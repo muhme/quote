@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Datei: app/views/layouts/application.rhtml -->
+<html lang="de">
+    <head>
+        <title><%= page_title %></title>
+        <% if controller.controller_name == "start" and controller.action_name == "index" %>
+          <meta name="keywords" content="Zitat, Zitatesammlung, Spruch, Website, Homepage, Service, Joomla" />
+          <meta name="description" content="Sammlung von Zitaten zum Einbinden auf der eigenen Website (kosten- und werbefrei)." />
+        <% end %>
+        <%= stylesheet_link_tag 'application' %>
+        <link type="text/plain" rel="author" href="http://www.zitat-service.de/humans.txt" />
+    </head>
+    <body>
+
+<span id="side">
+        <div id="logo"><a href="/"><%= image_tag("quote_service_32.png", :size => "32x32", :alt => "Logo", :title => "www.zitat-service.de", :border => "0") %></a></div>
+    <%= if logged_in?
+        "<p>" +
+        image_tag("user_orange.png", :alt => "Benutzer", :title => "Angemeldet") + " " +
+        truncate(h(self.current_user.login), 7) +
+        ( self.current_user.admin ?
+          " " + image_tag("award_star_bronze_1.png", :alt => "Orden", :title => "Administrator") : "" ) +
+        "</p>"
+     end %>
+    <p><%= logged_in? ? link_to("Abmelden", :controller => "account", :action => "logout") : link_to("Anmelden", :controller => "account", :action => "login") %></p>
+    <p><%= link_to "Zitate", :controller => "quotation" %> <%= link_to("+", :controller => "quotation", :action => "list_no_public") if has_non_public(Quotation) %></p>
+    <p id="letter"><%= link_to "Kategorien", :controller => "category" %> <%= link_to("+", :controller => "category", :action => "list_no_public") if has_non_public(Category) %>
+       <%= category_links %></p>
+    <p id="letter"><%= link_to "Autoren", :controller => "author" %> <%= link_to("+", :controller => "author", :action => "list_no_public") if has_non_public(Author) %>
+       <%= author_links %></p>
+    <p><%= link_to "Hilfe", :controller => "start", :action => "help" %></p>
+    <p><%= link_to "Einbinden", :controller => "start", :action => "use" %></p>
+    <p><%= link_to "Projekt", :controller => "start", :action => "project" %></p>
+    <p><%= link_to "Impressum", :controller => "start", :action => "contact" %></p>
+</span>
+        <% if flash[:error] -%>
+            <div id="error"><%= image_tag("exclamation.png", :alt => "rotes Ausrufezeichen", :title => "Achtung", :border => "0") %> <%= flash[:error] %></div>
+        <% elsif flash[:notice] -%>
+            <div id="notice"><%= image_tag("flag_green.png", :alt => "gr&uuml;ne Fahne", :title => "OK", :border => "0") %> <%= flash[:notice] %></div>
+        <% end -%>
+        <div id="content">
+            <%= yield %>
+        </div>
+    </body>
+</html>

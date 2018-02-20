@@ -1,0 +1,12 @@
+<h1>Zitat bearbeiten</h1>
+
+<% form_tag(:action => 'update', :id => @quotation) do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Speichern' %> &nbsp;
+  <%= link_to(image_tag("eye.png", :alt => 'Auge', :title => 'Anzeigen', :border => 0), {:action => 'show', :id => @quotation.id}, :class => "not_dashed")%> &nbsp;
+  <%= link_to(image_tag("arrow_undo.png", :alt => 'Zurück-Pfeil', :title => 'Zurück', :border => 0), {:action => 'list'}, :class => "not_dashed")%>
+<% end %>
+<p>Bitte das <%= link_to("Urheberrecht", {:controller => 'start', :action => 'help', :anchor => 'urheberrecht' }, :alt => 'Hinweise zum Urheberrecht', :title => 'Hinweise zum Urheberrecht') %>  beachten.</p>
+<script type="text/javascript">
+document.forms[0].quotation_quotation.focus();
+</script>

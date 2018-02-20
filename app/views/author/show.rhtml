@@ -1,0 +1,34 @@
+<h1>Autor</h1>
+<table>
+    <tr>
+      <td valign=top>Id:</td><td><%= h(@author.id) %></td>
+    </tr><tr>
+      <td valign=top>Name:</td><td><b><%= h(@author.name) %></b></td>
+    </tr><tr>
+      <td valign=top>Vorname:</td><td><b><%= h(@author.firstname) %></b></td>
+    </tr><tr>
+      <td valign=top>Beschreibung:</td><td><%= h(@author.description) %></td>
+    </tr><tr>
+      <td valign=top>Link:</td><td><%= lh(@author.link) %></td>
+    </tr><tr>
+      <td valign=top>Angelegt:</td><td><%= nice_date(@author.created_at) %></td>
+    </tr><tr>
+      <td valign=top>Aktualisiert:</td><td><%= nice_date(@author.updated_at) %></td>
+    </tr><tr>
+      <td valign=top>Benutzer:</td><td><%= hu(@author.user_id) %></td>
+    </tr><tr>
+      <td valign=top>&Ouml;ffentlich:</td><td><%= @author.public? ? "Ja" : "Nein" %></td>
+    </tr><tr>
+      <td valign=top>Zitate:</td><td><%=
+    	  q=Quotation.find_all_by_author_id(@author.id)
+    	  q.empty? ? "0" : link_to(q.size, :controller => 'quotation', :action => 'list_by_author', :author => @author.id)%></td>
+    </tr>
+</table>
+
+<p>
+<% if can_edit?(@author.user_id) %>
+    <%= link_to(image_tag("pencil.png", :alt => 'Stift', :title => 'Bearbeiten', :border => 0), {:action => 'edit', :id => @author.id}, :class => "not_dashed")%> &nbsp;
+<% end %>
+<%= link_to(image_tag("sm-plus.gif", :alt => 'Share', :title => 'Lesezeichen / Weitersagen', :border => 0), 'http://www.addthis.com/bookmark.php', :class => "not_dashed")%> &nbsp;
+<%= link_to(image_tag("arrow_undo.png", :alt => 'Zurück-Pfeil', :title => 'Zurück', :border => 0), {:action => 'list'}, :class => "not_dashed")%>
+</p>

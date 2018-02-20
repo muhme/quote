@@ -1,0 +1,77 @@
+<p>English readers please jump to <%= link_to 'joomla_english', :action => 'joomla_english' %>.</p>
+<h1>Zitate in <%= link_to(image_tag("joomla.png", :alt => "Joomla! Logo", :title => "Joomla!", :border => "0"), 'http://www.joomla.org', :class => 'not_dashed') %> einbinden</h1>
+<p>Diese Seite beschreibt die M&ouml;glichkeiten zum Einbinden der Zitate von <a href="http://www.zitat-service.de">www.zitat-service.de</a> in das <a href="http://www.joomla.org">CMS Joomla!</a>. Kosten- und Werbefrei können Zufalls-Zitate in Joomla! von Autoren, Kategorien oder der eigenen Zitatesammlung angezeigt werden.</p>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_4_small.png", :alt => "Joomla! 3.0 Modulzuweisung", :title => "Joomla! 3.0 Modulzuweisung", :border => "1"), '../images/joomla_30_4.png', :class => "not_dashed") %></div>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_1_small.png", :alt => "Joomla! 3.0 Status Veröffentlicht", :title => "Joomla! 3.0 Details", :border => "1"), '../images/joomla_30_1.png', :class => "not_dashed") %></div>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_0_small.png", :alt => "Joomla! 3.0 Module-Installation", :title => "Joomla! 3.0 Module-Installation", :border => "1"), '../images/joomla_30_0.png', :class => "not_dashed") %></div>
+<h2>F&uuml;r Joomla! Versionen 1.6 ... 3.0
+<%=
+	image_tag("joomla16.png", :alt => "Joomla! 1.6 kompatibel", :title => "Joomla! 1.6 kompatibel") +
+	image_tag("joomla17.png", :alt => "Joomla! 1.7 kompatibel", :title => "Joomla! 1.7 kompatibel") +
+	image_tag("joomla25.png", :alt => "Joomla! 2.5 kompatibel", :title => "Joomla! 2.5 kompatibel") +
+	image_tag("joomla30.png", :alt => "Joomla! 3.0 kompatibel", :title => "Joomla! 3.0 kompatibel")
+%>
+</h2>
+<p>Modul-Version 1.3 vom 4. April 2013. Im Joomla! Backend als Administrator:</p>
+<ul>
+  <li>das Modul mod_zitat_service_de &uuml;ber "Erweiterungen | Installieren" von der folgenden Webadresse installieren:<br />
+<%= link_to url_for(:only_path => false) + '/mod_zitat_service_de_1.3.zip', 'joomla/mod_zitat_service_de_1.3.zip'  %>,</li>
+  <li>dann das Modul auf "Veröffentlicht" setzen &uuml;ber "Erweiterungen | Module",</li>
+  <li>die gewünschte Position im Template einstellen (z.B. position-7) und</li>
+  <li>das Module den gewünschten Menüs zuordnen (z.B. "Auf allen Seiten").</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_2_small.png", :alt => "Joomla! 3.0 Basis-Optionen", :title => "Joomla! 3.0 Basis-Optionen", :border => "1"), '../images/joomla_30_2.png', :class => "not_dashed") %></div>
+<p>Mit den Basisoptionen des Moduls ist es m&ouml;glich die angezeigten Zitate:</p>
+<ul>
+  <li>auf einen Autor (z.B. Goethe),</li>
+  <li>eine Kategorie (z.B. Fussball) oder</li>
+  <li>auf die selbst eingestellten Zitate mit dem eigenen Benutzernamen einzuschr&auml;nken.</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_3_small.png", :alt => "Joomla! 3.0 Status Veröffentlicht", :title => "Joomla! 3.0 Details", :border => "1"), '../images/joomla_30_3.png', :class => "not_dashed") %></div>
+Standardmässig werden die Zitate im gleichen Fenster geöffnet. Mit den optionalen Parametern kann:</p>
+<ul>
+  <li>der Name eines Fensters (z.B. quote) angegeben werden und die Zitate, Quell- b.z.w. Autor-Links öffnen sich dann in einem neuen Fenster.</li>
+  <li>Mit der Abfragemethode kann eingestellt werden wie das Zitat geholt wird. Die empfohlende Abfragemethode ist Asynchron mit JavaScript im Web-Browser. Der Seitenaufbau wird beschleunigt indem das Zitat erst nach dem Seitenaufbau geholt wird. Diese Option ist auch zwingend, wenn der Abruf des Zitates aus Joomla nicht möglich ist, z.B. weil allow_url_fopen in PHP ausgeschaltet ist.</li>
+  <li>Da bei der asynchronen Abfragemethode das Zitat geholt wird nachdem die Seite schon aufgebaut wurde können nachfolgende Module <i>springen</i>. Das Modul sollte daher das letzte in einer Reihe sein (damit nach unten Platz ist) oder ein horizontaler Platz freigehalten werden. Die minimale Höhe des Moduls kann mit dem letzten Parameter angegeben werden, wenn keine eigener CSS existiert. Die Höhe kann z.B. mit 20ex oder 100px angegeben werden. Zum Testen der Höhe ist die Kategorie WebDesignTest gut geeignet da sie die kürzesten und längsten Zitate enthält.</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("parameter_small.png", :alt => "Joomla! 1.5 Modulparameter", :title => "Joomla! 1.5 Modulparameter", :border => "1"), '../images/parameter.png', :class => "not_dashed") %></div>
+<h2>F&uuml;r Joomla! Version 1.5 <img src="http://archive.extensions.joomla.org/images/jed/compat_15_native.png" alt="Joomla! 1.5 Native" title="Joomla! 1.5 Native"></h2>
+<p>Letzte Modul-Version 1.2.1 vom 10. Dezember 2010: Installation und Konfiguration wie oben, nur das folgende Modul benutzen:<br/>
+<%= link_to url_for(:only_path => false) + '/mod_zitat_service_j15_1.2.1.zip', 'joomla/mod_zitat_service_j15_1.2.1.zip'  %>,</li>
+</p>
+<h2>F&uuml;r Joomla! Version 1.0 <img src="http://docs.joomla.org/images/d/d3/Compat_10.png" alt="Joomla! 1.0 Native" title="Joomla! 1.0 Native"></h2>
+<p>Letzte Modul-Version 1.1.2 vom 13. Mai 2009: Installation und Konfiguration wie oben, nur das folgende Modul benutzen:<br/>
+<%= link_to url_for(:only_path => false) + '/mod_zitat_service_j10_1.1.2.zip', 'joomla/mod_zitat_service_j10_1.1.2.zip'  %>,</li>
+</p>
+<h2>Anpassung der Darstellung</h2>
+<p>Die Darstellung des Zitats kann per cascading stylesheets (CSS) angepasst werden.
+Das DIV-Element der Klasse <i>quote</i> umschlie&szlig;t das gesamte Zitat, hier kannst Du z.B. einen Rahmen setzen. Enthalten sind zwei DIV-Elemente der Klassen <i>quotation</i> f&uuml;r das Zitat und <i>source</i> f&uuml;r den Autor und die Quelle.
+Das folgende Beispiel, entfernt die Standard-Link-Dekoration (unterstrichen), setzt das Zitat in schwarzer Schrift und größer als normal. Die Quelle (ob mit oder ohne Link) wird dann grau dargestellt:</p>
+<div class="code">
+div.quote * a {<br>
+&nbsp;&nbsp;text-decoration:none;<br>
+&nbsp;&nbsp;color: black;<br>
+&nbsp;&nbsp;font-size: larger;<br>
+}<br>
+div.quote div.source, div.quote div.source a {<br>
+&nbsp;&nbsp;color: gray;<br>
+}
+</div>
+<p style="clear: both;">In Joomla sind die Zeilen an das benutzte Template anzuhängen (z.B. für beez die Datei beez/css/template.css).</p>
+<h2>Einschränkungen und Fehlerbehandlung</h2>
+<p>Das Joomla-Modul kann bei asynchronem Aufruf nur einmal auf einer Webseite eingebunden werden.</p>
+<p>Wenn <pp>allow_url_fopen</pp> auf dem Server ausgeschalten ist, dann wird JavaScript eingefügt mit dem das Zitat angezeigt wird. Hat der Benutzer außerdem JavaScript im Web-Browser ausgeschaltet, dann wird immer das gleiche Zitat angezeigt und ein HTML-Kommentar dokumentiert das.</p>
+<p>Für das Holen des Zitats wird ein Timeout von 3 Sekunden gesetzt. Wenn der Abruf vom Server zu länger dauert dann wird ein Standard-Zitat angezeigt und die Fehlermeldung findet sich als HTML-Kommentat im Seiten-Quelltext.</p>
+<h2>Beispiel einer Einbindung in Joomla im Netz</h2>
+<ul>
+  <li><a href="http://www.bruderbund-moersch.de">Gesangverein Bruderbund Mörsch 1900 e.V.</a> - aus allen Zitaten, auf der linken Seite</li>
+  <li><a href="http://www.neuekinder.de">Neue Kinder</a> - Zitate der Kategorie Buddhismus, auf der rechten Seite</a></li>
+  <li><a href="http://www.fsv1950-wachow-tremmen.de">FSV Wachow-Tremmen e.V.</a> - Zitate der Kategorie Fussball, auf der rechten Seite mit freigehaltener Höhe</a></li>
+  <li><a href="http://www.consulting.heikol.de">Systemberatung Heiko Lübbe</a> - Zitate des Benutzes heiko, aus der Kategorie Programmieren und mit angepassten CSS, oben rechts</li>
+</ul>
+<h2>Fehler oder Erweiterungen</h2>
+<p>
+Wenn Du einen Fehler entdeckt hast oder Dir eine Erweiterung w&uuml;nschst, dann schreibe bitte eine Email. Der Tracker ist nur noch lesbar: <a href="http://trac.zitat-service.de/trac/quote.cgi">Trac</a>.</p>
+<p>Zur&uuml;ck zur Einbindung im Allgemeinen und per IFRAME: <%= link_to(image_tag("arrow_undo.png", :alt => "Pfeil zur&uuml;ck", :title => "Zur&uuml;ck", :border => "0"), {:action => 'use'}, :class => 'not_dashed') %></p>
+<hr>
+<p style="font-size: small;">Joomla! Logos unter Copyright von <a href="http://www.opensourcematters.org">OpenSourceMatters</a>.

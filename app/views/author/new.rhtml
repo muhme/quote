@@ -1,0 +1,10 @@
+<h1>Autor anlegen</h1>
+
+<% form_tag(:action => 'create') do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag "Anlegen" %>
+&nbsp; <%= link_to(image_tag("arrow_undo.png", :alt => "Pfeil zur&uuml;ck", :title => "Zur&uuml;ck", :border => "0"), :action => 'list') %>
+<% end %>
+<script type="text/javascript">
+document.forms[0].author_name.focus();
+</script>

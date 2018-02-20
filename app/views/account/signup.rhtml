@@ -1,0 +1,21 @@
+<h1>Benutzer anlegen</h1>
+<%= error_messages_for :user %>
+<% form_for :user do |f| -%>
+<p><label for="login">Benutzername (z.B. Vorname)</label><br/>
+<%= f.text_field :login, :size=>40, :maxlength=>40 %></p>
+
+<p><label for="email">Email-Adresse</label><br/>
+<%= f.text_field :email, :size=>40, :maxlength=>100 %></p>
+
+<p><label for="password">Kennwort</label><br/>
+<%= f.password_field :password, :size=>40, :maxlength=>40 %></p>
+
+<p><label for="password_confirmation">Kennwort wiederholen</label><br/>
+<%= f.password_field :password_confirmation, :size=>40, :maxlength=>40 %></p>
+
+<p><%= submit_tag 'Anmelden' %></p>
+<% end -%>
+<p>Die von Dir erstellten Zitaten, Autoren und Kategorien werden unter Deinem Benutzernamen gespeichert. Mit diesem Benutzernamen bist Du f&uuml;r die anderen sichtbar.</p>
+<p>Die Email-Adresse wird ausschlie&szlig;lich benutzt, um Dich bei zuk&uuml;nftigen
+&Auml;nderungen des Zitat-Services zu informieren.</p>
+<p>Dein Kennwort wird nur verschl&uuml;sselt gespeichert.</p>

@@ -1,0 +1,21 @@
+<%
+categories = "#{@categories.total_entries} "
+categories += @categories.total_entries == 1 ? "Kategorie, die" : "Kategorien, die"
+if params[:letter] == "*"
+	categories += " nicht mit A-Z "
+else
+	categories += " mit \"" + params[:letter].first + "\" "
+end
+categories += @categories.total_entries == 1 ? "beginnt" : "beginnen"
+%>
+<h1><%= categories %></h1>
+
+<%= render :partial => 'list_content' %>
+
+<% if logged_in? %>
+    <p class="ListNavi">
+    <% form_tag(:action => 'new') do%>
+      <%= submit_tag "Neu" %>
+    <% end %>
+    </p>
+<% end %>

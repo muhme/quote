@@ -1,0 +1,11 @@
+<h1>Autor bearbeiten</h1>
+
+<% form_tag(:action => 'update', :id => @author) do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag 'Speichern' %> &nbsp; 
+  <%= link_to(image_tag("eye.png", :alt => 'Auge', :title => 'Anzeigen', :border => 0), {:action => 'show', :id => @author.id}, :class => "not_dashed")%> &nbsp;
+  <%= link_to(image_tag("arrow_undo.png", :alt => 'Zurück-Pfeil', :title => 'Zurück', :border => 0), {:action => 'list'}, :class => "not_dashed")%>
+<% end %>
+<script type="text/javascript">
+document.forms[0].author_name.focus();
+</script>

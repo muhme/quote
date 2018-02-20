@@ -1,0 +1,9 @@
+development:
+  adapter: mysql
+  database: quote_development
+  username: USERNAME
+  password: PASSWORD
+  host: localhost
+  socket: /var/run/mysql/mysql.sock
+  timeout: 5000
+  encoding: utf8

@@ -1,0 +1,231 @@
+body {
+    font-family: verdana, arial, helvetica, sans-serif;
+    background-color: #ddffdd;
+    color: #000;
+    background-image: url(../images/flower.png);
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-position: bottom right;
+}
+@font-face {
+  font-family: "Gondoliere";
+  src: url(Gondoliere.ttf) format("truetype");
+}
+#side {
+    position: fixed;
+    background: #bb88bb;
+    padding: 8px;
+    border: 1px solid black;
+    display: block; /* in combination with width necessary for IE6 */
+    width: 6em;
+}
+#content {
+    /* ie 7 shows h1 truncated in the top, so therefore I add 3 px space in the top */
+    padding: 3px 0px 0px 0px;
+    position: absolute;
+    top: 1cm;
+    left: 9em;
+    margin-right: 1em;
+}
+pre {
+    color: inherit;
+    background-color: #eee;
+    padding: 10px;
+    font-size: 11px;
+}
+a {
+    color: #000;
+    text-decoration: none;
+}
+a:link {
+    border-bottom: 1px dashed #000;
+}
+a:visited {
+    border-bottom: 1px dashed #000;
+}
+a:hover {
+    background-color:#bb88bb;
+}
+div.randomquote * a {
+    border:none;
+}
+.ListActions a, #side * a, a.not_dashed {
+	color: #000;
+    text-decoration: none;
+    border: none;
+}
+#side * a:hover {
+    color: #fff;
+    background-color:#000;
+    border: none;
+}
+.fieldWithErrors {
+    padding: 2px;
+    color: inherit;
+    background-color: red;
+    display: table;
+}
+#errorExplanation {
+    width: 400px;
+    border: 2px solid red;
+    padding: 7px;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    color: inherit;
+    background-color: #f0f0f0;
+}
+#errorExplanation h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    color: inherit;
+    background-color: #c00;
+    color: #fff;
+}
+#errorExplanation p {
+    color: #333;
+    background-color: inherit;
+    margin-bottom: 0;
+    padding: 5px;
+}
+#errorExplanation ul li {
+    font-size: 12px;
+    list-style: square;
+}
+td {
+    background: #ddffdd;	/* hack? to disable transparency for tr */
+}
+tr.ListLine1 td {
+    background-color: #f0f0f0;
+}
+th, tr.ListLine0 td {
+    background-color: #e0e0e0;
+}
+h1 {
+    font-family: Gondoliere, Comic Sans MS, serif;
+    color: #208020;
+    margin-top: 1ex;
+    padding-top: 0px;
+}
+h1.error {
+	color: red;
+}
+h2 {
+    font-family: Gondoliere, Comic Sans MS, serif;
+    color: #208020;
+}
+.random_quote {
+    color: black;
+    border: 2px solid #208020;
+    padding: 8px;
+    margin-left: 9em;
+}
+.quote, .author, .center {
+    text-align: center;
+}
+#notice {
+    position: absolute;
+    left: 9em;
+    color: #006400; /* darkgreen */
+    height: 1.8cm;
+    overflow: hidden;
+}
+#error {
+    position: absolute;
+    left: 9em;
+    color: red;
+    height: 1.8cm;
+    overflow: hidden;
+}
+#logo {
+    padding: 12px 1px 1px 24px;
+}
+.ListSource, .ListSource a {
+    color: #777;
+}
+.ListSource a:hover {
+    color: #000;
+}
+
+.pagination {
+    padding: 3px;
+    margin: 3px;
+}
+.pagination a {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #208020;
+    text-decoration: none;
+    color: black;
+}
+.pagination a:hover, .pagination a:active {
+    border: 1px solid #208020;
+}
+.pagination span.current {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #208020;
+    font-weight: bold;
+    background-color: #208020;
+    color: white;
+}
+.pagination span.disabled {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #208020;
+    color: #999;
+}
+.randomquote_title {
+    color: #777;
+}
+.randomquote {
+    border: 1px solid;
+    padding: 10px;
+    display: inline-block;
+}
+.ListActions {
+    vertical-align: middle;
+    width: 90px;
+    text-align: center;
+}
+.code {
+    float: left;
+    font-family: courier, sans-serif;
+    font-size: 80%;
+    color: black;
+    background-color: #ddd;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 5px;
+}
+.example {
+    color: #777;
+}
+table#letter {
+	padding: 0px;
+	margin: 0px;
+}
+table#letter td {
+	padding: 0px;
+	margin: 0px;
+	font-size: 60%;
+	text-align: center;
+    background: #bb88bb;	/* hack? to disable transparency for tr */
+}
+table#letter td#unused {
+	color: gray;
+}
+p#letter {
+	margin: 10px 0px 0px 0px;
+	padding: 0px;
+}
+dt {
+    font-weight: bold;
+}
+
+table#quote_collections th {
+    text-align: left;
+
+}

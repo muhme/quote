@@ -1,0 +1,68 @@
+<%
+    # create a list of categories with links and link titles with number of quotations
+    categories = []
+    for r in @quotation.categories
+        categories[categories.length - 1] += ", " if categories.length > 0
+        i = Category.find(r.id).quotations.find(:all).size
+        category = h(r.category)
+        categories << link_to (category, {:action => 'list_by_category', :category => r.id},
+                :alt => "Zitate der Kategorie #{category}",
+                :title => "#{i} Zitat" + (i == 1 ? "" : "e") + " der Kategorie #{category}")
+    end
+
+    # author with link and link title with authors number of quotations
+    name = h(@quotation.get_author_name_or_blank)
+    i = Quotation.count(:conditions => "author_id = #{@quotation.author_id}")
+    if (i > 1)
+        author = link_to (name, {:action => 'list_by_author', :author => @quotation.author_id},
+                :alt => "Zitate des Authors #{name}",
+                :title => "#{i} Zitate des Authors #{name}")
+    else
+        author = link_to (name, {:action => 'list_by_author', :author => @quotation.author_id},
+                :alt => "Zitate des Authors #{name}",
+                :title => "Zitate des Authors #{name}")
+    end
+
+    # user with links and link number of quotations in link title
+    name = hu(@quotation.user_id)
+    i = Quotation.count(:conditions => "user_id = #{@quotation.user_id}")
+    if (i > 1)
+        user = link_to (name, {:action => 'list_by_user', :user => name},
+                :alt => "Zitate des Benutzeres #{name}",
+                :title => "#{i} Zitate des Benutzeres #{name}")
+    else
+        user = name
+    end
+%>
+<h1>Zitat</h1>
+<table>
+    <tr>
+      <td valign=top>Nr:</td><td><%= h(@quotation.id) %></td>
+    </tr><tr>
+      <td valign=top>Zitat:</td><td><b><%= h(@quotation.quotation) %></b></td>
+    </tr><tr>
+      <td valign=top>Autor:</td><td><%= author %></td>
+    </tr><tr>
+      <td valign=top>Quelle:</td><td><%= h(@quotation.source) %></td>
+    </tr><tr>
+      <td valign=top>Link zur Quelle:</td><td><%= lh(@quotation.source_link) %></td>
+    </tr><tr>
+      <td valign=top>Kategorien:</td><td><%= categories %></td>
+    </tr><tr>
+      <td valign=top>Angelegt:</td><td><%= nice_date(@quotation.created_at) %></td>
+    </tr><tr>
+      <td valign=top>Aktualisiert:</td><td><%= nice_date(@quotation.updated_at) %></td>
+    </tr><tr>
+      <td valign=top>Eingetragen von:</td><td><%= user %></td>
+    </tr><tr>
+      <td valign=top>&Ouml;ffentlich:</td><td><%= @quotation.public? ? "Ja" : "Nein" %></td>
+    </tr>
+</table>
+
+<p>
+<% if can_edit?(@quotation.user_id) %>
+    <%= link_to(image_tag("pencil.png", :alt => 'Stift', :title => 'Bearbeiten', :border => 0), {:action => 'edit', :id => @quotation.id}, :class => "not_dashed")%> &nbsp;
+<% end %>
+<%= link_to(image_tag("sm-plus.gif", :alt => 'Share', :title => 'Lesezeichen / Weitersagen', :border => 0), 'http://www.addthis.com/bookmark.php', :class => "not_dashed")%> &nbsp;
+<%= link_to(image_tag("arrow_undo.png", :alt => 'Zurück-Pfeil', :title => 'Zurück', :border => 0), {:action => 'list'}, :class => "not_dashed")%>
+</p>

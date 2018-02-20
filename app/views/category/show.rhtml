@@ -1,0 +1,30 @@
+<h1>Kategorie</h1>
+<table>
+    <tr>
+      <td valign=top>Nr.:</td><td><%= h(@category.id) %></td>
+    </tr><tr>
+      <td valign=top>Name:</td><td><b><%= h(@category.category) %></b></td>
+    </tr><tr>
+      <td valign=top>Beschreibung:</td><td><%= h(@category.description) %></td>
+    </tr><tr>
+      <td valign=top>Angelegt:</td><td><%= nice_date @category.created_at %></td>
+    </tr><tr>
+      <td valign=top>Aktualisiert:</td><td><%= nice_date @category.updated_at %></td>
+    </tr><tr>
+      <td valign=top>Benutzer:</td><td><%= hu(@category.user_id) %></td>
+    </tr><tr>
+      <td valign=top>&Ouml;ffentlich:</td><td><%= @category.public? ? "Ja" : "Nein" %></td>
+    </tr><tr>
+      <td valign=top>Zitate:</td><td><%=
+    	  q=@category.quotations.find(:all).size
+    	  q == 0 ? "0" : link_to(q, :controller => 'quotation', :action => 'list_by_category', :category => @category.id)%></td>
+    </tr>
+</table>
+
+<p>
+<% if can_edit?(@category.user_id) %>
+    <%= link_to(image_tag("pencil.png", :alt => 'Stift', :title => 'Bearbeiten', :border => 0), {:action => 'edit', :id => @category.id}, :class => "not_dashed")%> &nbsp;
+<% end %>
+<%= link_to(image_tag("sm-plus.gif", :alt => 'Share', :title => 'Lesezeichen / Weitersagen', :border => 0), 'http://www.addthis.com/bookmark.php', :class => "not_dashed")%> &nbsp;
+<%= link_to(image_tag("arrow_undo.png", :alt => 'Zurück-Pfeil', :title => 'Zurück', :border => 0), {:action => 'list'}, :class => "not_dashed")%>
+</p>

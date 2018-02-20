@@ -1,0 +1,28 @@
+<%= error_messages_for 'quotation' %>
+
+<!--[form:quotation]-->
+
+    <p><label for="quotation_quotation">Zitat <span class="example">z.B. Erfahrungen vererben sich nicht - jeder muß sie allein machen.</span></label><br/>
+    <%= text_area :quotation, :quotation, {:cols => 80, :rows => 2}  %></p>
+
+    <p><label for="quotation_source">Original-Quelle <span class="example">typischerweise ein Buchtitel, z.B. Gebrauchsanweisung, Glossen und Essays, 1930</span></label><br/>
+    <%= text_field :quotation, :source, :size => 80, :maxlength => 255 %></p>
+
+    <p><label for="quotation_source_link">Link <span class="example">zu einer Website mit dem Original-Text der das Zitat enthält, z.B. http://www.textlog.de/tucholsky-anweisung.html</span></label><br/>
+    <%= text_field :quotation, :source_link, :size => 80, :maxlength => 255 %></p>
+
+    <p><label for="quotation_categories"><%= @quotation.category_count %> <%= @quotation.category_count == 1 ? "Kategorie" : " Kategorien" %> <span class="example">(mehrere mit &lt;Strg&gt;)</label><br/>
+    <%= collection_select :quotation, :category_ids, Category.find(:all, :order => 'category'), :id, :category, { :selected => @quotation.category_ids }, { :multiple => true, :name => 'quotation[category_ids][]' } -%>
+
+    <p><label for="quotation_author_id">Autor <span class="example">z.B. Kurt Tucholsky</span></label><br/>
+    <%= @authors = Author.find(:all, :order => "name").map {|a| [a.last_first_name, a.id] }
+    @authors.sort! {|a,b| to_comparable(a[0]) <=> to_comparable(b[0])}
+    select(:quotation, :author_id, @authors) %></p>
+
+    <% if logged_in? and self.current_user.admin == true %>
+        <p><label for="quotation_public">&Ouml;ffentlich</label><br/>
+        <%= select(:quotation, :public, [['Nein',false],['Ja',true]]) %></p>
+    <% end %>
+
+<!--[eoform:quotation]-->
+

@@ -1,0 +1,2 @@
+<h1><%= @quotations.total_entries %> Zitat<%="e" if @quotations.total_entries != 1%> von "<%= h(params[:user]) %>"</h1>
+<%= render :partial => 'list_content' %>

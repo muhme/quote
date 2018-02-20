@@ -1,0 +1,22 @@
+<%= error_messages_for 'author' %>
+
+<!--[form:author]-->
+
+    <p><label for="author_name">Nachname <span class="example">z.B. Goethe</span></label><br/>
+    <%= text_field 'author', 'name', :size => 64, :maxlength => 64   %></p>
+
+    <p><label for="author_firstname">Vorname <span class="example">z.B. Johann Wolfgang von</span></label><br/>
+    <%= text_field 'author', 'firstname', :size => 64, :maxlength => 64  %></p>
+
+    <p><label for="author_description">Beschreibung <span class="example">z.B. deutscher Dichter (1749 - 1832)</span></label><br/>
+    <%= text_field 'author', 'description', :size => 64, :maxlength => 255  %></p>
+
+    <p><label for="author_link">Link <span class="example">z.B. http://de.wikipedia.org/wiki/Goethe</label><br/>
+    <%= text_field 'author', 'link', :size => 64, :maxlength => 255  %></p>
+
+    <% if logged_in? and self.current_user.admin == true %>
+        <p><label for="author_public">&Ouml;ffentlich</label><br/>
+        <%= select(:author, :public, [['Nein',false],['Ja',true]]) %></p>
+    <% end %>
+
+<!--[eoform:author]-->
