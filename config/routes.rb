@@ -1,48 +1,39 @@
-ActionController::Routing::Routes.draw do |map|
-  # The priority is based upon order of creation: first created -> highest priority.
+Rails.application.routes.draw do
+  
+  get 'static_pages/joomla'
+  get 'static_pages/humans'
+  get 'static_pages/contact'
+  get 'static_pages/joomla_english'
+  get 'static_pages/project'
+  get 'static_pages/use'
+  get 'static_pages/help'
+  get 'static_pages/list'
+  get 'static_pages/search'
 
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
-
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
-  map.connect '', :controller => 'start'
-
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  
+  root to: 'static_pages#list'
+  
   # start from the beginning with a direct URL "joomla" instead "start/joomla"
-  map.connect 'joomla', :controller => 'start', :action => 'joomla'
-  map.connect 'joomla_english', :controller => 'start', :action => 'joomla'
+  get 'joomla', to: 'static_pages#joomla'
+  # map.connect 'joomla', :controller => 'start', :action => 'joomla'
+  # map.connect 'joomla_english', :controller => 'start', :action => 'joomla'
 
   # dynamic generated humans.txt
-  map.connect 'humans.txt', :controller => 'start', :action => 'humans'
-
-  # fall-back if the redirect to the CGI script is missing
-  map.connect 'quote', :controller => 'start', :action => 'quote'
-
-  # See how all your routes lay out with "rake routes"
-
-  # Install the default routes as the lowest priority.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
-
-  map.connect '*whatever', :controller => 'start', :action => 'not_found'
+  get 'humans.txt', to: 'static_pages#humans'
+  # map.connect 'humans.txt', :controller => 'start', :action => 'humans'
+  
+  # default controller routes
+  resources :authors, :account, :categories, :quotations, :users
+  resources :static_pages, except: :show
+  
+  get 'account/login', to: 'account#login'
+  
+  get 'category/list_by_letter', to: 'category#list_by_letter'
+  get 'author/list_by_letter', to: 'author#list_by_letter'
+  get 'quotation/list_by_user/:user', to: 'quotation#list_by_user'
+  
+  # catch all
+  match "*path", to: "static_pages#not_found", via: :all
+  
 end

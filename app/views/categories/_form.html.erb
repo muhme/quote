@@ -1,0 +1,25 @@
+<%= form_with(model: category, local: true) do |form| %>
+  <% if category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
+
+      <ul>
+      <% category.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <p><label for="category_category">Kategorie</label><br/>
+    <%= text_field 'category', 'category', :size => 64, :maxlength => 64  %></p>
+
+    <p><label for="category_description">Beschreibung / auch verwendete Worte</label><br/>
+    <%= text_area 'category', 'description', {:cols => 64, :rows => 4}  %></p>
+
+    <% if logged_in? and self.current_user.admin == true %>
+        <p><label for="category_public">&Ouml;ffentlich</label><br/>
+        <%= select(:category, :public, [['Nein',false],['Ja',true]]) %></p>
+    <% end %>
+
+<% end %>
