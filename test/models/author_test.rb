@@ -71,4 +71,29 @@ class AuthorTest < ActiveSupport::TestCase
     assert_not @author.valid?
   end
   
+  test "get_author_name_or_blank method" do
+    
+    # first name and name set from setup
+    assert_equal @author.get_author_name_or_blank, "Johann Wolfgang von Goethe"
+    
+    # w/o first name
+    @author.firstname = ""
+    assert_equal @author.get_author_name_or_blank, "Goethe"
+  end
+  
+  test "get_linked_author_name_or_blank method" do
+    
+    # first name, name and link from setup
+    assert_equal @author.get_linked_author_name_or_blank, "<a href=\"https://de.wikipedia.org/wiki/Johann_Wolfgang_von_Goethe\" target=\"quote_extern\">Johann Wolfgang von Goethe</a>"
+    
+    # w/o first name
+    @author.firstname = ""
+    assert_equal @author.get_linked_author_name_or_blank, "<a href=\"https://de.wikipedia.org/wiki/Johann_Wolfgang_von_Goethe\" target=\"quote_extern\">Goethe</a>"
+
+    # w/o link
+    @author.link = ""
+    assert_equal @author.get_linked_author_name_or_blank, "Goethe"
+    
+  end
+  
 end

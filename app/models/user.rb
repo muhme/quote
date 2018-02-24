@@ -10,4 +10,9 @@ class User < ApplicationRecord
   validates :salt, presence: false, length: { maximum: 32 }, uniqueness: false
   validates :remember_token, presence: false, length: { maximum: 32 }, uniqueness: false
 
+  # count number of quotations created by the user
+  def number_of_quotations
+    return User.count_by_sql("select count(*) from quotations where user_id = #{self.id}")
+  end
+
 end

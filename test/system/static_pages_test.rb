@@ -38,7 +38,7 @@ class StaticPagessTest < ApplicationSystemTestCase
   end
   
   test "humans" do
-    check_page page, "humans.txt", nil, "TEAM", 3 # TODO
+    check_page page, "humans.txt", nil, "TEAM", 300
   end
     
   test "joomla" do

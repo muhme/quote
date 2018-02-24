@@ -2,29 +2,29 @@
 
 <p>Eine gemeinsame Sammlung von Zitaten mit Links zu Autoren und Textstellen. Zum Einbinden auf den eigenen Webseiten sortiert nach Autor, Stichwort oder Benutzer. Aktuell haben wir <%= nice_number(Quotation.count) %> Zitate, von <%= nice_number(Author.count) %> Autoren in <%= nice_number(Category.count) %> Kategorien.</p>
 <p>
-<% form_tag(:action=>'search') do %>
-    <p><label for="find">In allen Zitaten suchen:</label><br/>
-    <%= text_field 'result', 'pattern'  %>
-    <%= submit_tag "Finden" %>
-<% end %>
-<script type="text/javascript">
-document.forms[0].result_pattern.focus();
-</script>
+  <% form_tag(:action=>'search') do %>
+      <p><label for="find">In allen Zitaten suchen:</label><br/>
+      <%= text_field 'result', 'pattern'  %>
+      <%= submit_tag "Finden" %>
+  <% end %>
+  <script type="text/javascript">
+    document.forms[0].result_pattern.focus();
+  </script>
 </p>
 <% unless @quotation.nil? %>
-<p>
-<div class="randomquote_title">Zufallszitat</div>
-<div class="randomquote">
-            <span class="ListQuote"><%= h(@quotation.quotation) %></span><br>
-            <% me = @quotation.get_linked_author_and_source
-               unless me.blank? -%>
-                <span class="ListSource"><%= me %></span>
-            <% end -%>
-</div>
-</p>
+  <p>
+    <div class="randomquote_title">Zufallszitat</div>
+      <div class="randomquote">
+      <span class="ListQuote"><%= raw h(@quotation.quotation) %></span><br>
+      <% me = @quotation.get_linked_author_and_source -%>
+      <% unless me.blank? -%>
+        <span class="ListSource"><%= raw me %></span>
+      <% end -%>
+    </div>
+  </p>
 <% end %>
 <h2>Dankeschön</h2>
-<p><%= User.count %> Benutzer haben sich eingetragen. Die zuletzt eingestellten Zitate sind von %= @users[0] %>, %= @users[1] %> und %= @users[2] %>.</p>
+<p><%= User.count %> Benutzer haben sich eingetragen. Die zuletzt eingestellten Zitate sind von <%= raw @users[0] %>, <%= raw @users[1] %> und <%= raw @users[2] %>.</p>
 <div style="float: right; margin-left: 3em; margin-bottom: 3ex;">
 <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like-box href="http://www.facebook.com/pages/zitat-servicede/158799934165305#!/pages/zitat-servicede/158799934165305" width="292" connections="10" stream="false" header="false"></fb:like-box>
 </div>

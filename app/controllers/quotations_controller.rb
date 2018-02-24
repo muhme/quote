@@ -60,6 +60,38 @@ class QuotationsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  # list quotations created by a user
+  def list_by_user
+    user = params[:user]
+    if user.blank?
+      flash[:error] = "Kein Benutzer angegeben!"
+      redirect_to :action => 'list'
+      return false
+    end
+    
+    sql = ["select distinct q.* from quotations q, users u where q.user_id = u.id and u.login = ? order by q.created_at desc", user]
+    # TODO @quotations = Quotation.paginate_by_sql sql, :page=>params[:page], :per_page=>5
+    Quotation.find_by_sql sql
+  end
+  
+  def list_by_category
+  
+    @category = Category.find params[:category]
+    sql = 'select distinct q.* from quotations q, categories c, categories_quotations cq where category_id = ? and quotation_id = q.id'
+    if not logged_in?
+        sql += " and q.public = 1"
+    elsif self.current_user.admin != true
+        sql += ' and ( q.public = 1 or q.user_id = ? )'
+    end
+    
+    sql_array = []
+    sql_array << sql
+    sql_array << params[:category]
+    sql_array << self.current_user.id if logged_in? and self.current_user.admin != true;
+   # TODO  @quotations = Quotation.paginate_by_sql sql_array, :page=>params[:page], :per_page=>5
+   Category.find_by_sql sql
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -71,4 +103,5 @@ class QuotationsController < ApplicationController
     def quotation_params
       params.require(:quotation).permit(:quotation, :user_id, :author_id) # user_id + author_id TODO
     end
+    
 end

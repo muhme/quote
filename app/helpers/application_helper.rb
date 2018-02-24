@@ -69,9 +69,22 @@ module ApplicationHelper
   
   # do an html_escape() and get users login name oder "" if the user doesn't exist
   def hu(id)
-
     User.exists?(id) ? h(User.find(id).login) : ""
-
+  end
+  
+  # do an html_escape() and a truncate() and using "&nbsp;" if the result blank
+  def th(content, length)
+    ret = truncate(html_escape(content), lenght: length)
+    ret.blank? ? "&nbsp;" : ret
   end
 
+  # gives an HTML-IMG if the param has the desired value
+  def sorted_img_if(name, link, bool)
+    return bool ? name + image_tag("arrow_down.png", :alt => 'Sortiert', :title => 'Sortiert', :border => 0) + "</th>" : link
+  end
+
+  # TODO
+  def logged_in?
+    true
+  end
 end

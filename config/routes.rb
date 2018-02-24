@@ -32,6 +32,9 @@ Rails.application.routes.draw do
   get 'category/list_by_letter', to: 'category#list_by_letter'
   get 'author/list_by_letter', to: 'author#list_by_letter'
   get 'quotation/list_by_user/:user', to: 'quotation#list_by_user'
+  get 'quotation/list_by_category/:category', to: 'quotation#list_by_category'
+  get 'category/index/:order', to: 'category#index'
+  get 'category/index', to: 'category#index'
   
   # catch all
   match "*path", to: "static_pages#not_found", via: :all

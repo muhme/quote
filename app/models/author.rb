@@ -23,4 +23,25 @@ class Author < ApplicationRecord
     end
     ret
   end
+
+  # returns authors name or blank
+  # returns "", "firstname", "lastname" or "firstname lastname"
+  #   
+  def get_author_name_or_blank
+    ret = ""
+    ret += firstname unless firstname.blank?
+    ret += " " unless firstname.blank? or name.blank?
+    ret += name unless name.blank?
+    ret
+  end
+
+  # returns authors name, linked if possible, or blank
+  # returns "", "firstname", "lastname" or "firstname lastname"
+  #   
+  def get_linked_author_name_or_blank
+    ret = get_author_name_or_blank
+    ret = "<a href=\"#{self.link}\" target=\"quote_extern\">#{ret}</a>" unless ret.blank? or self.link.blank?
+    ret
+  end
+
 end
