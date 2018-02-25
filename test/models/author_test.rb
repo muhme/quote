@@ -3,11 +3,8 @@ require 'test_helper'
 class AuthorTest < ActiveSupport::TestCase
   
   def setup
-    @user = User.new()
-    @user.login = "author test"
-    @user.save!
     @author = Author.new()
-    @author.user_id = @user.id
+    @author.user_id = User.find_by_login('one').id
     @author.name = "Goethe"
     @author.firstname = "Johann Wolfgang von"
     @author.description = "deutscher Dichter (1749 - 1832)"

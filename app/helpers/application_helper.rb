@@ -9,15 +9,7 @@ module ApplicationHelper
     return "#{thousend}.#{rest}"
   end
   
-  def logged_in?
-    return nil
-  end
-  def has_non_public(o)
-    return nil
-  end
-  def can_edit?(o)
-    return true
-  end
+
   
   # gives links to the authors by 1st letter as four-rows-table
   # A B C D E F G
@@ -83,8 +75,4 @@ module ApplicationHelper
     return bool ? name + image_tag("arrow_down.png", :alt => 'Sortiert', :title => 'Sortiert', :border => 0) + "</th>" : link
   end
 
-  # TODO
-  def logged_in?
-    true
-  end
 end

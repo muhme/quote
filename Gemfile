@@ -34,6 +34,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'will_paginate', '~> 3.1'
+gem 'authlogic', '~> 3.6'
 
 
 group :development, :test do

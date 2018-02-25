@@ -21,12 +21,11 @@ class UserTest < ActiveSupport::TestCase
     assert @user.valid?
   end
 
-  test "user's login, email, crypted_password and salt max length" do
+  test "user's login, email, crypted_password and password_salt max length" do
     @user.login = "a" * 32
     @user.email = "a" * 64
     @user.crypted_password = "a" * 32
-    @user.salt = "a" * 32
-    @user.remember_token = "a" * 32
+    @user.password_salt = "a" * 32
     assert @user.valid?
   end
   
@@ -48,12 +47,8 @@ class UserTest < ActiveSupport::TestCase
     @user.crypted_password = "a" * 33
     assert_not @user.valid?
   end
-  test "user's salt should not be too long" do
-    @user.salt = "a" * 33
-    assert_not @user.valid?
-  end
-  test "user's remember_token should not be too long" do
-    @user.remember_token = "a" * 33
+  test "password_salt should not be too long" do
+    @user.password_salt = "a" * 33
     assert_not @user.valid?
   end
   

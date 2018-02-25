@@ -3,17 +3,14 @@ require 'test_helper'
 class QuotationTest < ActiveSupport::TestCase
   
   def setup
-    @user = User.new()
-    @user.login = "quotation test"
-    @user.save!
     @author = Author.new()
     @author.name = "Gandi"
-    @author.user_id = @user.id
+    @author.user_id = User.find_by_login('one').id
     @author.save!
     @quotation = Quotation.new()
-    @quotation.user_id = @user.id
+    @quotation.user_id = User.find_by_login('one').id
     @quotation.quotation = "Be the change you wish to see." # Mahatma Gandhi
-    @quotation.author_id = @author.id
+    @quotation.author_id = User.find_by_login('one').id
     @quotation.save!
   end
   

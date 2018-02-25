@@ -81,7 +81,7 @@ class QuotationsController < ApplicationController
     sql = 'select distinct q.* from quotations q, categories c, categories_quotations cq where category_id = ? and quotation_id = q.id'
     if not logged_in?
         sql += " and q.public = 1"
-    elsif self.current_user.admin != true
+    elsif current_user.admin != true
         sql += ' and ( q.public = 1 or q.user_id = ? )'
     end
     

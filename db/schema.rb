@@ -53,15 +53,26 @@ ActiveRecord::Schema.define(version: 20180221052756) do
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "login", limit: 32, null: false
     t.string "email", limit: 64
-    t.boolean "admin", default: false
-    t.string "crypted_password", limit: 32
-    t.string "salt", limit: 32
-    t.string "remember_token", limit: 32
-    t.datetime "remember_token_expires_at"
+    t.string "crypted_password"
+    t.string "password_salt"
+    t.string "persistence_token"
+    t.string "single_access_token"
+    t.string "perishable_token"
+    t.integer "login_count", default: 0, null: false
+    t.integer "failed_login_count", default: 0, null: false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string "current_login_ip"
+    t.string "last_login_ip"
+    t.boolean "active", default: false
+    t.boolean "approved", default: false
+    t.boolean "confirmed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "login", limit: 32, null: false
+    t.boolean "admin", default: false
   end
 
   add_foreign_key "authors", "users"

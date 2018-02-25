@@ -3,11 +3,9 @@ require 'test_helper'
 class CategoryTest < ActiveSupport::TestCase
   
   def setup
-    @user = User.new()
-    @user.login = "category test"
-    @user.save!
+
     @category = Category.new()
-    @category.user_id = @user.id
+    @category.user_id = User.find_by_login('one').id
     @category.category = "programming"
     @category.description = "All related to computer programming languages."
   end

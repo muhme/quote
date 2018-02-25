@@ -10,15 +10,18 @@
   <body>
     <span id="side">
       <div id="logo"><a href="/"><%= image_tag("quote_service_32.png", :size => "32x32", :alt => "Logo", :title => "www.zitat-service.de", :border => "0") %></a></div>
-      <%= if logged_in?
+<!-- TDODO
+      < %= if logged_in?
         "<p>" +
         image_tag("user_orange.png", :alt => "Benutzer", :title => "Angemeldet") + " " +
-        truncate(h(self.current_user.login), 7) +
-        ( self.current_user.admin ?
+        truncate(h(current_user.login), 7) +
+        ( current_user.admin ?
           " " + image_tag("award_star_bronze_1.png", :alt => "Orden", :title => "Administrator") : "" ) +
         "</p>"
       end %>
-      <p><%= logged_in? ? link_to("Abmelden", :controller => "account", :action => "logout") : link_to("Anmelden", :controller => "account", :action => "login") %></p>
+
+      <p>< %= logged_in? ? link_to("Abmelden", :controller => "account", :action => "logout") : link_to("Anmelden", :controller => "account", :action => "login") %></p>
+-->
       <p><%= link_to "Zitate", :controller => "quotations" %> <%= link_to("+", :controller => "quotations", :action => "list_no_public") if has_non_public(Quotation) %></p>
       <p id="letter"><%= link_to "Kategorien", :controller => "categories" %> <%= link_to("+", :controller => "categories", :action => "list_no_public") if has_non_public(Category) %>
         <%= raw category_links %></p>

@@ -7,19 +7,9 @@ class CategoriesController < ApplicationController
   # GET /categories.json
   def index
     
-      # TODO
-  def logged_in?
-    true
-  end
-  def current_user
-    def admin
-      return true
-    end
-  end
-    
     sql = 'select * from categories c'
-    sql += ' where  c.public = 1' if not logged_in? or self.current_user.admin != true
-    sql += ' or c.user_id = ?' if (logged_in? and self.current_user.admin != true)
+    sql += ' where  c.public = 1' if false # TODO not logged_in? or current_user.admin != true
+    sql += ' or c.user_id = ?' if false # TODO (logged_in? and current_user.admin != true)
     sql += params[:order] == 'categories' ?
          # by category name alphabeticaly
          ' order by c.category' :
