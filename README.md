@@ -24,7 +24,7 @@ mysql> GRANT ALL PRIVILEGES ON * . * TO 'quote'@'localhost';
 mysql> quit
 $ echo "QUOTE_DATABASE_PASSWORD='Your_quote_password' ; export QUOTE_DATABASE_PASSWORD" >> ~/.bash_profile
 $ . ~/.bash_profile
-$ sudo yum install mysql-devel
+$ sudo yum -y install mysql-devel
 $ bundle install
 $ rake db:create && rake db:migrate
 $ rails server
@@ -33,12 +33,12 @@ Click on 'Preview' and choose 'Preview Running Application'. In the new small wi
 ## Testing
 
 * rails test - to run automated tests
-* rails test_system - to run automated headless Chrome system tests
+* rails test:system - to run automated headless Chrome system tests
 
 ### Headless Chrome system tests
-To run the headless chrome system tests you have to do some more installation, see [https://intoli.com/blog/installing-google-chrome-on-centos]:
+To run the headless chrome system tests you have to do some more installation, see https://intoli.com/blog/installing-google-chrome-on-centos:
 ```
-$ cd ~
+$ cd /tmp
 $ wget http://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip
 $ unzip chromedriver_linux64.zip
 $ sudo mv chromedriver /usr/local/bin
