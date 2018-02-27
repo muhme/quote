@@ -178,19 +178,21 @@ h2 {
 .pagination a:hover, .pagination a:active {
     border: 1px solid #208020;
 }
-.pagination span.current {
+.pagination em.current {
     padding: 2px 5px 2px 5px;
     margin: 2px;
     border: 1px solid #208020;
     font-weight: bold;
     background-color: #208020;
     color: white;
+    font-style: normal
 }
-.pagination span.disabled {
+.pagination *.disabled {
     padding: 2px 5px 2px 5px;
     margin: 2px;
     border: 1px solid #208020;
     color: #999;
+    font-style: normal
 }
 .randomquote_title {
     color: #777;

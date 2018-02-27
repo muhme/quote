@@ -17,9 +17,9 @@
     <p><label for="category_description">Beschreibung / auch verwendete Worte</label><br/>
     <%= text_area 'category', 'description', {:cols => 64, :rows => 4}  %></p>
 
-    <% if logged_in? and self.current_user.admin == true %>
+<!-- TODO    < % if logged_in? and self.current_user.admin == true %> -->
         <p><label for="category_public">&Ouml;ffentlich</label><br/>
         <%= select(:category, :public, [['Nein',false],['Ja',true]]) %></p>
-    <% end %>
+<!--    < % end %> -->
 
 <% end %>

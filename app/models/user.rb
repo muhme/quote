@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_many :authors
   
   validates :login, presence: true, length: { maximum: 32 }, uniqueness: true
-  validates :email, presence: false, length: { maximum: 64 }, uniqueness: false
+  validates :email, presence: true, length: { maximum: 64 }, uniqueness: false
   validates :crypted_password, presence: false, length: { maximum: 255 }, uniqueness: false
   validates :password_salt, presence: false, length: { maximum: 32 }, uniqueness: false
 

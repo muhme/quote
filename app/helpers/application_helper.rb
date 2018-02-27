@@ -1,16 +1,13 @@
 module ApplicationHelper
     
   # Produces nice number, e.g. 1.234 instead of 1234
-  # Could be replaced in RoR 3.2 with number_to_human(n, :separator => '.')
   def nice_number(number)
     return number.to_s if number < 1000
     thousend = number / 1000
     rest = number % 1000
     return "#{thousend}.#{rest}"
   end
-  
 
-  
   # gives links to the authors by 1st letter as four-rows-table
   # A B C D E F G
   # H I J K L M N
@@ -23,7 +20,7 @@ module ApplicationHelper
     all << "*"
     for i in 0..(all.length - 1)
       if init_chars.include?(all[i])
-        ret <<= "<td>" + link_to(all[i], :controller => "author", :action => "list_by_letter", :letter => all[i]) + "</td>"
+        ret <<= "<td>" + link_to(all[i], :controller => "authors", :action => "list_by_letter", :letter => all[i]) + "</td>"
       else
         ret <<= "<td id=\"unused\">#{all[i]}</td>"
       end
@@ -44,7 +41,7 @@ module ApplicationHelper
     all << "*"
     for i in 0..(all.length - 1)
       if init_chars.include?(all[i])
-        ret <<= "<td>" + link_to(all[i], :controller => "category", :action => "list_by_letter", :letter => all[i]) + "</td>"
+        ret <<= "<td>" + link_to(all[i], :controller => "categories", :action => "list_by_letter", :letter => all[i]) + "</td>"
       else
         ret <<= "<td id=\"unused\">#{all[i]}</td>"
       end
@@ -66,8 +63,13 @@ module ApplicationHelper
   
   # do an html_escape() and a truncate() and using "&nbsp;" if the result blank
   def th(content, length)
-    ret = truncate(html_escape(content), lenght: length)
+    ret = truncate(html_escape(content), length: length)
     ret.blank? ? "&nbsp;" : ret
+  end
+  
+  # do an html_escape() and remove "http://" and set a visible link
+  def lh(link)
+    link_to(link[7..link.size], link, :popup => true) if link =~ /^http:\/\//i
   end
 
   # gives an HTML-IMG if the param has the desired value
@@ -75,4 +77,25 @@ module ApplicationHelper
     return bool ? name + image_tag("arrow_down.png", :alt => 'Sortiert', :title => 'Sortiert', :border => 0) + "</th>" : link
   end
 
+  # do an html_escape() and a truncate overall on 40 chars
+  # make the 1st name letter bold
+  def author_name(firstname, name)
+    ret = ""
+    unless firstname.blank?
+      ret = h(firstname)
+    end
+    unless name.blank?
+      ret = truncate(html_escape(ret), length: 25) # to have enough space for the <b>A</b> and not truncate in tag
+      ret += " " unless firstname.blank?
+      # todo: fix UTF-8 two-byte handling everywhere!
+      # if name[0..1] == Iconv.new('utf-8//IGNORE//TRANSLIT', 'iso-8859-15').iconv("Ä")
+      if name[2..4] == "sop" and name.length == 5
+        ret += "<b>".html_safe + h(name[0..1]) + "</b>".html_safe + h(name[2..name.size])
+      else
+        ret += "<b>".html_safe + h(name[0..0]) + "</b>".html_safe + h(name[1..name.size])
+      end
+    end
+    truncate(ret, length: 40, escape: false)
+  end
+  
 end

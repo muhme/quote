@@ -1,27 +1,12 @@
-<p id="notice"><%= notice %></p>
+<% pattern = h(params[:pattern]) %>
+<h1>Zitate<%= " f&uuml;r \"#{pattern}\"" unless pattern.blank? %></h1>
 
-<h1>Quotations</h1>
+<%= render :partial => 'list_content' %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Quotation</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @quotations.each do |quotation| %>
-      <tr>
-        <td><%= quotation.quotation %></td>
-        <td><%= link_to 'Show', quotation %></td>
-        <td><%= link_to 'Edit', edit_quotation_path(quotation) %></td>
-        <td><%= link_to 'Destroy', quotation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<% if logged_in? %>
+    <p class="ListNavi">
+    <% form_tag(:action=> 'new') do %>
+      <%= submit_tag "Neu" %>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Quotation', new_quotation_path %>
+    </p>
+<% end %>

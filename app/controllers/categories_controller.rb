@@ -1,23 +1,18 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
-
-
   # GET /categories
   # GET /categories.json
   def index
-    
     sql = 'select * from categories c'
     sql += ' where  c.public = 1' if false # TODO not logged_in? or current_user.admin != true
     sql += ' or c.user_id = ?' if false # TODO (logged_in? and current_user.admin != true)
     sql += params[:order] == 'categories' ?
-         # by category name alphabeticaly
-         ' order by c.category' :
-         # by the number of quotations that the categories have
-         ' order by (select count(*) from categories_quotations cq, quotations q where cq.quotation_id = q.id and cq.category_id = c.id) desc'
-    
-    # TODO @categories = Category.paginate_by_sql [sql, self.current_user.id], :page=>params[:page], :per_page=>10
-    @categories = Category.paginate(page: params[:page], :per_page => 10)
+      # by category name alphabeticaly
+      ' order by c.category' :
+      # by the number of quotations that the categories have
+      ' order by (select count(*) from categories_quotations cq, quotations q where cq.quotation_id = q.id and cq.category_id = c.id) desc'
+    @categories = Category.paginate_by_sql(sql, page: params[:page], :per_page => 10)
   end
 
   # GET /categories/1
@@ -75,6 +70,23 @@ class CategoriesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def list_by_letter
+    letter = params[:letter]
+    if letter.blank?
+      flush[:error] = "Buchstabe fehlt!"
+      redirect_to :action => 'list'
+      return
+    end
+    if letter == "*"
+      sql = "select * from categories where category NOT REGEXP '[A-Z].*'"
+    else
+      sql = "select * from categories where category like ?"
+    end
+    sql += ' order by category'
+    @categories = Category.paginate_by_sql [sql, "#{letter.first}%"], :page=>params[:page], :per_page=>10
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -47,4 +47,13 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to categories_url
   end
+  
+  test "list_by_letter method" do
+    get "/categories/list_by_letter/A"
+    assert_response :success
+    
+    get "/categories/list_by_letter/*"
+    assert_response :success
+  end
+
 end

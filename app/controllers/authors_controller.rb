@@ -1,15 +1,32 @@
 class AuthorsController < ApplicationController
   before_action :set_author, only: [:show, :edit, :update, :destroy]
 
+  require 'will_paginate/array' # TODO to be removed?
+
   # GET /authors
   # GET /authors.json
+  # get all public for not logged in users and
+  # own entries for logged in users and all entries for admins
   def index
-    @authors = Author.all
+  
+    sql = 'select * from authors a'
+    sql += " where public = 1" if false # TODO not logged_in? or self.current_user.admin != true;
+    sql += ' or user_id = ?' if false # logged_in? and self.current_user.admin != true;
+    sql += params[:order] == 'authors' ?
+      # by authors name and firstname alphabeticaly
+      # using select with IF to sort the empty names authores at the end
+      ' order by IF(a.name="","ZZZ",a.name), a.firstname' :
+      # by the number of quotations that the authors have
+      ' order by (select count(*) from quotations q where q.author_id = a.id) desc'
+    
+    @authors = Author.paginate_by_sql(sql, page: params[:page], :per_page => 10)
   end
 
   # GET /authors/1
   # GET /authors/1.json
   def show
+    @author = Author.find(params[:id])
+    return unless access?(@author, :read)
   end
 
   # GET /authors/new
@@ -59,6 +76,22 @@ class AuthorsController < ApplicationController
       format.html { redirect_to authors_url, notice: 'Author was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+  
+  def list_by_letter
+    letter = params[:letter]
+    if letter.blank?
+      flush[:error] = "Buchstabe fehlt!"
+      redirect_to :action => 'list'
+      return
+    end
+    if letter == "*"
+      sql = "select * from authors where name NOT REGEXP '[A-Z].*'"
+    else
+      sql = "select * from authors where name like ?"
+    end
+    sql += ' order by name, firstname'
+    @authors = Author.paginate_by_sql [sql, "#{letter.first}%"], :page=>params[:page], :per_page=>10
   end
 
   private

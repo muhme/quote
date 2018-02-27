@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  category: MyString1
-  description: MyString One
+  category: one
+  description: Description for 1st category
 
 two:
-  category: MyString2
-  description: MyString Two
+  category: two
+  description: Description for 2nd category
   
 three:
-  category: MyString3
-  description: MyString Three
+  category: three
+  description: Description for 3rd category

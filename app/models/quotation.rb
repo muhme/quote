@@ -19,5 +19,29 @@ class Quotation < ApplicationRecord
     ret += my_source unless my_source.blank?
     ret
   end
+
+  def get_author_name_or_blank
+    self.author ? self.author.get_author_name_or_blank : ""
+  end
+    
+  # returns authors name and source name or blank
+  # returns "", "authors name", "source" or "authors name, source"
+  #
+  def get_author_and_source_name
+    ret = get_author_name_or_blank
+    ret += ", " unless ret.blank? or self.source.blank?
+    ret += self.source unless self.source.blank?
+    ret
+  end
+    
+  # returns authors name and source name or blank
+  # returns "", "authors name", "source" or "authors name, source"
+  #
+  def get_author_and_source_name
+    ret = get_author_name_or_blank
+    ret += ", " unless ret.blank? or self.source.blank?
+    ret += self.source unless self.source.blank?
+    ret
+  end
   
 end

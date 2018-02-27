@@ -1,22 +1,7 @@
 require "application_system_test_case"
 
 class StaticPagessTest < ApplicationSystemTestCase
-  # test "visiting the index" do
-  #   visit static_pagess_url
-  #
-  #   assert_selector "h1", text: "Start"
-  # end
-  
-  def check_page page, path, selector, content, size
-    visit path
-    if (defined?(selector)).nil? 
-      assert_selector selector, text: content
-    else
-      assert page.text.include?(content), "page \"#{path}\" is missing text \"#{content}\""
-    end
-    assert page.text.length >= size, "page \"#{path}\" is with #{page.text.length.to_s} smaller than #{size.to_s}"
-  end
-  
+
   test "home" do
     check_page page, "/", "h2", "Dankeschön", 1000
   end

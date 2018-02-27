@@ -1,0 +1,36 @@
+<%= will_paginate @authors %>
+
+<table border=1 cellpadding="5" cellspacing="0">
+    <tr>
+        <th><%= raw sorted_img_if('Name', link_to('Name', :controller => 'authors', :order => 'authors'), params[:order] == 'authors') %>
+        <th>Beschreibung</th>
+        <th><%= raw sorted_img_if('Zitate', link_to('Zitate', :controller => 'authors'), params[:order] != 'authors') %>
+        <th>Aktionen</th>
+    </tr>
+  
+    <%
+    odd_or_even = 0
+    for author in @authors
+        odd_or_even = 1 - odd_or_even
+        # q = Quotation.find_all_by_author_id(author.id) TODO remove this and next
+        # quotations = q.nil? ? 0 : q.size
+        quotations = author.quotation_ids.size
+    %>
+        <tr valign="top" class="ListLine<%= odd_or_even %>">
+            <td><%= raw author_name(author.firstname, author.name) %></td>
+            <td><%= raw th(author.description,40) %></td>
+            <td align="center"><%= link_to quotations.to_s, :controller => 'quotations', :action => 'list_by_author', :author => author.id %></td>
+            <td class="ListActions">
+                <%= link_to image_tag("eye.png", :alt => 'Auge', :title => 'Ansehen', :border => 0), :action => 'show', :id => author %>
+                <% if can_edit?(author.user_id) %>
+                    &nbsp;
+                    <%= link_to image_tag("pencil.png", :alt => 'Stift', :title => 'Bearbeiten', :border => 0), :action => 'edit', :id => author %>
+                    &nbsp;
+                    <% if quotations == 0 %>
+                        <%= link_to image_tag("cancel.png", :alt => 'rotes Kreuz', :title => 'L&ouml;schen', :border => 0), { :action => 'destroy', :id => author }, :confirm => "Wirklich den Author \"#{author.firstname} #{author.name}\" l&ouml;schen?", :method => :post %>
+                    <% end %>
+                <% end %>
+            </td>
+        </tr>
+    <% end %>
+</table>

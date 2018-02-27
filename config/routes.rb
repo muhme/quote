@@ -29,12 +29,14 @@ Rails.application.routes.draw do
   
   get 'account/login', to: 'account#login'
   
-  get 'category/list_by_letter', to: 'category#list_by_letter'
-  get 'author/list_by_letter', to: 'author#list_by_letter'
-  get 'quotation/list_by_user/:user', to: 'quotation#list_by_user'
-  get 'quotation/list_by_category/:category', to: 'quotation#list_by_category'
-  get 'category/index/:order', to: 'category#index'
-  get 'category/index', to: 'category#index'
+  get 'categories/list_by_letter/:letter', to: 'categories#list_by_letter'
+  get 'authors/list_by_letter/:letter', to: 'authors#list_by_letter'
+  get 'quotations/list_by_user/:user', to: 'quotations#list_by_user'
+  get 'quotations/list_by_category/:category', to: 'quotations#list_by_category'
+  get 'quotations/list_by_author/:author', to: 'quotations#list_by_author'
+  # get 'category/index/:order', to: 'category#index'
+  # get 'categories/index', to: 'category#index'
+  # get 'authors/index', to: 'authors#index'
   
   # catch all
   match "*path", to: "static_pages#not_found", via: :all

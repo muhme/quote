@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   private
 
     # TODO
-    def access?
+    def access?(a,b)
       true
     end
     def logged_in?

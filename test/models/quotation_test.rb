@@ -10,7 +10,7 @@ class QuotationTest < ActiveSupport::TestCase
     @quotation = Quotation.new()
     @quotation.user_id = User.find_by_login('one').id
     @quotation.quotation = "Be the change you wish to see." # Mahatma Gandhi
-    @quotation.author_id = User.find_by_login('one').id
+    @quotation.author_id = @author.id
     @quotation.save!
   end
   
