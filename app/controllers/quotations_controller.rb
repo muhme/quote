@@ -34,6 +34,7 @@ class QuotationsController < ApplicationController
 #    sql_array << self.current_user.id if logged_in? and self.current_user.admin != true
 #    @quotations = Quotation.paginate_by_sql sql_array, :page=>params[:page], :per_page=>5
     @quotations = Quotation.paginate(page: params[:page], :per_page => 10)
+
         
     flash.now[:notice] = 'Die Zitate sind danach sortiert, wann sie eingestellt wurden. Die zuletzt eingestellten Zitate stehen oben.' unless ( params[:page] and params[:page].to_i > 1 )
   end

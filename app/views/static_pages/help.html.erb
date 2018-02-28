@@ -1,6 +1,6 @@
 <h1>Hilfe</h1>
 <p>
-Der Zitat-Service bietet Dir eine Sammlung von Zitaten, sortiert nach Autoren und Kategorien. Du kannst Dir, nach der <%= link_to 'Anmeldung', :controller => 'account', :action => 'login' %>, eine eigene Zitat-Sammlung anlegen.
+Der Zitat-Service bietet Dir eine Sammlung von Zitaten, sortiert nach Autoren und Kategorien. Du kannst Dir, nach der <%= link_to 'Anmeldung', '/login' %>, eine eigene Zitat-Sammlung anlegen.
 Zufallszitate f&uuml;r die eigene Homepage k&ouml;nnen aktuell aus <%= nice_number(Quotation.count) %> Zitaten, zu den <%= nice_number(Author.count) %> Autoren oder themenbezogen aus
 <%= nice_number(Category.count) %> Kategorien abgerufen werden. Der Service ist kosten- und werbefrei.</p>
 <p>Das Einbinden der Zitate in die eigene Homepage ist unter <a href="use">Einbinden</a> beschrieben.</p>

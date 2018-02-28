@@ -3,8 +3,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user_session, :current_user, :access?, :logged_in?, :has_non_public, :can_edit?
 
-
-
   protected
 
 # TODO
@@ -27,7 +25,7 @@ class ApplicationController < ActionController::Base
       true
     end
     def logged_in?
-      true
+      false
     end
     def has_non_public(o)
       return nil

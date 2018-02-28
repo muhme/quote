@@ -2,10 +2,10 @@
 
 <p>Eine gemeinsame Sammlung von Zitaten mit Links zu Autoren und Textstellen. Zum Einbinden auf den eigenen Webseiten sortiert nach Autor, Stichwort oder Benutzer. Aktuell haben wir <%= nice_number(Quotation.count) %> Zitate, von <%= nice_number(Author.count) %> Autoren in <%= nice_number(Category.count) %> Kategorien.</p>
 <p>
-  <% form_tag(:action=>'search') do %>
-      <p><label for="find">In allen Zitaten suchen:</label><br/>
-      <%= text_field 'result', 'pattern'  %>
-      <%= submit_tag "Finden" %>
+  <%= form_tag("/search", method: "get") do %>
+    <%= label_tag(:find, "In allen Zitaten suchen:") %><br />
+    <%= text_field_tag(:find) %>
+    <%= submit_tag("Finden") %>
   <% end %>
   <script type="text/javascript">
     document.forms[0].result_pattern.focus();

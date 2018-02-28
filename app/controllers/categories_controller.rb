@@ -25,20 +25,24 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new
+    @category.user_id = 2 # TODO hack, replace by actual user id
   end
 
   # GET /categories/1/edit
   def edit
+    @category = Category.find(params[:id])
+    return unless access?(@category, :update) # TODO
   end
 
   # POST /categories
   # POST /categories.json
   def create
     @category = Category.new(category_params)
+    @category.user_id = User.first.id  # TODO set actual user id
 
     respond_to do |format|
       if @category.save
-        format.html { redirect_to @category, notice: 'Category was successfully created.' }
+        format.html { redirect_to @category, notice: "Die Kategorie \"#{@category.category}\" wurde erfolgreich angelegt." }
         format.json { render :show, status: :created, location: @category }
       else
         format.html { render :new }
@@ -96,6 +100,8 @@ class CategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:category, :description, :user_id)  # user_id TODO
+      # params.require(:category)
+      # params.permit(:category, :description, :user_id)
+      params.require(:category).permit(:category, :description, :user_id)
     end
 end

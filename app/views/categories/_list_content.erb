@@ -12,7 +12,7 @@
     odd_or_even = 0
     for category in @categories
         odd_or_even = 1 - odd_or_even
-        quotations = category.quotation_ids.size.to_s
+        quotations = category.quotation_ids.size
     %>
         <tr valign="top" class="ListLine<%= odd_or_even %>">
             <td><%= th(category.category,40) %></td>
@@ -25,7 +25,7 @@
                 <%= link_to image_tag("pencil.png", :alt => 'Stift', :title => 'Bearbeiten', :border => 0), :action => 'edit', :id => category %>
                 &nbsp;
                 <% if quotations == 0 %>
-                    <%= link_to image_tag("cancel.png", :alt => 'rotes Kreuz', :title => 'L&ouml;schen', :border => 0), { :action => 'destroy', :id => category }, :confirm => "Wirklich die Kategorie \"#{category.category}\" l&ouml;schen?", :method => :post %>
+                    <%= link_to image_tag("cancel.png", :alt => 'rotes Kreuz', :title => 'L&ouml;schen', :border => 0), { :action => 'destroy', :id => category }, :method => :delete, data: { confirm: "Wirklich die Kategorie \"#{category.category}\" löschen?" } %>
                 <% end %>
             <% end %>
             </td>

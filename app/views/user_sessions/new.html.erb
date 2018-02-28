@@ -1,0 +1,36 @@
+<h1>Anmeldung</h1>
+
+
+  
+<%= form_for @user_session do |f| -%>
+
+<% if @user_session.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> verhindert die Anmeldung:</h2>
+ 
+    <ul>
+    <% @user_session.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+  <p>
+    <%= f.label :username, "Benutzername" %><br />
+    <%= f.text_field :login %>
+  </p><p>
+    <%= f.label :password, "Kennwort" %><br />
+    <%= f.password_field :password %>
+  </p><p>
+    <%= f.label :remember_me, "Anmeldung merken" %><br />
+    <%= f.check_box :remember_me %>
+  </p><p>
+    <%= f.submit 'Anmelden' %>
+  </p>
+<% end -%>
+<script type="text/javascript">
+document.forms[0].login.focus();
+</script>
+
+<p>Du hast noch keinen Benutzer?<br>Dann lege Dir bitte einen Benutzer an. Dann kannst Du selbst Zitate anlegen und bearbeiten: <a href="signup">Benutzer anlegen</a></p>

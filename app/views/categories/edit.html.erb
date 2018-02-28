@@ -1,6 +1,10 @@
-<h1>Editing Category</h1>
+<h1>Kategorie bearbeiten</h1>
 
-<%= render 'form', category: @category %>
-
-<%= link_to 'Show', @category %> |
-<%= link_to 'Back', categories_path %>
+<%= form_for @category, url: {action: "update"} do |f| %>
+  <%= render partial: 'form', locals: { f: f } %>
+  <%= f.submit 'Speichern' %> &nbsp; 
+  <%= link_to(image_tag("eye.png", :alt => 'Auge', :title => 'Anzeigen', :border => 0), {:action => 'show', :id => @category.id}, :class => "not_dashed")%>
+<% end %>
+<script type="text/javascript">
+document.forms[0].category_category.focus();
+</script>

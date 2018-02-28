@@ -1,37 +1,18 @@
 <h1><%= @categories.total_entries %> Kategorien</h1>
 
-<!-- IMPROVE use partial list_content too -->
-<%= will_paginate  %>
+<%= render 'list_content' %>
 
-<table border=1 cellpadding="5" cellspacing="0">
-    <tr>
-        <th><%= raw sorted_img_if('Kategorie', link_to('Kategorie', :controller => 'categories', :order => 'categories'), params[:order] == 'categories') %>
-        <th>Beschreibung / auch verwendete Worte</th>
-        <th><%= raw sorted_img_if('Zitate', link_to('Zitate', :controller => 'categories'), params[:order] != 'categories') %>
-        <th>Aktionen</th>
-    </tr>
+<!-- TODO -->
+<!-- button styling see https://coding.smashingmagazine.com/2009/11/designing-css-buttons-techniques-and-resources/ -->
+    <p class="ListNavi">
+      <%= link_to "Neu als Link", :action => "new" %>
+    </p>
     
-    <%  
-    odd_or_even = 0
-    for category in @categories
-        odd_or_even = 1 - odd_or_even
-        quotations = category.quotation_ids.size.to_s
-    %>
-        <tr valign="top" class="ListLine<%= odd_or_even %>">
-            <td><%= raw th(category.category, 40) %></td>
-            <td><%= raw th(category.description, 40) %></td>
-            <td align="center"><%= link_to quotations.to_s, :controller => 'quotations', :action => 'list_by_category', :category => category.id %></td>
-            <td class="ListActions">
-                <%= link_to image_tag("eye.png", :alt => 'Auge', :title => 'Ansehen', :border => 0), :action => 'show', :id => category %>
-            <% if can_edit?(category.user_id) %>
-                &nbsp;
-                <%= link_to image_tag("pencil.png", :alt => 'Stift', :title => 'Bearbeiten', :border => 0), :action => 'edit', :id => category %>
-                &nbsp;
-                <% if quotations == 0 %>
-                    < % = link_to image_tag("cancel.png", :alt => 'rotes Kreuz', :title => 'L&ouml;schen', :border => 0), { :action => 'destroy', :id => category }, :confirm => "Wirklich die Kategorie \"#{category.category}\" l&ouml;schen?", :method => :post %>
-                <% end %>
-            <% end %>
-            </td>
-        </tr>
-    <% end %>
-</table>
+    
+<% if logged_in? %>
+    <p class="ListNavi">
+      <% form_tag(:action => 'new') do %>
+        <%= submit_tag "Neu" %>
+      <% end %>
+    </p>
+<% end %>

@@ -1,5 +1,10 @@
-<h1>New Category</h1>
+<h1>Kategorie anlegen</h1>
 
-<%= render 'form', category: @category %>
-
-<%= link_to 'Back', categories_path %>
+<%= form_for @category, url: {action: "create"} do |f| %>
+  <%= render partial: "form", locals: { f: f } %>
+  <%= f.submit "Anlegen" %>
+&nbsp; <%= link_to(image_tag("arrow_undo.png", :alt => "Pfeil zur&uuml;ck", :title => "Zur&uuml;ck", :border => "0"), :action => 'index') %>
+<% end %>
+<script type="text/javascript">
+  document.forms[0].category_category.focus();
+</script>

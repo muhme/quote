@@ -27,7 +27,9 @@ Rails.application.routes.draw do
   resources :authors, :account, :categories, :quotations, :users
   resources :static_pages, except: :show
   
-  get 'account/login', to: 'account#login'
+  get 'login', to: 'user_sessions#new'
+  post 'login', to: 'user_sessions#create'
+  get 'logout', to: 'user_sessions#destroy'
   
   get 'categories/list_by_letter/:letter', to: 'categories#list_by_letter'
   get 'authors/list_by_letter/:letter', to: 'authors#list_by_letter'
