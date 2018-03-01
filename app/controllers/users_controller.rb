@@ -4,12 +4,13 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    render 404
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
+    # TODO show only own user!
   end
 
   # GET /users/new
@@ -25,6 +26,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
+    @user.active = @user.approved = @user.confirmed = true # TODO email handling
 
     respond_to do |format|
       if @user.save
@@ -35,6 +37,10 @@ class UsersController < ApplicationController
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  def edit
+    @user = current_user
   end
 
   # PATCH/PUT /users/1
@@ -69,6 +75,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:login, :email, :admin, :crypted_password, :password_salt)
+      params.require(:user).permit(:login, :email, :admin, :password, :password_confirmation)
     end
 end

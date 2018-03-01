@@ -32,3 +32,9 @@
         </tr>
     <% end %>
 </table>
+
+<% if current_user %>
+  <p class="ListNavi">
+    <%= button_to "Kategorie anlegen", { :action => "new" }, method: :get %>
+  </p>
+<% end %>

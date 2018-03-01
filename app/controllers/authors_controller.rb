@@ -42,10 +42,11 @@ class AuthorsController < ApplicationController
   # POST /authors.json
   def create
     @author = Author.new(author_params)
+    @author.user_id = User.first.id # TODO hack, replace by actual user id
 
     respond_to do |format|
       if @author.save
-        format.html { redirect_to @author, notice: 'Author was successfully created.' }
+        format.html { redirect_to @author, notice: "Der Author \"" + @author.get_author_name_or_blank + "\" wurde angelegt." }
         format.json { render :show, status: :created, location: @author }
       else
         format.html { render :new }
@@ -59,7 +60,7 @@ class AuthorsController < ApplicationController
   def update
     respond_to do |format|
       if @author.update(author_params)
-        format.html { redirect_to @author, notice: 'Author was successfully updated.' }
+        format.html { redirect_to @author, notice: "Der Eintrag für den Author \"" + @author.get_author_name_or_blank + "\" wurde aktualisiert." }
         format.json { render :show, status: :ok, location: @author }
       else
         format.html { render :edit }
@@ -73,7 +74,7 @@ class AuthorsController < ApplicationController
   def destroy
     @author.destroy
     respond_to do |format|
-      format.html { redirect_to authors_url, notice: 'Author was successfully destroyed.' }
+      format.html { redirect_to authors_url, notice: "Der Eintrag für den Author \"" + @author.get_author_name_or_blank + "\" wurde gelöscht." }
       format.json { head :no_content }
     end
   end
@@ -102,6 +103,6 @@ class AuthorsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def author_params
-      params.require(:author).permit(:name, :firstname, :description, :link, :user_id)  # user_id TODO
+      params.require(:author).permit(:name, :firstname, :description, :link, :public, :user_id)  # user_id TODO
     end
 end

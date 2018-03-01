@@ -25,7 +25,7 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new
-    @category.user_id = 2 # TODO hack, replace by actual user id
+    @category.user_id = User.first.id # TODO hack, replace by actual user id
   end
 
   # GET /categories/1/edit
@@ -42,7 +42,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
-        format.html { redirect_to @category, notice: "Die Kategorie \"#{@category.category}\" wurde erfolgreich angelegt." }
+        format.html { redirect_to @category, notice: "Die Kategorie \"#{@category.category}\" wurde angelegt." }
         format.json { render :show, status: :created, location: @category }
       else
         format.html { render :new }
@@ -68,9 +68,10 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
+    name = @category.category
     @category.destroy
     respond_to do |format|
-      format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
+      format.html { redirect_to categories_url, notice: "Kategorie \"#{name}\" wurde gelöscht." }
       format.json { head :no_content }
     end
   end
@@ -102,6 +103,6 @@ class CategoriesController < ApplicationController
     def category_params
       # params.require(:category)
       # params.permit(:category, :description, :user_id)
-      params.require(:category).permit(:category, :description, :user_id)
+      params.require(:category).permit(:category, :description, :public, :user_id)
     end
 end

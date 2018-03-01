@@ -11,11 +11,3 @@
 <h1><%= authors %></h1>
 
 <%= render 'list_content' %>
-
-<% if logged_in? %>
-    <p class="ListNavi">
-      <% form_tag(:action => 'new') do %>
-        <%= submit_tag "Neu" %>
-      <% end %>
-    </p>
-<% end %>

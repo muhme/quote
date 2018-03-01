@@ -5,9 +5,10 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one)
   end
 
+  # user list don't have to be available
   test "should get index" do
     get users_url
-    assert_response :success
+    assert_response :missing
   end
 
   test "should get new" do
@@ -24,15 +25,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 #    assert_redirected_to user_url(User.last)
 #  end
 
+  # TODO only own user
   test "should show user" do
     get user_url(@user)
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_user_url(@user)
-    assert_response :success
-  end
+  # TODO only own user
+  # test "should get edit" do
+  #  get edit_user_url(@user)
+  #  assert_response :success
+  # end
 
   test "should update user" do
     patch user_url(@user), params: { user: { admin: @user.admin, crypted_password: @user.crypted_password, email: @user.email, login: @user.login, password_salt: @user.password_salt } }

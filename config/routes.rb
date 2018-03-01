@@ -24,11 +24,13 @@ Rails.application.routes.draw do
   # map.connect 'humans.txt', :controller => 'start', :action => 'humans'
   
   # default controller routes
-  resources :authors, :account, :categories, :quotations, :users
+  resources :authors, :account, :categories, :quotations
   resources :static_pages, except: :show
+  resources :users, except: :index
+  resources :user_sessions # TODO reduce to some?
   
   get 'login', to: 'user_sessions#new'
-  post 'login', to: 'user_sessions#create'
+# not needed in railscast    post 'login', to: 'user_sessions#create'
   get 'logout', to: 'user_sessions#destroy'
   
   get 'categories/list_by_letter/:letter', to: 'categories#list_by_letter'

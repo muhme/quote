@@ -1,25 +1,25 @@
 <h1>Autor</h1>
 <table>
     <tr>
-      <td valign=top>Id:</td><td><%= h(@author.id) %></td>
+      <td valign=top>Interne Nr.</td><td><%= h(@author.id) %></td>
     </tr><tr>
-      <td valign=top>Name:</td><td><b><%= h(@author.name) %></b></td>
+      <td valign=top>Name</td><td><b><%= h(@author.name) %></b></td>
     </tr><tr>
-      <td valign=top>Vorname:</td><td><b><%= h(@author.firstname) %></b></td>
+      <td valign=top>Vorname</td><td><b><%= h(@author.firstname) %></b></td>
     </tr><tr>
-      <td valign=top>Beschreibung:</td><td><%= h(@author.description) %></td>
+      <td valign=top>Beschreibung</td><td><%= h(@author.description) %></td>
     </tr><tr>
-      <td valign=top>Link:</td><td><%= lh(@author.link) %></td>
+      <td valign=top>Link</td><td><%= lh(@author.link) %></td>
     </tr><tr>
-      <td valign=top>Angelegt:</td><td><%= nice_date(@author.created_at) %></td>
+      <td valign=top>Angelegt</td><td><%= nice_date(@author.created_at) %></td>
     </tr><tr>
-      <td valign=top>Aktualisiert:</td><td><%= nice_date(@author.updated_at) %></td>
+      <td valign=top>Aktualisiert</td><td><%= nice_date(@author.updated_at) %></td>
     </tr><tr>
-      <td valign=top>Benutzer:</td><td><%= hu(@author.user_id) %></td>
+      <td valign=top>Benutzer</td><td><%= hu(@author.user_id) %></td>
     </tr><tr>
-      <td valign=top>&Ouml;ffentlich:</td><td><%= @author.public? ? "Ja" : "Nein" %></td>
+      <td valign=top>&Ouml;ffentlich</td><td><%= @author.public? ? "Ja" : "Nein" %></td>
     </tr><tr>
-      <td valign=top>Zitate:</td><td><%=
+      <td valign=top>Zitate</td><td><%=
     	  link_to(@author.quotation_ids.size.to_s, :controller => 'quotations', :action => 'list_by_author', :author => @author.id)%></td>
     </tr>
 </table>

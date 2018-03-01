@@ -7,7 +7,7 @@ class UserSessionsController < ApplicationController
   def create
     @user_session = UserSession.new(user_session_params)
     if @user_session.save
-      flash[:notice] = "Hallo #{self.current_user.login.capitalize}, sch&ouml;n dass Du da bist."
+      flash[:notice] = "Hallo #{current_user.login}, schön dass Du da bist."
       redirect_to root_url
     else
       flash[:error] = "Die Anmeldung war nicht erfolgreich!"
@@ -23,6 +23,6 @@ class UserSessionsController < ApplicationController
   private
 
     def user_session_params
-      params.require(:user_session).permit(:email, :password, :remember_me)
+      params.require(:user_session).permit(:login, :password)
     end
 end

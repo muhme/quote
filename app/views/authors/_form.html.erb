@@ -1,7 +1,7 @@
 <%= form_with(model: author, local: true) do |form| %>
   <% if author.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(author.errors.count, "error") %> prohibited this author from being saved:</h2>
+      <h2><%= pluralize(author.errors.count, "error") %> verhindert das Speichern des Eintrages:</h2>
 
       <ul>
       <% author.errors.full_messages.each do |message| %>
@@ -12,26 +12,34 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :author_name %>
+    <%= form.label :name, raw('Nachname <span class="example">z.B. Goethe</span>') %><br />
+    <%= form.text_field :name, id: :author_name, autofocus: true %>
   </div>
 
   <div class="field">
-    <%= form.label :firstname %>
+    <%= form.label :firstname, raw('Vorname <span class="example">z.B. Johann Wolfgang von</span>') %><br />
     <%= form.text_field :firstname, id: :author_firstname %>
   </div>
 
   <div class="field">
-    <%= form.label :description %>
+    <%= form.label :description, raw('Beschreibung <span class="example">z.B. deutscher Dichter (1749 - 1832)</span>')  %><br />
     <%= form.text_field :description, id: :author_description %>
   </div>
 
   <div class="field">
-    <%= form.label :link %>
+    <%= form.label :link, raw('Link <span class="example">z.B. http://de.wikipedia.org/wiki/Goethe</labe')  %><br />
     <%= form.text_field :link, id: :author_link %>
   </div>
+  
+  <% if current_user and current_user.admin == true %>
+    <div class="field">
+      <p><label for="author_public">Öffentlich</label><br/>
+      <%= form.check_box :public %>
+    </div>
+  <% end %>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Speichern" %>
+    &nbsp; <%= link_to(image_tag("arrow_undo.png", :alt => "Pfeil zurück", :title => "Zurück", :border => "0"), :action => 'index') %>
   </div>
 <% end %>

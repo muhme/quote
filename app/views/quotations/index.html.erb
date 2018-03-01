@@ -3,7 +3,7 @@
 
 <%= render :partial => 'list_content' %>
 
-<% if logged_in? %>
+<% if current_user %>
     <p class="ListNavi">
     <% form_tag(:action=> 'new') do %>
       <%= submit_tag "Neu" %>

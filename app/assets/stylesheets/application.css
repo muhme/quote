@@ -246,3 +246,9 @@ table#quote_collections th {
     text-align: left;
 
 }
+.field {
+    margin-bottom: 1em;
+}
+.button_to input {
+    font-size: 18px;
+}
