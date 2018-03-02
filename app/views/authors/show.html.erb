@@ -17,7 +17,7 @@
     </tr><tr>
       <td valign=top>Benutzer</td><td><%= hu(@author.user_id) %></td>
     </tr><tr>
-      <td valign=top>&Ouml;ffentlich</td><td><%= @author.public? ? "Ja" : "Nein" %></td>
+      <td valign=top>Öffentlich</td><td><%= @author.public? ? "Ja" : "Nein" %></td>
     </tr><tr>
       <td valign=top>Zitate</td><td><%=
     	  link_to(@author.quotation_ids.size.to_s, :controller => 'quotations', :action => 'list_by_author', :author => @author.id)%></td>

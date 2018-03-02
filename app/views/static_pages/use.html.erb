@@ -1,7 +1,7 @@
 <h1>Zitate einbinden</h1>
 <p>
 Du kannst die Zitate in Deine Homepage einbauen.
-Probiere doch einmal den Aufruf: <a href="http://www.zitat-service.de/quote" target="_blank">http://www.zitat-service.de/quote</a>. Mit "Seite neu Laden" erh&auml;ltst Du das n&auml;chste Zufallszitat in Deinem Browser.
+Probiere doch einmal den Aufruf: <a href="http://www.zitat-service.de/quote" target="_blank">http://www.zitat-service.de/quote</a>. Mit "Seite neu Laden" erhältst Du das nächste Zufallszitat in Deinem Browser.
 </p>
 <h2>Joomla</h2>
 <p>Die Einbindung mit dem CMS Joomla wird hier beschrieben: <%= link_to 'joomla', :action => 'joomla' %>.</p>
@@ -13,24 +13,24 @@ Die Einbindung in Deine Seiten erfolgt mit inline frames (iframe) und kann mit c
 <p>Der iframe-Eintrag in dieser Seite ist:
 <div class="code">&lt;iframe src="http://www.zitat-service.de/quote?style=http://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"&gt;&lt;/iframe&gt;</div>
 </p>
-<p style="clear: both;">&Uuml;bernimm ihn einfach f&uuml;r Deinen ersten Test.</p>
+<p style="clear: both;">Übernimm ihn einfach für Deinen ersten Test.</p>
 <h2>CSS</h2>
 <p>Wenn Du das iframe erfolgreich in Deine Seite eingebunden hast,
-dann kannst Du Dir selbst ein CSS-Datei nach Deinen W&uuml;nschen gestalten.
-Dazu kannst Du als Vorlage <a href="http://www.zitat-service.de/quote.css">quote.css</a> benutzen und f&uuml;r Dich anpassen. Dein eigenes CSS bindest Du dann mit dem Parameter <code>style</code> ein</b>.
-Das DIV-Element der Klasse <i>quote</i> umschlie&szlig;t das gesamte Zitat, hier kannst Du z.B. einen Rahmen setzen. Enthalten sind zwei DIV-Elemente der Klassen <i>quotation</i> f&uuml;r das Zitat und <i>source</i> f&uuml;r den Autor und die Quelle.
+dann kannst Du Dir selbst ein CSS-Datei nach Deinen Wünschen gestalten.
+Dazu kannst Du als Vorlage <a href="http://www.zitat-service.de/quote.css">quote.css</a> benutzen und für Dich anpassen. Dein eigenes CSS bindest Du dann mit dem Parameter <code>style</code> ein</b>.
+Das DIV-Element der Klasse <i>quote</i> umschließt das gesamte Zitat, hier kannst Du z.B. einen Rahmen setzen. Enthalten sind zwei DIV-Elemente der Klassen <i>quotation</i> für das Zitat und <i>source</i> für den Autor und die Quelle.
 <h2>Parameter</h2>
-<p>F&uuml;r die Zitat-Abfrage kannst Du - neben dem Parameter <i>style</i> f&uuml;r das Stylesheet - die Parameter
-<i>category</i> f&uuml;r die Kategorie, <i>user</i> f&uuml;r den Benutzernamen und <i>author</i> f&uuml;r den Namen des Autors angeben.
-Du erh&auml;ltst dann nur Zitate aus dieser Kategorie, von diesem Benutzer oder dem Autoren mit diesem Nachnamen.
-Die Zitate von Einstein erh&auml;ltst Du z.B. mit:
+<p>Für die Zitat-Abfrage kannst Du - neben dem Parameter <i>style</i> für das Stylesheet - die Parameter
+<i>category</i> für die Kategorie, <i>user</i> für den Benutzernamen und <i>author</i> für den Namen des Autors angeben.
+Du erhältst dann nur Zitate aus dieser Kategorie, von diesem Benutzer oder dem Autoren mit diesem Nachnamen.
+Die Zitate von Einstein erhältst Du z.B. mit:
 <div class="code">http://www.zitat-service.de/quote?author=Einstein</code></div>
 <p style="clear: both;">Mit dem Parameter <i>content_only</i> wird das Zitat nur mit CSS-DIV's, also ohne HTML-header, geliefert.</p>
-<p>Mit dem Parameter <i>encoding</i> wird die Kodierung angegeben. Voreingestellt ist ISO-8859-1, eine &Auml;nderung in z.B. UTF-8 ist mit diesem Parameter möglich.</p>
+<p>Mit dem Parameter <i>encoding</i> wird die Kodierung angegeben. Voreingestellt ist ISO-8859-1, eine Änderung in z.B. UTF-8 ist mit diesem Parameter möglich.</p>
 <p>
 Ein weiterer Parameter ist <i>window</i>. Ohne diesen Parameter werden Links im aktuellen Fenster (_parent) geöffnet. Mit z.B. <i>window=quote</i> werden die Links dann in einem neuen Fenster geöffnet.</p>
 </p>
-<p>Die Parameter k&ouml;nnen auch kombiniert werden. Die Abfrage aller Zitate des Benutzers "heiko" aus der Kategorie "WasBedeutetLiebe" und mit der Angabe eines Stylesheets erfolgt zum Beispiel mit:
+<p>Die Parameter können auch kombiniert werden. Die Abfrage aller Zitate des Benutzers "heiko" aus der Kategorie "WasBedeutetLiebe" und mit der Angabe eines Stylesheets erfolgt zum Beispiel mit:
 <div class="code">http://www.zitat-service.de/quote?user=heiko&category=WasBedeutetLiebe&style=http://www.zitat-service.de/quote.css</code></div>
 <h2 style="clear: both; margin-top: 3em;">Praxis-Beispiele</h2>
 <ul>

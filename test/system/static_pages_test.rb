@@ -33,5 +33,11 @@ class StaticPagessTest < ApplicationSystemTestCase
   test "joomla_english" do
     check_page page, "static_pages/joomla_english", "h2", "Examples", 2500
   end
+
+  test "UTF-8 German Umlaut" do
+    check_page page, "static_pages/use", "p", "für", 3000
+    check_page page, "static_pages/use", "p", "geöffnet", 3000
+    check_page page, "static_pages/use", "p", "Änderung", 3000
+  end
   
 end

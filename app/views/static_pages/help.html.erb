@@ -1,57 +1,57 @@
 <h1>Hilfe</h1>
 <p>
 Der Zitat-Service bietet Dir eine Sammlung von Zitaten, sortiert nach Autoren und Kategorien. Du kannst Dir, nach der <%= link_to 'Anmeldung', '/login' %>, eine eigene Zitat-Sammlung anlegen.
-Zufallszitate f&uuml;r die eigene Homepage k&ouml;nnen aktuell aus <%= nice_number(Quotation.count) %> Zitaten, zu den <%= nice_number(Author.count) %> Autoren oder themenbezogen aus
+Zufallszitate für die eigene Homepage können aktuell aus <%= nice_number(Quotation.count) %> Zitaten, zu den <%= nice_number(Author.count) %> Autoren oder themenbezogen aus
 <%= nice_number(Category.count) %> Kategorien abgerufen werden. Der Service ist kosten- und werbefrei.</p>
 <p>Das Einbinden der Zitate in die eigene Homepage ist unter <a href="use">Einbinden</a> beschrieben.</p>
 <h2>Willkommen</h2>
-<p>Du kannst immer links oben &uuml;ber das Logo <%= image_tag("quote_service_16.png", :alt => "Logo", :title => "www.zitat-service.de") %> zur Start-Seite gelangen.
+<p>Du kannst immer links oben über das Logo <%= image_tag("quote_service_16.png", :alt => "Logo", :title => "www.zitat-service.de") %> zur Start-Seite gelangen.
 Dort wird Dir ein Zufallszitat angezeigt und Du kannst in den Zitaten suchen.
 </p>
 <h2>Zitate</h2>
 <p>
-In der Liste der Zitate bekommst Du &uuml;ber <%= image_tag("eye.png", :alt => "Auge", :title => "Ansehen") %> weitere Infos zum Zitat.
-Deine eigenen Zitate kannst Du auch &auml;ndern <%= image_tag("pencil.png", :alt => "Stift", :title => "&Auml;ndern") %> oder l&ouml;schen <%= image_tag("cancel.png", :alt => "rotes Kreuz", :title => "L&ouml;schen") %>.
+In der Liste der Zitate bekommst Du über <%= image_tag("eye.png", :alt => "Auge", :title => "Ansehen") %> weitere Infos zum Zitat.
+Deine eigenen Zitate kannst Du auch ändern <%= image_tag("pencil.png", :alt => "Stift", :title => "Ändern") %> oder löschen <%= image_tag("cancel.png", :alt => "rotes Kreuz", :title => "Löschen") %>.
 Wenn Du angemeldest bist, dann kannst Du neue Zitate eingeben.
 Bitte nenne zu einem Zitat die Original-Quelle (z.B. den Buchtitel, nicht eine anderes zitierendes Dokument).
 Wenn Du zu dem Zitat ein Dokument im Internet kennst, wo das Zitat im Originaltext nachzulesen ist, dann gib bitte den Link dorthin an.
 Bitte keine Links auf Seiten setzen, wo es Informationen zu kaufen gibt (z.B. den Buchtitel bei Amazon).
-Jedem Zitat k&ouml;nnen beliebig viele Kategorien zugeordnet werden.
-F&uuml;r die Auswahl mehrerer Kategorien ist &uuml;blicherweise die &lt;Strg&gt;-Taste zu dr&uuml;cken.
+Jedem Zitat können beliebig viele Kategorien zugeordnet werden.
+Für die Auswahl mehrerer Kategorien ist üblicherweise die &lt;Strg&gt;-Taste zu drücken.
 Jedem Zitat ist ein Autor zuzuordnen. Benutze "Unbekannt" wenn der Autor noch nicht angelegt ist.
 Du kannst dann nach dem Anlegen des Autors das Zitat erneut bearbeiten und dem Autor zuweisen.
 </p>
 <h2 id="urheberrecht">Urheberrecht</h2>
-<p>Auch Zitate unterliegen dem deutschen Urheberrecht. Urheberrechtlich gesch&uuml;tzte Werke d&uuml;rfen ohne Erlaubnis des Autors nicht benutzt werden. Einzelne Zitate sind m&ouml;glich und sind je Autor auf nicht mehr als 5 - 10 kurze Zitate erlaubt.
-Bei &Uuml;bersetzungen ist zu beachten, dass auch der &Uuml;bersetzer Urheberrechtsschutz wie ein Autor geniesst.
-Zitate im Sinne des Urheberrechts m&uuml;ssen zwingend eine Quellenangabe (gewöhnlich Buch, Erscheinungsjahr, Seitenzahl) aufweisen.
+<p>Auch Zitate unterliegen dem deutschen Urheberrecht. Urheberrechtlich geschützte Werke dürfen ohne Erlaubnis des Autors nicht benutzt werden. Einzelne Zitate sind möglich und sind je Autor auf nicht mehr als 5 - 10 kurze Zitate erlaubt.
+Bei Übersetzungen ist zu beachten, dass auch der Übersetzer Urheberrechtsschutz wie ein Autor geniesst.
+Zitate im Sinne des Urheberrechts müssen zwingend eine Quellenangabe (gewöhnlich Buch, Erscheinungsjahr, Seitenzahl) aufweisen.
 <p>Da es Berichte von Abmahnungen gegeben hat, nehmen wir keine Zitate von Karl Valentin, Erich Kästner oder Heinz Erhardt auf (siehe z.B. <a href="http://www1.wdr.de/themen/archiv/sp_urheberrecht/valentin100.html">Karl Valentin und die Anwälte</a>, WDR 2012).</p>
 </p>
-<p>Zitate, die von Urhebern stammen die seit mehr als 70 Jahren tot sind, sind gemeinfrei und d&uuml;rfen beliebig genutzt werden.</p>
+<p>Zitate, die von Urhebern stammen die seit mehr als 70 Jahren tot sind, sind gemeinfrei und dürfen beliebig genutzt werden.</p>
 <h2>Kategorien</h2>
 <p>
-Kategorien ordnen Zitate Themen wie Gl&uuml;ck, Menschen oder Begeisterung zu.
+Kategorien ordnen Zitate Themen wie Glück, Menschen oder Begeisterung zu.
 Ein Zitat kann dabei mehreren Kategorien zugeordnet sein.
 Du kannst Dir alle bisher erstellten Kategorien anzeigen lassen.
 Zu einer Kategorie bekommst Du mit <%= image_tag("eye.png", :alt => "Auge", :title => "Ansehen") %> weitere Einzelheiten.
-Von Dir angelegte Kategorien kannst Du auch &auml;ndern <%= image_tag("pencil.png", :alt => "Stift", :title => "&Auml;ndern") %> oder l&ouml;schen <%= image_tag("cancel.png", :alt => "rotes Kreuz", :title => "L&ouml;schen") %>.
+Von Dir angelegte Kategorien kannst Du auch ändern <%= image_tag("pencil.png", :alt => "Stift", :title => "Ändern") %> oder löschen <%= image_tag("cancel.png", :alt => "rotes Kreuz", :title => "Löschen") %>.
 Du siehst wieviele Zitate einer Kategorie zugeordnet sind und kannst Dir alle Zitate zu einer Kategorie anzeigen lassen.
 </p>
 <h2>Autoren</h2>
 <p>
-In der Liste der Autoren gibt es &uuml;ber <%= image_tag("eye.png", :alt => "Auge", :title => "Ansehen") %> die Details.
-Die von Dir angelegten Autoren kannst Du auch &auml;ndern <%= image_tag("pencil.png", :alt => "Stift", :title => "&Auml;ndern") %>.
-Das L&ouml;schen <%= image_tag("cancel.png", :alt => "rotes Kreuz", :title => "L&ouml;schen") %> eines von Dir angelegten Autors geht nur, wenn dem Autor kein Zitat mehr zugeordent ist.
-Du siehst wieviele Zitate f&uuml;r den Autoren gespeichert sind und kannst Dir die Zitate des Autors anzeigen lassen.
+In der Liste der Autoren gibt es über <%= image_tag("eye.png", :alt => "Auge", :title => "Ansehen") %> die Details.
+Die von Dir angelegten Autoren kannst Du auch ändern <%= image_tag("pencil.png", :alt => "Stift", :title => "Ändern") %>.
+Das Löschen <%= image_tag("cancel.png", :alt => "rotes Kreuz", :title => "Löschen") %> eines von Dir angelegten Autors geht nur, wenn dem Autor kein Zitat mehr zugeordent ist.
+Du siehst wieviele Zitate für den Autoren gespeichert sind und kannst Dir die Zitate des Autors anzeigen lassen.
 </p>
 <h2>Sichtbarkeit</h2>
 <p>
-Die von Dir neu angelegten Zitate, Kategorien und Autoren sind zuerst nur f&uuml;r Dich sichtbar.
-Durch einen Adminstrator werden die Eintr&auml;ge dann &ouml;ffentlich gesetzt und sind f&uuml;r alle sichtbar.
-Wenn Du sp&auml;ter noch einmal &Auml;nderungen vornimmst, dann sind die Eint&auml;ge wieder
-nur f&uuml;r Dich sichtbar, bis ein Administrator sie wieder &ouml;ffentlich setzt.
+Die von Dir neu angelegten Zitate, Kategorien und Autoren sind zuerst nur für Dich sichtbar.
+Durch einen Adminstrator werden die Einträge dann Öffentlich gesetzt und sind für alle sichtbar.
+Wenn Du später noch einmal Änderungen vornimmst, dann sind die Einträge wieder
+nur für Dich sichtbar, bis ein Administrator sie wieder Öffentlich setzt.
 Die Einschränkung der Sichtbarkeit schützt vor Mißbrauch beim Einbinden der Zitate auf den Websites.
 </p>
 <h2>Fehler oder Erweiterungen</h2>
 <p>
-Wenn Du einen Fehler entdeckt hast oder Dir eine Erweiterung w&uuml;nschst, dann nutze bitte <a href="http://trac.zitat-service.de/trac/quote.cgi">Trac</a>.
+Wenn Du einen Fehler entdeckt hast oder Dir eine Erweiterung wünschst, dann nutze bitte <a href="http://trac.zitat-service.de/trac/quote.cgi">Trac</a>.

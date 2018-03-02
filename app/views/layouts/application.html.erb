@@ -43,7 +43,7 @@
     <% if flash[:error] -%>
       <div id="error"><%= image_tag("exclamation.png", :alt => "rotes Ausrufezeichen", :title => "Achtung", :border => "0") %> <%= flash[:error] %></div>
     <% elsif flash[:notice] -%>
-      <div id="notice"><%= image_tag("flag_green.png", :alt => "gr&uuml;ne Fahne", :title => "OK", :border => "0") %> <%= flash[:notice] %></div>
+      <div id="notice"><%= image_tag("flag_green.png", :alt => "grüne Fahne", :title => "OK", :border => "0") %> <%= flash[:notice] %></div>
     <% end -%>
     <div id="content">
       <%= yield %>
