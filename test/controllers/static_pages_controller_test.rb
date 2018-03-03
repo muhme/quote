@@ -65,5 +65,9 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     get static_pages_list_url
     assert_response :success
   end
-
+  
+  test "forbidden" do
+    get forbidden_url
+    assert_response :forbidden # 403
+  end
 end

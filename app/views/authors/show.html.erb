@@ -2,23 +2,34 @@
 <table>
     <tr>
       <td valign=top>Interne Nr.</td><td><%= h(@author.id) %></td>
-    </tr><tr>
+    </tr>
+    <tr>
       <td valign=top>Name</td><td><b><%= h(@author.name) %></b></td>
-    </tr><tr>
+    </tr>
+    <tr>
       <td valign=top>Vorname</td><td><b><%= h(@author.firstname) %></b></td>
-    </tr><tr>
+    </tr>
+    <tr>
       <td valign=top>Beschreibung</td><td><%= h(@author.description) %></td>
-    </tr><tr>
+    </tr>
+    <tr>
       <td valign=top>Link</td><td><%= lh(@author.link) %></td>
-    </tr><tr>
+    </tr>
+    <tr>
       <td valign=top>Angelegt</td><td><%= nice_date(@author.created_at) %></td>
-    </tr><tr>
-      <td valign=top>Aktualisiert</td><td><%= nice_date(@author.updated_at) %></td>
-    </tr><tr>
+    </tr>
+    <% if @author.created_at != @author.updated_at %>
+      <tr>
+        <td valign=top>Aktualisiert</td><td><%= nice_date(@author.updated_at) %></td>
+      </tr>
+    <% end %>
+    <tr>
       <td valign=top>Benutzer</td><td><%= hu(@author.user_id) %></td>
-    </tr><tr>
+    </tr>
+    <tr>
       <td valign=top>Öffentlich</td><td><%= @author.public? ? "Ja" : "Nein" %></td>
-    </tr><tr>
+    </tr>
+    <tr>
       <td valign=top>Zitate</td><td><%=
     	  link_to(@author.quotation_ids.size.to_s, :controller => 'quotations', :action => 'list_by_author', :author => @author.id)%></td>
     </tr>

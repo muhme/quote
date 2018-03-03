@@ -19,8 +19,10 @@ class StaticPagesController < ApplicationController
     render :layout => false #, :content_type => 'text/plain'
     # render plain: "TEAM OK"
   end
-  
 
+  def forbidden
+    render :status => :forbidden  # 403
+  end
 
   def contact
   end

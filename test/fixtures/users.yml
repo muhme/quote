@@ -1,8 +1,33 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  login: one
-  email: whatever@whatever.com
+first_user:
+  id: 1   # used by authors and quotations
+  login: first_user
+  email: first_user@whatever.com
   password_salt: <%= salt = Authlogic::Random.hex_token %>
-  crypted_password: <%= Authlogic::CryptoProviders::SCrypt.encrypt("benrocks" + salt) %>
+  crypted_password: <%= Authlogic::CryptoProviders::SCrypt.encrypt("first_user_password" + salt) %>
   persistence_token: <%= Authlogic::Random.hex_token %>
+  active: true
+  approved: true
+  confirmed: true
+
+second_user:
+  login: second_user
+  email: second_user@whatever.com
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::SCrypt.encrypt("second_user_password" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  active: true
+  approved: true
+  confirmed: true
+
+admin_user:
+  login: admin_user
+  email: admin_user@whatever.com
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::SCrypt.encrypt("admin_user_password" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  admin: true
+  active: true
+  approved: true
+  confirmed: true

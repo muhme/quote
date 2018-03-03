@@ -53,7 +53,7 @@ module ApplicationHelper
   # Produces e.g. "19.12.1961, 06:15 Uhr MEZ", including daylight saving time
   def nice_date(date)
     Time.zone = 'Berlin'
-    date.nil? ? "" : h(Time.zone.at(date).strftime("%d.%m.%y, %H:%M Uhr %Z").gsub('CET','MEZ').gsub('CEST','MESZ'))
+    date.nil? ? "" : h(Time.zone.at(date).strftime("%d.%m.%Y, %H:%M Uhr %Z").gsub('CET','MEZ').gsub('CEST','MESZ'))
   end
   
   # do an html_escape() and get users login name oder "" if the user doesn't exist

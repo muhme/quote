@@ -1,17 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-
-  # GET /users
-  # GET /users.json
-  def index
-    render 404
-  end
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
-    # TODO show only own user!
-  end
+  before_action :set_user, only: [:edit, :update, :destroy]
 
   # GET /users/new
   def new

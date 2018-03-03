@@ -35,7 +35,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update quotation" do
-    @user = users(:one)
+    @user = users(:first_user)
     @author = authors(:one)
     patch quotation_url(@quotation), params: { quotation: { quotation: @quotation.quotation, user_id: @user.id, author_id: @author.id } }
     assert_redirected_to quotation_url(@quotation)

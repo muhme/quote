@@ -2,20 +2,42 @@ require "application_system_test_case"
 
 class AuthorsTest < ApplicationSystemTestCase
 
+  # /authors
   test "author" do
-    check_page page, "/authors", "h1", "Autor", 250
+    check_page page, authors_url, "h1", "Autor", 250
   end
 
+  # /authors/list_by_letter/A
   test "author_letter_a" do
     check_page page, "/authors/list_by_letter/A", "h1", "Autor", 200
   end
 
+  # /authors/list_by_letter/*
   test "author_not_letter" do
     check_page page, "/authors/list_by_letter/*", "h1", "Autor", 200
   end
   
+  # e.g. /author/1
   test "show author" do
-    check_page page, "/authors/" + Author.first.id.to_s, "h1", "Autor", 200
+    check_page page, author_url(Author.first.id), "h1", "Autor", 200
   end
+  
+  # /authors/new
+  test "new author with login" do
+    check_page page, new_author_url, "h1", "Autor anlegen", 300
+  end  
 
+  # /authors/new
+  test "new author without login" do
+    check_page page, new_author_url, "h1", "Autor anlegen", 300
+  end 
+
+  #visit articles_path
+ 
+  #click_on "New Article"
+ 
+  #fill_in "Title", with: "Creating an Article"
+  #fill_in "Body", with: "Created this article successfully!"
+ 
+  #click_on "Create Article"
 end

@@ -4,7 +4,7 @@ class AuthorTest < ActiveSupport::TestCase
   
   def setup
     @author = Author.new()
-    @author.user_id = User.find_by_login('one').id
+    @author.user_id = User.first.id
     @author.name = "Goethe"
     @author.firstname = "Johann Wolfgang von"
     @author.description = "deutscher Dichter (1749 - 1832)"

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:one)
+    @user = users(:first_user)
   end
 
   # user list don't have to be available
@@ -39,8 +39,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "should update user" do
     patch user_url(@user), params: { user: { admin: @user.admin, crypted_password: @user.crypted_password, email: @user.email, login: @user.login, password_salt: @user.password_salt } }
-    # TODO assert_redirected_to user_url(@user)
-    assert_response :success # only to make test happy
+    assert_redirected_to user_url(@user)
   end
 
   test "should destroy user" do

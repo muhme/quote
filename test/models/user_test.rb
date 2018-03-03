@@ -3,9 +3,8 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
   
   def setup
-    @user = User.find_by_login('one')
-    @user.password = "12345678" # TODO only set to run test, useless
-    @user.password_confirmation = "12345678" # TODO only set to run test, useless
+    @user = User.find_by_login(:first_user)
+    activate_authlogic
   end
   
   test "validate setup" do
@@ -50,7 +49,7 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.valid?
   end
   test "password_salt should not be too long" do
-    @user.password_salt = "a" * 33
+    @user.password_salt = "a" * 256
     assert_not @user.valid?
   end
   

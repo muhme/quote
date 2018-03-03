@@ -79,7 +79,7 @@ class CategoriesController < ApplicationController
   def list_by_letter
     letter = params[:letter]
     if letter.blank?
-      flush[:error] = "Buchstabe fehlt!"
+      flash[:error] = "Buchstabe fehlt!"
       redirect_to :action => 'list'
       return
     end

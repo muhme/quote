@@ -1,13 +1,22 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   name: MyString1
   firstname: MyString1
   description: MyString One
   link: MyString
+  public: true
+  user_id: 1
 
-two:
+public_false:
   name: MyString2
   firstname: MyString2
   description: MyString Two
   link: MyString
+  public: false
+  user_id: 1
+
+without_quotes:
+  name: Author Entry not related to any quotation
+  user_id: 1

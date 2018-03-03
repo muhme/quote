@@ -13,4 +13,11 @@ class UsersTest < ApplicationSystemTestCase
     visit '/user'
     assert_selector "h1", text: "Nicht gefunden"
   end
+  
+  # /users/new
+  test "new user" do
+    visit new_user_url
+    assert_selector "h1", text: "Benutzereintrag anlegen"
+  end
+  
 end

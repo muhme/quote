@@ -74,50 +74,6 @@ div.randomquote * a {
     background-color:#000;
     border: none;
 }
-.fieldWithErrors {
-    padding: 2px;
-    color: inherit;
-    background-color: red;
-    display: table;
-}
-#errorExplanation {
-    width: 400px;
-    border: 2px solid red;
-    padding: 7px;
-    padding-bottom: 12px;
-    margin-bottom: 20px;
-    color: inherit;
-    background-color: #f0f0f0;
-}
-#errorExplanation h2 {
-    text-align: left;
-    font-weight: bold;
-    padding: 5px 5px 5px 15px;
-    font-size: 12px;
-    margin: -7px;
-    color: inherit;
-    background-color: #c00;
-    color: #fff;
-}
-#errorExplanation p {
-    color: #333;
-    background-color: inherit;
-    margin-bottom: 0;
-    padding: 5px;
-}
-#errorExplanation ul li {
-    font-size: 12px;
-    list-style: square;
-}
-td {
-    background: #ddffdd;	/* hack? to disable transparency for tr */
-}
-tr.ListLine1 td {
-    background-color: #f0f0f0;
-}
-th, tr.ListLine0 td {
-    background-color: #e0e0e0;
-}
 h1 {
     font-family: Gondoliere, Comic Sans MS, serif;
     color: #208020;
@@ -130,6 +86,21 @@ h1.error {
 h2 {
     font-family: Gondoliere, Comic Sans MS, serif;
     color: #208020;
+}
+.field_with_errors {
+    color: red;
+}
+#error_explanation, #error_explanation h2 {
+    color: #f00;
+}
+td {
+    background: #ddffdd;	/* hack? to disable transparency for tr */
+}
+tr.ListLine1 td {
+    background-color: #f0f0f0;
+}
+th, tr.ListLine0 td {
+    background-color: #e0e0e0;
 }
 .random_quote {
     color: black;

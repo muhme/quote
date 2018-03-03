@@ -1,8 +1,7 @@
 <%= form_with(model: author, local: true) do |form| %>
   <% if author.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(author.errors.count, "error") %> verhindert das Speichern des Eintrages:</h2>
-
+      <h2><%= author.errors.count %> Fehler</h2>
       <ul>
       <% author.errors.full_messages.each do |message| %>
         <li><%= message %></li>

@@ -5,10 +5,10 @@ class QuotationTest < ActiveSupport::TestCase
   def setup
     @author = Author.new()
     @author.name = "Gandi"
-    @author.user_id = User.find_by_login('one').id
+    @author.user_id = User.first.id
     @author.save!
     @quotation = Quotation.new()
-    @quotation.user_id = User.find_by_login('one').id
+    @quotation.user_id = User.first.id
     @quotation.quotation = "Be the change you wish to see." # Mahatma Gandhi
     @quotation.author_id = @author.id
     @quotation.save!

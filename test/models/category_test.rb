@@ -5,7 +5,7 @@ class CategoryTest < ActiveSupport::TestCase
   def setup
 
     @category = Category.new()
-    @category.user_id = User.find_by_login('one').id
+    @category.user_id = User.first.id
     @category.category = "programming"
     @category.description = "All related to computer programming languages."
   end

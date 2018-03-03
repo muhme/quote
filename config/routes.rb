@@ -26,12 +26,15 @@ Rails.application.routes.draw do
   # default controller routes
   resources :authors, :account, :categories, :quotations
   resources :static_pages, except: :show
-  resources :users, except: :index
+  resources :users, except: [ :index, :show ]
   resources :user_sessions # TODO reduce to some?
   
   get 'login', to: 'user_sessions#new'
 # not needed in railscast    post 'login', to: 'user_sessions#create'
   get 'logout', to: 'user_sessions#destroy'
+  
+  get 'forbidden', to: 'static_pages#forbidden'
+  get 'not_found', to: 'static_pages#not_found'
   
   get 'categories/list_by_letter/:letter', to: 'categories#list_by_letter'
   get 'authors/list_by_letter/:letter', to: 'authors#list_by_letter'
