@@ -6,6 +6,11 @@ class Category < ApplicationRecord
   validates :category, presence: true, length: { maximum: 64 }, uniqueness: true
   validates :description, presence: false, length: { maximum: 255 }, uniqueness: false
   
+  # count all non-public categories
+  def Category.count_non_public
+    return count_by_sql("select count(*) from categories where public = 0")
+  end
+  
   # gives an array with all categories names initial chars, e.g. ["a", "b", "d" ...]
   def Category.init_chars
     a = Category.find_by_sql "select distinct substring(upper(trim(category)) from 1 for 1) as init from categories order by init"

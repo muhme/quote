@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  quotation: MyString1
+  id: 1
+  quotation: public_quotation
   user_id: 1
   author_id: 1
+  public: true
 
 two:
   quotation: MyString2

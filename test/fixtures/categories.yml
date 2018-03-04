@@ -1,13 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  category: one
+  id: 1
+  category: public_category
   description: Description for 1st category
+  public: true
+  user_id: 1
 
-two:
+public_false:
   category: two
   description: Description for 2nd category
+  public: false
+  user_id: 1
   
-three:
+without_quotes:
   category: three
   description: Description for 3rd category
+  user_id: 1

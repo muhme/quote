@@ -19,17 +19,21 @@ class AuthorsTest < ApplicationSystemTestCase
   
   # e.g. /author/1
   test "show author" do
-    check_page page, author_url(Author.first.id), "h1", "Autor", 200
+    check_page page, author_url(Author.find_by_name('public_author')), "h1", "Autor", 200
   end
   
   # /authors/new
   test "new author with login" do
+    visit login_url
+    fill_in 'user_session_login', with: 'first_user'
+    fill_in 'user_session_password', with: 'first_user_password'
+    click_on 'Anmelden'
     check_page page, new_author_url, "h1", "Autor anlegen", 300
   end  
 
   # /authors/new
   test "new author without login" do
-    check_page page, new_author_url, "h1", "Autor anlegen", 300
+    check_page page, new_author_url, "h1", "Nicht erlaubt", 300
   end 
 
   #visit articles_path

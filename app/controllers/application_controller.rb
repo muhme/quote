@@ -65,14 +65,16 @@ class ApplicationController < ActionController::Base
       return false
     end
 
-    # TODO
-    def has_non_public(o)
-      return nil
+    # if a user logged in with the same id oder as admin?
+    def can_edit?(user_id)
+      current_user && ( current_user.id == user_id || current_user.admin == true )
     end
-    def can_edit?(o)
-      return true
+
+    # checks if the Quotation, Author or Category has non public entries
+    def has_non_public(thisClass)
+      current_user && current_user.admin && thisClass.count_non_public > 0
     end
-  
+
     def current_user_session
       return @current_user_session if defined?(@current_user_session)
       @current_user_session = UserSession.find

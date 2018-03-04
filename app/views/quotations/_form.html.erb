@@ -1,8 +1,7 @@
 <%= form_with(model: quotation, local: true) do |form| %>
   <% if quotation.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(quotation.errors.count, "error") %> prohibited this quotation from being saved:</h2>
-
+      <h2><%= author.errors.count %> Fehler</h2>
       <ul>
       <% quotation.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -16,7 +15,16 @@
     <%= form.text_field :quotation, id: :quotation_quotation %>
   </div>
 
+  <% if current_user and current_user.admin == true %>
+    <div class="field">
+      <p><label for="author_public">Öffentlich</label><br/>
+      <%= form.check_box :public %>
+    </div>
+  <% end %>
+
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Speichern" %>
+    &nbsp; <%= link_to(image_tag("arrow_undo.png", :alt => "Pfeil zurück", :title => "Zurück", :border => "0"), :action => 'index') %>
   </div>
+
 <% end %>

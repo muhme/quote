@@ -19,7 +19,7 @@ class QuotationsTest < ApplicationSystemTestCase
   end
   
   test "show quote" do
-    check_page page, "/quotations/" + Quotation.first.id.to_s, "h1", "Zitat", 200
+    check_page page, quotation_url(Quotation.find_by_quotation('public_quotation')), "h1", "Zitat", 200
   end
 
 end

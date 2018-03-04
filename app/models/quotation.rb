@@ -8,6 +8,11 @@ class Quotation < ApplicationRecord
   validates :source, presence: false, length: { maximum: 255 }, uniqueness: false
   validates :source_link, presence: false, length: { maximum: 255 }, uniqueness: false
   
+  # count all non-public quotes
+  def Quotation.count_non_public
+    return count_by_sql("select count(*) from quotations where public = 0")
+  end
+  
   # returns - with links if exist - authors name and quotations source name or blank
   # returns "", "authors name", "source" or "authors name, source"
   #

@@ -23,10 +23,21 @@ Rails.application.routes.draw do
   get 'humans.txt', to: 'static_pages#humans'
   # map.connect 'humans.txt', :controller => 'start', :action => 'humans'
   
+  get 'categories/list_no_public', to: 'categories#list_no_public'
+  get 'categories/list_by_letter/:letter', to: 'categories#list_by_letter'
+
+  get 'authors/list_no_public', to: 'authors#list_no_public'
+  get 'authors/list_by_letter/:letter', to: 'authors#list_by_letter'
+  
+  get 'quotations/list_no_public', to: 'quotations#list_no_public'
+  get 'quotations/list_by_user/:user', to: 'quotations#list_by_user'
+  get 'quotations/list_by_category/:category', to: 'quotations#list_by_category'
+  get 'quotations/list_by_author/:author', to: 'quotations#list_by_author'
+  
   # default controller routes
   resources :authors, :account, :categories, :quotations
   resources :static_pages, except: :show
-  resources :users, except: [ :index, :show ]
+  resources :users, except: [ :index, :show, :destroy ]
   resources :user_sessions # TODO reduce to some?
   
   get 'login', to: 'user_sessions#new'
@@ -35,16 +46,7 @@ Rails.application.routes.draw do
   
   get 'forbidden', to: 'static_pages#forbidden'
   get 'not_found', to: 'static_pages#not_found'
-  
-  get 'categories/list_by_letter/:letter', to: 'categories#list_by_letter'
-  get 'authors/list_by_letter/:letter', to: 'authors#list_by_letter'
-  get 'quotations/list_by_user/:user', to: 'quotations#list_by_user'
-  get 'quotations/list_by_category/:category', to: 'quotations#list_by_category'
-  get 'quotations/list_by_author/:author', to: 'quotations#list_by_author'
-  # get 'category/index/:order', to: 'category#index'
-  # get 'categories/index', to: 'category#index'
-  # get 'authors/index', to: 'authors#index'
-  
+
   # catch all
   match "*path", to: "static_pages#not_found", via: :all
   

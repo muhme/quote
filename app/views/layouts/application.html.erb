@@ -24,9 +24,9 @@
       <div id="user_nav">
   <% if current_user %>
     <%= link_to "Profil", edit_user_path(:current) %> <br />
-    <%= link_to "Abmelden", logout_path %>
+    <%= link_to "Logout", logout_path %>
   <% else %>
-    <%= link_to "Anmelden", login_path %>
+    <%= link_to "Login", login_path %>
   <% end %>
 </div>
 

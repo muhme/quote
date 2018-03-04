@@ -12,8 +12,6 @@
     odd_or_even = 0
     for author in @authors
         odd_or_even = 1 - odd_or_even
-        # q = Quotation.find_all_by_author_id(author.id) TODO remove this and next
-        # quotations = q.nil? ? 0 : q.size
         quotations = author.quotation_ids.size
     %>
         <tr valign="top" class="ListLine<%= odd_or_even %>">

@@ -4,7 +4,7 @@
     <h2><%= pluralize(category.errors.count, "error") %> verhindert das Speichern der Kategorie:</h2>
  
     <ul>
-    <% category.errors.full_messages.each do |msg| %>
+    <% category.errors.full_messages.each do |message| %>
       <li><%= message %></li>
     <% end %>
     </ul>

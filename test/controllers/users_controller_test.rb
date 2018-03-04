@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = users(:first_user)
+    @first_user = users(:first_user)
   end
 
   # user list don't have to be available
@@ -25,10 +25,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 #    assert_redirected_to user_url(User.last)
 #  end
 
-  # TODO only own user
-  test "should show user" do
-    get user_url(@user)
-    assert_response :success
+  # user, e.g. /users/1/show
+  test "not displaying user details ever" do
+    get user_url(@first_user)
+    assert_response :not_found
+    login :first_user
+    get user_url(@first_user)
+    assert_response :not_found
+    login :admin_user
+    get user_url(@first_user)
+    assert_response :not_found
   end
 
   # TODO only own user
@@ -37,16 +43,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   #  assert_response :success
   # end
 
-  test "should update user" do
-    patch user_url(@user), params: { user: { admin: @user.admin, crypted_password: @user.crypted_password, email: @user.email, login: @user.login, password_salt: @user.password_salt } }
-    assert_redirected_to user_url(@user)
+# TODO make useful
+#  test "should update user" do
+#    patch user_url(@first_user), params: { user: { admin: @user.admin, crypted_password: @user.crypted_password, email: @user.email, login: @user.login, password_salt: @user.password_salt } }
+#    assert_redirected_to user_url(@user)
+#  end
+
+  test "destroy user not allowed" do
+    delete '/users/1'
+    assert_response :not_found
   end
 
-  test "should destroy user" do
-    assert_difference('User.count', -1) do
-      delete user_url(@user)
-    end
-
-    assert_redirected_to users_url
-  end
 end

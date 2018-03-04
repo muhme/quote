@@ -15,10 +15,8 @@
     </tr><tr>
       <td valign=top>Öffentlich:</td><td><%= @category.public? ? "Ja" : "Nein" %></td>
     </tr><tr>
-      <td valign=top>Zitate:</td><td>
-<!-- TODO   	  q=@category.quotations.find(:all).size --><%= q=@category.quotations.size
-    	  q == 0 ? "0" : link_to(q, :controller => 'quotations', :action => 'show', :category => @category.id)%></td>
-    	  <!-- TODO :action => 'list_by_category' -->
+      <td valign=top>Zitate:</td><td><%=
+        link_to(@category.quotation_ids.size.to_s, :controller => 'quotations', :action => 'list_by_category', :category => @category.id)%></td>
     </tr>
 </table>
 

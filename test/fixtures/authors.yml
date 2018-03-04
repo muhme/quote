@@ -1,11 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+# Barbara (author id 1) has two quotes
 one:
   id: 1
-  name: MyString1
-  firstname: MyString1
-  description: MyString One
-  link: MyString
+  name: public_author
+  description: Pseudonym einer deutschen Streetart-Künstlerin
   public: true
   user_id: 1
 

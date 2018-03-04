@@ -9,7 +9,6 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal "42", nice_number(42)
   end
 
-
   test "author_name method simple" do
     assert_equal "James <b>B</b>rown", author_name("James", "Brown")
   end

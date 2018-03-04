@@ -15,8 +15,15 @@ class AuthorTest < ActiveSupport::TestCase
     assert @author.valid?
   end
   
-  test "author's name should not be empty" do
+  test "author's last name or first name have to be set" do
     @author.name = ""
+    @author.firstname = "X"
+    assert @author.valid?
+    @author.name = "X"
+    @author.firstname = ""
+    assert @author.valid?
+    @author.name = ""
+    @author.firstname = ""
     assert_not @author.valid?
   end
   
@@ -38,7 +45,7 @@ class AuthorTest < ActiveSupport::TestCase
   test "author's name, first name, description and link don't have to be unique" do
     @author.save
     duplicate_author = @author.dup
-    assert duplicate_author.valid?   # TODO but have to create warning in view
+    assert duplicate_author.valid?   # NICE but have to create warning in view
   end
   
   test "author's name should not be too long" do

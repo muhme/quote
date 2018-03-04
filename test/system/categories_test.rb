@@ -3,7 +3,7 @@ require "application_system_test_case"
 class CategoriesTest < ApplicationSystemTestCase
 
   test "category" do
-    check_page page, "/categories", "h1", "Kategorie", 300
+    check_page page, "/categories", "h1", "Kategorie", 250
   end
 
   test "category_letter_a" do
@@ -15,7 +15,7 @@ class CategoriesTest < ApplicationSystemTestCase
   end
 
   test "show category" do
-    check_page page, "/categories/" + Category.first.id.to_s, "h1", "Kategorie", 200
+    check_page page, category_url(Category.find_by_category('public_category')), "h1", "Kategorie", 200
   end
 
 end

@@ -3,11 +3,17 @@ class Author < ApplicationRecord
   belongs_to :user
   has_many :quotations
   
-  validates :name, presence: true, length: { maximum: 64 }, uniqueness: false
+  validates :name, presence: false, length: { maximum: 64 }, uniqueness: false
   validates :firstname, presence: false, length: { maximum: 64 }, uniqueness: false
   validates :link, presence: false, length: { maximum: 255 }, uniqueness: false
   validates :description, presence: false, length: { maximum: 255 }, uniqueness: false
+  validate :first_or_last_name
 
+  # count all non-public authors
+  def Author.count_non_public
+    return count_by_sql("select count(*) from authors where public = 0")
+  end
+  
   # gives an array with all author names initial chars, e.g. ["a", "b", "d" ...]
   def Author.init_chars
     a = Author.find_by_sql "select distinct substring(upper(trim(name)) from 1 for 1) as init from authors order by init"
@@ -43,5 +49,13 @@ class Author < ApplicationRecord
     ret = "<a href=\"#{self.link}\" target=\"quote_extern\">#{ret}</a>" unless ret.blank? or self.link.blank?
     ret
   end
+  
+  private
+
+    def first_or_last_name
+      if name.blank? and firstname.blank?
+        errors.add(:base, "Vorname oder Nachname muss gesetzt sein")
+      end
+    end
 
 end
