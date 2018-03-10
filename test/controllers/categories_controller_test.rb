@@ -34,13 +34,13 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   
   test "404 for not existing category" do
     id = rand 0..10000000000000
-    get author_url(id)
+    get author_url id
     assert_response :redirect
     follow_redirect!
     assert_response :missing
 
     login :first_user
-    get author_url(id)
+    get author_url id
     assert_response :redirect
     follow_redirect!
     assert_response :missing
@@ -141,6 +141,18 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
       delete category_url @category_public_false
     end
     assert_redirected_to categories_url
+  end
+  
+  test "list_no_public method" do
+    get categories_list_no_public_url
+    assert_redirected_to categories_url
+    login :first_user
+    get categories_list_no_public_url
+    assert_redirected_to categories_url
+    get '/logout'
+    login :admin_user
+    get categories_list_no_public_url
+    assert_response :success
   end
 
 end

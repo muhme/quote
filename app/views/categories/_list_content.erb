@@ -2,7 +2,7 @@
 
 <table border=1 cellpadding="5" cellspacing="0">
     <tr>
-        <th><%= sorted_img_if('Kategorie', link_to('Kategorie', :controller => 'categories', :order => 'categories'), params[:order] == 'categories') %>
+        <th><%= raw sorted_img_if('Kategorie', link_to('Kategorie', :controller => 'categories', :order => 'categories'), params[:order] == 'categories') %>
         <th>Beschreibung / auch verwendete Worte</th>
         <th><%= raw sorted_img_if('Zitate', link_to('Zitate', :controller => 'categories'), params[:order] != 'categories') %>
         <th>Aktionen</th>

@@ -3,7 +3,7 @@ require "application_system_test_case"
 class QuotationsTest < ApplicationSystemTestCase
 
   test "quotations" do
-    check_page page, "/quotations", "h1", "Zitate", 300
+    check_page page, "/quotations", "h1", "Zitat", 300
   end
 
   test "list by category" do

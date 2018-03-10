@@ -1,5 +1,11 @@
 module ApplicationHelper
-    
+  
+  # gives nice number in singular or plural
+  # e.g. "0 Zitate", 1 Zitat", "2 Zitate", "4.711 Zitate"
+  def nnsp(number, singular, plural)
+    return nice_number(number) + ' ' + ( number == 1 ? singular : plural )
+  end
+  
   # Produces nice number, e.g. 1.234 instead of 1234
   def nice_number(number)
     return number.to_s if number < 1000

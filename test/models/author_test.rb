@@ -97,7 +97,21 @@ class AuthorTest < ActiveSupport::TestCase
     # w/o link
     @author.link = ""
     assert_equal @author.get_linked_author_name_or_blank, "Goethe"
-    
   end
   
+  test "last_first_name method" do
+    
+    assert_equal @author.last_first_name, "Goethe, Johann Wolfgang von"
+    
+    # w/o first name
+    @author.firstname = ""
+    assert_equal @author.last_first_name, "Goethe"
+
+    # w/o link
+    @author.firstname = "Johann"
+    @author.name = ""
+    assert_equal @author.last_first_name, "Johann"
+
+  end
+
 end

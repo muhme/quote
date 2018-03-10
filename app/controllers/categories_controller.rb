@@ -5,7 +5,7 @@ class CategoriesController < ApplicationController
   def index
 
     sql =  "select * from categories c"
-    sql += " where  c.public = 1" if not current_user or current_user.admin != true
+    sql += " where c.public = 1" if not current_user or current_user.admin != true
     sql += " or c.user_id = #{current_user.id}" if current_user and current_user.admin != true
     sql += params[:order] == 'categories' ?
       # by category name alphabeticaly
@@ -47,11 +47,11 @@ class CategoriesController < ApplicationController
       redirect_to forbidden_url 
     end
 
-      if @category.save
-        redirect_to @category, notice: "Die Kategorie \"#{@category.category}\" wurde angelegt."
-      else
-        render :new
-      end
+    if @category.save
+      redirect_to @category, notice: "Die Kategorie \"#{@category.category}\" wurde angelegt."
+    else
+      render :new
+    end
 
     rescue Exception => exc
       logger.error "create category failed: #{exc.message}"
@@ -105,7 +105,7 @@ class CategoriesController < ApplicationController
   def list_no_public
     if !current_user or current_user.admin == false
       flash[:error] = "Kein Administrator!"
-      redirect_to :action => 'list'
+      redirect_to categories_url
       return false
     end
     @categories = Category.paginate_by_sql 'select * from categories where public = 0', :page=>params[:page], :per_page=>10

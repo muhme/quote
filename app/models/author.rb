@@ -50,6 +50,18 @@ class Author < ApplicationRecord
     ret
   end
   
+  # gives last name comma separated from first name
+  # w/o comma if first or last name is missing
+  # gives an empty string if first and last name are missing
+  # e.g. gives "Einstein, Albert" or only lastname "Sokrates" or only firstname "Karl" or ""
+  def last_first_name
+    ret = ""
+    ret += name unless name.blank?
+    ret += ", " unless firstname.blank? or name.blank?
+    ret += firstname unless firstname.blank?
+    ret
+  end
+    
   private
 
     def first_or_last_name

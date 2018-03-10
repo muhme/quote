@@ -1,7 +1,7 @@
 <%= form_with(model: quotation, local: true) do |form| %>
   <% if quotation.errors.any? %>
     <div id="error_explanation">
-      <h2><%= author.errors.count %> Fehler</h2>
+      <h2><%= quotation.errors.count %> Fehler</h2>
       <ul>
       <% quotation.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -11,8 +11,28 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :quotation %>
-    <%= form.text_field :quotation, id: :quotation_quotation %>
+    <%= form.label :quotation, raw('Zitat <span class="example">z.B. Erfahrungen vererben sich nicht - jeder muß sie allein machen.</span>') %><br />
+    <%= form.text_area :quotation, {:cols => 80, :rows => 2} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :source, raw('Original-Quelle <span class="example">typischerweise ein Buchtitel, z.B. Gebrauchsanweisung, Glossen und Essays, 1930</span>') %><br />
+    <%= form.text_field :source, {:size => 80, :maxlength => 255} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :source, raw('Link <span class="example">zu einer Website mit dem Original-Text der das Zitat enthält, z.B. http://www.textlog.de/tucholsky-anweisung.html') %><br />
+    <%= form.text_field :source_link, {:size => 80, :maxlength => 255} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :categories, raw('Kategorien <span class="example">(mehrere mit &lt;Strg&gt; auswählen)') %><br />
+    <%= form.collection_select(:category_ids, Category.order(:category), :id, :category, { :selected => @quotation.category_ids, :name => 'quotation[category_ids][]' }, { :multiple => true } ) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :author, raw('Autor <span class="example">z.B. Kurt Tucholsky</span></label>') %><br />
+    <%= form.select(:author_id, Author.order(:name).map {|a| [a.last_first_name, a.id]}) %>
   </div>
 
   <% if current_user and current_user.admin == true %>

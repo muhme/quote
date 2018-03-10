@@ -126,7 +126,7 @@ th, tr.ListLine0 td {
     overflow: hidden;
 }
 #logo {
-    padding: 12px 1px 1px 24px;
+    padding: 12px 1px 24px 24px;
 }
 .ListSource, .ListSource a {
     color: #777;

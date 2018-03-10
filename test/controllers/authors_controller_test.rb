@@ -156,4 +156,16 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to author_url(@author_one)
   end
 
+  test "list_no_public method" do
+    get authors_list_no_public_url
+    assert_redirected_to authors_url
+    login :first_user
+    get authors_list_no_public_url
+    assert_redirected_to authors_url
+    get '/logout'
+    login :admin_user
+    get authors_list_no_public_url
+    assert_response :success
+  end
+
 end

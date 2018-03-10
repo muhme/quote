@@ -23,9 +23,15 @@
                 &nbsp;
                 <%= link_to image_tag("pencil.png", :alt => 'Stift', :title => 'Bearbeiten', :border => 0), :action => 'edit', :id => quotation %>
                 &nbsp;
-                <%= link_to image_tag("cancel.png", :alt => 'rotes Kreuz', :title => 'Löschen', :border => 0), { :action => 'destroy', :id => quotation }, :confirm => "Wirklich das Zitat \"" + truncate(quotation.quotation, length: 20) + "\" löschen?", :method => :post %>
+                <%= link_to image_tag("cancel.png", :alt => 'rotes Kreuz', :title => 'Löschen', :border => 0), { :action => 'destroy', :id => quotation }, :method => :delete, data: {:confirm => "Wirklich das Zitat \"" + truncate(quotation.quotation, length: 20) + "\" löschen?" } %>
         <% end %>
         </td>
     </tr>
 <% end %>
 </table>
+
+<%if current_user %>
+  <p class="ListNavi">
+    <%= button_to "Zitat anlegen", { :action => "new" }, method: :get %>
+  </p>
+<% end %>

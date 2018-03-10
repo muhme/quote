@@ -2,9 +2,9 @@
 
 <p>Eine gemeinsame Sammlung von Zitaten mit Links zu Autoren und Textstellen. Zum Einbinden auf den eigenen Webseiten sortiert nach Autor, Stichwort oder Benutzer. Aktuell haben wir <%= nice_number(Quotation.count) %> Zitate, von <%= nice_number(Author.count) %> Autoren in <%= nice_number(Category.count) %> Kategorien.</p>
 <p>
-  <%= form_tag("/search", method: "get") do %>
+  <%= form_tag("/quotations", method: "get") do %>
     <%= label_tag(:find, "In allen Zitaten suchen:") %><br />
-    <%= text_field_tag(:find) %>
+    <%= text_field_tag(:pattern) %>
     <%= submit_tag("Finden") %>
   <% end %>
   <script type="text/javascript">
@@ -36,7 +36,7 @@
   <dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> 7. April 2013</dt>
     <dd>Es gibt ein neues Modul für die Joomla! Versionen 1.6 - 3.0: <%= link_to 'Einbinden/Joomla', :action => 'joomla' %>.</dd>
   <dt><%= image_tag("exclamation.png", :alt => "explamination", :title => "Achtung!") %> 26. November 2012</dt>
-    <dd>Bitte keine Zitate von Karl Valentin, Erich Kästner oder Heinz Erhardt einstellen (siehe <a href="StaticPages/help#urheberrecht">Urheberrecht.</a>).</dd>
+    <dd>Bitte keine Zitate von Karl Valentin, Erich Kästner oder Heinz Erhardt einstellen (siehe <a href="static_pages/help#urheberrecht">Urheberrecht.</a>).</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 16. Juli 2011</dt>
     <dd><a href="humans.txt">humans.txt</a> (We are People, Not Machines) wurde hinzugfügt. Danke!</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 2. April 2011</dt>
@@ -44,7 +44,7 @@
   <dt><%= image_tag("award_star_bronze_1.png", :alt => "admin", :title => "Administrator") %> 12. September 2010</dt>
     <dd><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> hilft uns jetzt bei der Verwaltung der Zitate. Dankeschön!</dd>
   <dt><%= image_tag("pencil.png", :alt => "pencil", :title => "Pencil") %> 22. November 2009</dt>
-    <dd>Der Platz für die Zitate wurden auf 512 Zeichen verdoppelt. Die Kategorie <a href="quotation/list_by_category?category=287">WebDesignTest</a> umfasst die kürzesten und längsten Zitate.</dd>
+    <dd>Der Platz für die Zitate wurden auf 512 Zeichen verdoppelt. Die Kategorie <a href="quotations/list_by_category/287">WebDesignTest</a> umfasst die kürzesten und längsten Zitate.</dd>
   <dt><%= image_tag("twitter.png", :alt => "twitter", :title => "Twitter") %> 3. September 2009</dt>
     <dd>Folge uns auf twitter: <a href="http://twitter.com/zitat">@zitat</a></dd>
 </div>

@@ -59,7 +59,7 @@ class AuthorsController < ApplicationController
     # NICE give warning if the same autor already exists
     
     rescue Exception => exc
-      logger.error "create author  failed: #{exc.message}"
+      logger.error "create author failed: #{exc.message}"
       flash[:error] = "Das Anlegen des Autors \"" + @author.get_author_name_or_blank + "\" ist gescheitert! (#{exc.message})"
   end
 
@@ -110,7 +110,7 @@ class AuthorsController < ApplicationController
   def list_no_public
     if !current_user or current_user.admin == false
       flash[:error] = "Kein Administrator!"
-      redirect_to :action => 'list'
+      redirect_to authors_url
       return false
     end
     @authors = Author.paginate_by_sql 'select * from authors where public = 0', :page=>params[:page], :per_page=>10

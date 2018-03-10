@@ -7,7 +7,9 @@ one:
   author_id: 1
   public: true
 
-two:
-  quotation: MyString2
+public_false:
+  quotation: public_false
   user_id: 1
   author_id: 1
+  public: false
+
