@@ -10,26 +10,13 @@
   <body>
     <span id="side">
       <div id="logo"><a href="/"><%= image_tag("quote_service_32.png", :size => "32x32", :alt => "Logo", :title => "www.zitat-service.de", :border => "0") %></a></div>
-
-      <%= if current_user
-        raw("<p>" +
-        image_tag("user_orange.png", :alt => "Benutzer", :title => "Angemeldet") + " " +
-        truncate(h(current_user.login), length: 7) +
-        ( current_user.admin ?
-          " " + image_tag("award_star_bronze_1.png", :alt => "Orden", :title => "Administrator") : "" ) +
-        "</p>")
-      end %>
-
-      
+      <%= raw("<p>" + image_tag("user_orange.png", :alt => "Benutzer", :title => "Angemeldet") + " " +
+          link_to(truncate(h(current_user.login), length: 7), edit_user_path(:current))) if current_user %>
+      <%= raw (" " + image_tag("award_star_bronze_1.png", :alt => "Orden", :title => "Administrator")) if current_user and current_user.admin %>
+      <%= raw "</p>" if current_user %>
       <div id="user_nav">
-  <% if current_user %>
-    <%= link_to "Profil", edit_user_path(:current) %> <br />
-    <%= link_to "Logout", logout_path %>
-  <% else %>
-    <%= link_to "Login", login_path %>
-  <% end %>
-</div>
-
+        <%= current_user ? link_to('Logout', logout_path) : link_to('Login', login_path) %>
+      </div>
       <p><%= link_to "Zitate", :controller => "quotations" %> <%= link_to("+", :controller => "quotations", :action => "list_no_public") if has_non_public(Quotation) %></p>
       <p id="letter"><%= link_to "Kategorien", :controller => "categories" %> <%= link_to("+", :controller => "categories", :action => "list_no_public") if has_non_public(Category) %>
         <%= raw category_links %></p>

@@ -35,10 +35,10 @@ Rails.application.routes.draw do
   get 'quotations/list_by_author/:author', to: 'quotations#list_by_author'
   
   # default controller routes
-  resources :authors, :account, :categories, :quotations
-  resources :static_pages, except: :show
+  resources :authors, :categories, :quotations
+  resources :static_pages, except: [ :show, :create, :new, :edit, :update, :destroy ]
   resources :users, except: [ :index, :show, :destroy ]
-  resources :user_sessions # TODO reduce to some?
+  resources :user_sessions, except: [ :index, :show, :edit, :update ]
   
   get 'login', to: 'user_sessions#new'
 # not needed in railscast    post 'login', to: 'user_sessions#create'

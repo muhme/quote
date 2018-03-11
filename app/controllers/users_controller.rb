@@ -6,10 +6,6 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  # GET /users/1/edit
-  def edit
-  end
-
   # POST /users
   def create
     @user = User.new(user_params)
@@ -18,20 +14,30 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to root_url, notice: "Der Eintrag für den Benutzer \"#{@user.login}\” wurde angelegt."
     else
-      format.html { render :new }
+      render :new
     end
   end
-  
+
+  # GET /users/1/edit
   def edit
+    unless current_user
+      flash[:error] = "Nicht angemeldet!"
+      redirect_to root_url
+    end
     @user = current_user
   end
 
   # PATCH/PUT /users/1
   def update
+    unless current_user
+      flash[:error] = "Nicht angemeldet!"
+      redirect_to root_url
+      return
+    end
     if @user.update(user_params)
-      redirect_to @user, notice: 'User was successfully updated.'
+      redirect_to root_url, notice: 'Benutzereintrag wurde geändert.'
     else
-      format.html { render :edit }
+      render :edit
     end
   end
 
@@ -42,7 +48,7 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = current_user  # only allow current user
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

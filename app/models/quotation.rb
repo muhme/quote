@@ -48,5 +48,5 @@ class Quotation < ApplicationRecord
     ret += self.source unless self.source.blank?
     ret
   end
-  
+
 end

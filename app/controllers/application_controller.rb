@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :current_user_session, :current_user, :access?, :has_non_public, :can_edit?
+  helper_method :current_user_session, :current_user, :access?, :has_non_public, :can_edit?, :sql_quotations_for_category, :sql_quotations_for_author
 
   protected
 
@@ -15,7 +15,29 @@ class ApplicationController < ActionController::Base
     end
   
   private
-  
+
+    # give user context visible quotations for a category
+    def sql_quotations_for_category(category_id)
+      sql = "select q.* from quotations q, categories_quotations cq where cq.quotation_id = q.id and cq.category_id = '#{category_id}'"
+      if current_user
+        sql += " and q.public = 1 or q.user_id = #{current_user.id}" unless current_user.admin
+      else
+        sql += " and q.public = 1"
+      end
+      return sql
+    end
+    
+    # give user context visible quotations for an author
+    def sql_quotations_for_author(author_id)
+      sql = "select * from quotations where author_id = '#{author_id}'"
+      if current_user
+        sql += " and public = 1 or user_id = #{current_user.id}" unless current_user.admin
+      else
+        sql += " and public = 1"
+      end
+      return sql
+    end
+
     # return true is the user is logged in and is an admin, or the owner
     # else returns false and redirect to forbidden
     #

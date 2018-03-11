@@ -12,7 +12,7 @@
     odd_or_even = 0
     for category in @categories
         odd_or_even = 1 - odd_or_even
-        quotations = category.quotation_ids.size
+        quotations = Quotation.find_by_sql(sql_quotations_for_category(category.id)).size
     %>
         <tr valign="top" class="ListLine<%= odd_or_even %>">
             <td><%= th(category.category,40) %></td>

@@ -4,8 +4,7 @@ class QuotationsController < ApplicationController
 
   # GET /quotations
   # GET /quotations?pattern=berlin
-  # get all public for not logged in users and
-  # own entries for logged in users and all entries for admins
+  # get all public for not logged in users and own entries for logged in users and all entries for admins
   def index
     pattern = params[:pattern].blank? ? "%" : params[:pattern]
     sql = "select * from quotations where quotation like '%" + pattern + "%' "
@@ -106,39 +105,19 @@ class QuotationsController < ApplicationController
       return false
     end
     @category = Category.find params[:category]
-
-    sql = 'select distinct q.* from quotations q, categories c, categories_quotations cq where category_id = ? and quotation_id = q.id'
-# TODO
-#    if not logged_in?
-#      sql += " and q.public = 1"
-#    elsif current_user.admin != true
-#      sql += ' and ( q.public = 1 or q.user_id = ? )'
-#    end
-    
-    sql_array = []
-    sql_array << sql
-    sql_array << params[:category]
-# TODO
-#    sql_array << self.current_user.id if logged_in? and self.current_user.admin != true;
-    @quotations = Quotation.paginate_by_sql sql_array, :page=>params[:page], :per_page=>5
+    @quotations = Quotation.paginate_by_sql sql_quotations_for_category(@category.id), :page=>params[:page], :per_page=>5
   end
   
   # select * from `quotations` where q.public = 1 and author_id = ?
   def list_by_author
+    unless Author.exists? params[:author]
+      flash[:error] = "Kann den Autor \"#{params[:author]}\" nicht finden!"
+      redirect_to root_url
+      return false
+    end
     @author = Author.find params[:author]
-    
-    sql = 'select * from quotations where author_id = ?'
-# TODO
-#    if not logged_in?
-#      sql += " and public = 1"
-#    elsif self.current_user.admin != true
-#     sql += ' and ( public = 1 or user_id = ? )'
-#    end
-    
-    sql_array = [sql, params[:author]]
-# TODO
-#    sql_array << self.current_user.id if logged_in? and self.current_user.admin != true;
-    @quotations = Quotation.paginate_by_sql sql_array, :page=>params[:page], :per_page=>5
+    @quotations = Quotation.paginate_by_sql sql_quotations_for_author(@author.id), :page=>params[:page], :per_page=>5
+
   end
   
   # for admins list all not public categories

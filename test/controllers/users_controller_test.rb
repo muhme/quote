@@ -16,14 +16,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-# TODO commented out, as not working at the moment
-#  test "should create user" do
-#    assert_difference('User.count') do
-#      post users_url, params: { user: { login: "second" } }
-#    end
-#
-#    assert_redirected_to user_url(User.last)
-#  end
+  test "should create user" do
+    assert_difference('User.count') do
+      post users_url, params: { user: { login: "second", email: "second@bla.com" , password: "123QWEasd", password_confirmation: "123QWEasd" } }
+    end
+
+    assert_redirected_to root_url
+  end
 
   # user, e.g. /users/1/show
   test "not displaying user details ever" do
@@ -37,17 +36,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
-  # TODO only own user
-  # test "should get edit" do
-  #  get edit_user_url(@user)
-  #  assert_response :success
-  # end
+  test "should get edit" do
+    get edit_user_url(@first_user)
+    assert_redirected_to root_url
+  end
 
-# TODO make useful
-#  test "should update user" do
-#    patch user_url(@first_user), params: { user: { admin: @user.admin, crypted_password: @user.crypted_password, email: @user.email, login: @user.login, password_salt: @user.password_salt } }
-#    assert_redirected_to user_url(@user)
-#  end
+  test "should update user" do
+    patch user_url(@first_user), params: { user: { login: "first+", email: "first_plus@bla.com" , password: "123QWEasd", password_confirmation: "123QWEasd" } }
+    assert_redirected_to root_url
+  end
 
   test "destroy user not allowed" do
     delete '/users/1'

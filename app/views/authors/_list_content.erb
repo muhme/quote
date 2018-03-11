@@ -12,7 +12,7 @@
     odd_or_even = 0
     for author in @authors
         odd_or_even = 1 - odd_or_even
-        quotations = author.quotation_ids.size
+        quotations = Quotation.find_by_sql(sql_quotations_for_author(author.id)).size
     %>
         <tr valign="top" class="ListLine<%= odd_or_even %>">
             <td><%= raw author_name(author.firstname, author.name) %></td>

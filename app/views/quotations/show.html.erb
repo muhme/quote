@@ -3,7 +3,6 @@
     categories = []
     for r in @quotation.categories
         categories[categories.length - 1] += ", " if categories.length > 0
-        # i = Category.find(r.id).quotations.find(:all).size TODO delete
         i = Category.find_by_id(r.id).quotation_ids.size
         category = h(r.category)
         categories << link_to(category, {:action => 'list_by_category', :category => r.id},
