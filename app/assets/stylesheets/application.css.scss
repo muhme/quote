@@ -17,14 +17,14 @@ body {
     font-family: verdana, arial, helvetica, sans-serif;
     background-color: #ddffdd;
     color: #000;
-    background-image: url(../assets/flower.png);
+    background-image: image-url("flower.png");
     background-repeat:no-repeat;
     background-attachment:fixed;
     background-position: bottom right;
 }
 @font-face {
   font-family: "Gondoliere";
-  src: url(Gondoliere.ttf) format("truetype");
+  src: font-url("Gondoliere.ttf") format("truetype");
 }
 #side {
     position: fixed;
