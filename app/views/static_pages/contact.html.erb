@@ -11,8 +11,11 @@ Wir werden die Zitate, die unter Ihr Urheberrecht fallen, unverzüglich löschen
 <h2>Zusatzerklärung</h2>
 <p>Für den Inhalt extern verlinkter Seiten ist ausschließlich der jeweilige Betreiber verantwortlich.</p>
 <h2>Design &amp; Entwicklung</h2>
-<p>Rails Version: <%= Rails.version %> </p>
-<p>Umgebung: <%= ENV['RAILS_ENV'] %></p>
+<p>
+  Server: <%= ENV['HOSTNAME'] %><br />
+  Rails Version: <%= Rails.version %><br />
+  Umgebung: <%= ENV['RAILS_ENV'] %>
+</p>
 <p>Die Webanwendung <a href="https://www.zitat-service.de">www.zitat-service.de</a> wurde erstellt durch:</p><p><a style="border: 0px;" href="https://www.consulting.heikol.de">
     <%= image_tag("systemberatung.png", :alt => "Link zu consulting.heiko.de", :title => "Systemberatung Heiko Lübbe") %></a>
 </p>

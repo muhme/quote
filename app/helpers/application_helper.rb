@@ -1,5 +1,55 @@
 module ApplicationHelper
-  
+
+  # Create a SEO page title.
+  def page_title
+
+    d = "Zitat-Service"
+
+    if controller.controller_name == "author"
+      if controller.action_name == "list_by_letter"
+        d += " - Autoren die mit " + params[:letter].first + " beginnen"
+      elsif controller.action_name == "show"
+        d += " - Autor " + @author.get_author_name_or_blank
+      else
+        d += " - Autoren"
+      end
+    end
+
+    if controller.controller_name == "category"
+      if controller.action_name == "show"
+        d += " - Kategorie " + @category.category
+      else
+        d += " - Kategorien"
+        d += " die mit " + params[:letter].first + " beginnen" if controller.action_name == "list_by_letter"
+      end
+    end
+
+    if controller.controller_name == "quotation"
+      if controller.action_name == "show"
+        d += " - Zitat von " + @quotation.get_author_name_or_blank
+      else
+        d += " - Zitate"
+        d += " von " + @author.get_author_name_or_blank if controller.action_name == "list_by_author"
+        d += " zu " + @category.category if controller.action_name == "list_by_category"
+        d += " des Benutzers " + h(params[:user]) if controller.action_name == "list_by_user"
+      end
+    end
+
+    d += " - Fehler 404 - Eintrag nicht gefunden" if controller.action_name == "not_found"
+    d += " - Impressum" if controller.action_name == "contact"
+    d += " - Projekt" if controller.action_name == "project"
+    d += " - Statusreport" if controller.action_name == "report"
+    d += " - Anmelden" if controller.action_name == "login"
+    d += " - Eintragen" if controller.action_name == "signup"
+    d += " - Hier wird Dir geholfen!" if controller.action_name == "help"
+    d += " - Zitate in die eigene Homepage einbinden" if controller.action_name == "use"
+    d += " - Zitate mit Joomla! in die eigene Homepage einbinden" if controller.action_name == "joomla"
+
+    d += ", Seite #{params[:page]}" if params[:page]
+
+    d
+  end  
+
   # gives nice number in singular or plural
   # e.g. "0 Zitate", 1 Zitat", "2 Zitate", "4.711 Zitate"
   def nnsp(number, singular, plural)

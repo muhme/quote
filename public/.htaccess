@@ -1,0 +1,9 @@
+# hlu, 2018, March 15th
+# zitat-service.de
+
+AddDefaultCharset utf-8
+
+RewriteEngine On
+
+# QSA - pass query strings, L - last rule
+RewriteRule ^quote$ cgi-bin/quote.cgi [QSA,L]
