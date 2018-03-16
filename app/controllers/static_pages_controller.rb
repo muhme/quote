@@ -75,10 +75,6 @@ class StaticPagesController < ApplicationController
     end
   end
   
-  def search
-    redirect_to :controller => 'quotation', :action => 'list', :pattern => params[:find]
-  end
-  
   # routed for '*path' catch all
   def not_found
     render :status => 404

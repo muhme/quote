@@ -26,43 +26,43 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get joomla" do
-    get static_pages_joomla_url
+    get start_joomla_url
     assert_response :success
   end
 
   test "should get humans" do
-    # get static_pages_humans_url
+    # get start_humans_url
     get "/humans.txt"
     assert_response :success
   end
 
   test "should get contact" do
-    get static_pages_contact_url
+    get start_contact_url
     assert_response :success
   end
 
   test "should get joomla_english" do
-    get static_pages_joomla_english_url
+    get start_joomla_english_url
     assert_response :success
   end
 
   test "should get project" do
-    get static_pages_project_url
+    get start_project_url
     assert_response :success
   end
 
   test "should get use" do
-    get static_pages_use_url
+    get start_use_url
     assert_response :success
   end
 
   test "should get help" do
-    get static_pages_help_url
+    get start_help_url
     assert_response :success
   end
 
   test "should get list" do
-    get static_pages_list_url
+    get start_list_url
     assert_response :success
   end
   

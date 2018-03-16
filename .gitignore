@@ -19,3 +19,8 @@
 .byebug_history
 
 /public/assets/*
+
+# hlu, Mar 16th 2018: as found on DigitalOcean production server
+.ruby-gemset
+.ruby-version
+vendor/bundle

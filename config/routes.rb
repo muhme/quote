@@ -1,27 +1,23 @@
 Rails.application.routes.draw do
-  
-  get 'static_pages/joomla'
-  get 'static_pages/humans'
-  get 'static_pages/contact'
-  get 'static_pages/joomla_english'
-  get 'static_pages/project'
-  get 'static_pages/use'
-  get 'static_pages/help'
-  get 'static_pages/list'
-  get 'static_pages/search'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   
   root to: 'static_pages#list'
-  
+
+  # static_pages controller with historical and nicer 'start' URL
+  get 'start/joomla'        , to: 'static_pages#joomla'
+  get 'start/humans'        , to: 'static_pages#humans'
+  get 'start/contact'       , to: 'static_pages#contact'
+  get 'start/joomla_english', to: 'static_pages#joomla_english'
+  get 'start/project'       , to: 'static_pages#project'
+  get 'start/use'           , to: 'static_pages#use'
+  get 'start/help'          , to: 'static_pages#help'
+  get 'start/list'          , to: 'static_pages#list'
   # start from the beginning with a direct URL "joomla" instead "start/joomla"
-  get 'joomla', to: 'static_pages#joomla'
-  # map.connect 'joomla', :controller => 'start', :action => 'joomla'
-  # map.connect 'joomla_english', :controller => 'start', :action => 'joomla'
+  get 'joomla'              , to: 'static_pages#joomla'
 
   # dynamic generated humans.txt
   get 'humans.txt', to: 'static_pages#humans'
-  # map.connect 'humans.txt', :controller => 'start', :action => 'humans'
   
   get 'categories/list_no_public', to: 'categories#list_no_public'
   get 'categories/list_by_letter/:letter', to: 'categories#list_by_letter'
@@ -36,12 +32,10 @@ Rails.application.routes.draw do
   
   # default controller routes
   resources :authors, :categories, :quotations
-  resources :static_pages, except: [ :show, :create, :new, :edit, :update, :destroy ]
   resources :users, except: [ :index, :show, :destroy ]
   resources :user_sessions, except: [ :index, :show, :edit, :update ]
   
   get 'login', to: 'user_sessions#new'
-# not needed in railscast    post 'login', to: 'user_sessions#create'
   get 'logout', to: 'user_sessions#destroy'
   
   get 'forbidden', to: 'static_pages#forbidden'
