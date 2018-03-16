@@ -88,7 +88,7 @@ class QuotationsController < ApplicationController
 
   # list quotations created by a user
   def list_by_user
-    unless User.exists? params[:user]
+    unless User.exists?(:login => params[:user])
       flash[:error] = "Kann Benutzer \"#{params[:user]}\" nicht finden!"
       redirect_to root_url
       return false

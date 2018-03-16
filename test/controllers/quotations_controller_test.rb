@@ -30,9 +30,9 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
   end
   
   test "list_by_user method" do
-    get '/quotations/list_by_user/1'
+    get '/quotations/list_by_user/' + users(:first_user).login
     assert_response :success
-    get '/quotations/list_by_user/4711'
+    get '/quotations/list_by_user/jhrefoqg'
     assert_redirected_to root_url
   end
   

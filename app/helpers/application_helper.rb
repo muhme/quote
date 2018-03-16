@@ -5,7 +5,7 @@ module ApplicationHelper
 
     d = "Zitat-Service"
 
-    if controller.controller_name == "author"
+    if controller.controller_name == "authors"
       if controller.action_name == "list_by_letter"
         d += " - Autoren die mit " + params[:letter].first + " beginnen"
       elsif controller.action_name == "show"
@@ -15,7 +15,7 @@ module ApplicationHelper
       end
     end
 
-    if controller.controller_name == "category"
+    if controller.controller_name == "categories"
       if controller.action_name == "show"
         d += " - Kategorie " + @category.category
       else
@@ -24,7 +24,7 @@ module ApplicationHelper
       end
     end
 
-    if controller.controller_name == "quotation"
+    if controller.controller_name == "quotations"
       if controller.action_name == "show"
         d += " - Zitat von " + @quotation.get_author_name_or_blank
       else
@@ -39,11 +39,12 @@ module ApplicationHelper
     d += " - Impressum" if controller.action_name == "contact"
     d += " - Projekt" if controller.action_name == "project"
     d += " - Statusreport" if controller.action_name == "report"
-    d += " - Anmelden" if controller.action_name == "login"
+    d += " - Anmelden" if controller.controller_name == "user_sessions" and controller.action_name == "new"
     d += " - Eintragen" if controller.action_name == "signup"
     d += " - Hier wird Dir geholfen!" if controller.action_name == "help"
     d += " - Zitate in die eigene Homepage einbinden" if controller.action_name == "use"
     d += " - Zitate mit Joomla! in die eigene Homepage einbinden" if controller.action_name == "joomla"
+    d += " - Using quotes with Joomla! for the own homepage" if controller.action_name == "joomla_english"
 
     d += ", Seite #{params[:page]}" if params[:page]
 
@@ -51,7 +52,7 @@ module ApplicationHelper
   end  
 
   # gives nice number in singular or plural
-  # e.g. "0 Zitate", 1 Zitat", "2 Zitate", "4.711 Zitate"
+  # e.g. "0 Zitate", "1 Zitat", "2 Zitate", "4.711 Zitate"
   def nnsp(number, singular, plural)
     return nice_number(number) + ' ' + ( number == 1 ? singular : plural )
   end
