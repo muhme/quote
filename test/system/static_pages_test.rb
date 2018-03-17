@@ -8,22 +8,22 @@ class StaticPagessTest < ApplicationSystemTestCase
   end
   
   test "contact" do
-    check_page page, "static_pages/contact", "h1", "Impressum", 500
+    check_page page, "start/contact", "h1", "Impressum", 500
     assert_equal page.title, "Zitat-Service - Impressum"
   end
   
   test "help" do
-    check_page page, "static_pages/help", "h1", "Hilfe", 3000
+    check_page page, "start/help", "h1", "Hilfe", 3000
     assert_equal page.title, "Zitat-Service - Hier wird Dir geholfen!"
   end
   
   test "project" do
-    check_page page, "static_pages/project", "h1", "Projekt", 1500
+    check_page page, "start/project", "h1", "Projekt", 1500
     assert_equal page.title, "Zitat-Service - Projekt"
   end
   
   test "use" do
-    check_page page, "static_pages/use", "h1", "Zitate einbinden", 3000
+    check_page page, "start/use", "h1", "Zitate einbinden", 3000
       assert_equal page.title, "Zitat-Service - Zitate in die eigene Homepage einbinden"
   end
   
@@ -37,14 +37,14 @@ class StaticPagessTest < ApplicationSystemTestCase
   end
     
   test "joomla_english" do
-    check_page page, "static_pages/joomla_english", "h2", "Examples", 2500
+    check_page page, "start/joomla_english", "h2", "Examples", 2500
     assert_equal page.title, "Zitat-Service - Using quotes with Joomla! for the own homepage"
   end
 
   test "UTF-8 German Umlaut" do
-    check_page page, "static_pages/use", "p", "für", 3000
-    check_page page, "static_pages/use", "p", "geöffnet", 3000
-    check_page page, "static_pages/use", "p", "Änderung", 3000
+    check_page page, "start/use", "p", "für", 3000
+    check_page page, "start/use", "p", "geöffnet", 3000
+    check_page page, "start/use", "p", "Änderung", 3000
   end
   
 end

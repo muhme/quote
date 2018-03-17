@@ -1,7 +1,7 @@
 <p>Deutsche Leser bitte zu: <%= link_to 'joomla', :action => 'joomla' %>.</p>
 
-<h1>Using Quotes in <%= link_to(image_tag("joomla.png", :alt => "Joomla! Logo", :title => "Joomla!", :border => "0"), 'http://www.joomla.org', :class => 'not_dashed') %></h1>
-<p>This page describes how to use random quotations from <a href="http://www.zitat-service.de">www.zitat-service.de</a> in <a href="http://www.joomla.org">CMS Joomla!</a>. Free and w/o ad's you can display randomized quotes from whole collection, only from selected author, only from selected category or from your own uploaded quotes. Most quotes are in German, but you have a nice selection of English quotations with category 'English'.</p>
+<h1>Using Quotes in <%= link_to(image_tag("joomla.png", :alt => "Joomla! Logo", :title => "Joomla!", :border => "0"), 'https://www.joomla.org', :class => 'not_dashed') %></h1>
+<p>This page describes how to use random quotations from <a href="https://www.zitat-service.de">www.zitat-service.de</a> in <a href="https://www.joomla.org">CMS Joomla!</a>. Free and w/o ad's you can display randomized quotes from whole collection, only from selected author, only from selected category or from your own uploaded quotes. Most quotes are in German, but you have a nice selection of English quotations with category 'English'.</p>
 <div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_25_0_small.png", :alt => "Joomla! 2.5 Extension Manager", :title => "Joomla! 2.5 Extension Manager", :border => "1"), '../assets/joomla_25_0.png', :class => "not_dashed") %></div>
 <h2>Joomla! Versions 1.6 ... 3.0
 <%=
@@ -30,12 +30,12 @@
   <li>You can set a minimal module height (e.g. 20ex or 100px). For testing you can use the category WebDesignTest which contains the shortest and largest quotation.</li>
 </ul>
 <div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("parameter_small.png", :alt => "Joomla! 1.5 Modulparameter", :title => "Joomla! 1.5 Modulparameter", :border => "1"), '../assets/parameter.png', :class => "not_dashed") %></div>
-<h2>Joomla! Version 1.5 <img src="http://archive.extensions.joomla.org/assets/jed/compat_15_native.png" alt="Joomla! 1.5 Native" title="Joomla! 1.5 Native"></h2>
+<h2>Joomla! Version 1.5 <%= image_tag("joomla15.png", :alt => "Joomla! 1.5 kompatibel", :title => "Joomla! 1.5 kompatibel") %></h2>
 <p>Last module version is 1.2.1 from December, 10th 2010: Installation and configuration is the same, but you have to use:</p>
 <ul>
 	<li><%= $l=url_for(:only_path => false, :action => 'joomla') + '/mod_zitat_service_j15_1.2.1.zip'; link_to $l, $l %></li>
 </ul>
-<h2>Joomla! Version 1.0 <img src="http://docs.joomla.org/images/d/d3/Compat_10.png" alt="Joomla! 1.0 Native" title="Joomla! 1.0 Native"></h2>
+<h2>Joomla! Version 1.0 <%= image_tag("joomla10.png", :alt => "Joomla! 1.0 Native", :title => "Joomla! 1.0 Native") %></h2>
 <p>Last module version is 1.1.2 from May, 13th 2009: Installation and configuration is the same, but you have to use:
 <ul>
 	<li><%= $l=url_for(:only_path => false, :action => 'joomla') + '/mod_zitat_service_j10_1.1.2.zip'; link_to $l, $l %></li>

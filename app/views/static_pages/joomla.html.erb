@@ -1,6 +1,6 @@
 <p>English readers please jump to <%= link_to 'joomla_english', :action => 'joomla_english' %>.</p>
-<h1>Zitate in <%= link_to(image_tag("joomla.png", :alt => "Joomla! Logo", :title => "Joomla!", :border => "0"), 'http://www.joomla.org', :class => 'not_dashed') %> einbinden</h1>
-<p>Diese Seite beschreibt die Möglichkeiten zum Einbinden der Zitate von <a href="http://www.zitat-service.de">www.zitat-service.de</a> in das <a href="http://www.joomla.org">CMS Joomla!</a>. Kosten- und Werbefrei können Zufalls-Zitate in Joomla! von Autoren, Kategorien oder der eigenen Zitatesammlung angezeigt werden.</p>
+<h1>Zitate in <%= link_to(image_tag("joomla.png", :alt => "Joomla! Logo", :title => "Joomla!", :border => "0"), 'https://www.joomla.org', :class => 'not_dashed') %> einbinden</h1>
+<p>Diese Seite beschreibt die Möglichkeiten zum Einbinden der Zitate von <a href="https://www.zitat-service.de">www.zitat-service.de</a> in das <a href="https://www.joomla.org">CMS Joomla!</a>. Kosten- und Werbefrei können Zufalls-Zitate in Joomla! von Autoren, Kategorien oder der eigenen Zitatesammlung angezeigt werden.</p>
 <div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_4_small.png", :alt => "Joomla! 3.0 Modulzuweisung", :title => "Joomla! 3.0 Modulzuweisung", :border => "1"), '../assets/joomla_30_4.png', :class => "not_dashed") %></div>
 <div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_1_small.png", :alt => "Joomla! 3.0 Status Veröffentlicht", :title => "Joomla! 3.0 Details", :border => "1"), '../assets/joomla_30_1.png', :class => "not_dashed") %></div>
 <div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_0_small.png", :alt => "Joomla! 3.0 Module-Installation", :title => "Joomla! 3.0 Module-Installation", :border => "1"), '../assets/joomla_30_0.png', :class => "not_dashed") %></div>
@@ -35,11 +35,11 @@ Standardmässig werden die Zitate im gleichen Fenster geöffnet. Mit den optiona
   <li>Da bei der asynchronen Abfragemethode das Zitat geholt wird nachdem die Seite schon aufgebaut wurde können nachfolgende Module <i>springen</i>. Das Modul sollte daher das letzte in einer Reihe sein (damit nach unten Platz ist) oder ein horizontaler Platz freigehalten werden. Die minimale Höhe des Moduls kann mit dem letzten Parameter angegeben werden, wenn keine eigener CSS existiert. Die Höhe kann z.B. mit 20ex oder 100px angegeben werden. Zum Testen der Höhe ist die Kategorie WebDesignTest gut geeignet da sie die kürzesten und längsten Zitate enthält.</li>
 </ul>
 <div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("parameter_small.png", :alt => "Joomla! 1.5 Modulparameter", :title => "Joomla! 1.5 Modulparameter", :border => "1"), '../assets/parameter.png', :class => "not_dashed") %></div>
-<h2>Für Joomla! Version 1.5 <img src="http://archive.extensions.joomla.org/images/jed/compat_15_native.png" alt="Joomla! 1.5 Native" title="Joomla! 1.5 Native"></h2>
+<h2>Für Joomla! Version 1.5 <%= image_tag("joomla15.png", :alt => "Joomla! 1.5 kompatibel", :title => "Joomla! 1.5 kompatibel") %></h2>
 <p>Letzte Modul-Version 1.2.1 vom 10. Dezember 2010: Installation und Konfiguration wie oben, nur das folgende Modul benutzen:<br/>
 <%= link_to url_for(:only_path => false) + '/mod_zitat_service_j15_1.2.1.zip', 'joomla/mod_zitat_service_j15_1.2.1.zip'  %>,</li>
 </p>
-<h2>Für Joomla! Version 1.0 <img src="http://docs.joomla.org/images/d/d3/Compat_10.png" alt="Joomla! 1.0 Native" title="Joomla! 1.0 Native"></h2>
+<h2>Für Joomla! Version 1.0 <%= image_tag("joomla10.png", :alt => "Joomla! 1.0 Native", :title => "Joomla! 1.0 Native") %></h2>
 <p>Letzte Modul-Version 1.1.2 vom 13. Mai 2009: Installation und Konfiguration wie oben, nur das folgende Modul benutzen:<br/>
 <%= link_to url_for(:only_path => false) + '/mod_zitat_service_j10_1.1.2.zip', 'joomla/mod_zitat_service_j10_1.1.2.zip'  %>,</li>
 </p>
@@ -66,8 +66,7 @@ div.quote div.source, div.quote div.source a {<br>
 <ul>
   <li><a href="http://www.bruderbund-moersch.de">Gesangverein Bruderbund Mörsch 1900 e.V.</a> - aus allen Zitaten, auf der linken Seite</li>
   <li><a href="http://www.neuekinder.de">Neue Kinder</a> - Zitate der Kategorie Buddhismus, auf der rechten Seite</a></li>
-  <li><a href="http://www.fsv1950-wachow-tremmen.de">FSV Wachow-Tremmen e.V.</a> - Zitate der Kategorie Fussball, auf der rechten Seite mit freigehaltener Höhe</a></li>
-  <li><a href="http://www.consulting.heikol.de">Systemberatung Heiko Lübbe</a> - Zitate des Benutzes heiko, aus der Kategorie Programmieren und mit angepassten CSS, oben rechts</li>
+  <li><a href="https://www.consulting.heikol.de">Systemberatung Heiko Lübbe</a> - Zitate des Benutzes heiko, aus der Kategorie Programmieren und mit angepassten CSS, oben rechts</li>
 </ul>
 <h2>Fehler oder Erweiterungen</h2>
 <p>
