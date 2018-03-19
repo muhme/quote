@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 #
 # quote.pl
-# hlu, Sep/17/2006 - Mar/15/2018
+# hlu, Sep/17/2006 - Mar/19/2018
 
 use strict;
 use CGI;
@@ -34,7 +34,7 @@ sub linkIt($$$) {
     my $quotation = shift;
     my $window = shift;
 
-    $quotation = "<a href=\"http://www.zitat-service.de/quotation/show/$id\" target=\"" . $window . "\">$quotation</a>" if $id;
+    $quotation = "<a href=\"https://www.zitat-service.de/quotations/$id\" target=\"" . $window . "\">$quotation</a>" if $id;
 
     return $quotation;
 }

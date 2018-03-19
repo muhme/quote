@@ -8,6 +8,7 @@ muhme/quote - Rails web application, serving [zitat-service.de](https://www.zita
 ## Installation
 Short command list, used on AWS Cloud9 EC2 with Amazon Linux AMI 2017.09:
 ```
+$ sudo yum install -y perl-CGI yum install perl-DBD-MySQL
 $ git clone https://github.com/muhme/quote
 $ cd quote
 $ rvm use ruby-2.4.1@quote --ruby-version --create # ignore ln: failed to create sym link
