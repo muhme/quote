@@ -1,9 +1,9 @@
 <p>English readers please jump to <%= link_to 'joomla_english', :action => 'joomla_english' %>.</p>
 <h1>Zitate in <%= link_to(image_tag("joomla.png", :alt => "Joomla! Logo", :title => "Joomla!", :border => "0"), 'https://www.joomla.org', :class => 'not_dashed') %> einbinden</h1>
 <p>Diese Seite beschreibt die Möglichkeiten zum Einbinden der Zitate von <a href="https://www.zitat-service.de">www.zitat-service.de</a> in das <a href="https://www.joomla.org">CMS Joomla!</a>. Kosten- und Werbefrei können Zufalls-Zitate in Joomla! von Autoren, Kategorien oder der eigenen Zitatesammlung angezeigt werden.</p>
-<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_4_small.png", :alt => "Joomla! 3.0 Modulzuweisung", :title => "Joomla! 3.0 Modulzuweisung", :border => "1"), '../assets/joomla_30_4.png', :class => "not_dashed") %></div>
-<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_1_small.png", :alt => "Joomla! 3.0 Status Veröffentlicht", :title => "Joomla! 3.0 Details", :border => "1"), '../assets/joomla_30_1.png', :class => "not_dashed") %></div>
-<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_0_small.png", :alt => "Joomla! 3.0 Module-Installation", :title => "Joomla! 3.0 Module-Installation", :border => "1"), '../assets/joomla_30_0.png', :class => "not_dashed") %></div>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_4_small.png", :alt => "Joomla! 3.0 Modulzuweisung", :title => "Joomla! 3.0 Modulzuweisung", :border => "1"), asset_url('joomla_30_4.png'), :class => "not_dashed") %></div>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_1_small.png", :alt => "Joomla! 3.0 Status Veröffentlicht", :title => "Joomla! 3.0 Details", :border => "1"),  asset_url('joomla_30_1.png'), :class => "not_dashed") %></div>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_0_small.png", :alt => "Joomla! 3.0 Module-Installation", :title => "Joomla! 3.0 Module-Installation", :border => "1"),  asset_url('joomla_30_0.png'), :class => "not_dashed") %></div>
 <h2>Für Joomla! Versionen 1.6 ... 3.0
 <%=
 	image_tag("joomla16.png", :alt => "Joomla! 1.6 kompatibel", :title => "Joomla! 1.6 kompatibel") +
@@ -15,33 +15,33 @@
 <p>Modul-Version 1.3 vom 4. April 2013. Im Joomla! Backend als Administrator:</p>
 <ul>
   <li>das Modul mod_zitat_service_de über "Erweiterungen | Installieren" von der folgenden Webadresse installieren:<br />
-<%= link_to url_for(:only_path => false) + '/mod_zitat_service_de_1.3.zip', 'joomla/mod_zitat_service_de_1.3.zip'  %>,</li>
+<%= link_to_joomla 'mod_zitat_service_de_1.3.zip' %>,</li>
   <li>dann das Modul auf "Veröffentlicht" setzen über "Erweiterungen | Module",</li>
   <li>die gewünschte Position im Template einstellen (z.B. position-7) und</li>
   <li>das Module den gewünschten Menüs zuordnen (z.B. "Auf allen Seiten").</li>
 </ul>
-<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_2_small.png", :alt => "Joomla! 3.0 Basis-Optionen", :title => "Joomla! 3.0 Basis-Optionen", :border => "1"), '../assets/joomla_30_2.png', :class => "not_dashed") %></div>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_2_small.png", :alt => "Joomla! 3.0 Basis-Optionen", :title => "Joomla! 3.0 Basis-Optionen", :border => "1"), asset_url('joomla_30_2.png'), :class => "not_dashed") %></div>
 <p>Mit den Basisoptionen des Moduls ist es möglich die angezeigten Zitate:</p>
 <ul>
   <li>auf einen Autor (z.B. Goethe),</li>
   <li>eine Kategorie (z.B. Fussball) oder</li>
   <li>auf die selbst eingestellten Zitate mit dem eigenen Benutzernamen einzuschränken.</li>
 </ul>
-<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_3_small.png", :alt => "Joomla! 3.0 Status Veröffentlicht", :title => "Joomla! 3.0 Details", :border => "1"), '../assets/joomla_30_3.png', :class => "not_dashed") %></div>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_3_small.png", :alt => "Joomla! 3.0 Status Veröffentlicht", :title => "Joomla! 3.0 Details", :border => "1"), asset_url('joomla_30_3.png'), :class => "not_dashed") %></div>
 Standardmässig werden die Zitate im gleichen Fenster geöffnet. Mit den optionalen Parametern kann:</p>
 <ul>
   <li>der Name eines Fensters (z.B. quote) angegeben werden und die Zitate, Quell- b.z.w. Autor-Links öffnen sich dann in einem neuen Fenster.</li>
   <li>Mit der Abfragemethode kann eingestellt werden wie das Zitat geholt wird. Die empfohlende Abfragemethode ist Asynchron mit JavaScript im Web-Browser. Der Seitenaufbau wird beschleunigt indem das Zitat erst nach dem Seitenaufbau geholt wird. Diese Option ist auch zwingend, wenn der Abruf des Zitates aus Joomla nicht möglich ist, z.B. weil allow_url_fopen in PHP ausgeschaltet ist.</li>
   <li>Da bei der asynchronen Abfragemethode das Zitat geholt wird nachdem die Seite schon aufgebaut wurde können nachfolgende Module <i>springen</i>. Das Modul sollte daher das letzte in einer Reihe sein (damit nach unten Platz ist) oder ein horizontaler Platz freigehalten werden. Die minimale Höhe des Moduls kann mit dem letzten Parameter angegeben werden, wenn keine eigener CSS existiert. Die Höhe kann z.B. mit 20ex oder 100px angegeben werden. Zum Testen der Höhe ist die Kategorie WebDesignTest gut geeignet da sie die kürzesten und längsten Zitate enthält.</li>
 </ul>
-<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("parameter_small.png", :alt => "Joomla! 1.5 Modulparameter", :title => "Joomla! 1.5 Modulparameter", :border => "1"), '../assets/parameter.png', :class => "not_dashed") %></div>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("parameter_small.png", :alt => "Joomla! 1.5 Modulparameter", :title => "Joomla! 1.5 Modulparameter", :border => "1"), asset_url('parameter.png'), :class => "not_dashed") %></div>
 <h2>Für Joomla! Version 1.5 <%= image_tag("joomla15.png", :alt => "Joomla! 1.5 kompatibel", :title => "Joomla! 1.5 kompatibel") %></h2>
 <p>Letzte Modul-Version 1.2.1 vom 10. Dezember 2010: Installation und Konfiguration wie oben, nur das folgende Modul benutzen:<br/>
-<%= link_to url_for(:only_path => false) + '/mod_zitat_service_j15_1.2.1.zip', 'joomla/mod_zitat_service_j15_1.2.1.zip'  %>,</li>
+<%= link_to_joomla 'mod_zitat_service_j15_1.2.1.zip' %>,</li>
 </p>
 <h2>Für Joomla! Version 1.0 <%= image_tag("joomla10.png", :alt => "Joomla! 1.0 Native", :title => "Joomla! 1.0 Native") %></h2>
 <p>Letzte Modul-Version 1.1.2 vom 13. Mai 2009: Installation und Konfiguration wie oben, nur das folgende Modul benutzen:<br/>
-<%= link_to url_for(:only_path => false) + '/mod_zitat_service_j10_1.1.2.zip', 'joomla/mod_zitat_service_j10_1.1.2.zip'  %>,</li>
+<%= link_to_joomla 'mod_zitat_service_j10_1.1.2.zip' %>,</li>
 </p>
 <h2>Anpassung der Darstellung</h2>
 <p>Die Darstellung des Zitats kann per cascading stylesheets (CSS) angepasst werden.

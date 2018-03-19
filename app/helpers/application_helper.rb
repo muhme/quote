@@ -155,4 +155,9 @@ module ApplicationHelper
     truncate(ret, length: 40, escape: false)
   end
   
+  # link to zip's in public/joomla
+  def link_to_joomla(url)
+    link_to(url, '/joomla/' + url)
+  end
+  
 end
