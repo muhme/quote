@@ -31,12 +31,15 @@ ActiveRecord::Schema.define(version: 20180221052756) do
     t.datetime "updated_at", null: false
     t.boolean "public", default: false
     t.bigint "user_id"
+    t.index ["public"], name: "index_categories_on_public"
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
   create_table "categories_quotations", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "category_id", null: false
     t.bigint "quotation_id", null: false
+    t.index ["category_id", "quotation_id"], name: "index_categories_quotations_on_category_id_and_quotation_id"
+    t.index ["quotation_id", "category_id"], name: "index_categories_quotations_on_quotation_id_and_category_id"
   end
 
   create_table "quotations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
