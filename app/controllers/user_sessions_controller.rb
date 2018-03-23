@@ -5,7 +5,6 @@ class UserSessionsController < ApplicationController
   end
 
   def create
-    
     @user_session = UserSession.new(user_session_params.to_h)
     if @user_session.save
       flash[:notice] = "Hallo #{current_user.login}, schön dass Du da bist."

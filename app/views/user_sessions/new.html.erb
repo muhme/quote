@@ -10,6 +10,7 @@
       <% end %>
     </ul>
   </div>
+  <p>Wenn Du schon einen Benutzernamen angelegt hattest, dann kannst Du das <%= link_to 'Kennwort mit einer E-Mail zurücksetzen', :controller => 'password_resets', :action => 'new' %>.</p>
 <% end %>
   
 <div class="field">
@@ -25,4 +26,4 @@
 </div>
 <% end %>
 
-<p><p>Du hast noch keinen Benutzer?<br>Dann lege Dir bitte selbst einen Benutzer an. Dann kannst Du selbst Zitate anlegen und bearbeiten: <%= link_to "Register", new_user_path %></p>
+<p>Du hast noch keinen Benutzer?<br>Dann lege Dir bitte selbst einen Benutzer an. Dann kannst Du Zitate anlegen und bearbeiten: <%= link_to "Register", new_user_path %></p>

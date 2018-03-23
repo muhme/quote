@@ -1,0 +1,13 @@
+<h1>Kennwort zurücksetzen</h1>
+ 
+<p>Das Kennwort für einen existierenden Benutzereintrag kann selbst zurück gesetzt werden.</p>
+<p>Dazu wird an die Email-Adresse ein Link geschickt.</p>
+ 
+<div class="actions">
+  <%= form_tag password_resets_path do %>
+    <%= label_tag(:email, "Email-Adresse") %><br />
+    <%= text_field_tag(:email, '', autofocus: true) %><br /><br />
+    <%= submit_tag "Email schicken" %>
+    &nbsp; <%= link_to(image_tag("arrow_undo.png", :alt => "Pfeil zurück", :title => "Zurück", :border => "0"), root_url) %>
+</div>
+<% end %>
