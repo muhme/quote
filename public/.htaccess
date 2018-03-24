@@ -31,6 +31,8 @@ RewriteRule quotation[/]*$                             /quotations              
 RewriteRule category[/]*$                              /categories                   [R=301,L,NE]
 RewriteRule author[/]*$                                /authors                      [R=301,L,NE]
 RewriteRule ^quotation/show/([0-9]+)$                  /quotations/$1                [R=301,L,NE]
+RewriteRule ^category/show/([0-9]+)$                   /categories/$1                [R=301,L,NE]
+RewriteRule ^author/show/([0-9]+)$                     /authors/$1                   [R=301,L,NE]
 #
 RewriteCond %{REQUEST_URI}  ^/category/list_by_letter$
 RewriteCond %{QUERY_STRING} ^letter=([A-Z\*])$
