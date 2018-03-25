@@ -32,4 +32,4 @@
 en:
   will_paginate:
     previous_label: '&laquo;'
-    next_label: '&laquo;'
+    next_label: '&raquo;'
