@@ -47,4 +47,12 @@ class StaticPagessTest < ApplicationSystemTestCase
     check_page page, "start/use", "p", "Änderung", 3000
   end
   
+  test "not found" do
+    ["/bla", "/bla.html", "/bla.png", "/bla.gif", "/bla.css", "/bla.js", "/quotations.jpg",
+     "/a/b", "/a/b.html", "/a/b.png", "/a/b.gif", "/a/b.css", "/a/b.js", "/authors/0.jpg"
+    ].each {
+      |url| check_page(page, url, "h1", "404", 200)
+    }
+  end
+  
 end

@@ -26,7 +26,7 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get joomla" do
-    get start_joomla_url
+    get joomla_url
     assert_response :success
   end
 

@@ -1,4 +1,6 @@
 class StaticPagesController < ApplicationController
+  protect_from_forgery except: :not_found
+
   def joomla
   end
   
@@ -77,6 +79,13 @@ class StaticPagesController < ApplicationController
   
   # routed for '*path' catch all
   def not_found
-    render :status => 404
+    # set error only for first call, e.g. for "bla.png", not for second call e.g. "bla" if not .html
+    flash[:error] = "Seite \"#{request.original_url}\" nicht gefunden!" if flash[:error].blank?
+    respond_to do |format|
+      format.html { render :status => 404 }
+      # handle all kind of ending .jpg, .png or .bla
+      format.all { redirect_to controller: 'static_pages', action: 'not_found' }
+    end
   end
+
 end
