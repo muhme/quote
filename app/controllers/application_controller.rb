@@ -2,6 +2,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user_session, :current_user, :access?, :has_non_public, :can_edit?, :sql_quotations_for_category, :sql_quotations_for_author
 
+  rescue_from ActionController::UnknownFormat do |exception|
+    logger.error exception.message
+    # render plain: '404 Not found', status: 404 
+    redirect_to(controller: 'static_pages', action: 'not_found', original_url: request.original_url)
+  end
+
   protected
 
     def handle_unverified_request

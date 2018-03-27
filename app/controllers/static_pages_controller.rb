@@ -79,12 +79,14 @@ class StaticPagesController < ApplicationController
   
   # routed for '*path' catch all
   def not_found
-    # set error only for first call, e.g. for "bla.png", not for second call e.g. "bla" if not .html
-    flash[:error] = "Seite \"#{request.original_url}\" nicht gefunden!" if flash[:error].blank?
+    
+    @original_url = params[:original_url]
+    if @original_url.blank?
+      @original_url = request.original_url
+    end
+    
     respond_to do |format|
-      format.html { render :status => 404 }
-      # handle all kind of ending .jpg, .png or .bla
-      format.all { redirect_to controller: 'static_pages', action: 'not_found' }
+      format.all { render :status => 404, :formats => 'html', content_type: "text/html" }
     end
   end
 

@@ -51,7 +51,7 @@ class StaticPagessTest < ApplicationSystemTestCase
     ["/bla", "/bla.html", "/bla.png", "/bla.gif", "/bla.css", "/bla.js", "/quotations.jpg",
      "/a/b", "/a/b.html", "/a/b.png", "/a/b.gif", "/a/b.css", "/a/b.js", "/authors/0.jpg"
     ].each {
-      |url| check_page(page, url, "h1", "404", 200)
+      |url| check_page(page, url, "h1", "404", 150)
     }
   end
   
