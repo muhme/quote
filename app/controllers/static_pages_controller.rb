@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
   def joomla
   end
   
-    # dynamic generated humans.txt
+  # dynamic generated humans.txt
   def humans
     # create alphab. sorted list of user's login name with number of quotations, like:
     # anton (4)
@@ -79,12 +79,7 @@ class StaticPagesController < ApplicationController
   
   # routed for '*path' catch all
   def not_found
-    
-    @original_url = params[:original_url]
-    if @original_url.blank?
-      @original_url = request.original_url
-    end
-    
+    @original_url = params[:original_url] || request.original_url
     respond_to do |format|
       format.all { render :status => 404, :formats => 'html', content_type: "text/html" }
     end
