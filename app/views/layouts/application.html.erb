@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= request.path.eql?('/start/joomla_english') ? 'en' : 'de' %>">
   <head>
     <title><%= page_title %></title>
     <%= csrf_meta_tags %>

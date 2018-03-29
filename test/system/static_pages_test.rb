@@ -24,7 +24,7 @@ class StaticPagessTest < ApplicationSystemTestCase
   
   test "use" do
     check_page page, "start/use", "h1", "Zitate einbinden", 3000
-      assert_equal page.title, "Zitat-Service - Zitate in die eigene Homepage einbinden"
+    assert_equal page.title, "Zitat-Service - Zitate in die eigene Homepage einbinden"
   end
   
   test "humans" do
@@ -53,6 +53,16 @@ class StaticPagessTest < ApplicationSystemTestCase
     ].each {
       |url| check_page(page, url, "h1", "404", 150)
     }
+  end
+  
+  test "HTML lang" do
+    [root_url, joomla_url, authors_url, author_url(Author.find_by_name('public_author'))].each {
+      |url|
+        visit url
+        assert page.source.match('<html [^>]+lang="de">')
+    }
+    visit start_joomla_english_url
+    assert page.source.match('<html [^>]+lang="en">')
   end
   
 end
