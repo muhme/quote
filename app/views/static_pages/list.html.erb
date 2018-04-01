@@ -4,12 +4,9 @@
 <p>
   <%= form_tag("/quotations", method: "get") do %>
     <%= label_tag(:find, "In allen Zitaten suchen:") %><br />
-    <%= text_field_tag(:pattern) %>
+    <%= text_field_tag(:pattern, '', autofocus: true) %>
     <%= submit_tag("Finden") %>
   <% end %>
-  <script type="text/javascript">
-    document.forms[0].result_pattern.focus();
-  </script>
 </p>
 <% unless @quotation.nil? %>
   <p>
