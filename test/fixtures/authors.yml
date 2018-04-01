@@ -19,3 +19,13 @@ public_false:
 without_quotes:
   name: Author Entry not related to any quotation
   user_id: 1
+  
+# create five thousend authors (in April 2018 we have 523 authors)
+<% 100.upto(5100) do |i| %>
+fix_<%= i %>:
+  id: <%= i %>
+  name: <%= i %>_author
+  description: Description for <%= i %>_author
+  public: <%= i % 2 == 0 ? 'true' : 'false' %>
+  user_id: 1
+<% end %>

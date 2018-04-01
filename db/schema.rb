@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322095709) do
+ActiveRecord::Schema.define(version: 20180401092625) do
 
   create_table "authors", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", limit: 64
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20180322095709) do
     t.bigint "user_id"
     t.bigint "author_id"
     t.index ["author_id"], name: "index_quotations_on_author_id"
+    t.index ["public"], name: "index_quotations_on_public"
     t.index ["user_id"], name: "index_quotations_on_user_id"
   end
 

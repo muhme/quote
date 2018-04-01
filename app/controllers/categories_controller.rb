@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   # GET /categories
   def index
 
-    sql =  "select * from categories c"
+    sql =  "select distinct * from categories c"
     sql += " where c.public = 1" if not current_user or current_user.admin != true
     sql += " or c.user_id = #{current_user.id}" if current_user and current_user.admin != true
     sql += params[:order] == 'categories' ?

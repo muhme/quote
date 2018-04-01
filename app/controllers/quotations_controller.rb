@@ -7,7 +7,7 @@ class QuotationsController < ApplicationController
   # get all public for not logged in users and own entries for logged in users and all entries for admins
   def index
     pattern = params[:pattern].blank? ? "%" : params[:pattern]
-    sql = "select * from quotations where quotation like '%" + pattern + "%' "
+    sql = "select distinct * from quotations where quotation like '%" + pattern + "%' "
     if current_user
       sql += " and public = 1 or user_id = #{current_user.id}" unless current_user.admin
     else

@@ -6,7 +6,7 @@ class AuthorsController < ApplicationController
   # own entries for logged in users and all entries for admins
   def index
   
-    sql =  "select * from authors a"
+    sql =  "select distinct * from authors a"
     sql += " where public = 1" if not current_user or current_user.admin != true
     sql += " or user_id = #{current_user.id}" if current_user and current_user.admin != true
     sql += params[:order] == 'authors' ?

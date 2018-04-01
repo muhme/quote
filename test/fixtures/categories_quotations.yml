@@ -3,3 +3,19 @@
 one:
   category_id: 1
   quotation_id: 1
+  
+# create five thousend direct assignments from one category to one quote
+<% 100.upto(5100) do |i| %>
+fix_<%= i %>:
+  category_id: <%= i %>
+  quotation_id: <%= i %>
+<% end %>
+
+# create additional 10 categories for 500 quotes
+<% 100.upto(600) do |i| %>
+<% 10.times do |j| %>
+fix_<%= i %>_<%= j %>:
+  category_id: <%= i + j + 1 %>
+  quotation_id: <%= i %>
+<% end %>
+<% end %>

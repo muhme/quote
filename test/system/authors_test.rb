@@ -12,12 +12,21 @@ class AuthorsTest < ApplicationSystemTestCase
   test "author_letter_a" do
     check_page page, "/authors/list_by_letter/A", "h1", "Autor", 200
     assert_equal page.title, "Zitat-Service - Autoren die mit A beginnen"
+    
+    # slow performance seen with user w/o admin rights logged in
+    visit login_url
+    fill_in 'user_session_login', with: 'first_user'
+    fill_in 'user_session_password', with: 'first_user_password'
+    click_on 'Anmelden'
+    
   end
 
   # /authors/list_by_letter/*
   test "author_not_letter" do
     check_page page, "/authors/list_by_letter/*", "h1", "Autor", 200
     assert_equal page.title, "Zitat-Service - Autoren die mit * beginnen"
+    check_page page, "/authors/list_by_letter/A", "h1", "Autor", 200
+    assert_equal page.title, "Zitat-Service - Autoren die mit A beginnen"
   end
   
   # e.g. /authors/1

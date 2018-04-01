@@ -13,3 +13,12 @@ public_false:
   author_id: 1
   public: false
 
+# create ten thousend quotes (April 2018 we have 1,332)
+<% 100.upto(10100) do |i| %>
+fix_<%= i %>:
+  id: <%= i %>
+  quotation: <%= i %>_quotation
+  public: <%= i % 2 == 0 ? 'true' : 'false' %>
+  user_id: 1
+  author_id: 1
+<% end %>

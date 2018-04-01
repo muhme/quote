@@ -17,3 +17,13 @@ without_quotes:
   category: three
   description: Description for 3rd category
   user_id: 1
+
+# create five thousand categories (April 2018 we have 533 categories)
+<% 100.upto(5100) do |i| %>
+fix_<%= i %>:
+  id: <%= i %>
+  category: <%= i %>_category
+  description: Description for <%= i %>_category
+  public: <%= i % 2 == 0 ? 'true' : 'false' %>
+  user_id: 1
+<% end %>

@@ -25,7 +25,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
   test "list_by_category method" do
     get '/quotations/list_by_category/1'
     assert_response :success
-    get '/quotations/list_by_category/4711'
+    get '/quotations/list_by_category/42000000'
     assert_redirected_to root_url
   end
   
