@@ -19,6 +19,7 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal "1.234", nice_number(1234)
     assert_equal "0", nice_number(0)
     assert_equal "42", nice_number(42)
+    assert_equal "1.004", nice_number(1004)
   end
 
   test "author_name method simple" do

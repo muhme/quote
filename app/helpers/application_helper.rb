@@ -60,9 +60,7 @@ module ApplicationHelper
   # Produces nice number, e.g. 1.234 instead of 1234
   def nice_number(number)
     return number.to_s if number < 1000
-    thousend = number / 1000
-    rest = number % 1000
-    return "#{thousend}.#{rest}"
+    number.to_s.reverse.scan(/\d{1,3}/).join(".").reverse
   end
 
   # gives links to the authors by 1st letter as four-rows-table
