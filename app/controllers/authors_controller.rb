@@ -98,7 +98,7 @@ class AuthorsController < ApplicationController
       return
     end
     if letter == "*"
-      sql = "select * from authors where name NOT REGEXP '[A-Z].*'"
+      sql = "select * from authors where name NOT REGEXP '^[A-Z].*'"
     else
       sql = "select * from authors where name like ?"
     end

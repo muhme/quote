@@ -93,7 +93,7 @@ class CategoriesController < ApplicationController
       return
     end
     if letter == "*"
-      sql = "select * from categories where category NOT REGEXP '[A-Z].*'"
+      sql = "select * from categories where category NOT REGEXP '^[A-Z].*'"
     else
       sql = "select * from categories where category like ?"
     end
