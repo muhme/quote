@@ -28,7 +28,7 @@ class UsersTest < ApplicationSystemTestCase
     fill_in 'user_session_password', with: 'special_user_password'
     click_on 'Anmelden'
     check_page page, new_author_url, "h1", "Autor anlegen", 300
-    get '/logout'
+    visit logout_url
     check_page page, login_url, "h1", "Login", 300
   end
 

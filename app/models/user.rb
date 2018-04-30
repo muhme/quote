@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   acts_as_authentic do |c|
     # allow non-ASCCI characters (e.g. äöü) in email address
-    c.validates_format_of_email_field_options = {:with => Authlogic::Regex.email_nonascii}
+    c.validates_format_of_email_field_options = {:with => Authlogic::Regex::EMAIL_NONASCII}
     # disable login field checks (e.g. allow spaces), only used temporary for manual testing, not enabled for new user on production
     # c.validate_login_field = false
   end
