@@ -90,6 +90,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   
   # Force all access to the app over transport layer security and use secure cookies.
-  config.force_ssl = true
+  config.force_ssl = false # don't force to use HSTS
 
 end
