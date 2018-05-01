@@ -24,3 +24,6 @@
 .ruby-gemset
 .ruby-version
 vendor/bundle
+
+# simplecov for measure code test coverage
+coverage
