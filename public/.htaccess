@@ -1,4 +1,4 @@
-# hlu, 2018, March 15th
+# hlu, 2018, March 15th - 2018, May 17th
 # zitat-service.de
 #
 #   R - redirect
@@ -23,7 +23,7 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # CGI Perl script
 #
-RewriteRule ^quote$ cgi-bin/quote.cgi [QSA,L]
+RewriteRule ^quote$ fcgi-bin/quote.cgi [QSA,L]
 
 # permanent redirect for changed URL's from Rails 2.0 to Rail 5.1.5 update
 #

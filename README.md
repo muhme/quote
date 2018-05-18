@@ -3,7 +3,7 @@
 muhme/quote - Rails web application, serving [zitat-service.de](https://www.zitat-service.de)
 * 2006 developed with Rails 1.2
 * 2009 migrated to Rails 2.0
-* 2018 migrated to Rails 5.1.5
+* 2018 migrated to Rails 5.1.5 / 5.2.0
 
 ## Installation
 Short command list, used on AWS Cloud9 EC2 with Amazon Linux AMI 2017.09:

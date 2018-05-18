@@ -1,10 +1,10 @@
 #!/usr/bin/perl -w
 #
 # quote.pl
-# hlu, Sep/17/2006 - Mar/19/2018
+# hlu, Sep/17/2006 - May/17/2018
 
 use strict;
-use CGI;
+use CGI::Fast;
 use DBI;
 
 my $DSN = $ENV{'QUOTE_DSN'}; # e.g. 'DBI:mysql:quote_production:localhost';
@@ -86,7 +86,8 @@ sub authorAndSource($$$$$$) {
 # starting with version 1.2, December 2010 JavaScriptFunction is used. JavaScript
 # parameter could be removed some years later (check htaccess for usage before).
 {
-    my $cgi = new CGI;
+
+  while (my $cgi = CGI::Fast->new) {
 
     my $encoding = $cgi->param('encoding'); # useful are ISO-8859-1 and UTF-8
     my $category = $cgi->param('category');
@@ -177,4 +178,5 @@ sub authorAndSource($$$$$$) {
     print $cgi->end_html() unless $content_only;
 
     $dbh->disconnect if $dbh;
+  }
 }
