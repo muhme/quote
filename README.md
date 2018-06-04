@@ -6,6 +6,13 @@ muhme/quote - Rails web application, serving [zitat-service.de](https://www.zita
 * 2018 migrated to Rails 5.1.5 / 5.2.0
 
 ## Installation
+### 1st Method Docker
+Pick up the the three files docker-compose.yaml, db.Dockerfile and rails.Dockerfile and run:
+```
+$ docker-compose up
+```
+Then you have zitat-service running whith a dataset from beginning of June 2018: http://localhost:8102 
+### 2nd Method AWS Cloud9 EC2
 Short command list, used on AWS Cloud9 EC2 with Amazon Linux AMI 2017.09:
 ```
 $ sudo yum install -y perl-CGI yum install perl-DBD-MySQL
