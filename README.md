@@ -6,12 +6,26 @@ muhme/quote - Rails web application, serving [zitat-service.de](https://www.zita
 * 2018 migrated to Rails 5.1.5 / 5.2.0
 
 ## Installation
+You can use your own Rails development envrironment. For starters there are two installation methods described following. 1st is to use Docker and second is to use AWS Cloud9.
 ### 1st Method Docker
-Pick up the the three files docker-compose.yaml, db.Dockerfile and rails.Dockerfile and run:
 ```
+$ git clone https://github.com/muhme/quote quote
+$ cd quote
+$ docker-compose build
 $ docker-compose up
 ```
-Then you have zitat-service running whith a dataset from beginning of June 2018: http://localhost:8102 
+Then you have three containers running:
+* quote_mariadb - MariaDB database server
+** database admin is root/root
+** database quote_development with user quote_development/quote_development created and June 2018 database export loaded
+** database quote_test with user quote_test/quote_test created
+* quote_mysqladmin - phpMyAdmin (user root/root)
+** http://localhost:8101 
+* quote_rails - Rails web application zitat-service
+** http://localhost:8102 
+** getting Shell with: "docker exec -it quote_rails bash" and run e.g. "rails test"
+** local directory with cloned GitHub repository is mounted into container
+```
 ### 2nd Method AWS Cloud9 EC2
 Short command list, used on AWS Cloud9 EC2 with Amazon Linux AMI 2017.09:
 ```

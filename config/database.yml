@@ -20,6 +20,7 @@ development:
   <<: *default
   database: quote_development
   username: quote_development
+  host: db	# using hostname 'db' in Docker environment
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -28,6 +29,8 @@ test:
   <<: *default
   database: quote_test
   username: quote_test
+  password: quote_test
+  host: db	# using hostname 'db' in Docker environment
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

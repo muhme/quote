@@ -31,6 +31,8 @@ services:
     build:
       context: .
       dockerfile: rails.Dockerfile
+    volumes:
+      - .:/quote
     environment:
       QUOTE_DATABASE_PASSWORD: quote_development      
     ports:
