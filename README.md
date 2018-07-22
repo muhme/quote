@@ -16,16 +16,15 @@ $ docker-compose up
 ```
 Then you have three containers running:
 * quote_mariadb - MariaDB database server
-** database admin is root/root
-** database quote_development with user quote_development/quote_development created and June 2018 database export loaded
-** database quote_test with user quote_test/quote_test created
+  * database admin is root/root
+  * database quote_development with user quote_development/quote_development created and June 2018 database export loaded
+  * database quote_test with user quote_test/quote_test created
 * quote_mysqladmin - phpMyAdmin (user root/root)
-** http://localhost:8101 
+  * http://localhost:8101
 * quote_rails - Rails web application zitat-service
-** http://localhost:8102 
-** getting Shell with: "docker exec -it quote_rails bash" and run e.g. "rails test"
-** local directory with cloned GitHub repository is mounted into container
-```
+  * http://localhost:8102
+  * getting Shell with: "docker exec -it quote_rails bash" and run e.g. "rails test"
+  * local directory with cloned GitHub repository is mounted into container
 ### 2nd Method AWS Cloud9 EC2
 Short command list, used on AWS Cloud9 EC2 with Amazon Linux AMI 2017.09:
 ```
