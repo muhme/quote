@@ -122,9 +122,10 @@ module ApplicationHelper
     ret.blank? ? "&nbsp;" : ret
   end
   
-  # do an html_escape() and remove "http://" and set a visible link
+  # do an html_escape() and remove "http://" or "https://" and set a visible link
   def lh(link)
-    link_to(link[7..link.size], link, :popup => true) if link =~ /^http:\/\//i
+    return link_to(link[7..link.size], link, :popup => true) if link =~ /^http:\/\//i
+    link_to(link[8..link.size], link, :popup => true) if link =~ /^https:\/\//i
   end
 
   # gives an HTML-IMG if the param has the desired value

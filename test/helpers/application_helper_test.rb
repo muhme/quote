@@ -59,4 +59,16 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal "<b>Ä</b>sop", author_name(nil, "Äsop")
   end
 
+  test "lh without link" do
+    assert_nil lh("Donald J. Trump")
+  end
+
+  test "lh with http link" do
+    assert_equal "<a popup=\"true\" href=\"http://www.zitat-service.de\">www.zitat-service.de</a>", lh("http://www.zitat-service.de")
+  end
+
+  test "lh with https link" do
+    assert_equal "<a popup=\"true\" href=\"https://www.zitat-service.de\">www.zitat-service.de</a>", lh("https://www.zitat-service.de")
+  end
+
 end
