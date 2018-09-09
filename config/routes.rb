@@ -12,8 +12,9 @@ Rails.application.routes.draw do
   get 'start/use'            => 'static_pages#use'
   get 'start/help'           => 'static_pages#help'
   get 'start/list'           => 'static_pages#list'
-  # start from the beginning with a direct URL "joomla" instead "start/joomla"
+  # start from the beginning with a direct URL, e.g. "joomla" instead "start/joomla"
   get 'joomla'               => 'static_pages#joomla'
+  get 'joomla_english'       => 'static_pages#joomla_english'
 
   # dynamic generated humans.txt
   get 'humans.txt' => 'static_pages#humans'
