@@ -9,7 +9,7 @@ muhme/quote - Rails web application, serving [zitat-service.de](https://www.zita
 You can use your own Rails development envrironment. For starters there are two installation methods described following. 1st is to use Docker and second is to use AWS Cloud9.
 ### 1st Method Docker
 ```
-$ git clone https://github.com/muhme/quote quote
+$ git clone https://github.com/muhme/quote
 $ cd quote
 $ docker-compose up
 ```
@@ -23,7 +23,7 @@ Then you have four containers running:
 * quote_rails - Rails web application zitat-service
   * http://localhost:8102
   * getting Shell with: "docker exec -it quote_rails bash"
-  * running function tests with "docker exec -it quote_rails rails test"
+  * running function tests with "docker exec -it quote_rails rails t"
   * running system tests using Chrome browser on Selenium container with "docker exec -ti quote_rails rails test:system"
   * local directory with cloned GitHub repository is mounted into container
 * quote_chrome - Selenium Standalone with Chrome and VNC server
