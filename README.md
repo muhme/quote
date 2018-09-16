@@ -52,12 +52,7 @@ $ rake db:create && rake db:migrate
 $ rails server
 ```
 Click on 'Preview' and choose 'Preview Running Application'. In the new small window click on the top right 'Pop out in new window' and you see the web application running. For Testing you have to set your host in file config/environments/test.rb.
-## Testing
 
-* rails test - to run automated tests
-* rails test:system - to run automated headless Chrome system tests
-
-### Headless Chrome system tests
 To run the headless chrome system tests you have to do some more installation, see https://intoli.com/blog/installing-google-chrome-on-centos:
 ```
 $ cd /tmp
@@ -66,6 +61,10 @@ $ unzip chromedriver_linux64.zip
 $ sudo mv chromedriver /usr/local/bin
 $ curl https://intoli.com/install-google-chrome.sh | bash
 ```
+## Testing
+
+* rails test - to run automated tests (actual test coverage is 95% :)
+* rails test:system - to run automated headless Chrome system tests (actual test coverage is 78% :|
 
 ## Contact
 
