@@ -11,10 +11,9 @@ You can use your own Rails development envrironment. For starters there are two 
 ```
 $ git clone https://github.com/muhme/quote quote
 $ cd quote
-$ docker-compose build
 $ docker-compose up
 ```
-Then you have three containers running:
+Then you have four containers running:
 * quote_mariadb - MariaDB database server
   * database admin is root/root
   * database quote_development with user quote_development/quote_development created and June 2018 database export loaded
@@ -23,8 +22,12 @@ Then you have three containers running:
   * http://localhost:8101
 * quote_rails - Rails web application zitat-service
   * http://localhost:8102
-  * getting Shell with: "docker exec -it quote_rails bash" and run e.g. "rails test"
+  * getting Shell with: "docker exec -it quote_rails bash"
+  * running function tests with "docker exec -it quote_rails rails test"
+  * running system tests using Chrome browser on Selenium container with "docker exec -ti quote_rails rails test:system"
   * local directory with cloned GitHub repository is mounted into container
+* quote_chrome - Selenium Standalone with Chrome and VNC server
+  * vnc://localhost:8104 - to see browser working in test:system (using the password: secret)
 ### 2nd Method AWS Cloud9 EC2
 Short command list, used on AWS Cloud9 EC2 with Amazon Linux AMI 2017.09:
 ```
@@ -48,7 +51,7 @@ $ bundle install
 $ rake db:create && rake db:migrate
 $ rails server
 ```
-Click on 'Preview' and choose 'Preview Running Application'. In the new small window click on the top right 'Pop out in new window' and you see the web application running.
+Click on 'Preview' and choose 'Preview Running Application'. In the new small window click on the top right 'Pop out in new window' and you see the web application running. For Testing you have to set your host in file config/environments/test.rb.
 ## Testing
 
 * rails test - to run automated tests

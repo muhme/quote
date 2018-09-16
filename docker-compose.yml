@@ -1,6 +1,6 @@
 # docker-compose.yaml - compose three docker images (mariadb with loaded test data, phpmysqladmin and Rails) to run zitat-service.de
 #
-version: '3'
+version: '3.5'
 services:
   db:
     container_name: quote_mariadb
@@ -37,7 +37,14 @@ services:
       QUOTE_DATABASE_PASSWORD: quote_development      
     ports:
       - "8102:3000"
+      - "8103:3100"
     depends_on:
       - db
-    
-
+      - chrome
+  chrome:
+    container_name: quote_chrome
+    image: selenium/standalone-chrome-debug
+    ports:
+      - "8104:5900"
+    volumes:
+      - /dev/shm:/dev/shm

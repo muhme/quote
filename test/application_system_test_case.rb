@@ -1,8 +1,21 @@
 require "test_helper"
+require 'capybara/rails'
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
-  driven_by :selenium_chrome_headless, screen_size: [1400, 1400] 
+  # w/o Docker
+  # driven_by :selenium_chrome_headless, screen_size: [1400, 1400] 
+
+  # see https://medium.com/@pacuna/using-rails-5-1-system-tests-with-docker-a90c52ed0648
+  driven_by :selenium, using: :chrome, screen_size: [1400, 1400], options: {url: "http://chrome:4444/wd/hub"}
+  #
+  def setup
+    host! "http://rails:3100"
+    super
+  end
+  # puma listening port 3100 on TEST 
+  Capybara.server_port = 3100
+  Capybara.server_host = "0.0.0.0"
 
   # visiting page with given path, finding content for selector, verifying minimum page size and loading speed
   #
