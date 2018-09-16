@@ -41,6 +41,11 @@ class StaticPagessTest < ApplicationSystemTestCase
     assert_equal page.title, "Zitat-Service - Using quotes with Joomla! for the own homepage"
   end
 
+  test "direct route joomla_english" do
+    check_page page, "joomla_english", "h2", "Examples", 2500
+    assert_equal page.title, "Zitat-Service - Using quotes with Joomla! for the own homepage"
+  end
+
   test "UTF-8 German Umlaut" do
     check_page page, "start/use", "p", "für", 3000
     check_page page, "start/use", "p", "geöffnet", 3000
