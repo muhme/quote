@@ -3,7 +3,7 @@
 muhme/quote - Rails web application, serving [zitat-service.de](https://www.zitat-service.de)
 * 2006 developed with Rails 1.2
 * 2009 migrated to Rails 2.0
-* 2018 migrated to Rails 5.1.5 / 5.2.1
+* 2018 migrated to Rails 5.1.5 / 5.2.1 / 5.2.2
 
 ## Installation
 You can use your own Rails development envrironment. For starters there are two installation methods described following. First and recommended is to use Docker and second alternative is to use AWS Cloud9.
