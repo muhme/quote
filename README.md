@@ -4,6 +4,7 @@ muhme/quote - Rails web application, serving [zitat-service.de](https://www.zita
 * 2006 developed with Rails 1.2
 * 2009 migrated to Rails 2.0
 * 2018 migrated to Rails 5.1.5 / 5.2.1 / 5.2.2
+* 2019 migrated to Rails 5.2.3
 
 ## Installation
 You can use your own Rails development envrironment. For starters there are two installation methods described following. First and recommended is to use Docker and second alternative is to use AWS Cloud9.
@@ -65,6 +66,11 @@ $ curl https://intoli.com/install-google-chrome.sh | bash
 
 * rails test - to run automated tests (actual test coverage is 95% :)
 * rails test:system - to run automated headless Chrome system tests (actual test coverage is 78% :|
+
+If your're using Docker, go into container first with:
+```
+$ docker exec -it quote_rails /bin/bash
+```
 
 ## Contact
 
