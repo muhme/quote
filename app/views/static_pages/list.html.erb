@@ -1,5 +1,4 @@
 <h1>Herzlich Willkommen beim Zitat-Service</h1>
-
 <p>Eine gemeinsame Sammlung von Zitaten mit Links zu Autoren und Textstellen. Zum Einbinden auf den eigenen Webseiten sortiert nach Autor, Stichwort oder Benutzer. Aktuell haben wir <%= nice_number(Quotation.count) %> Zitate, von <%= nice_number(Author.count) %> Autoren in <%= nice_number(Category.count) %> Kategorien.</p>
 <p>
   <%= form_tag("/quotations", method: "get") do %>
@@ -22,10 +21,6 @@
 <% end %>
 <h2>Dankeschön</h2>
 <p><%= User.count %> Benutzer haben sich eingetragen. Die zuletzt eingestellten Zitate sind von <%= raw @users[0] %>, <%= raw @users[1] %> und <%= raw @users[2] %>.</p>
-<div style="float: right; margin-left: 3em; margin-bottom: 3ex;">
-<script src="https://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like-box href="https://www.facebook.com/pages/zitat-servicede/158799934165305#!/pages/zitat-servicede/158799934165305" width="292" connections="10" stream="false" header="false"></fb:like-box>
-</div>
-<div style="">
 <h2>News</h2>
 <dl>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 24. März 2018</dt>
@@ -48,5 +43,4 @@
     <dd>Der Platz für die Zitate wurden auf 512 Zeichen verdoppelt. Die Kategorie <a href="quotations/list_by_category/287">WebDesignTest</a> umfasst die kürzesten und längsten Zitate.</dd>
   <dt><%= image_tag("twitter.png", :alt => "twitter", :title => "Twitter") %> 3. September 2009</dt>
     <dd>Folge uns auf twitter: <a href="https://twitter.com/zitat">@zitat</a></dd>
-</div>
 </dl>
