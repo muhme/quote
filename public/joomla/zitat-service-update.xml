@@ -1,0 +1,16 @@
+<updates>
+	<update>
+		<name>zitat-service.de</name>
+		<description>Automatic update Joomla module zitat-service.de</description>
+		<element>mod_zitat_service_de</element>
+		<type>module</type>
+		<version>1.0.0</version>
+		<downloads>
+			<downloadurl type="full" format="zip">https://www.zitat-service.de/joomla/mod_zitat_service_de_1.4.zip</downloadurl>
+		</downloads>
+		<maintainer>Heiko Lübbe</maintainer>
+		<maintainerurl>https://github.com/muhme/quote/issues</maintainerurl>
+		<targetplatform name="joomla" version=".*"/>
+		<client>site</client>
+	</update>
+</updates>
