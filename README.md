@@ -74,4 +74,4 @@ $ docker exec -it quote_rails /bin/bash
 
 ## Contact
 
-Don't hesitate to ask if you have any questions.
+Don't hesitate to ask if you have any questions or comments.
