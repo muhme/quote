@@ -3,19 +3,82 @@ class User < ApplicationRecord
   has_many :quotations
   has_many :categories
   has_many :authors
+
+  # EMAIL_NONASCII copied from authlogic-4.4.3/lib/authlogic/regex.rb as is deprecated/deleted
+  #
+  # A draft regular expression for internationalized email addresses. Given
+  # that the standard may be in flux, this simply emulates @email_regex but
+  # rather than allowing specific characters for each part, it instead
+  # disallows the complement set of characters:
+  #
+  # - email_name_regex disallows: @[]^ !"#$()*,/:;<=>?`{|}~\ and control characters
+  # - domain_head_regex disallows: _%+ and all characters in email_name_regex
+  # - domain_tld_regex disallows: 0123456789- and all characters in domain_head_regex
+  #
+  # http://en.wikipedia.org/wiki/Email_address#Internationalization
+  # http://tools.ietf.org/html/rfc6530
+  # http://www.unicode.org/faq/idn.html
+  # http://ruby-doc.org/core-2.1.5/Regexp.html#class-Regexp-label-Character+Classes
+  # http://en.wikipedia.org/wiki/Unicode_character_property#General_Category
+  EMAIL_NONASCII = /
+    \A
+    [^[:cntrl:][@\[\]\^ \!"\#$\(\)*,\/:;<=>?`{|}~\\]]+                        # mailbox
+    @
+    (?:[^[:cntrl:][@\[\]\^ \!\"\#$&\(\)*,\/:;<=>\?`{|}~\\_.%+']]+\.)+         # subdomains
+    (?:[^[:cntrl:][@\[\]\^ \!\"\#$&\(\)*,\/:;<=>\?`{|}~\\_.%+\-'0-9]]{2,25})  # TLD
+    \z
+  /x
+
+# LOGIN = /\A[[:alnum:]_][[:alnum:]\.+\-_@ ]+\z/
+LOGIN = /\A[^[:cntrl:][@\[\]\^\!"\#$\(\)*,\/:;<=>?`{|}~\\]]+\z/
+
+validates :email,
+  format: {
+    with: EMAIL_NONASCII,
+    message: proc {
+      ::Authlogic::I18n.t(
+        "error_messages.email_invalid",
+        default: "should look like an email address."
+      )
+    }
+  },
+  length: { maximum: 64 },
+  uniqueness: false
+
+validates :login,
+  format: {
+    with: LOGIN,
+    message: proc {
+      ::Authlogic::I18n.t(
+        "error_messages.login_invalid",
+        default: "should use only letters, numbers, spaces, and .-_@+ please."
+      )
+    }
+  },
+  length: { within: 3..32 },
+  uniqueness: true
+
+  validates :password,
+    confirmation: { if: :require_password? },
+    length: {
+      minimum: 8,
+      if: :require_password?
+    }
+  validates :password_confirmation,
+    length: {
+      minimum: 8,
+      if: :require_password?
+  }
   
-  validates :login, presence: true, length: { maximum: 32 }, uniqueness: true
-  validates :email, presence: true, length: { maximum: 64 }, uniqueness: false
   validates :crypted_password, presence: false, length: { maximum: 255 }, uniqueness: false
   validates :password_salt, presence: false, length: { maximum: 255 }, uniqueness: false
 
   acts_as_authentic do |c|
-    # allow non-ASCCI characters (e.g. äöü) in email address
-    c.validates_format_of_email_field_options = {:with => Authlogic::Regex::EMAIL_NONASCII}
-    # disable login field checks (e.g. allow spaces), only used temporary for manual testing, not enabled for new user on production
-    # c.validate_login_field = false
+    c.validate_email_field = false
+    c.validate_login_field = false
+    c.validate_password_field = false
   end
-
+  
   def deliver_password_reset_instructions!
     reset_perishable_token!
     UserMailer.password_reset(self).deliver_now

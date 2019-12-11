@@ -52,7 +52,22 @@ class UserTest < ActiveSupport::TestCase
     @user.password_salt = "a" * 256
     assert_not @user.valid?
   end
-  
+  test "non-ascii character, but UTF8 letter in login name" do
+    @user.login = "lübbe"
+    assert @user.valid?
+  end
+  test "non-ascii character, but UTF8 letter in email address" do
+    @user.email = "heiko.lübbe@somewhere.de"
+    assert @user.valid?
+  end
+  test "@ char needed in email address" do
+    @user.email = "bla"
+    assert_not @user.valid?
+  end
+  test "spaces in login name are possible" do
+    @user.login = "james bond"
+    assert @user.valid?
+  end
   test "user's admin defaults to false" do
     @user.save
     assert @user.admin == false

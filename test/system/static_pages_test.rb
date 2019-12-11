@@ -64,10 +64,10 @@ class StaticPagessTest < ApplicationSystemTestCase
     [root_url, joomla_url, authors_url, author_url(Author.find_by_name('public_author'))].each {
       |url|
         visit url
-        assert page.source.match('<html [^>]+lang="de">')
+        assert page.source.match('<html lang="de">')
     }
     visit start_joomla_english_url
-    assert page.source.match('<html [^>]+lang="en">')
+    assert page.source.match('<html lang="en">')
   end
   
 end
