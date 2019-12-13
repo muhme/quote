@@ -33,17 +33,39 @@ class UserTest < ActiveSupport::TestCase
   test "user's login have to be unique" do
     @user.save
     duplicate = @user.dup
+    duplicate.email = "fresh@unused.com"
     assert_not duplicate.valid?
   end
-  
+  test "user's login have to be unique case insensitive" do
+    @user.save
+    duplicate = @user.dup
+    duplicate.email = "fresh@unused.com"
+    duplicate.login = duplicate.login.upcase 
+    assert_not duplicate.valid?
+  end
   test "user's login should not be too long" do
     @user.login = "a" * 33
     assert_not @user.valid?
+  end
+ 
+  test "user's email have to be unique" do
+    @user.save
+    duplicate = @user.dup
+    duplicate.login = "fresh_and_unused"
+    assert_not duplicate.valid?
+  end
+  test "user's email have to be unique case insensitive" do
+    @user.save
+    duplicate = @user.dup
+    duplicate.login = "fresh_and_unused"
+    duplicate.email = duplicate.email.upcase 
+    assert_not duplicate.valid?
   end
   test "user's email should not be too long" do
     @user.email = "a" * 65
     assert_not @user.valid?
   end
+  
   test "user's crypted_password should not be too long" do
     @user.crypted_password = "a" * 256
     assert_not @user.valid?

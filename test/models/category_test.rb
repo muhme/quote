@@ -3,7 +3,6 @@ require 'test_helper'
 class CategoryTest < ActiveSupport::TestCase
   
   def setup
-
     @category = Category.new()
     @category.user_id = User.first.id
     @category.category = "programming"
@@ -34,6 +33,14 @@ class CategoryTest < ActiveSupport::TestCase
     @category.category = "test"
     @category.save
     duplicate = @category.dup
+    assert_not duplicate.valid?
+  end
+
+  test "category names should be unique case insensitive" do
+    @category.category = "test"
+    @category.save
+    duplicate = @category.dup
+    duplicate.category = "Test"
     assert_not duplicate.valid?
   end
   

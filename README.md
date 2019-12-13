@@ -1,14 +1,11 @@
 # README
 
 muhme/quote - Rails web application, serving [zitat-service.de](https://www.zitat-service.de)
-* 2006 developed with Rails 1.2
-* 2009 migrated to Rails 2.0
-* 2018 migrated to Rails 5.1.5 / 5.2.1 / 5.2.2
-* 2019 migrated to Rails 5.2.3
+
 
 ## Installation
-You can use your own Rails development envrironment. For starters there are two installation methods described following. First and recommended is to use Docker and second alternative is to use AWS Cloud9.
-### 1st Method Docker
+You can use your own Rails development envrironment. Or you use prepared Docker development environment.
+### Docker Development Environment
 ```
 $ git clone https://github.com/muhme/quote
 $ cd quote
@@ -29,43 +26,17 @@ Then you have four containers running:
   * local directory with cloned GitHub repository is mounted into container
 * quote_chrome - Selenium Standalone with Chrome and VNC server
   * vnc://localhost:8104 - to see browser working in test:system (using the password: secret)
-### 2nd Method AWS Cloud9 EC2
-Short command list, used on AWS Cloud9 EC2 with Amazon Linux AMI 2017.09:
-```
-$ sudo yum install -y perl-CGI yum install perl-DBD-MySQL
-$ git clone https://github.com/muhme/quote
-$ cd quote
-$ rvm use ruby-2.4.1@quote --ruby-version --create # ignore ln: failed to create sym link
-$ sudo service mysqld restart
-```
-Set database root user passwd and creating quote database user:
-```
-$ /usr/libexec/mysql55/mysqladmin -u root password 'Your_mysql_root_password'
-$ mysql -u root -pYour_mysql_root_password
-mysql> CREATE USER 'quote'@'localhost' IDENTIFIED BY 'Your_quote_password';
-mysql> GRANT ALL PRIVILEGES ON * . * TO 'quote'@'localhost';
-mysql> quit
-$ echo "QUOTE_DATABASE_PASSWORD='Your_quote_password' ; export QUOTE_DATABASE_PASSWORD" >> ~/.bash_profile
-$ . ~/.bash_profile
-$ sudo yum -y install mysql-devel
-$ bundle install
-$ rake db:create && rake db:migrate
-$ rails server
-```
-Click on 'Preview' and choose 'Preview Running Application'. In the new small window click on the top right 'Pop out in new window' and you see the web application running. For Testing you have to set your host in file config/environments/test.rb.
 
-To run the headless chrome system tests you have to do some more installation, see https://intoli.com/blog/installing-google-chrome-on-centos:
-```
-$ cd /tmp
-$ wget http://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip
-$ unzip chromedriver_linux64.zip
-$ sudo mv chromedriver /usr/local/bin
-$ curl https://intoli.com/install-google-chrome.sh | bash
-```
+  ### History
+* 2006 developed with Rails 1.2
+* 2009 migrated to Rails 2.0
+* 2018 migrated to Rails 5.1.5 / 5.2.1 / 5.2.2
+* 2019 migrated to Rails 5.2.3 / 5.2.4 / 6.0.1
+
 ## Testing
 
-* rails test - to run automated tests (actual test coverage is 95% :)
-* rails test:system - to run automated headless Chrome system tests (actual test coverage is 78% :|
+* rails test - to run automated unit tests: actual 142 tests, wich are covering 535 of 611 lines of code (88%)
+* rails test:system - to run automated headless Chrome system tests: actual 34 tests, which are covering 404 of 627 lines of code (64%)
 
 If your're using Docker, go into container first with:
 ```

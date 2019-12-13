@@ -3,7 +3,7 @@ class Category < ApplicationRecord
   belongs_to :user
   has_and_belongs_to_many :quotations
   
-  validates :category, presence: true, length: { maximum: 64 }, uniqueness: true
+  validates :category, presence: true, length: { maximum: 64 }, uniqueness: {case_sensitive: false}
   validates :description, presence: false, length: { maximum: 255 }, uniqueness: false
   
   # count all non-public categories

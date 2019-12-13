@@ -37,6 +37,14 @@ class QuotationTest < ActiveSupport::TestCase
     assert_not duplicate.valid?
   end
 
+  test "quotation's quotation should be unique case insensitive" do
+    @quotation.quotation = "test"
+    @quotation.save
+    duplicate = @quotation.dup
+    duplicate.quotation = "TEST"
+    assert_not duplicate.valid?
+  end
+
   test "quotation's quotation should not be too long" do
     @quotation.quotation = "a" * 513
     assert_not @quotation.valid?

@@ -20,6 +20,7 @@ development:
   <<: *default
   database: quote_development
   username: quote_development
+  password: quote_development
   host: db	# using hostname 'db' in Docker environment
 
 # Warning: The database defined as "test" will be erased and

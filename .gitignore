@@ -27,3 +27,6 @@ vendor/bundle
 
 # simplecov for measure code test coverage
 coverage
+
+# ignore Mac OS X desktop service store
+.DS_Store

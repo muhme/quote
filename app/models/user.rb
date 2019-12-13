@@ -43,7 +43,7 @@ validates :email,
     }
   },
   length: { maximum: 64 },
-  uniqueness: false
+  uniqueness: {case_sensitive: false}
 
 validates :login,
   format: {
@@ -56,7 +56,7 @@ validates :login,
     }
   },
   length: { within: 3..32 },
-  uniqueness: true
+  uniqueness: {case_sensitive: false}
 
   validates :password,
     confirmation: { if: :require_password? },
@@ -74,9 +74,6 @@ validates :login,
   validates :password_salt, presence: false, length: { maximum: 255 }, uniqueness: false
 
   acts_as_authentic do |c|
-    c.validate_email_field = false
-    c.validate_login_field = false
-    c.validate_password_field = false
   end
   
   def deliver_password_reset_instructions!

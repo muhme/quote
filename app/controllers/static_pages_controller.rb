@@ -81,7 +81,7 @@ class StaticPagesController < ApplicationController
   def not_found
     @original_url = params[:original_url] || request.original_url
     respond_to do |format|
-      format.all { render :status => 404, :formats => 'html', content_type: "text/html" }
+      format.all { render :status => 404, :formats => :html, content_type: "text/html" }
     end
   end
 
