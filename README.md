@@ -2,7 +2,6 @@
 
 muhme/quote - Rails web application, serving [zitat-service.de](https://www.zitat-service.de)
 
-
 ## Installation
 You can use your own Rails development envrironment. Or you use prepared Docker development environment.
 ### Docker Development Environment
@@ -27,12 +26,6 @@ Then you have four containers running:
 * quote_chrome - Selenium Standalone with Chrome and VNC server
   * vnc://localhost:8104 - to see browser working in test:system (using the password: secret)
 
-  ### History
-* 2006 developed with Rails 1.2
-* 2009 migrated to Rails 2.0
-* 2018 migrated to Rails 5.1.5 / 5.2.1 / 5.2.2
-* 2019 migrated to Rails 5.2.3 / 5.2.4 / 6.0.1
-
 ## Testing
 
 * rails test - to run automated unit tests: actual 142 tests, wich are covering 535 of 611 lines of code (88%)
@@ -42,6 +35,13 @@ If your're using Docker, go into container first with:
 ```
 $ docker exec -it quote_rails /bin/bash
 ```
+
+## History
+
+* 2006 developed with Rails 1.2
+* 2009 migrated to Rails 2.0
+* 2018 migrated to Rails 5.1.5 / 5.2.1 / 5.2.2
+* 2019 migrated to Rails 5.2.3 / 5.2.4 / 6.0.1
 
 ## Contact
 
