@@ -30,3 +30,5 @@ coverage
 
 # ignore Mac OS X desktop service store
 .DS_Store
+
+/config/master.key
