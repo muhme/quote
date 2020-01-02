@@ -143,13 +143,7 @@ module ApplicationHelper
     unless name.blank?
       ret = truncate(html_escape(ret), length: 25) # to have enough space for the <b>A</b> and not truncate in tag
       ret += " " unless firstname.blank?
-      # todo: fix UTF-8 two-byte handling everywhere!
-      # if name[0..1] == Iconv.new('utf-8//IGNORE//TRANSLIT', 'iso-8859-15').iconv("Ä")
-      if name[2..4] == "sop" and name.length == 5
-        ret += "<b>".html_safe + h(name[0..1]) + "</b>".html_safe + h(name[2..name.size])
-      else
-        ret += "<b>".html_safe + h(name[0..0]) + "</b>".html_safe + h(name[1..name.size])
-      end
+      ret += "<b>".html_safe + h(name[0..0]) + "</b>".html_safe + h(name[1..name.size])
     end
     truncate(ret, length: 40, escape: false)
   end

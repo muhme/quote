@@ -100,7 +100,9 @@ class QuotationTest < ActiveSupport::TestCase
     assert_equal @quotation.get_linked_author_and_source, '<a href="https://de.wikipedia.org/wiki/Mohandas_Karamchand_Gandhi" target="quote_extern">Gandi</a>, <a href="https://somewhere.org" target="quote_extern">source</a>'
   end
   
-
-
+  test "get_author_and_source_name method" do
+    @quotation.source = "source"
+    assert_equal @quotation.get_author_and_source_name, "Gandi, source"
+  end
 
 end

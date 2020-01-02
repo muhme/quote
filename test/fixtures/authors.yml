@@ -8,6 +8,12 @@ one:
   public: true
   user_id: 1
 
+second:
+  id: 2
+  name: second author
+  public: true
+  user_id: 1
+
 public_false:
   name: MyString2
   firstname: MyString2

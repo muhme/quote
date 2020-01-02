@@ -14,7 +14,12 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal ["heiko.luebbe@zitat-service.de"], mail.from
     assert_match "mit dem folgenden Link", mail.body.encoded
     assert_match @first_user.login, mail.body.encoded
-    # assert_match @first_user.persistence_token, mail.body.encoded
+    assert_match @first_user.perishable_token, mail.body.encoded
   end
 
+  test "deliver_password_reset_instructions method" do
+    assert_emails 1 do
+      @first_user.deliver_password_reset_instructions!
+    end
+  end
 end

@@ -26,6 +26,10 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     get '/authors/list_by_letter/*'
     assert_response :success
+    get '/authors/list_by_letter/'
+    assert_response :redirect
+    get '/authors/list_by_letter/%20'
+    assert_response :missing # 404
   end
   
   test "404 for not existing author without login" do
@@ -119,6 +123,12 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to author_url @author_one
     author = Author.find_by_name 'Luther'
     assert author.public
+  end
+  test "return to edit if validation fails" do
+    login :first_user
+    patch author_url(@author_one), params: { author: { name: '' } }
+    assert_response :success
+    assert_match /1 fehler|1 error/i, @response.body
   end
 
   test "should destroy own author entry" do

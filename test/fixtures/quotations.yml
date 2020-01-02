@@ -7,6 +7,13 @@ one:
   author_id: 1
   public: true
 
+second:
+    id: 2
+    quotation: second_quotation
+    user_id: 1
+    author_id: 1
+    public: true
+
 public_false:
   quotation: public_false
   user_id: 1

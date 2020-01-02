@@ -57,5 +57,16 @@ Rails.application.configure do
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  #
+  # commented out to have files changes in Docker env immediately take effect
+  # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  # use Docker container quote_maildev  
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => 'quote_maildev',
+    :port => 25,
+    :openssl_verify_mode => 'none'
+  }
+
 end

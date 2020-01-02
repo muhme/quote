@@ -12,6 +12,7 @@ first_user:
   confirmed: true
 
 second_user:
+  id: 2
   login: second_user
   email: second_user@whatever.com
   password_salt: <%= salt = Authlogic::Random.hex_token %>
@@ -23,6 +24,7 @@ second_user:
 
 # testing logins found in the wild with spaces, @ and UTF8 chars
 special_user:
+  id: 3
   login: Ä Grüsel@öber.eu
   email: äöüÄÖÜ@bla.com
   password_salt: <%= salt = Authlogic::Random.hex_token %>
@@ -33,6 +35,7 @@ special_user:
   confirmed: true
 
 admin_user:
+  id: 4
   login: admin_user
   email: admin_user@whatever.com
   password_salt: <%= salt = Authlogic::Random.hex_token %>

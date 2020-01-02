@@ -7,18 +7,6 @@ class ApplicationController < ActionController::Base
     # render plain: '404 Not found', status: 404 
     redirect_to(controller: 'static_pages', action: 'not_found', original_url: request.original_url)
   end
-
-  protected
-
-    def handle_unverified_request
-      # raise an exception
-      fail ActionController::InvalidAuthenticityToken
-      # or destroy session, redirect
-      if current_user_session
-        current_user_session.destroy
-      end
-      redirect_to root_url
-    end
   
   private
 
@@ -38,7 +26,7 @@ class ApplicationController < ActionController::Base
     def sql_quotations_for_author(author_id)
       sql = "select * from quotations where author_id = '#{author_id}'"
       if current_user
-        sql += " and public = 1 or user_id = #{current_user.id}" unless current_user.admin
+        sql += " and ( public = 1 or user_id = #{current_user.id} ) " unless current_user.admin
       else
         sql += " and public = 1"
       end
@@ -63,7 +51,7 @@ class ApplicationController < ActionController::Base
       msg = "Kein Recht #{name} #{obj.id} zu #{msg}!"
       
       if current_user and (current_user.admin or current_user.id == obj.user_id)
-        # write access
+        # own object or admin has read/write access
         return true
       else
         if action == :read
@@ -76,10 +64,7 @@ class ApplicationController < ActionController::Base
           end
         end
         if current_user
-          if current_user.id == obj.user_id
-            # own-object read/write access
-            return true
-          else
+          if current_user.id != obj.user_id
             # read/write other objects denied
             msg += " (Nicht der eigene Eintrag)"
           end

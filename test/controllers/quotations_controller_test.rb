@@ -18,7 +18,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     get quotations_url
     assert_response :success
     login :first_user
-    get categories_url
+    get quotations_url
     assert_response :success
   end
   
@@ -33,6 +33,13 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     get '/quotations/list_by_user/' + users(:first_user).login
     assert_response :success
     get '/quotations/list_by_user/jhrefoqg'
+    assert_redirected_to root_url
+  end
+
+  test "list_by_author" do
+    get '/quotations/list_by_author/1'
+    assert_response :success
+    get '/quotations/list_by_author/x'
     assert_redirected_to root_url
   end
   
@@ -66,6 +73,8 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     assert_forbidden
     get '/logout'
     login :first_user
+    get quotation_url @quotation_public_false
+    assert_response :success # quote is public false, but created by first user
     get quotation_url @quotation_one
     assert_response :success
     get '/logout'
@@ -121,6 +130,10 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     get '/logout'
     patch quotation_url(@quotation_one), params: { quotation: { quotation: 'The early bird catches the worm!!!' } }
     assert_forbidden
+    login :first_user
+    patch quotation_url(@quotation_one), params: { quotation: { quotation: '' } }
+    assert_response :success
+    assert_match /1 fehler|1 error/i, @response.body
   end
 
   test "destroy quotation" do

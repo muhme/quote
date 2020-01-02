@@ -49,7 +49,7 @@ class Author < ApplicationRecord
     ret = "<a href=\"#{self.link}\" target=\"quote_extern\">#{ret}</a>" unless ret.blank? or self.link.blank?
     ret
   end
-  
+    
   # gives last name comma separated from first name
   # w/o comma if first or last name is missing
   # gives an empty string if first and last name are missing

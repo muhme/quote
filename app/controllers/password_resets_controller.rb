@@ -12,7 +12,7 @@ class PasswordResetsController < ApplicationController
     @user = User.find_by_email(params[:email])
     if @user
       @user.deliver_password_reset_instructions!
-      redirect_to root_path, notice: "Eine E-Mail mit dem Link zum Zurücksetzen des Kennwortes wurde an \"#{@user.email}\"geschickt." # "Instructions to reset your password have been emailed to you"
+      redirect_to root_path, notice: "Eine E-Mail mit dem Link zum Zurücksetzen des Kennwortes wurde an \"#{@user.email}\" geschickt." # "Instructions to reset your password have been emailed to you"
     else
       flash.now[:error] = "Es wurde kein Benutzer mit der Email-Adresse \"#{params[:email]}\" gefunden!" # "No user was found with email address #{params[:email]}"
       render :action => :new

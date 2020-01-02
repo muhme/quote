@@ -20,9 +20,9 @@ Rails.application.routes.draw do
   get 'humans.txt' => 'static_pages#humans'
   
   get 'categories/list_no_public'             => 'categories#list_no_public'
-  get 'categories/list_by_letter/:letter'     => 'categories#list_by_letter'
+  get 'categories/list_by_letter/:letter'     => 'categories#list_by_letter', constraints: { letter: /[A-Za-z*]/ }
   get 'authors/list_no_public'                => 'authors#list_no_public'
-  get 'authors/list_by_letter/:letter'        => 'authors#list_by_letter'
+  get 'authors/list_by_letter/:letter'        => 'authors#list_by_letter', constraints: { letter: /[A-Za-z*]/ }
   get 'quotations/list_no_public'             => 'quotations#list_no_public'
   get 'quotations/list_by_user/:user'         => 'quotations#list_by_user'
   get 'quotations/list_by_category/:category' => 'quotations#list_by_category'

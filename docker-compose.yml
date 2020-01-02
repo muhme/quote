@@ -48,3 +48,8 @@ services:
       - "8104:5900"
     volumes:
       - /dev/shm:/dev/shm
+  maildev:
+    container_name: quote_maildev
+    image: djfarrelly/maildev
+    ports:
+      - "8105:80"

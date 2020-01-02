@@ -92,15 +92,14 @@ class AuthorsController < ApplicationController
   # NICE only showing public or own entries to be extended like in index
   def list_by_letter
     letter = params[:letter]
-    if letter.blank?
+    if letter == "*"
+      sql = "select * from authors where name NOT REGEXP '^[A-Z].*'"
+    elsif letter =~ /[A-Za-z]/
+      sql = "select * from authors where name like ?"
+    else # not reachable, because route restrictions already forbid it - but, just in case
       flash[:error] = "Buchstabe fehlt!"
       redirect_to :action => 'list'
       return
-    end
-    if letter == "*"
-      sql = "select * from authors where name NOT REGEXP '^[A-Z].*'"
-    else
-      sql = "select * from authors where name like ?"
     end
     sql += ' order by name, firstname'
     @authors = Author.paginate_by_sql [sql, "#{letter.first}%"], :page=>params[:page], :per_page=>10

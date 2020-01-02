@@ -71,4 +71,8 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal "<a popup=\"true\" href=\"https://www.zitat-service.de\">www.zitat-service.de</a>", lh("https://www.zitat-service.de")
   end
 
+  test "link_to_joomla method" do
+    assert_equal "<a href=\"/joomla/a.zip\">a.zip</a>", link_to_joomla("a.zip")
+  end
+
 end

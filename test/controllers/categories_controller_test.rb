@@ -30,6 +30,10 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     get "/categories/list_by_letter/*"
     assert_response :success
+    get '/categories/list_by_letter/'
+    assert_response :redirect
+    get '/categories/list_by_letter/%20'
+    assert_response :missing # 404
   end
   
   test "404 for not existing category" do
@@ -118,24 +122,41 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     patch category_url(@category_one), params: { category: { description: "hu hu hu" } }
     assert_forbidden
   end
+  test "return to edit if validation fails" do
+    login :first_user
+    patch category_url(@category_one), params: { category: { category: '' } }
+    assert_response :success
+    assert_match /1 fehler|1 error/i, @response.body
+  end
 
   test "destroy category" do
     assert_no_difference 'Category.count' do
       delete category_url @category_without_quotes
     end
     assert_forbidden
+
     login :second_user
     assert_no_difference 'Category.count' do
       delete category_url @category_without_quotes
     end
     assert_forbidden
     get '/logout'
+
     login :first_user
     assert_difference('Category.count', -1) do
       delete category_url @category_without_quotes
     end
     assert_redirected_to categories_url
     get '/logout'
+
+    # not able to delete category with quote
+    login :first_user
+    assert_difference('Category.count', 0) do
+      delete category_url @category_one
+    end
+    assert_response :redirect
+    get '/logout'
+
     login :admin_user
     assert_difference('Category.count', -1) do
       delete category_url @category_public_false

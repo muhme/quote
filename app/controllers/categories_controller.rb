@@ -62,7 +62,7 @@ class CategoriesController < ApplicationController
   def update
     return unless access?(@category, :update)
     if @category.update category_params
-      redirect_to @category, notice: "Category \"#{@category.category}\" wurde aktualisiert."
+      redirect_to @category, notice: "Kategorie \"#{@category.category}\" wurde aktualisiert."
     else
       render :edit
     end
@@ -87,15 +87,14 @@ class CategoriesController < ApplicationController
   # NICE only showing public or own entries to be extended like in index
   def list_by_letter
     letter = params[:letter]
-    if letter.blank?
+    if letter == "*"
+      sql = "select * from categories where category NOT REGEXP '^[A-Z].*'"
+    elsif letter =~ /[A-Za-z*]/
+      sql = "select * from categories where category like ?"
+    else # not reachable, because route restrictions already forbid it - but, just in case
       flash[:error] = "Buchstabe fehlt!"
       redirect_to :action => 'list'
       return
-    end
-    if letter == "*"
-      sql = "select * from categories where category NOT REGEXP '^[A-Z].*'"
-    else
-      sql = "select * from categories where category like ?"
     end
     sql += ' order by category'
     @categories = Category.paginate_by_sql [sql, "#{letter.first}%"], :page=>params[:page], :per_page=>10

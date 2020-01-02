@@ -10,7 +10,7 @@ $ git clone https://github.com/muhme/quote
 $ cd quote
 $ docker-compose up
 ```
-Then you have four containers running:
+Then you have five containers running:
 * quote_mariadb - MariaDB database server
   * database admin is root/root
   * database quote_development with user quote_development/quote_development created and June 2018 database export loaded
@@ -25,12 +25,16 @@ Then you have four containers running:
   * local directory with cloned GitHub repository is mounted into container
 * quote_chrome - Selenium Standalone with Chrome and VNC server
   * vnc://localhost:8104 - to see browser working in test:system (using the password: secret)
+* quote_maildev - SMTP Server and Web Interface for viewing and testing emails during development
+  * http://localhost:8105 
+
+If you're using docker-machine, please replace localhost with $DOCKER_HOST.
 
 ## Testing
 
-* rails test - to run automated unit tests: actual 142 tests, wich are covering 535 of 611 lines of code (88%)
-* rails test:system - to run automated headless Chrome system tests: actual 34 tests, which are covering 404 of 627 lines of code (64%)
-
+Test coverage is greater than 90%, check it by your own:
+* rails test - to run automated unit tests
+* rails test:system - to run automated headless Chrome system tests
 If your're using Docker, go into container first with:
 ```
 $ docker exec -it quote_rails /bin/bash
