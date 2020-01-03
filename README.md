@@ -35,6 +35,7 @@ If you're using docker-machine, please replace localhost with $DOCKER_HOST.
 Test coverage is greater than 90%, check it by your own:
 * rails test - to run automated unit tests
 * rails test:system - to run automated headless Chrome system tests
+
 If your're using Docker, go into container first with:
 ```
 $ docker exec -it quote_rails /bin/bash
@@ -43,9 +44,10 @@ $ docker exec -it quote_rails /bin/bash
 ## History
 
 * 2006 developed with Rails 1.2
-* 2009 migrated to Rails 2.0
-* 2018 migrated to Rails 5.1.5 / 5.2.1 / 5.2.2
-* 2019 migrated to Rails 5.2.3 / 5.2.4 / 6.0.1
+* 2009 upgraded to Rails 2.0
+* 2018 migrated to Rails 5.1.5, updated to Rails 5.2.1 / 5.2.2
+* 2019 updated to Rails 5.2.3 / 5.2.4, upgraded to 6.0.1
+* 2020 updated to Rails 6.0.2.1
 
 ## Contact
 
