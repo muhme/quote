@@ -10,7 +10,16 @@ $ git clone https://github.com/muhme/quote
 $ cd quote
 $ docker-compose up
 ```
-Then you have five containers running:
+Then you should have five containers running:
+```
+$ docker ps
+IMAGE                              COMMAND                  PORTS                                            NAMES
+mariadb                            "docker-entrypoint.s…"   0.0.0.0:8100->3306/tcp                           quote_mariadb
+phpmyadmin/phpmyadmin              "/docker-entrypoint.…"   0.0.0.0:8101->80/tcp                             quote_mysqladmin
+quote_rails                        "/bin/sh -c '/bin/ba…"   0.0.0.0:8102->3000/tcp, 0.0.0.0:8103->3100/tcp   quote_rails
+selenium/standalone-chrome-debug   "/opt/bin/entry_poin…"   4444/tcp, 0.0.0.0:8104->5900/tcp                 quote_chrome
+djfarrelly/maildev                 "bin/maildev --web 8…"   25/tcp, 0.0.0.0:8105->80/tcp                     quote_maildev
+```
 * quote_mariadb - MariaDB database server
   * database admin is root/root
   * database quote_development with user quote_development/quote_development created and June 2018 database export loaded
@@ -28,7 +37,8 @@ Then you have five containers running:
 * quote_maildev - SMTP Server and Web Interface for viewing and testing emails during development
   * http://localhost:8105 
 
-If you're using docker-machine, please replace localhost with $DOCKER_HOST.
+**Note**
+> If you're using docker-machine, please replace localhost with $DOCKER_HOST.
 
 ## Testing
 
@@ -36,7 +46,8 @@ Test coverage is greater than 90%, check it by your own:
 * rails test - to run automated unit tests
 * rails test:system - to run automated headless Chrome system tests
 
-If your're using Docker, go into container first with:
+**Note**
+> If your're using Docker, go into container first with:
 ```
 $ docker exec -it quote_rails /bin/bash
 ```
@@ -47,7 +58,7 @@ $ docker exec -it quote_rails /bin/bash
 * 2009 upgraded to Rails 2.0
 * 2018 migrated to Rails 5.1.5, updated to Rails 5.2.1 / 5.2.2
 * 2019 updated to Rails 5.2.3 / 5.2.4, upgraded to 6.0.1
-* 2020 updated to Rails 6.0.2.1
+* 2020 updated to Rails 6.0.2.1 / 6.0.2.2
 
 ## Contact
 
