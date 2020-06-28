@@ -58,7 +58,7 @@ $ docker exec -it quote_rails /bin/bash
 * 2009 upgraded to Rails 2.0
 * 2018 migrated to Rails 5.1.5, updated to Rails 5.2.1 / 5.2.2
 * 2019 updated to Rails 5.2.3 / 5.2.4, upgraded to 6.0.1
-* 2020 updated to Rails 6.0.2.1 ... 6.0.3.1
+* 2020 updated to Rails 6.0.2.1 ... 6.0.3.2
 
 ## Contact
 
