@@ -29,6 +29,7 @@ class PasswordResetsTest < ApplicationSystemTestCase
     check_this_page page, nil, '<a href="password_resets/new"'
   end
 
+  # TODO fails on docker-machine as link is hard-coded zitat-service.de and needs to be set from $DOCKER_HOST
   test "password reset" do
     np = '348ZQHjdeqr+'
     visit new_password_reset_url
