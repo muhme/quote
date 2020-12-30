@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.2'
+gem 'rails', '~> 6.1'
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.5.1'
 # Use Puma as the app server
@@ -34,7 +34,9 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'will_paginate', '~> 3.1'
-gem 'authlogic', '~> 5.0'
+gem 'authlogic', '~> 6'
+# for authlogic >= 6
+gem "scrypt", "~> 3.0"
 
 
 group :development, :test do

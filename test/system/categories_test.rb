@@ -39,6 +39,7 @@ class CategoriesTest < ApplicationSystemTestCase
     accept_alert do
       find("img[title='Löschen']", match: :first).click
     end
+    sleep 1 # there is still caching somewhere
     check_page page, cu, "h1", "404 - Nicht gefunden"
   end
 

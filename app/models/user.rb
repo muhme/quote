@@ -74,6 +74,7 @@ validates :login,
   validates :password_salt, presence: false, length: { maximum: 255 }, uniqueness: false
 
   acts_as_authentic do |c|
+    c.crypto_provider = ::Authlogic::CryptoProviders::SCrypt
   end
   
   def deliver_password_reset_instructions!

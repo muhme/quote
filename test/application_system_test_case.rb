@@ -10,7 +10,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :selenium, using: :chrome, screen_size: [1400, 1400], options: {url: "http://chrome:4444/wd/hub"}
   #
   def setup
-    host! "http://rails:3100"
+    Capybara.app_host = "http://rails:3100"
     super
   end
   # puma listening port 3100 on TEST 
