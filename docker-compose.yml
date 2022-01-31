@@ -1,5 +1,9 @@
-# docker-compose.yaml - compose three docker images (mariadb with loaded test data, phpmysqladmin and Rails) to run zitat-service.de
-#
+# docker-compose.yaml - compose five docker images to run zitat-service.de
+# - mariadb with loaded test data
+# - phpmysqladmin
+# - rails web application
+# - Selenium with headless chrome and VNC server for testing
+# - maildev SMTP server for testing emails
 version: '3.5'
 services:
   db:
@@ -50,6 +54,6 @@ services:
       - /dev/shm:/dev/shm
   maildev:
     container_name: quote_maildev
-    image: djfarrelly/maildev
+    image: maildev/maildev
     ports:
       - "8105:80"

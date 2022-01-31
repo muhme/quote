@@ -2,13 +2,12 @@
 
 muhme/quote - Rails web application, serving [zitat-service.de](https://www.zitat-service.de)
 
-## Installation
-You can use your own Rails development envrironment. Or you use prepared Docker development environment.
-### Docker Development Environment
+## Docker Containers
+There is a Docker test and development environment prepared. You can create your own test and development instance with the following commands:
 ```
 $ git clone https://github.com/muhme/quote
 $ cd quote
-$ docker-compose up
+$ docker compose up
 ```
 Then you should have five containers running:
 ```
@@ -31,14 +30,11 @@ djfarrelly/maildev                 "bin/maildev --web 8…"   25/tcp, 0.0.0.0:81
   * getting Shell with: "docker exec -it quote_rails bash"
   * running function tests with "docker exec -it quote_rails rails t"
   * running system tests using Chrome browser on Selenium container with "docker exec -ti quote_rails rails test:system"
-  * local directory with cloned GitHub repository is mounted into container
+  * local directory /quote with cloned GitHub repository is mounted into container
 * quote_chrome - Selenium Standalone with Chrome and VNC server
   * vnc://localhost:8104 - to see browser working in test:system (using the password: secret)
 * quote_maildev - SMTP Server and Web Interface for viewing and testing emails during development
   * http://localhost:8105 
-
-**Note**
-> If you're using docker-machine, please replace localhost with $DOCKER_HOST.
 
 ## Testing
 
@@ -54,6 +50,7 @@ $ docker exec -it quote_rails /bin/bash
 
 ## History
 
+* 2022 updated to Ruby 3.1 and Rails 7.0.1
 * 2021 updated to Rails 6.1.3 ... 6.1.4
 * 2020 updated to Rails 6.0.2 ... 6.1.0
 * 2019 updated to Rails 5.2.3 / 5.2.4, upgraded to 6.0.1
