@@ -12,7 +12,7 @@ Wir werden die Zitate, die unter Ihr Urheberrecht fallen, unverzüglich löschen
 <p>Für den Inhalt extern verlinkter Seiten ist ausschließlich der jeweilige Betreiber verantwortlich.</p>
 <h2>Design &amp; Entwicklung</h2>
 <p>
-  Server: <%= ENV['HOSTNAME'] %><br />
+  Server: <%= Socket.gethostname %><br />
   Rails Version: <%= Rails.version %><br />
   Umgebung: <%= ENV['RAILS_ENV'] %>
 </p>
