@@ -23,8 +23,10 @@
 <p><%= User.count %> Benutzer haben sich eingetragen. Die zuletzt eingestellten Zitate sind von <%= raw @users[0] %>, <%= raw @users[1] %> und <%= raw @users[2] %>.</p>
 <h2>News</h2>
 <dl>
-<dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> 24. September 2019</dt>
-<dd>Es gibt ein neues Joomla! Modul für die Unterstützung von TLS (https) und dem Joomla-Update-Mechanismus: <%= link_to 'Einbinden/Joomla', :action => 'joomla' %>.</dd>
+  <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 3. Januar 2021</dt>
+    <dd>HTTP/2 konfiguriert</dd>
+  <dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> 24. September 2019</dt>
+    <dd>Es gibt ein neues Joomla! Modul für die Unterstützung von TLS (https) und dem Joomla-Update-Mechanismus: <%= link_to 'Einbinden/Joomla', :action => 'joomla' %>.</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 24. März 2018</dt>
     <dd>Umzug des Web-Servers nach Frankfurt am Main zu dem Betreiber <a href="https://digitalocean.com/">DigitalOcean</a>.</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 31. Januar 2018</dt>
