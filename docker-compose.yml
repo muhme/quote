@@ -56,4 +56,5 @@ services:
     container_name: quote_maildev
     image: maildev/maildev
     ports:
-      - "8105:80"
+      - "8105:1080"
+      - "1025:1025"
