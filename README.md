@@ -32,7 +32,7 @@ djfarrelly/maildev                 "bin/maildev --web 8…"   25/tcp, 0.0.0.0:81
   * running system tests using Chrome browser on Selenium container with "docker exec -ti quote_rails rails test:system"
   * local directory /quote with cloned GitHub repository is mounted into container
 * quote_chrome - Selenium Standalone with Chrome and VNC server
-  * vnc://localhost:8104 - to see browser working in test:system (using the password: secret)
+  * [vnc://localhost:8104](vnc://localhost:8104) - to see browser working in test:system (using the password: secret)
 * quote_maildev - SMTP Server and Web Interface for viewing and testing emails during development
   * http://localhost:8105 
 
