@@ -183,6 +183,11 @@ GEM
       rack (>= 1.4)
     rexml (3.2.5)
     rubyzip (2.3.2)
+    rvt (1.1.0)
+      activemodel (>= 4.0)
+      coffee-rails
+      railties (>= 4.0)
+      sprockets-rails
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -256,6 +261,7 @@ DEPENDENCIES
   mysql2 (>= 0.5.1)
   puma (~> 5.6)
   rails (~> 7.0.4)
+  rvt
   sass-rails (~> 5.0)
   scrypt (~> 3.0)
   selenium-webdriver
