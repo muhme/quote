@@ -21,5 +21,10 @@ module Quote
 
     # default host for URLs used in mailer
     config.action_mailer.default_url_options = { :host => 'www.zitat-service.de' }
+
+    # delete trailing slashes from URLs, found on https://davepeiris.com/blog/trailing-slashes-rails, modfied to Rack::Sendfile, see rails middleware
+    config.middleware.insert_before(Rack::Sendfile, Rack::Rewrite) do
+      r301 %r{^/(.*)/$}, '/$1'
+    end
   end
 end

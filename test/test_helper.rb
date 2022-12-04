@@ -20,11 +20,18 @@ class ActiveSupport::TestCase
     assert_response :forbidden
   end
 
-  # doing first a redirect to /not_found and gices second an 404 from there  
+  # doing first a redirect to /not_found and gives second an 404 from there  
   def assert_missing
     assert_response :redirect
     follow_redirect!
     assert_response :missing
+  end
+
+  # test url/ is redirected to url
+  def assert_trailing_slash(url)
+    slashed_url = url + '/'
+    get slashed_url
+    assert_redirected_to url
   end
 
 end
