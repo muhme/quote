@@ -7,7 +7,7 @@ There is a Docker test and development environment prepared. You can create your
 ```
 $ git clone https://github.com/muhme/quote
 $ cd quote
-$ docker compose up
+$ docker compose up -d
 ```
 Then you should have five containers running:
 ```
