@@ -178,4 +178,43 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "pagination" do
+    # not a number
+    get '/authors?page=X'
+    assert_response :not_found
+    # have to be positive
+    get '/authors?page=-1'
+    assert_response :not_found
+    # there is no page zero
+    get '/authors?page=0'
+    assert_response :not_found
+    # 1st page
+    get '/authors?page=1'
+    assert_response :success
+    # 2nd page
+    get '/authors?page=2'
+    assert_response :success
+    # out of range
+    get '/authors?page=42000000'
+    assert_response :not_found
+  end
+
+  test "pagination with letter" do
+    # not a number
+    get '/authors/list_by_letter/A?page=X'
+    assert_response :not_found
+    # have to be positive
+    get '/authors/list_by_letter/A?page=-1'
+    assert_response :not_found
+    # there is no page zero
+    get '/authors/list_by_letter/A?page=0'
+    assert_response :not_found
+    # 1st page
+    get '/authors/list_by_letter/A?page=1'
+    assert_response :success
+    # out of range
+    get '/authors/list_by_letter/A?page=42000000'
+    assert_response :not_found
+  end
+  
 end

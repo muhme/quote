@@ -24,19 +24,18 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   def check_page page, path, selector, content, size = DEFAULT_MIN_PAGE_SIZE, first_time = true
     Rails.logger.debug "check_page path=#{path} selector=#{selector} content=#{content} size=#{size} first_time=#{first_time}"
     start_millisecond = (Time.now.to_f * 1000).to_i
-    visit path if defined?(path)
+    visit path unless path.nil?
     run_time = (Time.now.to_f * 1000).to_i - start_millisecond
     if selector.nil?
-      # assert page.text.include?(content), "page \"#{path}\" is missing text \"#{content}\""
       assert "page \"#{path}\" is missing pattern \"#{content}\"" unless page.text =~ /#{content}/ 
     else
-      assert_selector selector, text: content
+      assert_selector selector, text: content, visible: true
     end
     assert page.text.length >= size, "page \"#{path}\" is with #{page.text.length.to_s} smaller than #{size.to_s}"
     if run_time > 1000
       if first_time
         Rails.logger.debug "time was with ${#run_time} ms to slow, trying second time"
-        # just take a breath and then try a second time, maybe the Docker environment was too slow at first
+        # just take a breath and then try it a second time, maybe the Docker environment was too slow at first
         sleep 1
         check_page page, path, selector, content, size, false
       else
@@ -46,7 +45,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   # do check_page w/o visiting new path
-  def check_this_page page, selector, content, size = DEFAULT_MIN_PAGE_SIZE
+  def check_this_page page, selector, content
     check_page page, nil, selector, content
   end
 

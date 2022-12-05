@@ -1,5 +1,8 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action only: [:index, :list_by_letter] do
+    check_pagination(params[:page], nil)
+  end
 
   # GET /categories
   def index
@@ -14,6 +17,8 @@ class CategoriesController < ApplicationController
       ' order by (select count(*) from categories_quotations cq, quotations q where cq.quotation_id = q.id and cq.category_id = c.id) desc'
 
     @categories = Category.paginate_by_sql(sql, page: params[:page], :per_page => 10)
+    # check pagination second time with number of pages
+    check_pagination(params[:page], @categories.total_pages)
   end
 
   # GET /categories/1
@@ -98,6 +103,8 @@ class CategoriesController < ApplicationController
     end
     sql += ' order by category'
     @categories = Category.paginate_by_sql [sql, "#{letter.first}%"], :page=>params[:page], :per_page=>10
+    # check pagination second time with number of pages
+    check_pagination(params[:page], @categories.total_pages)
   end
 
   # for admins list all not public categories

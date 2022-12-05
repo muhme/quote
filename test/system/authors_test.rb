@@ -123,4 +123,28 @@ class AuthorsTest < ApplicationSystemTestCase
     check_this_page page, nil, 'Hallo admin_user, schön dass Du da bist.'
     check_page page, authors_list_no_public_url, "h1", "Nicht-Öffentliche Autoren"
   end
+
+  test "trailing slash" do
+    check_page page, authors_url + '/', "h1", "Autor"
+    assert_equal page.title, "Zitat-Service - Autoren"
+    # redirected URL w/o slash
+    assert_equal page.current_url, authors_url
+  end
+
+  test "pagination with trailing slash" do
+    url = authors_url + '?page=2/'
+    check_page page, url, "h1", "Autor"
+    check_this_page page, nil, "Aktionen"
+    # redirected URL w/o slash
+    assert_equal page.current_url, url.chop
+  end
+
+  test "pagination not found" do
+    url = authors_url + '?page=420000'
+    check_page page, url, "h1", "404"
+    # wrong URL have to be shown
+    check_this_page page, nil, url
+    check_this_page page, nil, "quote/issues"
+  end
+
 end

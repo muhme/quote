@@ -147,6 +147,29 @@ class QuotationsTest < ApplicationSystemTestCase
     check_page page, quotations_list_no_public_url, "h1", "Nicht-Öffentliche Zitate"
   end
 
+  test "trailing slash" do
+    check_page page, quotations_url + '/', "h1", "Zitat"
+    assert_equal page.title, "Zitat-Service - Zitate"
+    # redirected URL w/o slash
+    assert_equal page.current_url, quotations_url
+  end
+
+  test "pagination with trailing slash" do
+    url = quotations_url + '?page=2/'
+    check_page page, url, "h1", "Zitat"
+    check_this_page page, nil, "Aktionen"
+    # redirected URL w/o slash
+    assert_equal page.current_url, url.chop
+  end
+
+  test "pagination not found" do
+    url = quotations_url + '?page=420000'
+    check_page page, url, "h1", "404"
+    # wrong URL have to be shown
+    check_this_page page, nil, url
+    check_this_page page, nil, "quote/issues"
+  end
+
   # NICE cannot delete quote created by another user
 
 end

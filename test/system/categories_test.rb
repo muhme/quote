@@ -96,4 +96,27 @@ class CategoriesTest < ApplicationSystemTestCase
     check_page page, categories_list_no_public_url, "h1", "Nicht-Öffentliche Kategorien"
   end
 
+  test "trailing slash" do
+    check_page page, categories_url + '/', "h1", "Kategorie"
+    assert_equal page.title, "Zitat-Service - Kategorien"
+    # redirected URL w/o slash
+    assert_equal page.current_url, categories_url
+  end
+
+  test "pagination with trailing slash" do
+    url = categories_url + '?page=2/'
+    check_page page, url, "h1", "Kategorie"
+    check_this_page page, nil, "Aktionen"
+    # redirected URL w/o slash
+    assert_equal page.current_url, url.chop
+  end
+
+  test "pagination not found" do
+    url = categories_url + '?page=420000'
+    check_page page, url, "h1", "404"
+    # wrong URL have to be shown
+    check_this_page page, nil, url
+    check_this_page page, nil, "quote/issues"
+  end
+
 end

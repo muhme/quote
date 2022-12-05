@@ -1,9 +1,13 @@
 class QuotationsController < ApplicationController
   include ActionView::Helpers::TextHelper # for truncate()
   before_action :set_quotation, only: [:show, :edit, :update, :destroy]
+  before_action only: [:index] do
+    check_pagination(params[:page], nil)
+  end
 
   # GET /quotations
   # GET /quotations?pattern=berlin
+  # GET /quotations?page=42
   # get all public for not logged in users and own entries for logged in users and all entries for admins
   def index
     pattern = params[:pattern].blank? ? "%" : params[:pattern]
@@ -16,6 +20,8 @@ class QuotationsController < ApplicationController
     sql += " order by id desc"
 
     @quotations = Quotation.paginate_by_sql(sql, page: params[:page], :per_page => 5)
+    # check pagination second time with number of pages
+    check_pagination(params[:page], @quotations.total_pages)
 
     # give hint on first page if no other notice exist
     if ! flash[:notice] and ( ! params[:page] or params[:page].to_i == 1 )

@@ -98,5 +98,21 @@ class ApplicationController < ActionController::Base
       return @current_user if defined?(@current_user)
       @current_user = current_user_session && current_user_session.user
     end
+
+    # Are there any problems with page parameter given for pagination?
+    # called 1st time as before_action
+    # called 2nd time after pagination with total_pages set
+    # in case of problems renders status 404 and useful page
+    def check_pagination(page, total_pages)
+      if page
+        page_number = Integer(page) 
+        raise "page >= 0" if page_number <= 0
+        raise "page > #{total_pages}" if total_pages and page_number > total_pages
+      end
+    rescue Exception => exc
+      flash[:error] = "#{exc.message}"
+      @original_url = request.original_url
+      render "static_pages/not_found", :status => 404
+    end
   
 end
