@@ -111,8 +111,7 @@ class QuotationsTest < ApplicationSystemTestCase
     accept_alert do
       find("img[title='Löschen']", match: :first).click
     end
-    sleep 1 # there is still caching somewhere
-    check_page page, quotation_url(new_quote), "h1", "404 - Nicht gefunden"
+    check_page page, quotation_url(new_quote), "h1", "HTTP-Statuscode 404"
   end
 
   test "failed to save new quote" do

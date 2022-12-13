@@ -79,10 +79,9 @@ class AuthorsTest < ApplicationSystemTestCase
     accept_alert do
       find("img[title='Löschen']", match: :first).click
     end
-    sleep 1 # there is still caching somewhere
-    check_page page, au, "h1", "404 - Nicht gefunden"
+    check_page page, au, "h1", "HTTP-Statuscode 404"
   end
-  # NICE cannot delete autho created by another user
+  # NICE cannot delete author created by another user
   # NICE cannot delete author with quotations
 
   # /authors/new

@@ -40,6 +40,11 @@ Rails.application.routes.draw do
   get 'forbidden' => 'static_pages#forbidden'
   get 'not_found' => 'static_pages#not_found'
 
+  # see https://www.mintbit.com/blog/custom-404-500-error-pages-in-rails
+  get '/404', to: 'static_pages#not_found'
+  get '/500', to: 'static_pages#internal_server'
+  get '/422', to: 'static_pages#unprocessable'
+
   # catch all
   match "*path" => "static_pages#not_found", via: :all
   

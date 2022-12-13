@@ -26,5 +26,8 @@ module Quote
     config.middleware.insert_before(Rack::Sendfile, Rack::Rewrite) do
       r301 %r{^/(.*)/$}, '/$1'
     end
+
+    # see https://www.mintbit.com/blog/custom-404-500-error-pages-in-rails
+    config.exceptions_app = self.routes
   end
 end

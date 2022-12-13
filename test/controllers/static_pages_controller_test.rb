@@ -18,11 +18,23 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
 #  end
   test "should get use too" do
     get "/static_pages/use/igitt"
-    assert_response 404
+    assert_response :not_found # 404
   end
   test "should get not_found III" do
     get "/static_pages/use/igitt/42"
-    assert_response 404
+    assert_response :not_found # 404
+  end
+  test "/404" do
+    get "/404"
+    assert_response :not_found # 404 
+  end
+  test "/422" do
+    get "/422"
+    assert_response :unprocessable_entity #422
+  end
+  test "/500" do
+    get "/500"
+    assert_response :internal_server_error #500
   end
 
   test "should get joomla" do

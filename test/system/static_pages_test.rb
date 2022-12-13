@@ -52,12 +52,21 @@ class StaticPagessTest < ApplicationSystemTestCase
     check_page page, "start/use", "p", "Änderung", 3000
   end
   
-  test "not found" do
+  test "403 forbidden" do
+      check_page(page, "/quotations/list_no_public", "div", "Kein Administrator!", 150)
+  end
+  test "404 not found" do
     ["/bla", "/bla.html", "/bla.png", "/bla.gif", "/bla.css", "/bla.js", "/quotations.jpg",
      "/a/b", "/a/b.html", "/a/b.png", "/a/b.gif", "/a/b.css", "/a/b.js", "/authors/0.jpg"
     ].each {
-      |url| check_page(page, url, "h1", "404", 150)
+      |url| check_page(page, url, "h1", "HTTP-Statuscode 404", 150)
     }
+  end
+  test "422 unprocessable entity" do
+    check_page(page, "/422", "h1", "HTTP-Statuscode 422", 150)
+  end
+  test "500 internal server error" do
+    check_page(page, "/500", "h1", "HTTP-Statuscode 500", 150)
   end
   
   test "HTML lang" do

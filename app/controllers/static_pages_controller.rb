@@ -77,12 +77,22 @@ class StaticPagesController < ApplicationController
     end
   end
   
-  # routed for '*path' catch all
+  # 404, e.g. routed for '*path' catch all
   def not_found
     @original_url = params[:original_url] || request.original_url
     respond_to do |format|
       format.all { render :status => 404, :formats => :html, content_type: "text/html" }
     end
+  end
+
+  # 422
+  def unprocessable
+    render status: 422
+  end
+
+  # 500
+  def internal_server
+    render status: 500
   end
 
 end
