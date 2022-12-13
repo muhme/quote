@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
-  before_action only: [:index, :list_by_letter] do
+  before_action only: [:index, :list_by_letter, :list_no_public] do
     check_pagination(params[:page], nil)
   end
 
@@ -115,6 +115,8 @@ class CategoriesController < ApplicationController
       return false
     end
     @categories = Category.paginate_by_sql 'select * from categories where public = 0', :page=>params[:page], :per_page=>10
+    # check pagination second time with number of pages
+    check_pagination(params[:page], @categories.total_pages)
   end
   
   private

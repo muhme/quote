@@ -197,6 +197,24 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     # (not existing) pattern out of range
     get '/quotations?page=2&pattern=wefgrifgi24i2'
     assert_response :not_found
+    # repeat tests for other paginate_by_sql with two tests each (one before and one after)
+    get '/quotations/list_by_user/first_user?page=X'
+    assert_response :not_found
+    get '/quotations/list_by_user/first_user?page=42000000'
+    assert_response :not_found
+    get '/quotations/list_by_author/1?page=X'
+    assert_response :not_found
+    get '/quotations/list_by_author/1?page=42000000'
+    assert_response :not_found
+    get '/quotations/list_by_category/1?page=X'
+    assert_response :not_found
+    get '/quotations/list_by_category/1?page=42000000'
+    assert_response :not_found
+    login :admin_user
+    get '/quotations/list_no_public?page=X'
+    assert_response :not_found
+    get '/quotations/list_no_public?page=42000000'
+    assert_response :not_found
   end
   
 end

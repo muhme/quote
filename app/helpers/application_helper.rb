@@ -29,8 +29,8 @@ module ApplicationHelper
         d += " - Zitat von " + @quotation.get_author_name_or_blank
       else
         d += " - Zitate"
-        d += " von " + @author.get_author_name_or_blank if controller.action_name == "list_by_author"
-        d += " zu " + @category.category if controller.action_name == "list_by_category"
+        d += " von " + @author.get_author_name_or_blank if controller.action_name == "list_by_author" and !@author.nil?
+        d += " zu " + @category.category if controller.action_name == "list_by_category" and !@category.nil?
         d += " des Benutzers " + h(params[:user]) if controller.action_name == "list_by_user"
       end
     end

@@ -215,6 +215,12 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     # out of range
     get '/authors/list_by_letter/A?page=42000000'
     assert_response :not_found
+    # two tests (one before and one after) for list_no_public
+    login :admin_user
+    get '/authors/list_no_public?page=X'
+    assert_response :not_found
+    get '/authors/list_no_public?page=42000000'
+    assert_response :not_found
   end
   
 end

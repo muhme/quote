@@ -1,6 +1,6 @@
 class AuthorsController < ApplicationController
   before_action :set_author, only: [:show, :edit, :update, :destroy]
-  before_action only: [:index, :list_by_letter] do
+  before_action only: [:index, :list_by_letter, :list_no_public] do
     check_pagination(params[:page], nil)
   end
 
@@ -120,6 +120,8 @@ class AuthorsController < ApplicationController
       return false
     end
     @authors = Author.paginate_by_sql 'select * from authors where public = 0', :page=>params[:page], :per_page=>10
+    # check pagination second time with number of pages
+    check_pagination(params[:page], @authors.total_pages)
   end
 
   private

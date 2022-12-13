@@ -1,7 +1,7 @@
 class QuotationsController < ApplicationController
   include ActionView::Helpers::TextHelper # for truncate()
   before_action :set_quotation, only: [:show, :edit, :update, :destroy]
-  before_action only: [:index] do
+  before_action only: [:index, :list_by_user, :list_by_author, :list_by_category, :list_no_public] do
     check_pagination(params[:page], nil)
   end
 
@@ -102,6 +102,8 @@ class QuotationsController < ApplicationController
     
     sql = ["select distinct q.* from quotations q, users u where q.user_id = u.id and u.login = ? order by q.created_at desc", params[:user]]
     @quotations = Quotation.paginate_by_sql sql, :page=>params[:page], :per_page=>5
+    # check pagination second time with number of pages
+    check_pagination(params[:page], @quotations.total_pages)
   end
   
   def list_by_category
@@ -112,6 +114,8 @@ class QuotationsController < ApplicationController
     end
     @category = Category.find params[:category]
     @quotations = Quotation.paginate_by_sql sql_quotations_for_category(@category.id), :page=>params[:page], :per_page=>5
+    # check pagination second time with number of pages
+    check_pagination(params[:page], @quotations.total_pages)
   end
   
   # select * from `quotations` where q.public = 1 and author_id = ?
@@ -123,7 +127,8 @@ class QuotationsController < ApplicationController
     end
     @author = Author.find params[:author]
     @quotations = Quotation.paginate_by_sql sql_quotations_for_author(@author.id), :page=>params[:page], :per_page=>5
-
+    # check pagination second time with number of pages
+    check_pagination(params[:page], @quotations.total_pages)
   end
   
   # for admins list all not public categories
@@ -133,7 +138,9 @@ class QuotationsController < ApplicationController
      redirect_to quotations_url
      return false
     end
-    @quotations = Quotation.paginate_by_sql 'select * from quotations where public = 0', :page=>params[:page], :per_page=>10
+    @quotations = Quotation.paginate_by_sql 'select * from quotations where public = 0', :page=>params[:page], :per_page=>5
+    # check pagination second time with number of pages
+    check_pagination(params[:page], @quotations.total_pages)
   end
 
   private
