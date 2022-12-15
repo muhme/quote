@@ -14,10 +14,10 @@
     name = h(@quotation.get_author_name_or_blank)
     a = Author.find_by_id(@quotation.author_id)
     i = a.nil? ? 0 : a.quotations.size
-    if (i > 1)
+    if (i >= 1)
         author = link_to(name, {:action => 'list_by_author', :author => @quotation.author_id},
-                :alt => "Zitate des Authors #{name}",
-                :title => "#{i} Zitate des Authors #{name}")
+                :alt => "Zitate des Autors #{name}",
+                :title => "#{i} Zitat" + (i == 1 ? "" : "e") + " des Autors #{name}")
     else
         author = name
     end
@@ -26,10 +26,10 @@
     name = hu(@quotation.user_id)
     u = User.find_by_id(@quotation.user_id)
     i = u.nil? ? 0 : u.quotations.size
-    if (i > 1)
+    if (i >= 1)
         user = link_to(name, {:action => 'list_by_user', :user => name},
                 :alt => "Zitate des Benutzeres #{name}",
-                :title => "#{i} Zitate des Benutzeres #{name}")
+                :title => "#{i} Zitat" + (i == 1 ? "" : "e") + " des Benutzeres #{name}")
     else
         user = name
     end

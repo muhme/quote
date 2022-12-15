@@ -55,6 +55,25 @@ class QuotationsTest < ApplicationSystemTestCase
     assert_equal page.title, "Zitat-Service - Zitat von public_author"
   end
 
+  # linking author's name with that author's quotes #13
+  test "multiple quotes with author link" do
+    # quote #1 is from author #1 which has multiple quotes
+    check_page page, "quotations/1", nil, 'href="/quotations/list_by_author/'
+  end
+  test "single quote with author link" do
+    # quote #3 is from author #2 which has only one single quote
+    check_page page, "quotations/3", nil, 'href="/quotations/list_by_author/'
+  end
+  # same for user, has to be linked if at least one user exists
+  test "multiple quotes with user link" do
+    # quote #1 is from user #1 which has multiple quotes
+    check_page page, "quotations/1", nil, 'href="/quotations/list_by_user/'
+  end
+  test "single quote with user link" do
+    # quote #3 is from author #2 which has only one single quote
+    check_page page, "quotations/3", nil, 'href="/quotations/list_by_user/'
+  end
+
   test "edit own quote" do
     visit login_url
     fill_in 'user_session_login', with: 'first_user'

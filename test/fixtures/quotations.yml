@@ -14,6 +14,13 @@ second:
     author_id: 1
     public: true
 
+third:
+    id: 3
+    quotation: third_quotation
+    user_id: 2   # user #2 has only one single quote, see system/test/single quote with user link
+    author_id: 2 # author #2 has only one single quote, see system/test/single quote with author link
+    public: true
+
 public_false:
   quotation: public_false
   user_id: 1
