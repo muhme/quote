@@ -72,7 +72,7 @@ class AuthorsController < ApplicationController
   def update
     return unless access?(@author, :update)
     if @author.update author_params
-      redirect_to @author, notice: "Der Eintrag für den Author \"" + @author.get_author_name_or_blank + "\" wurde aktualisiert."
+      redirect_to @author, notice: "Der Eintrag für den Autor \"" + @author.get_author_name_or_blank + "\" wurde aktualisiert."
     else
       render :edit
     end

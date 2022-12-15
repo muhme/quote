@@ -26,7 +26,7 @@ class PasswordResetsTest < ApplicationSystemTestCase
     fill_in 'user_session_login', with: 'bla'
     fill_in 'user_session_password', with: 'bli'
     click_on 'Anmelden'
-    check_this_page page, nil, '<a href="password_resets/new"'
+    check_this_page page, nil, Regexp.escape('<a href="/password_resets/new"')
   end
 
   # TODO fails on docker-machine as link is hard-coded zitat-service.de and needs to be set from $DOCKER_HOST

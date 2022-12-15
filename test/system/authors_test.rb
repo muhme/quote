@@ -97,8 +97,8 @@ class AuthorsTest < ApplicationSystemTestCase
     check_page page, edit_author_url(1), "h1", "Author bearbeiten"
     fill_in 'author_name', with: 'jo!'
     click_on 'Speichern'
-    check_this_page page, nil, 'Der Eintrag für den Autor .* wurde aktualisiert.'
-    check_page page, quotation_url(1), nil, 'Name:[\s]+jo!' 
+    check_this_page page, nil, 'Der Eintrag für den Autor .* wurde aktualisiert'
+    check_page page, quotation_url(1), nil, 'Autor:.*jo!' 
   end
   test "edit own author fails" do
     visit login_url
@@ -142,7 +142,7 @@ class AuthorsTest < ApplicationSystemTestCase
     url = authors_url + '?page=420000'
     check_page page, url, "h1", "404"
     # wrong URL have to be shown
-    check_this_page page, nil, url
+    check_this_page page, nil, Regexp.escape(url)
     check_this_page page, nil, "quote/issues"
   end
 

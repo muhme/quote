@@ -70,7 +70,7 @@ class CategoriesTest < ApplicationSystemTestCase
     fill_in 'category_name', with: 'better name'
     click_on 'Speichern'
     check_this_page page, nil, 'Kategorie .* wurde aktualisiert.'
-    check_page page, quotation_url(1), nil, 'Name:[\s]+better name' 
+    check_page page, quotation_url(1), nil, 'Kategorie.*better name'  
   end
   test "edit own category fails" do
     visit login_url
@@ -114,7 +114,7 @@ class CategoriesTest < ApplicationSystemTestCase
     url = categories_url + '?page=420000'
     check_page page, url, "h1", "404"
     # wrong URL have to be shown
-    check_this_page page, nil, url
+    check_this_page page, nil, Regexp.escape(url)
     check_this_page page, nil, "quote/issues"
   end
 

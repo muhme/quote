@@ -80,7 +80,7 @@ class UsersTest < ApplicationSystemTestCase
   test "not any details for authentication" do
     visit login_url
     click_on 'Anmelden'
-    check_page page, root_url, nil, "Die Anmeldung war nicht erfolgreich!.*You did not provide any details for authentication."
+    check_page page, nil, nil, "Die Anmeldung war nicht erfolgreich!.*You did not provide any details for authentication"
   end
 
   test "password cannot be blank" do
@@ -88,7 +88,7 @@ class UsersTest < ApplicationSystemTestCase
     visit login_url
     fill_in 'user_session_login', with: @first_user.login
     click_on 'Anmelden'
-    check_page page, root_url, nil, "Die Anmeldung war nicht erfolgreich!.*Password cannot be blank"
+    check_page page, nil, nil, "Die Anmeldung war nicht erfolgreich!.*Password cannot be blank"
   end
 
   test "login is not valid" do

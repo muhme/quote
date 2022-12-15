@@ -64,7 +64,7 @@ class QuotationsTest < ApplicationSystemTestCase
     fill_in 'quotation_source', with: 'jo!'
     click_on 'Speichern'
     check_this_page page, nil, 'Das Zitat wurde aktualisiert.'
-    check_page page, quotation_url(1), nil, 'Quelle:[\s]+jo!' 
+    check_page page, quotation_url(1), nil, 'Quelle:.*jo!' 
   end
   test "edit own quote fails" do
     visit login_url
@@ -75,7 +75,7 @@ class QuotationsTest < ApplicationSystemTestCase
     fill_in 'quotation_quotation', with: 'jo!'
     click_on 'Speichern'
     check_this_page page, nil, 'Das Zitat wurde aktualisiert.'
-    check_page page, quotation_url(1), nil, 'Zitat:[\s]+jo!'
+    check_page page, quotation_url(1), nil, 'Zitat:.*jo!'
     # try to update second quote to exactly the same content as 1st quote
     check_page page, edit_quotation_url(2), "h1", "Zitat bearbeiten"
     fill_in 'quotation_quotation', with: 'jo!'
@@ -105,7 +105,7 @@ class QuotationsTest < ApplicationSystemTestCase
     click_on 'Speichern'
     new_quote = Quotation.last
     check_this_page page, nil, 'Zitat wurde angelegt.'
-    check_page page, quotation_url(new_quote), nil, "Öffentlich:[\s]+Nein"
+    check_page page, quotation_url(new_quote), nil, "Öffentlich:.*Nein"
     # delete
     visit quotations_url
     accept_alert do
@@ -165,7 +165,7 @@ class QuotationsTest < ApplicationSystemTestCase
     url = quotations_url + '?page=420000'
     check_page page, url, "h1", "404"
     # wrong URL have to be shown
-    check_this_page page, nil, url
+    check_this_page page, nil, Regexp.escape(url)
     check_this_page page, nil, "quote/issues"
   end
 

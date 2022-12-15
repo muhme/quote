@@ -17,29 +17,29 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   Capybara.server_port = 3100
   Capybara.server_host = "0.0.0.0"
 
-  DEFAULT_MIN_PAGE_SIZE = 200
+  DEFAULT_MIN_PAGE_SIZE = 200 # bytes
 
   # visiting page with given path, finding content for selector, verifying minimum page size and loading speed
-  # checking for slow 1 second to be successful even in docker env
+  # if running longer than one second first time, after a short breath, making a second attempt to be succeed in Docker env as well
   def check_page page, path, selector, content, size = DEFAULT_MIN_PAGE_SIZE, first_time = true
     Rails.logger.debug "check_page path=#{path} selector=#{selector} content=#{content} size=#{size} first_time=#{first_time}"
     start_millisecond = (Time.now.to_f * 1000).to_i
     visit path unless path.nil?
     run_time = (Time.now.to_f * 1000).to_i - start_millisecond
     if selector.nil?
-      assert "page \"#{path}\" is missing pattern \"#{content}\"" unless page.text =~ /#{content}/ 
+      assert false, "page \"#{page.current_url}\" is missing pattern \"#{content}\"" unless page.source =~ /#{content}/m 
     else
       assert_selector selector, text: content, visible: true
     end
-    assert page.text.length >= size, "page \"#{path}\" is with #{page.text.length.to_s} smaller than #{size.to_s}"
+    assert page.text.length >= size, "page \"#{page.current_url}\" is with #{page.text.length.to_s} smaller than #{size.to_s}"
     if run_time > 1000
       if first_time
-        Rails.logger.debug "time was with ${#run_time} ms to slow, trying second time"
+        Rails.logger.debug "time was with ${#run_time} ms too slow, trying second time"
         # just take a breath and then try it a second time, maybe the Docker environment was too slow at first
         sleep 1
         check_page page, path, selector, content, size, false
       else
-        assert true, "page \"#{path}\" took #{run_time} milliseconds (second time)"
+        assert false, "page \"#{path}\" took #{run_time} milliseconds (second time)"
       end
     end
   end
