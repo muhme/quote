@@ -6,4 +6,4 @@ RUN mkdir /quote
 ADD . /quote
 WORKDIR /quote
 RUN bundle install
-CMD /bin/bash -c 'rails s -p 3000 -b "0.0.0.0"'
+CMD /bin/bash -c 'rm -f tmp/pids/server.pid && rails s -p 3000 -b "0.0.0.0"'
