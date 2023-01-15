@@ -32,15 +32,17 @@ djfarrelly/maildev                 "bin/maildev --web 8…"   25/tcp, 0.0.0.0:81
   * running system tests using Chrome browser on Selenium container with "docker exec -ti quote_rails rails test:system"
   * local directory /quote with cloned GitHub repository is mounted into container
 * quote_chrome - Selenium Standalone with Chrome and VNC server
-  * [vnc://localhost:8104](vnc://localhost:8104) - to see browser working in test:system (using the password: secret)
+  * two ports are available to see browser working in test:system (using the password: secret):
+    * using a VNC viewer [vnc://localhost:8104](vnc://localhost:8104) or
+    * using your browser (no VNC client is needed) http://localhost:8105/?autoconnect=1&resize=scale&password=secret
 * quote_maildev - SMTP Server and Web Interface for viewing and testing emails during development
-  * http://localhost:8105 
+  * http://localhost:8106
 
 ## Testing
 
 Test coverage is greater than 90%, check it by your own:
 * rails test - to run automated unit tests
-* rails test:system - to run automated headless Chrome system tests
+* rails test:system - to run automated Selenium system tests with Chrome browser
 
 **Note**
 > If your're using Docker, go into container first with:
@@ -50,7 +52,7 @@ $ docker exec -it quote_rails /bin/bash
 
 ## History
 
-* 2022 updated to Ruby 3.1 and Rails 7.0.1 ... 7.0.4
+* 2022 updated to Ruby 3.2 and Rails 7.0.1 ... 7.0.4 and using Hotwire Turbo
 * 2021 updated to Rails 6.1.3 ... 6.1.4
 * 2020 updated to Rails 6.0.2 ... 6.1.0
 * 2019 updated to Rails 5.2.3 / 5.2.4, upgraded to 6.0.1

@@ -1,0 +1,10 @@
+<%#= "session[:author_id]=#{session[:author_id]}, modus: #{modus} <br>" %>
+<%= form_for :search_author, id: 'search_author', url: 'search_author', method: 'post' do |form| %>
+  <%= form.label :author, raw('Autor <span class="example">Nachnamen eingeben oder leer lassen (für Unbekannt)</span>') %>
+  <div class="field">
+    <%= form.search_field :author, value: author_selected_name(session[:author_id]), oninput: "this.form.requestSubmit()", :size => 80 %>
+  </div>
+  <%= hidden_field(:quotation, :modus, :value => modus) %>    
+<% end %>
+
+<div id="search_author_results"></div>

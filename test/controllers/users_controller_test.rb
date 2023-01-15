@@ -35,7 +35,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference('User.count') do
       post users_url, params: { user: { login: "test", email: "bla" , password: "123QWEasd", password_confirmation: "123QWEasd" } }
     end
-    assert_response :success
+    assert_response :unprocessable_entity # 422
     assert_match /Email should look like an email address./, @response.body
   end
 
@@ -73,7 +73,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "failed login" do
     post user_sessions_url, :params => { :user_session => { :login => 'bla', :password => 'bli' } }
-    assert_response :success
+    assert_response :unprocessable_entity
     assert_match /Login is not valid/, @response.body
   end
 
@@ -95,7 +95,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference('User.count') do
       patch user_url(@second_user), params: { user: { email: @first_user.email } }
     end
-    assert_response :success
+    assert_response :unprocessable_entity # 422
     assert_match /Email has already been taken/, @response.body
   end
 

@@ -79,4 +79,7 @@ Rails.application.configure do
   # enable docker container host name
   config.hosts << "rails"
 
+  # see css changes immediately
+  config.serve_static_assets = false
+
 end

@@ -1,6 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# Barbara (author id 1) has two quotes
+# unknown author with id 0 must exist
+unknown:
+  id: 0
+  name: unknown
+  description: Unknown Author with ID 0
+  public: true
+  user_id: 1
+
+# Barbara (author id 1) has more than two quotes
 one:
   id: 1
   name: public_author
@@ -25,7 +33,47 @@ public_false:
 without_quotes:
   name: Author Entry not related to any quotation
   user_id: 1
-  
+
+# real world
+schiller:
+  name: "Schiller"
+  firstname: "Friedrich"
+  description: "deutscher Dichter und Philosoph (1759 - 1805)"
+  public: true
+  user_id: 1
+
+all_fields_max_sizes:
+  name:        <%= ("name-field max size 64 " + 'X' * 64)[0,64] %>
+  firstname:   <%= ("firstname-field max size 64 " + 'X' * 64)[0,64] %>
+  link:        <%= ("link-field max size 255 " + 'X' * 255)[0,255] %>
+  description: <%= ("description-field max size 255 " + 'X' * 255)[0,255] %>
+  user_id: 1
+
+only_name:
+  name: "author with only name field set"
+  user_id: 1
+
+only_firstname:
+  firstname: "author with only firstname field set"
+  user_id: 1
+
+only_description:
+  description: "author with only description field set"
+  user_id: 1
+
+name_and_firstname:
+  name: "name field"
+  firstname: "firstname field"
+  user_id: 1
+
+# 20 users Eva 1 ... Eva 20 for autocompletion test
+<% 1.upto(20) do |i| %>
+eva<%= i %>:
+  name: "Eva <%= i %>"
+  public: true
+  user_id: 1 
+<% end %>
+
 # create five thousend authors (in April 2018 we have 523 authors)
 <% 100.upto(5100) do |i| %>
 fix_<%= i %>:

@@ -86,6 +86,11 @@ h1.error {
 h2 {
     font-family: Gondoliere, Comic Sans MS, serif;
     color: #208020;
+    padding-top: 1ex;
+    margin-bottom: 0.5ex;
+}
+p {
+    margin-top: 0.5ex;
 }
 .field_with_errors {
     color: red;
@@ -220,6 +225,24 @@ table#quote_collections th {
 .field {
     margin-bottom: 1em;
 }
+form#search_author .field {
+    margin-bottom: 0;
+}
 .button_to input {
     font-size: 18px;
+}
+
+div#authors_list {
+    font-size: 80%;
+    border: 1px solid gray;
+    background-color: white;
+    position: absolute;
+    z-index: 1;
+}
+div#authors_list a:link {
+    border-bottom: 0;
+}
+
+table#environment td {
+    border:1px solid black;
 }

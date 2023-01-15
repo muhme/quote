@@ -8,7 +8,6 @@ class AuthorsController < ApplicationController
   # get all public for not logged in users and
   # own entries for logged in users and all entries for admins
   def index
-  
     sql =  "select distinct * from authors a"
     sql += " where public = 1" if not current_user or current_user.admin != true
     sql += " or user_id = #{current_user.id}" if current_user and current_user.admin != true
@@ -27,6 +26,13 @@ class AuthorsController < ApplicationController
   # GET /authors/1
   def show
     return unless access?(@author, :read)
+  end
+
+  # POST /authors/search
+  def search
+    @authors = Author.filter_by_name(params[:author])
+    logger.debug { "POST /authors/search found #{@authors.count} authors for \"#{params[:author]}\"" }
+    render turbo_stream: turbo_stream.replace("search_author_results", partial: "quotations/search_author_results", locals: { authors: @authors })
   end
 
   # GET /authors/new
@@ -56,9 +62,9 @@ class AuthorsController < ApplicationController
     end
 
     if @author.save
-      redirect_to @author, notice: "Der Author \"" + @author.get_author_name_or_blank + "\" wurde angelegt."
+      redirect_to @author, notice: "Der Autor \"" + @author.get_author_name_or_blank + "\" wurde angelegt."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
     
     # NICE give warning if the same autor already exists
@@ -71,10 +77,11 @@ class AuthorsController < ApplicationController
   # PATCH/PUT /authors/1
   def update
     return unless access?(@author, :update)
+
     if @author.update author_params
       redirect_to @author, notice: "Der Eintrag für den Autor \"" + @author.get_author_name_or_blank + "\" wurde aktualisiert."
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

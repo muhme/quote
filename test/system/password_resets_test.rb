@@ -9,10 +9,7 @@ class PasswordResetsTest < ApplicationSystemTestCase
   end
 
   test "password reset page with login" do
-    visit login_url
-    fill_in 'user_session_login', with: 'first_user'
-    fill_in 'user_session_password', with: 'first_user_password'
-    click_on 'Anmelden'
+    do_login
     check_this_page page, "a", "Logout"
     visit new_password_reset_url
     # this have to force logout
@@ -22,11 +19,9 @@ class PasswordResetsTest < ApplicationSystemTestCase
   end
 
   test "password reset link given" do
-    visit login_url
-    fill_in 'user_session_login', with: 'bla'
-    fill_in 'user_session_password', with: 'bli'
-    click_on 'Anmelden'
-    check_this_page page, nil, Regexp.escape('<a href="/password_resets/new"')
+    do_login :bla, :bli, /Login - Die Anmeldung/
+    check_this_page page, nil, "Die Anmeldung war nicht erfolgreich!"
+    assert_link "Kennwort mit einer E-Mail zurücksetzen", href: "/password_resets/new"
   end
 
   # TODO fails on docker-machine as link is hard-coded zitat-service.de and needs to be set from $DOCKER_HOST
@@ -35,7 +30,7 @@ class PasswordResetsTest < ApplicationSystemTestCase
     visit new_password_reset_url
     fill_in 'email', with: 'first_user@whatever.com'
     click_on 'Email schicken'
-    check_this_page page, nil, "Eine E-Mail mit dem Link zum Zurücksetzen des Kennwortes wurde an .* geschickt."
+    check_this_page page, nil, /Eine E-Mail mit dem Link zum Zurücksetzen des Kennwortes wurde an .* geschickt./
     # do it
     last_email = ActionMailer::Base.deliveries.last
     #    <a href=3D"http://zitat-service.de/password_resets/V6mb1Fjyd4e7B_d4DAw=
@@ -47,12 +42,9 @@ class PasswordResetsTest < ApplicationSystemTestCase
     fill_in 'password', with: np
     fill_in 'password_confirmation', with: np
     click_on 'Kennwort aktualisieren'
-    check_this_page page, nil, "Das Kennwort für .* wurde erfolgreich aktualisiert."
+    check_this_page page, nil, /Das Kennwort für .* wurde erfolgreich aktualisiert./
     click_on 'Logout'
-    click_on 'Login'
-    fill_in 'user_session_login', with: 'first_user'
-    fill_in 'user_session_password', with: np
-    click_on 'Anmelden'
+    do_login :first_user, np
     check_page page, root_url, "a", "Logout"
   end
 
@@ -60,7 +52,7 @@ class PasswordResetsTest < ApplicationSystemTestCase
     visit new_password_reset_url
     fill_in 'email', with: 'bla'
     click_on 'Email schicken'
-    check_this_page page, nil, "Es wurde kein Benutzer mit der Email-Adresse .* gefunden!."
+    check_this_page page, nil, /Es wurde kein Benutzer mit der E-Mail .* gefunden!/
   end
 
 end

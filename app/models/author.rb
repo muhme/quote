@@ -9,22 +9,23 @@ class Author < ApplicationRecord
   validates :description, presence: false, length: { maximum: 255 }, uniqueness: false
   validate :first_or_last_name
 
+  scope :filter_by_name, -> (search_string) { where("name LIKE ? AND public = 1", "#{search_string}%").order('name').limit(10) }
+
   # count all non-public authors
   def Author.count_non_public
     return count_by_sql("select count(*) from authors where public = 0")
   end
   
-  # gives an array with all author names initial chars, e.g. ["a", "b", "d" ...]
+  # gives an array with initial letters from all existing author names, e.g. ["A", "C", "D" ...]
   def Author.init_chars
     a = Author.find_by_sql "select distinct substring(upper(trim(name)) from 1 for 1) as init from authors order by init"
     ret = []
     for i in 0..(a.length-1)
       ret[i] = a[i].nil? ? '*' : a[i].attributes['init']
-      # cannot use map, must use gsub for multibyte-support (from ActiveSupport::Multibyte)
-      ret[i] = ret[i].gsub('Ä','A')
-      ret[i] = ret[i].gsub('Ö','O')
-      ret[i] = ret[i].gsub('Ü','U')
-      ret[i] = ret[i].gsub('ß','s')
+      ret[i] = 'A' if ret[i] == 'Ä'
+      ret[i] = 'O' if ret[i] == 'Ö'
+      ret[i] = 'U' if ret[i] == 'Ü'
+      ret[i] = 'S' if ret[i] == 'ß'
       ret[i] = '*' unless ('A'..'Z').include?(ret[i])
     end
     ret

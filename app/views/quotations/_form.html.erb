@@ -1,17 +1,21 @@
+<% if quotation and quotation.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= quotation.errors.count %> Fehler</h2>
+    <ul>
+    <% quotation.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%#= "modus: #{modus} <br>" %>
+<%= render "quotations/search_author", modus: modus %>
+
 <%= form_with(model: quotation, local: true) do |form| %>
-  <% if quotation.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= quotation.errors.count %> Fehler</h2>
-      <ul>
-      <% quotation.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 
   <div class="field">
-    <%= form.label :quotation, raw('Zitat <span class="example">z.B. Erfahrungen vererben sich nicht - jeder muß sie allein machen.</span>') %><br />
+    <%= form.label :quotation, raw('<br />Zitat <span class="example">z.B. Erfahrungen vererben sich nicht - jeder muß sie allein machen.</span>') %><br />
     <%= form.text_area :quotation, {:cols => 80, :rows => 2} %>
   </div>
 
@@ -28,11 +32,6 @@
   <div class="field">
     <%= form.label :categories, raw('Kategorien <span class="example">(mehrere mit &lt;Strg&gt; auswählen)') %><br />
     <%= form.collection_select(:category_ids, Category.order(:category), :id, :category, { :selected => @quotation.category_ids, :name => 'quotation[category_ids][]' }, { :multiple => true } ) %>
-  </div>
-
-  <div class="field">
-    <%= form.label :author, raw('Autor <span class="example">z.B. Kurt Tucholsky</span></label>') %><br />
-    <%= form.select(:author_id, Author.order(:name).map {|a| [a.last_first_name, a.id]}) %>
   </div>
 
   <% if current_user and current_user.admin == true %>

@@ -1,21 +1,25 @@
 <h1>Impressum</h1>
-<p>Für den Inhalt der Website <a href="https://www.zitat-service.de">zitat-service.de</a> ist Heiko Lübbe verantwortlich:</p>
+<p>Für den Inhalt der Website <a href="https://www.zitat-service.de">zitat-service.de</a> ist der Betreiber Heiko Lübbe verantwortlich:</p>
 <p>
 <%= image_tag("contact.png", :alt => "Kontaktdaten mit Anschrift, Email, Telefon und Fax", :title => "Kontakt") %>
 </p>
 <h2>Urheberrecht</h2>
 <p>Wenn Sie als Autor oder als dessen Nachlassverwalter wünschen hier nicht zitiert zu werden,
-dann informieren Sie uns bitte per Email oder Telefon.
-Wir werden die Zitate, die unter Ihr Urheberrecht fallen, unverzüglich löschen.
+dann informieren Sie den Betreiber bitte per E-Mail. Die Zitate, die unter Ihr Urheberrecht fallen, werden unverzüglich gelöscht.
 </p>
-<h2>Zusatzerklärung</h2>
-<p>Für den Inhalt extern verlinkter Seiten ist ausschließlich der jeweilige Betreiber verantwortlich.</p>
+<h2>Verfügbarkeit der Website</h2>
+<p>Der Betreiber wird sich bemühen, den Dienst möglichst unterbrechungsfrei zum Abruf anzubieten. Auch bei aller Sorgfalt können aber Ausfallzeiten nicht ausgeschlossen werden. Der Betreiber behält sich das Recht vor, das Angebot jederzeit zu ändern oder einzustellen. Für durch nicht fehlerfrei angelegte Dateien oder nicht fehlerfrei strukturierte Formate bedingte Unterbrechungen oder anderweitige Störungen wird keine Gewähr übernommen.
+<h2>Hinweis zur Verwendung externer Links</h2>
+<p>Extern verlinkte Seiten werden bei der erstmaligen Verknüpfung überprüft. Es wird aber nicht ständig auf Veränderungen in extern verlinkten Seiten geprüft. Wenn der Betreiber feststellt oder von anderen darauf hingewiesen wird, dass ein konkretes Angebot, auf das extern verlinkt wurde, eine zivil- oder strafrechtliche Verantwortlichkeit auslöst, wird der Betreiber den Verweis auf dieses Angebot löschen.</p>
 <h2>Design &amp; Entwicklung</h2>
-<p>
-  Server: <%= Socket.gethostname %><br />
-  Rails Version: <%= Rails.version %><br />
-  Umgebung: <%= ENV['RAILS_ENV'] %>
-</p>
+<p>Bei Fehlern oder für Erweiterungswünsche bitte ein <a target="_blank" href="https://github.com/muhme/quote/issues">Ticket</a> erstellen.</p>
+<table id="environment">
+  <tr><td>Server</td><td><%= Socket.gethostname %></td></tr>
+  <tr><td>Rails Version</td><td><%= Rails.version %></td><tr>
+  <tr><td>Ruby Version</td><td><%= RUBY_VERSION %></td><tr>
+  <tr><td>Umgebung</td><td><%= ENV['RAILS_ENV'] %></td><tr>
+</table>
+
 <p>Die Webanwendung <a href="https://www.zitat-service.de">www.zitat-service.de</a> wurde erstellt durch:</p><p><a style="border: 0px;" href="https://www.consulting.heikol.de">
     <%= image_tag("systemberatung.png", :alt => "Link zu consulting.heiko.de", :title => "Systemberatung Heiko Lübbe") %></a>
 </p>

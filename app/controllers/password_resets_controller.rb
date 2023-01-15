@@ -14,8 +14,8 @@ class PasswordResetsController < ApplicationController
       @user.deliver_password_reset_instructions!
       redirect_to root_path, notice: "Eine E-Mail mit dem Link zum Zurücksetzen des Kennwortes wurde an \"#{@user.email}\" geschickt." # "Instructions to reset your password have been emailed to you"
     else
-      flash.now[:error] = "Es wurde kein Benutzer mit der Email-Adresse \"#{params[:email]}\" gefunden!" # "No user was found with email address #{params[:email]}"
-      render :action => :new
+      flash.now[:error] = "Es wurde kein Benutzer mit der E-Mail \"#{params[:email]}\" gefunden!" # "No user was found with email address #{params[:email]}"
+      render :action => :new, status: :unprocessable_entity
     end
   end
  
@@ -39,7 +39,6 @@ class PasswordResetsController < ApplicationController
   private
  
     def load_user_using_perishable_token
-
       @user = User.find_using_perishable_token(params[:id])
       
       if @user.nil? or (@user.login != params[:login])

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   
   root to: 'static_pages#list'
 
@@ -19,17 +19,21 @@ Rails.application.routes.draw do
   # dynamic generated humans.txt
   get 'humans.txt' => 'static_pages#humans'
   
-  get 'categories/list_no_public'             => 'categories#list_no_public'
-  get 'categories/list_by_letter/:letter'     => 'categories#list_by_letter', constraints: { letter: /[A-Za-z*]/ }
-  get 'authors/list_no_public'                => 'authors#list_no_public'
-  get 'authors/list_by_letter/:letter'        => 'authors#list_by_letter', constraints: { letter: /[A-Za-z*]/ }
-  get 'quotations/list_no_public'             => 'quotations#list_no_public'
-  get 'quotations/list_by_user/:user'         => 'quotations#list_by_user'
-  get 'quotations/list_by_category/:category' => 'quotations#list_by_category'
-  get 'quotations/list_by_author/:author'     => 'quotations#list_by_author'
-  
+  get  'categories/list_no_public'             => 'categories#list_no_public'
+  get  'categories/list_by_letter/:letter'     => 'categories#list_by_letter', constraints: { letter: /[A-Za-z*]/ }
+  get  'authors/list_no_public'                => 'authors#list_no_public'
+  get  'authors/list_by_letter/:letter'        => 'authors#list_by_letter', constraints: { letter: /[A-Za-z*]/ }
+  get  'quotations/list_no_public'             => 'quotations#list_no_public'
+  get  'quotations/list_by_user/:user'         => 'quotations#list_by_user'
+  get  'quotations/list_by_category/:category' => 'quotations#list_by_category'
+  get  'quotations/list_by_author/:author'     => 'quotations#list_by_author'
+  post 'quotations/search_author'              => 'quotations#search_author'
+  post 'quotations/:id/search_author'          => 'quotations#search_author'
+  get  'quotations/author_selected/:id'        => 'quotations#author_selected'
+
   # default controller routes
   resources :authors, :categories, :quotations
+  resources :categories, :quotations
   resources :users, except: [ :index, :show, :destroy ]
   resources :user_sessions, except: [ :index, :show, :edit, :update ]
   resources :password_resets, :only => [ :new, :create, :edit, :update ]
@@ -41,11 +45,11 @@ Rails.application.routes.draw do
   get 'not_found' => 'static_pages#not_found'
 
   # see https://www.mintbit.com/blog/custom-404-500-error-pages-in-rails
-  get '/404', to: 'static_pages#not_found'
-  get '/500', to: 'static_pages#internal_server'
-  get '/422', to: 'static_pages#unprocessable'
+  get '/404' => 'static_pages#not_found'
+  get '/500' => 'static_pages#internal_server'
+  get '/422' => 'static_pages#unprocessable'
 
   # catch all
-  match "*path" => "static_pages#not_found", via: :all
+  match "*path" => "static_pages#catch_all", via: :all
   
 end

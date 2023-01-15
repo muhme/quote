@@ -5,13 +5,13 @@ class UsersTest < ApplicationSystemTestCase
   # /users
   test "visiting the index" do
     visit users_url
-    assert_selector "h1", text: "Nicht gefunden"
+    assert_selector "h1", text: /Seite nicht gefunden.*404/
   end
   
   # /user
   test "picking user" do
     visit '/user'
-    assert_selector "h1", text: "Nicht gefunden"
+    assert_selector "h1", text: /Seite nicht gefunden.*404/
   end
   
   # /users/new
@@ -23,7 +23,7 @@ class UsersTest < ApplicationSystemTestCase
     fill_in 'user_password', with: 'abcDEF78'
     fill_in 'user_password_confirmation', with: 'abcDEF78'
     click_on 'Speichern'
-    check_page page, root_url, "a", "Logout"
+    check_this_page page, "a", "Logout"
   end
   test "new user error email address" do
     visit new_user_url
@@ -57,21 +57,14 @@ class UsersTest < ApplicationSystemTestCase
   end
 
   test "login" do
-    @first_user = users(:first_user)
-    visit login_url
-    fill_in 'user_session_login', with: @first_user.login
-    fill_in 'user_session_password', with: 'first_user_password'
-    click_on 'Anmelden'
-    check_page page, root_url, "a", "Logout"
+    do_login
+    check_this_page page, "a", "Logout"
   end
   
   # test ugly login "Ä Grüsel@öber.eu"
   test "special chars in login name" do
-    @special_user = users(:special_user)
-    visit login_url
-    fill_in 'user_session_login', with: @special_user.login
-    fill_in 'user_session_password', with: 'special_user_password'
-    click_on 'Anmelden'
+    special_user = users(:special_user)
+    do_login special_user.login, :special_user_password
     check_page page, new_author_url, "h1", "Autor anlegen"
     visit logout_url
     check_page page, login_url, "h1", "Login"
@@ -80,7 +73,8 @@ class UsersTest < ApplicationSystemTestCase
   test "not any details for authentication" do
     visit login_url
     click_on 'Anmelden'
-    check_page page, nil, nil, "Die Anmeldung war nicht erfolgreich!.*You did not provide any details for authentication"
+    check_this_page page, nil, "Die Anmeldung war nicht erfolgreich!"
+    check_this_page page, nil, "You did not provide any details for authentication"
   end
 
   test "password cannot be blank" do
@@ -88,42 +82,47 @@ class UsersTest < ApplicationSystemTestCase
     visit login_url
     fill_in 'user_session_login', with: @first_user.login
     click_on 'Anmelden'
-    check_page page, nil, nil, "Die Anmeldung war nicht erfolgreich!.*Password cannot be blank"
+    check_this_page page, nil, "Die Anmeldung war nicht erfolgreich!"
+    check_this_page page, nil, "Password cannot be blank"
   end
 
   test "login is not valid" do
-    visit login_url
-    fill_in 'user_session_login', with: 'bla'
-    fill_in 'user_session_password', with: 'bli'
-    click_on 'Anmelden'
-    check_this_page page, nil, "Die Anmeldung war nicht erfolgreich!.*Login is not valid"
+    do_login :bla, :bli, /Login/
+    check_this_page page, nil, "Die Anmeldung war nicht erfolgreich!"
+    check_this_page page, nil, "Login is not valid"
   end
 
   test "admin login" do
-    @admin_user = users(:admin_user)
-    visit login_url
-    fill_in 'user_session_login', with: @admin_user.login
-    fill_in 'user_session_password', with: 'admin_user_password'
-    click_on 'Anmelden'
-    check_this_page page, nil, 'title="Administrator"'
+    do_login :admin_user, :admin_user_password
+    check_this_page page, "h1", "Herzlich Willkommen beim Zitat-Service"
+    assert page.has_css? "img[title='Administrator']"
   end
 
   # /users/1/edit
-  test "change own login" do
-    visit login_url
-    fill_in 'user_session_login', with: 'first_user'
-    fill_in 'user_session_password', with: 'first_user_password'
-    click_on 'Anmelden'
+  test "change own login name" do
+    do_login
     check_page page, 'users/current/edit', nil, "Benutzer-Eintrag aktualisieren"
     fill_in 'user_login', with: 'first_user_changed'
     click_on 'Speichern'
     check_this_page page, nil, "Benutzereintrag wurde geändert."
     click_on 'Logout'
-    click_on 'Login'
-    fill_in 'user_session_login', with: 'first_user_changed'
-    fill_in 'user_session_password', with: 'first_user_password'
-    click_on 'Anmelden'
-    check_page page, root_url, "a", "Logout"
+    do_login :first_user_changed
+    check_this_page page, "a", "Logout"
+  end
+  test "change own password" do
+    new_pw = "kheroij0245hf!"
+    do_login
+    check_page page, 'users/current/edit', nil, "Benutzer-Eintrag aktualisieren"
+    fill_in 'user_password', with: new_pw 
+    fill_in 'user_password_confirmation', with: "bruqher2reh+"
+    click_on 'Speichern'
+    check_this_page page, nil, /doesn't match Password/
+    fill_in 'user_password', with: new_pw 
+    fill_in 'user_password_confirmation', with: new_pw
+    click_on 'Speichern'
+    check_this_page page, nil, "Benutzereintrag wurde geändert."
+    do_login :first_user, new_pw
+    check_this_page page, "a", "Logout"
   end
 
   test "cannot edit user without login" do
@@ -132,10 +131,7 @@ class UsersTest < ApplicationSystemTestCase
   end
 
   test "user edit error" do
-    visit login_url
-    fill_in 'user_session_login', with: 'first_user'
-    fill_in 'user_session_password', with: 'first_user_password'
-    click_on 'Anmelden'
+    do_login
     check_page page, 'users/current/edit', nil, "Benutzer-Eintrag aktualisieren"
     fill_in 'user_login', with: ''
     click_on 'Speichern'

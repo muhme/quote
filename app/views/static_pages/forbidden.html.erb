@@ -1,7 +1,5 @@
-<h1 class="error">HTTP-Statuscode 403 – Nicht erlaubt</h1>
-<p> Diese Seite wird angezeigt, weil eine Aktion ausgeführt wurde, die nicht erlaubt war.</p>
-<p>Für das Bearbeiten von Zitaten, Autoren oder Kategorien ist eine <%= link_to "Anmeldung", login_url %> erforderlich, um dem neuen Eintrag einen Benutzer zuzuordnen, bzw. zu prüfen. ob es sich um einen selbst angelegten Eintrag handelt.
-</p>
-<p>Benutzer dürfen nur ihre eigenen Zitate, Autoren oder Kategorien ändern. Admins können das für alle Benutzer tun.</p>
-<p>Wenn jedoch ein Fehler augetreten ist, dann schreibe uns bitte eine: <%= link_to "Email", :controller => "static_pages", :action => "contact" %></p>
-<p></p><%= link_to(image_tag("arrow_undo.png", :alt => "Pfeil zurück", :title => "Zurück", :border => "0"), root_url, class: 'not_dashed') %></p>
+<h1 class="error">Zugriff wurde verweigert (HTTP-Statuscode 403)</h1>
+<p>Die gewünschte Aktion konnte nicht ausgeführt werden. Um Zitate, Autoren oder Kategorien zu bearbeiten, ist Deine <%= link_to "Anmeldung", login_url %> erforderlich.</p>
+<p>Bitte beachte, dass Du nur die Zitate, Autoren oder Kategorien ändern darfst, die Du selbst angelegt hast.</p>
+<p>Wenn Du jedoch glaubst, dass ein Fehler vorliegt, dann erstelle bitte ein <a target="_blank" href="https://github.com/muhme/quote/issues">Ticket</a> mit den Einzelheiten. Administratoren werden Dir gerne weiterhelfen.</p>
+<%= link_to(image_tag("arrow_undo.png", :alt => "Pfeil zurück", :title => "Zurück", :border => "0"), root_url, class: 'not_dashed') %></p>

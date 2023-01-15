@@ -38,7 +38,6 @@ class ApplicationController < ActionController::Base
     #
     # action is :read, :update or :destroy
     def access?(obj, action)
-
       name = obj.class.name # default
       name = "Autor"        if name == "Author"
       name = "Zitat"        if name == "Quotation"
@@ -75,6 +74,7 @@ class ApplicationController < ActionController::Base
       end
       
       flash[:error] = msg;
+      logger.debug { "access failed with #{msg}" }
       redirect_to forbidden_url
       return false
     end
@@ -114,5 +114,4 @@ class ApplicationController < ActionController::Base
       @original_url = request.original_url
       render "static_pages/not_found", :status => 404
     end
-  
 end

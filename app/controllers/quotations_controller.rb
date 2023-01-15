@@ -32,13 +32,12 @@ class QuotationsController < ApplicationController
   # GET /quotations/1
   def show
     return unless access?(@quotation, :read)
-    @quotation = Quotation.find(params[:id])
-    return unless access?(@quotation, :read)
   end
 
   # GET /quotations/new
   def new
     @quotation = Quotation.new
+    @quotation.author_id = 0 # defaults to author "unknown"
     if current_user
       @quotation.user_id = current_user.id
     else
@@ -50,36 +49,83 @@ class QuotationsController < ApplicationController
   # GET /quotations/1/edit
   def edit
     return unless access?(@quotation, :update)
+    # will initialize search_author with quotes author_id if not existing, else don't overwrite author changes
+    session[:author_id] = @quotation.author_id unless session[:author_id].present?
+  end
+
+  # quotations author autocompletion field in creating or editing a quotation is implemented as a separate form
+  # status of selected author for quotation form actions is hold with two variables:
+  #   session[:author_id] - selected author id (by click on the link or if only one author matches the search pattern)
+  #   [:quotation][:modus] either "new" (for create) or "edit" for update
+  # Do you see a not that complicated implementaion? please let me know :)
+
+  # POST /quotations/search_author
+  # Parameters {"authenticity_token"=>"[FILTERED]", "search_author"=>{"author"=>"sch"}, "quotation"=>{"modus"=>"new"}}
+  def search_author
+    searching = params[:search_author][:author]
+    modus = params[:quotation][:modus]
+    @authors = []
+    @authors = Author.filter_by_name(searching) if searching.present?
+    logger.debug { "found #{@authors.count} authors for \"#{searching}\"" }
+    if @authors.count == 1
+      logger.debug { "set session[:author_id] to #{@authors.first.id}" }
+      session[:author_id] = @authors.first.id
+    else
+      session.delete(:author_id)
+    end
+    render turbo_stream: turbo_stream.update("search_author_results", partial: "quotations/search_author_results", locals: {authors: @authors, modus: modus })
+  end
+
+  # GET quotations/author_selected/id
+  def author_selected
+    unless current_user
+      flash[:error] = "Anmeldung fehlt, um ein neues Zitat anzulegen!"
+      redirect_to forbidden_url
+      return
+    end
+
+    logger.debug { "set session[:author_id] to #{params[:id]}" }
+    session[:author_id] = params[:id]
+    redirect_back_or_to({ action: params[:modus]})
   end
 
   # POST /quotations
   def create
-
-    @quotation = Quotation.new(quotation_params)
-    if current_user
-      @quotation.user_id = current_user.id
-    else
+    unless current_user
       flash[:error] = "Anmeldung fehlt, um ein neues Zitat anzulegen!"
-      redirect_to forbidden_url 
+      redirect_to forbidden_url
+      return
     end
+
+    @quotation = Quotation.new(quotation_params.except(:search_author))
+    @quotation.user_id = current_user.id
+
+    @quotation.author_id = session[:author_id] ? session[:author_id] : 0
+    logger.debug { "saving #{@quotation.inspect}" }
     if @quotation.save
+      session.delete(:author_id) # eat selected author
       redirect_to @quotation, notice: "Dankeschön, das #{@quotation.id}. Zitat wurde angelegt."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
     
     rescue Exception => exc
       logger.error "create quotation failed: #{exc.message}"
       flash[:error] = "Das Anlegen des Zitates ist gescheitert! (#{exc.message})"
+      render :new, status: :unprocessable_entity
   end
 
   # PATCH/PUT /quotations/1
   def update
     return unless access?(@quotation, :update)
-    if @quotation.update(quotation_params)
+
+    @quotation.author_id = session[:author_id] ? session[:author_id] : 0
+    logger.debug { "update quotation #{@quotation.inspect}" }
+    if @quotation.update(quotation_params.except(:search_author))
+      session.delete(:author_id) # eat selected author
       redirect_to @quotation, notice: 'Das Zitat wurde aktualisiert.'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -154,7 +200,6 @@ class QuotationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def quotation_params
-      params.require(:quotation).permit(:quotation, :source, :source_link, :author_id, :public, :category, :pattern, :category_ids => [])
-    end
-    
+      params.require(:quotation).permit(:search_author, :quotation, :source, :source_link, :public, :category, :pattern, :category_ids => [])
+    end  
 end

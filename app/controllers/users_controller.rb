@@ -14,8 +14,9 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to root_url, notice: "Der Eintrag für den Benutzer \"#{@user.login}\” wurde angelegt."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
+
   end
 
   # GET /users/1/edit
@@ -34,10 +35,11 @@ class UsersController < ApplicationController
       redirect_to root_url
       return
     end
+
     if @user.update(user_params)
       redirect_to root_url, notice: 'Benutzereintrag wurde geändert.'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

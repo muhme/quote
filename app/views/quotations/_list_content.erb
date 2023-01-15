@@ -23,7 +23,7 @@
                 &nbsp;
                 <%= link_to image_tag("pencil.png", :alt => 'Stift', :title => 'Bearbeiten', :border => 0), :action => 'edit', :id => quotation %>
                 &nbsp;
-                <%= link_to image_tag("cancel.png", :alt => 'rotes Kreuz', :title => 'Löschen', :border => 0), { :action => 'destroy', :id => quotation }, :method => :delete, data: {:confirm => "Wirklich das Zitat \"" + truncate(quotation.quotation, length: 20) + "\" löschen?" } %>
+                <%= link_to image_tag("cancel.png", :alt => 'rotes Kreuz', :title => 'Löschen', :border => 0), { :action => 'destroy', :id => quotation }, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Wirklich das Zitat \"" + truncate(quotation.quotation, length: 20) + "\" löschen?" } %>
         <% end %>
         </td>
     </tr>

@@ -11,7 +11,7 @@
   </div>
 <% end %>
  
-<p>Es kann das Kennwort für den Benutzernamen "<%= h(@user.login) %>" mit der Email-Adresse "<%= h(@user.email) %>" geändert werden.</p>
+<p>Hier kannst das Kennwort für den Benutzernamen "<%= h(@user.login) %>" mit der E-Mail "<%= h(@user.email) %>" ändern.</p>
 <p>Bitte das neue Kennwort zweimal eingeben.</p>
  
 <%= form_tag password_reset_path, :method => :put do %>

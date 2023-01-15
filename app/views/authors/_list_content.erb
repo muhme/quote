@@ -25,7 +25,7 @@
                     <%= link_to image_tag("pencil.png", :alt => 'Stift', :title => 'Bearbeiten', :border => 0), :action => 'edit', :id => author %>
                     &nbsp;
                     <% if quotations == 0 %>
-                        <%= link_to image_tag("cancel.png", :alt => 'rotes Kreuz', :title => 'Löschen', :border => 0), { :action => 'destroy', :id => author }, :method => :delete, data: { confirm: "Wirklich den Eintrag für den Autor \"" + author.get_author_name_or_blank + "\" löschen?" }  %>
+                        <%= link_to image_tag("cancel.png", :alt => 'rotes Kreuz', :title => 'Löschen', :border => 0), { :action => 'destroy', :id => author }, :method => :delete, data: { turbo_method: :delete, turbo_confirm: "Wirklich den Eintrag für den Autor \"" + author.get_author_name_or_blank + "\" löschen?" }  %>
                     <% end %>
                 <% end %>
             </td>

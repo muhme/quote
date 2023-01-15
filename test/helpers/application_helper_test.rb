@@ -75,4 +75,17 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal "<a href=\"/joomla/a.zip\">a.zip</a>", link_to_joomla("a.zip")
   end
 
+  #  "Schiller, Friedrich, deutscher Dichter und Philosoph (1759 - 1805)" with max length 80
+  #  or "" for unknown author (id=0) or id isn't set
+  test "author selected name" do
+    assert_equal author_selected_name(authors(:schiller).id), "Schiller, Friedrich, deutscher Dichter und Philosoph (1759 - 1805)"
+    assert_equal author_selected_name(authors(:all_fields_max_sizes).id).length, 80
+    assert_equal author_selected_name(authors(:unknown).id), ""
+    assert_equal author_selected_name(nil), ""
+    assert_equal author_selected_name(authors(:only_name).id), "author with only name field set"
+    assert_equal author_selected_name(authors(:only_firstname).id), "author with only firstname field set"
+    assert_equal author_selected_name(authors(:only_description).id), "author with only description field set"
+    assert_equal author_selected_name(authors(:name_and_firstname).id), "name field, firstname field"
+  end
+
 end

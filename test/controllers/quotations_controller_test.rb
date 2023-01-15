@@ -92,11 +92,11 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create quotation" do
-    post quotations_url, params: { quotation: { quotation: "Yes we can.", author_id: 1 } }
+    post quotations_url, params: { commit: "Speichern", quotation: { quotation: "Yes we can." } }
     assert_forbidden
     assert_difference('Quotation.count') do
       login :first_user
-      post quotations_url, params: { quotation: { quotation: "Yes we can.", author_id: 1 } }
+      post quotations_url, params: { commit: "Speichern", quotation: { quotation: "Yes we can." } }
     end
     assert_redirected_to quotation_url(Quotation.last)
     quotation = Quotation.find_by_quotation 'Yes we can.'
@@ -121,18 +121,18 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update quotation" do
     login :first_user
-    patch quotation_url(@quotation_one), params: { quotation: { quotation: 'The early bird catches the worm' } }
+    patch quotation_url(@quotation_one), params: { commit: "Speichern", quotation: { quotation: 'The early bird catches the worm' } }
     assert_redirected_to quotation_url @quotation_one
     get '/logout'
     login :admin_user
-    patch quotation_url(@quotation_one), params: { quotation: { quotation: 'The early bird catches the worm!' } }
+    patch quotation_url(@quotation_one), params: { commit: "Speichern", quotation: { quotation: 'The early bird catches the worm!' } }
     assert_redirected_to quotation_url @quotation_one
     get '/logout'
-    patch quotation_url(@quotation_one), params: { quotation: { quotation: 'The early bird catches the worm!!!' } }
+    patch quotation_url(@quotation_one), params: { commit: "Speichern", quotation: { quotation: 'The early bird catches the worm!!!' } }
     assert_forbidden
     login :first_user
-    patch quotation_url(@quotation_one), params: { quotation: { quotation: '' } }
-    assert_response :success
+    patch quotation_url(@quotation_one), params: { commit: "Speichern", quotation: { quotation: '' } }
+    assert_response :unprocessable_entity # 422
     assert_match /1 fehler|1 error/i, @response.body
   end
 

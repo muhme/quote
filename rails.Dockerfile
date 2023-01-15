@@ -1,7 +1,7 @@
-# rails.Dockerfile - instructions to build Docker image with Ruby on Rails based web application zitat-service.de
+# rails.Dockerfile - instructions to build Docker image for the Ruby on Rails based web application zitat-service.de
 #
-FROM ruby:3.1
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+FROM ruby:3.2
+RUN apt-get update -qq && apt-get upgrade -y
 RUN mkdir /quote
 ADD . /quote
 WORKDIR /quote

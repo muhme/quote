@@ -24,8 +24,8 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
   # POST /password_resets
   test "fail for not existing email address" do
     post password_resets_url, :params => { :email => 'bla' }
-    assert_response :success
-    assert_match /Es wurde kein Benutzer mit der Email-Adresse .*bla.* gefunden!/, @response.body
+    assert_response :unprocessable_entity # 422
+    assert_match /Es wurde kein Benutzer mit der E-Mail.*bla.*gefunden!/, @response.body
   end
 
   # POST /password_resets
@@ -40,10 +40,11 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
     #    8/edit?login=3Dfirst_user">http://zitat-service.de/password_resets/V6mb1F=
     # /password_resets/V6mb1Fjyd4e7B_d4DAw8
     pt = last_email.body.encoded.sub(/.*(\/password_resets\/[^\/]+).*/m, '\1').sub(/=[\s]/, '')
+    pt = pt.tr("\n", "") # delete new line from mail
     url = pt + "/edit?login=" + @first_user.login
     get url
     assert_response :success
-    assert_match /Es kann das Kennwort für den Benutzernamen .* geändert werden./, @response.body
+    assert_match /Hier kannst das Kennwort für den Benutzernamen .* ändern./, @response.body
     # do it, e.g. http://192.168.99.100:8102/password_resets/qh2cSjNijWcZ4iwaeuAD
     put pt, params: { :login => @first_user.login, :password => 'new45678', :password_confirmation => 'new45678'}
     assert_redirected_to root_url

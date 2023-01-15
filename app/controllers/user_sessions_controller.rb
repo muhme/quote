@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
       redirect_to root_url
     else
       flash[:error] = "Die Anmeldung war nicht erfolgreich!"
-      render :action => :new
+      render :new, status: :unprocessable_entity
     end
   end
 

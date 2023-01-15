@@ -14,11 +14,8 @@ class AuthorsTest < ApplicationSystemTestCase
     assert_equal page.title, "Zitat-Service - Autoren die mit A beginnen"
     
     # slow performance seen with user w/o admin rights logged in
-    visit login_url
-    fill_in 'user_session_login', with: 'first_user'
-    fill_in 'user_session_password', with: 'first_user_password'
-    click_on 'Anmelden'
-    check_page page, root_url, "a", "Logout"
+    do_login
+    check_this_page page, "a", "Logout"
     check_page page, "/authors/list_by_letter/M", "h1", "Autor"
     assert_equal page.title, "Zitat-Service - Autoren die mit M beginnen" 
   end
@@ -37,10 +34,7 @@ class AuthorsTest < ApplicationSystemTestCase
   
   # /authors/new
   test "first or last name is needed" do
-    visit login_url
-    fill_in 'user_session_login', with: 'first_user'
-    fill_in 'user_session_password', with: 'first_user_password'
-    click_on 'Anmelden'
+    do_login
     check_page page, new_author_url, "h1", "Autor anlegen"
     click_on 'Speichern'
     check_this_page page, nil, "Vorname oder Nachname muss gesetzt sein"
@@ -49,13 +43,11 @@ class AuthorsTest < ApplicationSystemTestCase
   # /authors/new
   test "create two authors with same name" do
     new_author_name = 'Hans'
-    visit login_url
-    fill_in 'user_session_login', with: 'first_user'
-    fill_in 'user_session_password', with: 'first_user_password'
-    click_on 'Anmelden'
+    do_login
     check_page page, new_author_url, "h1", "Autor anlegen"
     fill_in 'author_name', with: new_author_name
     click_on 'Speichern'
+    check_this_page page, "h1", "Autor" # do it before to have Capybara wait until and new author and url is existing
     check_page page, author_url(Author.find_by_name(new_author_name)), "h1", "Autor"
     # it is possible to have two authors with the same name
     check_page page, new_author_url, "h1", "Autor anlegen"
@@ -63,15 +55,14 @@ class AuthorsTest < ApplicationSystemTestCase
     click_on 'Speichern'
     check_page page, author_url(Author.last), "h1", "Autor"
   end
+
   test "delete author" do
     new_author_name = 'XYZ'
-    visit login_url
-    fill_in 'user_session_login', with: 'first_user'
-    fill_in 'user_session_password', with: 'first_user_password'
-    click_on 'Anmelden'
+    do_login
     check_page page, new_author_url, "h1", "Autor anlegen"
     fill_in 'author_name', with: new_author_name
     click_on 'Speichern'
+    check_this_page page, "h1", "Autor" # do it before to have Capybara wait until and new author and url is existing
     au = author_url(Author.find_by_name(new_author_name))
     check_page page, au, "h1", "Autor"
     # delete
@@ -81,30 +72,25 @@ class AuthorsTest < ApplicationSystemTestCase
     end
     check_page page, au, "h1", "HTTP-Statuscode 404"
   end
+
   # NICE cannot delete author created by another user
   # NICE cannot delete author with quotations
 
   # /authors/new
   test "new author without login" do
-    check_page page, new_author_url, "h1", "Nicht erlaubt"
+    check_page page, new_author_url, "h1", /Zugriff wurde verweigert .* 403/
   end
 
   test "edit own author" do
-    visit login_url
-    fill_in 'user_session_login', with: 'first_user'
-    fill_in 'user_session_password', with: 'first_user_password'
-    click_on 'Anmelden'
+    do_login
     check_page page, edit_author_url(1), "h1", "Author bearbeiten"
     fill_in 'author_name', with: 'jo!'
     click_on 'Speichern'
-    check_this_page page, nil, 'Der Eintrag für den Autor .* wurde aktualisiert'
-    check_page page, quotation_url(1), nil, 'Autor:.*jo!' 
+    check_this_page page, nil, /Der Eintrag für den Autor .* wurde aktualisiert/
+    check_page page, quotation_url(1), nil, /Autor:.*jo!/ 
   end
   test "edit own author fails" do
-    visit login_url
-    fill_in 'user_session_login', with: 'first_user'
-    fill_in 'user_session_password', with: 'first_user_password'
-    click_on 'Anmelden'
+    do_login
     check_page page, edit_author_url(1), "h1", "Author bearbeiten"
     fill_in 'author_name', with: ''
     click_on 'Speichern'
@@ -115,10 +101,7 @@ class AuthorsTest < ApplicationSystemTestCase
     check_page page, authors_list_no_public_url, nil, "Kein Administrator!"
   end
   test "list not public authors" do
-    visit login_url
-    fill_in 'user_session_login', with: 'admin_user'
-    fill_in 'user_session_password', with: 'admin_user_password'
-    click_on 'Anmelden'
+    do_login :admin_user, :admin_user_password
     check_this_page page, nil, 'Hallo admin_user, schön dass Du da bist.'
     check_page page, authors_list_no_public_url, "h1", "Nicht-Öffentliche Autoren"
   end
@@ -142,8 +125,8 @@ class AuthorsTest < ApplicationSystemTestCase
     url = authors_url + '?page=420000'
     check_page page, url, "h1", "404"
     # wrong URL have to be shown
-    check_this_page page, nil, Regexp.escape(url)
-    check_this_page page, nil, "quote/issues"
+    check_this_page page, nil, url
+    check_page_source page, /href=".*quote\/issues/
   end
 
 end

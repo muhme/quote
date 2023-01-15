@@ -127,7 +127,7 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
   test "return to edit if validation fails" do
     login :first_user
     patch author_url(@author_one), params: { author: { name: '' } }
-    assert_response :success
+    assert_response :unprocessable_entity # 422
     assert_match /1 fehler|1 error/i, @response.body
   end
 

@@ -125,7 +125,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   test "return to edit if validation fails" do
     login :first_user
     patch category_url(@category_one), params: { category: { category: '' } }
-    assert_response :success
+    assert_response :unprocessable_entity # 422
     assert_match /1 fehler|1 error/i, @response.body
   end
 

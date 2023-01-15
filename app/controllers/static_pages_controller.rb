@@ -44,7 +44,6 @@ class StaticPagesController < ApplicationController
   # get one random quotation
   # get last three users they have created new quotes, linked to there list of quotes and with a count of there quotes at all
   def list
-  
     # select * from quotations where public = 1 order by rand() limit 1
     @quotation = Quotation.where(public: true).order(Arel.sql('rand()')).first
 
@@ -80,9 +79,7 @@ class StaticPagesController < ApplicationController
   # 404, e.g. routed for '*path' catch all
   def not_found
     @original_url = params[:original_url] || request.original_url
-    respond_to do |format|
-      format.all { render :status => 404, :formats => :html, content_type: "text/html" }
-    end
+    render :status => 404, :formats => :html, content_type: "text/html"
   end
 
   # 422
@@ -95,4 +92,10 @@ class StaticPagesController < ApplicationController
     render status: 500
   end
 
+  # catch all rule as no route found
+  def catch_all
+    @original_url = params[:original_url] || request.original_url
+    logger.error "catch_all #{request.method} \"#{@original_url}\""
+    render 'static_pages/not_found', :formats => :html, status: 404, content_type: "text/html"
+  end
 end

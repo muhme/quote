@@ -56,10 +56,10 @@ class StaticPagessTest < ApplicationSystemTestCase
       check_page(page, "/quotations/list_no_public", "div", "Kein Administrator!", 150)
   end
   test "404 not found" do
-    ["/bla", "/bla.html", "/bla.png", "/bla.gif", "/bla.css", "/bla.js", "/quotations.jpg",
-     "/a/b", "/a/b.html", "/a/b.png", "/a/b.gif", "/a/b.css", "/a/b.js", "/authors/0.jpg"
+    ["/bla", "/bla.html", "/bla.png", "/bla.gif", "/bla.css", "/bla.js", "/bla.tiff", "/quotations.jpg",
+     "/a/b", "/a/b.html", "/a/b.png", "/a/b.gif", "/a/b.css", "/a/b.js", "/authors/0.jpg", "/quotations/1.json", "/categories/1.json"
     ].each {
-      |url| check_page(page, url, "h1", "HTTP-Statuscode 404", 150)
+      |url| check_page(page, url, "h1", /Seite nicht gefunden .* 404/, 150)
     }
   end
   test "422 unprocessable entity" do

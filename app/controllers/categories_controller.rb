@@ -6,7 +6,6 @@ class CategoriesController < ApplicationController
 
   # GET /categories
   def index
-
     sql =  "select distinct * from categories c"
     sql += " where c.public = 1" if not current_user or current_user.admin != true
     sql += " or c.user_id = #{current_user.id}" if current_user and current_user.admin != true
@@ -55,7 +54,7 @@ class CategoriesController < ApplicationController
     if @category.save
       redirect_to @category, notice: "Die Kategorie \"#{@category.category}\" wurde angelegt."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
 
     rescue Exception => exc
@@ -66,10 +65,11 @@ class CategoriesController < ApplicationController
   # PATCH/PUT /categories/1
   def update
     return unless access?(@category, :update)
+
     if @category.update category_params
       redirect_to @category, notice: "Kategorie \"#{@category.category}\" wurde aktualisiert."
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

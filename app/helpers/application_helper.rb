@@ -63,6 +63,20 @@ module ApplicationHelper
     number.to_s.reverse.scan(/\d{1,3}/).join(".").reverse
   end
 
+  # return authors "name, firstname, description" or "" for unknown author (id=0) or id isn't set
+  # e.g. "Schiller, Friedrich, deutscher Dichter und Philosoph (1759 - 1805)" with max length 80
+  def author_selected_name(id)
+    long_name = ""
+    if id and id.to_i > 0
+      author = Author.find(id)
+      [ author.name, author.firstname, author.description ].each do |field|
+        long_name << ", " if long_name.present? and field.present?
+        long_name << field if field.present?
+      end
+    end
+    return long_name[0,80]
+  end
+
   # gives links to the authors by 1st letter as four-rows-table
   # A B C D E F G
   # H I J K L M N
