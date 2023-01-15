@@ -12,12 +12,12 @@ $ docker compose up -d
 Then you should have five containers running:
 ```
 $ docker ps
-IMAGE                              COMMAND                  PORTS                                            NAMES
-mariadb                            "docker-entrypoint.s…"   0.0.0.0:8100->3306/tcp                           quote_mariadb
-phpmyadmin/phpmyadmin              "/docker-entrypoint.…"   0.0.0.0:8101->80/tcp                             quote_mysqladmin
-quote_rails                        "/bin/sh -c '/bin/ba…"   0.0.0.0:8102->3000/tcp, 0.0.0.0:8103->3100/tcp   quote_rails
-selenium/standalone-chrome-debug   "/opt/bin/entry_poin…"   4444/tcp, 0.0.0.0:8104->5900/tcp                 quote_chrome
-djfarrelly/maildev                 "bin/maildev --web 8…"   25/tcp, 0.0.0.0:8105->80/tcp                     quote_maildev
+IMAGE                        PORTS                                                      NAMES
+quote-rails                  0.0.0.0:8102->3000/tcp                                     quote_rails
+phpmyadmin/phpmyadmin        0.0.0.0:8101->80/tcp                                       quote_mysqladmin
+mariadb                      3306/tcp                                                   quote_mariadb
+selenium/standalone-chrome   4444/tcp, 0.0.0.0:8104->5900/tcp, 0.0.0.0:8105->7900/tcp   quote_chrome
+maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                           quote_maildev
 ```
 * quote_mariadb - MariaDB database server
   * database admin is root/root
