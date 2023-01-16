@@ -52,7 +52,8 @@ $ docker exec -it quote_rails /bin/bash
 
 ## History
 
-* 2022 updated to Ruby 3.2 and Rails 7.0.1 ... 7.0.4 and using Hotwire Turbo
+* 2023 using Hotwire Turbo
+* 2022 updated to Ruby 3.0 and Rails 7.0.1 ... 7.0.4
 * 2021 updated to Rails 6.1.3 ... 6.1.4
 * 2020 updated to Rails 6.0.2 ... 6.1.0
 * 2019 updated to Rails 5.2.3 / 5.2.4, upgraded to 6.0.1

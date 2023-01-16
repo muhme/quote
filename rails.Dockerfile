@@ -1,7 +1,7 @@
 # rails.Dockerfile - instructions to build Docker image for the Ruby on Rails based web application zitat-service.de
 #
-FROM ruby:3.2
-RUN apt-get update -qq && apt-get upgrade -y
+FROM ruby:3.0
+RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y net-tools vim
 RUN mkdir /quote
 ADD . /quote
 WORKDIR /quote
