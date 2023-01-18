@@ -77,3 +77,5 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen'
 end
+
+gem "terser", "~> 1.1"
