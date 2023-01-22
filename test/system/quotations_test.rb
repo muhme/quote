@@ -45,8 +45,8 @@ class QuotationsTest < ApplicationSystemTestCase
   end
   
   test "show quote" do
-    check_page page, quotation_url(Quotation.find_by_quotation('public_quotation')), "h1", "Zitat"
-    assert_equal page.title, "Zitat-Service - Zitat von public_author"
+    check_page page, quotation_url(1), "h1", "Zitat"
+    assert_equal page.title, "Zitat-Service - Zitat von Barbara"
   end
 
   # linking author's name with that author's quotes #13
@@ -139,21 +139,21 @@ class QuotationsTest < ApplicationSystemTestCase
     click_on 'Speichern'
     check_this_page page, nil, 'Zitat wurde aktualisiert.'
     check_page page, quotation_url(1), nil, /Zitat:.*Wer sich über die Wirklichkeit nicht hinauswagt, der wird nie die Wahrheit erobern./
-    check_this_page page, nil, (/Autor:.*Friedrich Schiller/)
+    check_this_page page, nil, /Autor:.*Friedrich Schiller/
     # existing author is not changed
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     fill_in 'quotation_quotation', with: 'der zankapfel schmeckt bitter'
     click_on 'Speichern'
     check_this_page page, nil, 'Zitat wurde aktualisiert.'
     check_page page, quotation_url(1), nil, /Zitat:.*der zankapfel schmeckt bitter/
-    check_this_page page, nil, (/Autor:.*Friedrich Schiller/)
+    check_this_page page, nil, /Autor:.*Friedrich Schiller/
     # autocomplete gives a list > 1
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     fill_in 'quotation_quotation', with: 'Hardware eventually fails. Software eventually works.'
     fill_in 'search_author_author', with: 'Eva'
     click_on 'Speichern'
     check_page page, quotation_url(1), nil, /Zitat:.*Hardware eventually fails. Software eventually works./
-    check_this_page page, nil, (/Autor:.*unknown/)
+    check_this_page page, nil, /Autor:.*unknown/
   end
   test "author autocompletion create quote" do
     do_login
@@ -164,7 +164,7 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, 'Zitat wurde angelegt.'
     new_quote = Quotation.last
     check_page page, quotation_url(new_quote), nil, /Zitat:.*Die Sterne lügen nicht./
-    check_this_page page, nil, (/Autor:.*Friedrich Schiller/)
+    check_this_page page, nil, /Autor:.*Friedrich Schiller/
     # check session variable author_id is eaten
     visit new_quotation_url
     fill_in 'quotation_quotation', with: 'Die Axt im Haus erspart den Zimmermann.'
@@ -172,7 +172,17 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, 'Zitat wurde angelegt.'
     new_quote = Quotation.last
     check_page page, quotation_url(new_quote), nil, /Zitat:.*Die Axt im Haus erspart den Zimmermann./
-    check_this_page page, nil, (/Autor:.*unknown/)
+    check_this_page page, nil, /Autor:.*unknown/
+  end
+  test "author autocompletion edit second quote bug #57" do
+    do_login
+    check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten" # 1st quote has author id 1 "Barbara"
+    check_page_source page, /Barbara/ # is given in HTML form as input value, therefore to user check_page_source
+    check_page page, edit_quotation_url(2), "h1", "Zitat bearbeiten" # 2nd quote has author id 2 "second author"
+    check_page_source  page, /second author/
+    click_on 'Speichern'
+    check_this_page page, nil, 'Zitat wurde aktualisiert.'
+    check_this_page page, nil, /Autor:.*second author.*/
   end
 
   test "edit someone else quote" do

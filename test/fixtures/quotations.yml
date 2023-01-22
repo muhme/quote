@@ -4,14 +4,14 @@ one:
   id: 1
   quotation: public_quotation
   user_id: 1
-  author_id: 1
+  author_id: 1 # Barbara
   public: true
 
 second:
     id: 2
     quotation: second_quotation
     user_id: 1
-    author_id: 1
+    author_id: 2 # second author
     public: true
 
 third:

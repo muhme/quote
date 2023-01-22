@@ -28,8 +28,8 @@ class AuthorsTest < ApplicationSystemTestCase
   
   # e.g. /authors/1
   test "show author" do
-    check_page page, author_url(Author.find_by_name('public_author')), "h1", "Autor"
-    assert_equal page.title, "Zitat-Service - Autor public_author"
+    check_page page, author_url(Author.find_by_name('Barbara')), "h1", "Autor"
+    assert_equal page.title, "Zitat-Service - Autor Barbara"
   end
   
   # /authors/new

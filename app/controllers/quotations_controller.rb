@@ -49,8 +49,8 @@ class QuotationsController < ApplicationController
   # GET /quotations/1/edit
   def edit
     return unless access?(@quotation, :update)
-    # will initialize search_author with quotes author_id if not existing, else don't overwrite author changes
-    session[:author_id] = @quotation.author_id unless session[:author_id].present?
+    # initialize search_author with quotes author_id
+    session[:author_id] = @quotation.author_id
   end
 
   # quotations author autocompletion field in creating or editing a quotation is implemented as a separate form

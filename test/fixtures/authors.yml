@@ -11,7 +11,7 @@ unknown:
 # Barbara (author id 1) has more than two quotes
 one:
   id: 1
-  name: public_author
+  name: Barbara
   description: Pseudonym einer deutschen Streetart-Künstlerin
   public: true
   user_id: 1

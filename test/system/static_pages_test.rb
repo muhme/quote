@@ -70,7 +70,7 @@ class StaticPagessTest < ApplicationSystemTestCase
   end
   
   test "HTML lang" do
-    [root_url, joomla_url, authors_url, author_url(Author.find_by_name('public_author'))].each {
+    [root_url, joomla_url, authors_url, author_url(Author.find_by_name('Barbara'))].each {
       |url|
         visit url
         assert page.source.match('<html lang="de">')
