@@ -67,7 +67,7 @@ module ApplicationHelper
   # e.g. "Schiller, Friedrich, deutscher Dichter und Philosoph (1759 - 1805)" with max length 80
   def author_selected_name(id)
     long_name = ""
-    if id and id.to_i > 0
+    if id
       author = Author.find(id)
       [ author.name, author.firstname, author.description ].each do |field|
         long_name << ", " if long_name.present? and field.present?

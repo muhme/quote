@@ -79,6 +79,17 @@ class ApplicationController < ActionController::Base
       return false
     end
 
+    # check user is logged in or set error message, redirect to forbidden url and return false
+    def logged_in?(msg)
+      if current_user
+        return true 
+      else
+        flash[:error] = msg
+        redirect_to forbidden_url
+        return false
+      end 
+    end
+
     # if a user logged in with the same id oder as admin?
     def can_edit?(user_id)
       current_user && ( current_user.id == user_id || current_user.admin == true )
@@ -113,5 +124,18 @@ class ApplicationController < ActionController::Base
       flash[:error] = "#{exc.message}"
       @original_url = request.original_url
       render "static_pages/not_found", :status => 404
+    end
+   
+    # collect Turbo Streams updates ...
+    #   key - turbo-stream target
+    #   component - partial with locals
+    # from https://github.com/hotwired/turbo-rails/issues/77
+    def turbo_stream_add_update(key, component)
+      @turbo_stream_actions ||= []
+      @turbo_stream_actions << turbo_stream.update(key, view_context.render(component))
+    end
+    # ... and run them with one rendering
+    def turbo_stream_do_actions()
+      @turbo_stream_actions
     end
 end

@@ -148,6 +148,7 @@ th, tr.ListLine0 td {
     padding: 2px 5px 2px 5px;
     margin: 2px;
     border: 1px solid #208020;
+    background-color: #ddffdd; /* make non-transparent */
     text-decoration: none;
     color: black;
 }
@@ -167,6 +168,7 @@ th, tr.ListLine0 td {
     padding: 2px 5px 2px 5px;
     margin: 2px;
     border: 1px solid #208020;
+    background-color: #ddffdd; /* make non-transparent */
     color: #999;
     font-style: normal
 }
@@ -225,6 +227,10 @@ table#quote_collections th {
 .field {
     margin-bottom: 1em;
 }
+.top_space_field {
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
 form#search_author .field {
     margin-bottom: 0;
 }
@@ -234,7 +240,8 @@ form#search_author .field {
 
 div#authors_list {
     font-size: 80%;
-    border: 1px solid gray;
+    border: 2px solid darkblue;
+    border-top: 0;
     background-color: white;
     position: absolute;
     z-index: 1;
@@ -245,4 +252,8 @@ div#authors_list a:link {
 
 table#environment td {
     border:1px solid black;
+}
+
+table#details {
+    background-color: #ddffdd; /* make show detail tables non-transparent */
 }

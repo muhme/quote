@@ -24,7 +24,7 @@ class QuotationsTest < ApplicationSystemTestCase
     check_page page, "quotations/list_by_category/" + Category.first.id.to_s, "h1", "Zitate für die Kategorie"
   end
   test "failed to list not existing category" do
-    check_page page, "quotations/list_by_category/bla", nil, /Kann Kategory .*bla.* nicht finden!/
+    check_page page, "quotations/list_by_category/bla", nil, /Kann Kategorie .*bla.* nicht finden!/
   end
 
   test "list by user" do
@@ -75,9 +75,8 @@ class QuotationsTest < ApplicationSystemTestCase
   test "edit own quote" do
     do_login
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
+    fill_in 'author', with: 'schiller'
     fill_in 'quotation_source', with: 'jo!'
-    fill_in 'search_author_author', with: 'schiller'
-    check_this_page page, nil, "Schiller, Friedrich" # wait for turbo
     click_on 'Speichern'
     check_this_page page, nil, 'Das Zitat wurde aktualisiert.'
     check_page page, quotation_url(1), nil, /Quelle:.*jo!/
@@ -100,7 +99,7 @@ class QuotationsTest < ApplicationSystemTestCase
   test "author autocompletion select one in the list" do
     do_login
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
-    fill_in 'search_author_author', with: 'Eva'
+    fill_in 'author', with: 'Eva'
     click_on 'Eva 10'
     click_on 'Speichern'
     check_this_page page, nil, 'Das Zitat wurde aktualisiert.'
@@ -109,8 +108,11 @@ class QuotationsTest < ApplicationSystemTestCase
   test "author autocompletion give name" do
     do_login
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
-    fill_in 'search_author_author', with: 'Eva 19'
-    check_this_page page, nil, /Eva 19,/ # wait until autor found
+    fill_in 'author', with: 'Eva 1'
+    check_this_page page, 'div#authors_list', /Eva 1/
+    fill_in 'author', with: 'Eva 19'
+    check_this_page page, 'div#authors_list', ''
+    check_page_source page, 'value="Eva 19"'
     click_on 'Speichern'
     check_this_page page, nil, 'Das Zitat wurde aktualisiert.'
     check_this_page page, nil, /Autor:.*Eva 19/
@@ -118,23 +120,23 @@ class QuotationsTest < ApplicationSystemTestCase
   test "author autocompletion multiple authors" do
     do_login
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
-    fill_in 'search_author_author', with: 'Eva'
+    fill_in 'author', with: 'Eva'
     click_on 'Speichern'
-    check_this_page page, nil, 'Das Zitat wurde aktualisiert.'
-    check_this_page page, nil, /Autor:.*unknown/
+    check_this_page page, nil, /Das Zitat wurde aktualisiert. Der Autor .* wurde nicht geändert./
+    check_this_page page, nil, /Autor:.*Barbara/
   end
   test "author autocompletion not existing author" do
     do_login
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
-    fill_in 'search_author_author', with: 'brabbel zabbel'
+    fill_in 'author', with: 'brabbel zabbel'
     click_on 'Speichern'
-    check_this_page page, nil, 'Das Zitat wurde aktualisiert.'
-    check_this_page page, nil, /Autor:.*unknown/
+    check_this_page page, nil, /Das Zitat wurde aktualisiert. Der Autor .* wurde nicht geändert./
+    check_this_page page, nil, /Autor:.*Barbara/
   end
   test "author autocompletion change quote" do
     do_login
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
-    fill_in 'search_author_author', with: 'Schiller'
+    fill_in 'author', with: 'Schiller'
     fill_in 'quotation_quotation', with: 'Wer sich über die Wirklichkeit nicht hinauswagt, der wird nie die Wahrheit erobern.'
     click_on 'Speichern'
     check_this_page page, nil, 'Zitat wurde aktualisiert.'
@@ -147,18 +149,19 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, 'Zitat wurde aktualisiert.'
     check_page page, quotation_url(1), nil, /Zitat:.*der zankapfel schmeckt bitter/
     check_this_page page, nil, /Autor:.*Friedrich Schiller/
-    # autocomplete gives a list > 1
+    # autocomplete with list > 1 doesn't change author
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     fill_in 'quotation_quotation', with: 'Hardware eventually fails. Software eventually works.'
-    fill_in 'search_author_author', with: 'Eva'
+    fill_in 'author', with: 'Eva'
     click_on 'Speichern'
+    check_this_page page, nil, /Das Zitat wurde aktualisiert. Der Autor .* wurde nicht geändert./
     check_page page, quotation_url(1), nil, /Zitat:.*Hardware eventually fails. Software eventually works./
-    check_this_page page, nil, /Autor:.*unknown/
+    check_this_page page, nil, /Autor:.*Friedrich Schiller/
   end
   test "author autocompletion create quote" do
     do_login
     visit new_quotation_url
-    fill_in 'search_author_author', with: 'Schiller'
+    fill_in 'author', with: 'Schiller'
     fill_in 'quotation_quotation', with: 'Die Sterne lügen nicht.'
     click_on 'Speichern'
     check_this_page page, nil, 'Zitat wurde angelegt.'

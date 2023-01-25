@@ -1,8 +1,9 @@
-<% if @authors.present? and @authors.count > 0 %>
-  <div id="authors_list">
-  <% for i in 0..(@authors.length - 1) do %>
-    <%= link_to "#{@authors[i].name}, #{@authors[i].firstname}, #{@authors[i].description}"[0,60], :controller => 'quotations', :action => 'author_selected', id: @authors[i], modus: modus  %>
-    <br />
+<%= turbo_frame_tag :search_author_results do %>
+  <% if authors.present? and authors.count > 0 %>
+    <div id="authors_list">
+      <% authors.each do |author| %>
+        <%= link_to author_selected_name(author.id), :controller => 'quotations', :action => 'author_selected', author_id: author  %><br />
+      <% end %>
+    </div>
   <% end %>
-  </div>
 <% end %>

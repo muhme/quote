@@ -96,7 +96,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     assert_forbidden
     assert_difference('Quotation.count') do
       login :first_user
-      post quotations_url, params: { commit: "Speichern", quotation: { quotation: "Yes we can." } }
+      post quotations_url, params: { commit: "Speichern", quotation: { quotation: "Yes we can.", author_id: 0 } }
     end
     assert_redirected_to quotation_url(Quotation.last)
     quotation = Quotation.find_by_quotation 'Yes we can.'
@@ -162,10 +162,10 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
 
   test "list_no_public method" do
     get quotations_list_no_public_url
-    assert_redirected_to quotations_url
+    assert_redirected_to forbidden_url
     login :first_user
     get quotations_list_no_public_url
-    assert_redirected_to quotations_url
+    assert_redirected_to forbidden_url
     get '/logout'
     login :admin_user
     get quotations_list_no_public_url

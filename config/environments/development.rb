@@ -81,5 +81,6 @@ Rails.application.configure do
 
   # see css changes immediately
   config.serve_static_assets = false
+  config.assets.compile = true
 
 end

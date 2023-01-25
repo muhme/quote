@@ -37,13 +37,9 @@ class AuthorsController < ApplicationController
 
   # GET /authors/new
   def new
+    return unless logged_in? "Anmeldung fehlt, um einen neuen Autor-Eintrag anzulegen!"
     @author = Author.new
-    if current_user
-      @author.user_id = current_user.id
-    else
-      flash[:error] = "Anmeldung fehlt, um einen neuen Autor-Eintrag anzulegen!"
-      redirect_to forbidden_url 
-    end
+    @author.user_id = current_user.id
   end
 
   # GET /authors/1/edit only for admin or own user
@@ -53,13 +49,9 @@ class AuthorsController < ApplicationController
 
   # POST /authors
   def create
+    return unless logged_in? "Anmeldung fehlt, um einen neuen Autor-Eintrag anzulegen!"
     @author = Author.new(author_params)
-    if current_user
-      @author.user_id = current_user.id
-    else
-      flash[:error] = "Anmeldung fehlt, um einen neuen Autor-Eintrag anzulegen!"
-      redirect_to forbidden_url 
-    end
+    @author.user_id = current_user.id
 
     if @author.save
       redirect_to @author, notice: "Der Autor \"" + @author.get_author_name_or_blank + "\" wurde angelegt."

@@ -80,7 +80,7 @@ class ApplicationHelperTest < ActionView::TestCase
   test "author selected name" do
     assert_equal author_selected_name(authors(:schiller).id), "Schiller, Friedrich, deutscher Dichter und Philosoph (1759 - 1805)"
     assert_equal author_selected_name(authors(:all_fields_max_sizes).id).length, 80
-    assert_equal author_selected_name(authors(:unknown).id), ""
+    assert_equal author_selected_name(authors(:unknown).id), "unknown, Unknown Author with ID 0"
     assert_equal author_selected_name(nil), ""
     assert_equal author_selected_name(authors(:only_name).id), "author with only name field set"
     assert_equal author_selected_name(authors(:only_firstname).id), "author with only firstname field set"

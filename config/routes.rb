@@ -28,8 +28,7 @@ Rails.application.routes.draw do
   get  'quotations/list_by_category/:category' => 'quotations#list_by_category'
   get  'quotations/list_by_author/:author'     => 'quotations#list_by_author'
   post 'quotations/search_author'              => 'quotations#search_author'
-  post 'quotations/:id/search_author'          => 'quotations#search_author'
-  get  'quotations/author_selected/:id'        => 'quotations#author_selected'
+  get  'quotations/author_selected/:author_id'        => 'quotations#author_selected'
 
   # default controller routes
   resources :authors, :categories, :quotations

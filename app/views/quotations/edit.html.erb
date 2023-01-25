@@ -1,4 +1,3 @@
 <h1>Zitat bearbeiten</h1>
 
-<% @quotation.author_id = session[:author_id] if session[:author_id].present? %>
 <%= render 'form', quotation: @quotation, modus: :edit %>

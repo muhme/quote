@@ -27,13 +27,9 @@ class CategoriesController < ApplicationController
 
   # GET /categories/new
   def new
+    return unless logged_in? "Anmeldung fehlt, um eine neue Kategorie anzulegen!"
     @category = Category.new
-    if current_user
-      @category.user_id = current_user.id
-    else
-      flash[:error] = "Anmeldung fehlt, um eine neue Kategorie anzulegen!"
-      redirect_to forbidden_url 
-    end
+    @category.user_id = current_user.id
   end
 
   # GET /categories/1/edit only for admin or own user
@@ -43,13 +39,9 @@ class CategoriesController < ApplicationController
 
   # POST /categories
   def create
+    return unless logged_in? "Anmeldung fehlt, um eine neue Kategorie anzulegen!"
     @category = Category.new(category_params)
-    if current_user
-      @category.user_id = current_user.id
-    else
-      flash[:error] = "Anmeldung fehlt, um eine neue Kategorie anzulegen!"
-      redirect_to forbidden_url 
-    end
+    @category.user_id = current_user.id
 
     if @category.save
       redirect_to @category, notice: "Die Kategorie \"#{@category.category}\" wurde angelegt."

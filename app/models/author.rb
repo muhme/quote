@@ -9,8 +9,6 @@ class Author < ApplicationRecord
   validates :description, presence: false, length: { maximum: 255 }, uniqueness: false
   validate :first_or_last_name
 
-  scope :filter_by_name, -> (search_string) { where("name LIKE ? AND public = 1", "#{search_string}%").order('name').limit(10) }
-
   # count all non-public authors
   def Author.count_non_public
     return count_by_sql("select count(*) from authors where public = 0")
@@ -63,6 +61,19 @@ class Author < ApplicationRecord
     ret
   end
     
+  # search for "name, firstname, description" e.g.
+  # Gandhi, Mahatma, indischer Rechtsanwalt, Pazifist, Staatsführer (1869 - 1948)
+  # returns always an Authors array with 0...10 entries
+  def Author.filter_by_name_firstname_description(search)
+    return [] if search.blank?
+    name, firstname, description = search.split(',', 3)
+    sql = "SELECT * from authors where name LIKE '#{name}%' AND public = 1"
+    sql << " AND firstname LIKE '#{firstname.lstrip}%'" if firstname.present?
+    sql << " AND description LIKE '#{description.lstrip}%'" if description.present?
+    sql << " ORDER BY name LIMIT 10;"
+    return Author.find_by_sql sql
+  end
+
   private
 
     def first_or_last_name

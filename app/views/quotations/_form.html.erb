@@ -9,17 +9,19 @@
   </div>
 <% end %>
 
-<%#= "modus: #{modus} <br>" %>
-<%= render "quotations/search_author", modus: modus %>
+<%#= raw "modus: #{modus}<br><br>" %>
 
-<%= form_with(model: quotation, local: true) do |form| %>
+<%= form_with(model: quotation, local: true, html: { autocomplete: 'off' }) do |form| %>
 
   <div class="field">
-    <%= form.label :quotation, raw('<br />Zitat <span class="example">z.B. Erfahrungen vererben sich nicht - jeder muß sie allein machen.</span>') %><br />
-    <%= form.text_area :quotation, {:cols => 80, :rows => 2} %>
+    <%= form.label :quotation, raw('Zitat <span class="example">z.B. Erfahrungen vererben sich nicht - jeder muß sie allein machen.</span>') %><br />
+    <%= form.text_area :quotation, {:cols => 80, :rows => 2, autofocus: true} %>
   </div>
 
-  <div class="field">
+  <%= render "quotations/search_author", author_id: quotation ? quotation.author_id : 0, modus: modus %>
+  <div id="search_author_results"></div>
+
+  <div class="top_space_field">
     <%= form.label :source, raw('Original-Quelle <span class="example">typischerweise ein Buchtitel, z.B. Gebrauchsanweisung, Glossen und Essays, 1930</span>') %><br />
     <%= form.text_field :source, {:size => 80, :maxlength => 255} %>
   </div>
@@ -31,7 +33,8 @@
 
   <div class="field">
     <%= form.label :categories, raw('Kategorien <span class="example">(mehrere mit &lt;Strg&gt; auswählen)') %><br />
-    <%= form.collection_select(:category_ids, Category.order(:category), :id, :category, { :selected => @quotation.category_ids, :name => 'quotation[category_ids][]' }, { :multiple => true } ) %>
+    <% category_ids = @quotation ? @quotation.category_ids : [] %>
+    <%= form.collection_select(:category_ids, Category.order(:category), :id, :category, { :selected => category_ids, :name => 'quotation[category_ids][]' }, { :multiple => true } ) %>
   </div>
 
   <% if current_user and current_user.admin == true %>

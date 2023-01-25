@@ -36,81 +36,53 @@ class QuotationsController < ApplicationController
 
   # GET /quotations/new
   def new
-    @quotation = Quotation.new
-    @quotation.author_id = 0 # defaults to author "unknown"
-    if current_user
-      @quotation.user_id = current_user.id
-    else
-      flash[:error] = "Anmeldung fehlt, um ein neues Zitat anzulegen!"
-      redirect_to forbidden_url 
-    end
+    return unless logged_in? "Anmeldung fehlt, um ein neues Zitat anzulegen!"
+    @quotation = Quotation.new(:user_id => current_user.id)
   end
 
   # GET /quotations/1/edit
   def edit
     return unless access?(@quotation, :update)
-    # initialize search_author with quotes author_id
-    session[:author_id] = @quotation.author_id
   end
 
-  # quotations author autocompletion field in creating or editing a quotation is implemented as a separate form
-  # status of selected author for quotation form actions is hold with two variables:
-  #   session[:author_id] - selected author id (by click on the link or if only one author matches the search pattern)
-  #   [:quotation][:modus] either "new" (for create) or "edit" for update
-  # Do you see a not that complicated implementaion? please let me know :)
-
-  # POST /quotations/search_author
-  # Parameters {"authenticity_token"=>"[FILTERED]", "search_author"=>{"author"=>"sch"}, "quotation"=>{"modus"=>"new"}}
-  def search_author
-    searching = params[:search_author][:author]
-    modus = params[:quotation][:modus]
-    @authors = []
-    @authors = Author.filter_by_name(searching) if searching.present?
-    logger.debug { "found #{@authors.count} authors for \"#{searching}\"" }
-    if @authors.count == 1
-      logger.debug { "set session[:author_id] to #{@authors.first.id}" }
-      session[:author_id] = @authors.first.id
-    else
-      session.delete(:author_id)
-    end
-    render turbo_stream: turbo_stream.update("search_author_results", partial: "quotations/search_author_results", locals: {authors: @authors, modus: modus })
-  end
-
-  # GET quotations/author_selected/id
+  # GET quotations/author_selected/author_id
+  # called from search author result list as a click on a link
   def author_selected
-    unless current_user
-      flash[:error] = "Anmeldung fehlt, um ein neues Zitat anzulegen!"
-      redirect_to forbidden_url
-      return
-    end
-
-    logger.debug { "set session[:author_id] to #{params[:id]}" }
-    session[:author_id] = params[:id]
-    redirect_back_or_to({ action: params[:modus]})
+    return unless logged_in? "Anmeldung fehlt, um ein neues Zitat anzulegen!"
+    double_turbo([], params[:author_id])
   end
 
   # POST /quotations
   def create
-    unless current_user
-      flash[:error] = "Anmeldung fehlt, um ein neues Zitat anzulegen!"
-      redirect_to forbidden_url
-      return
-    end
+    return unless logged_in? "Anmeldung fehlt, um ein neues Zitat anzulegen!"
 
-    @quotation = Quotation.new(quotation_params.except(:search_author))
-    @quotation.user_id = current_user.id
+    @authors = Author.filter_by_name_firstname_description(params[:author])
+    logger.debug { "found #{@authors.count} authors for \"#{params[:author]}\"" }
 
-    @quotation.author_id = session[:author_id] ? session[:author_id] : 0
-    logger.debug { "saving #{@quotation.inspect}" }
-    if @quotation.save
-      session.delete(:author_id) # eat selected author
-      redirect_to @quotation, notice: "Dankeschön, das #{@quotation.id}. Zitat wurde angelegt."
+    if params[:commit]
+      @quotation = Quotation.new(quotation_params.except(:author))
+      @quotation.user_id = current_user.id
+      @quotation.author_id = 0 unless @quotation.author_id # empty author field is an unknown author
+      logger.debug { "saving #{@quotation.inspect}" }
+      if @quotation.save
+        hint = "Dankeschön, das #{@quotation.id}. Zitat wurde angelegt."
+        hint << " Als Autor wurde „#{Author.find(@quotation.author_id).name}” verwendet." if @authors.count != 1
+        return redirect_to @quotation, notice: hint
+      else
+        render :new, status: :unprocessable_entity
+      end
     else
-      render :new, status: :unprocessable_entity
+      if @authors.count == 1
+        double_turbo([], @authors.first.id)
+      else
+        render turbo_stream: turbo_stream.update("search_author_results",
+          partial: "quotations/search_author_results", locals: {authors: @authors})
+      end
     end
     
     rescue Exception => exc
-      logger.error "create quotation failed: #{exc.message}"
+      logger.error "create quotation failed: #{exc.message}, backtrace:"
+      exc.backtrace.each { |n| logger.error "   #{n}" }
       flash[:error] = "Das Anlegen des Zitates ist gescheitert! (#{exc.message})"
       render :new, status: :unprocessable_entity
   end
@@ -119,13 +91,25 @@ class QuotationsController < ApplicationController
   def update
     return unless access?(@quotation, :update)
 
-    @quotation.author_id = session[:author_id] ? session[:author_id] : 0
-    logger.debug { "update quotation #{@quotation.inspect}" }
-    if @quotation.update(quotation_params.except(:search_author))
-      session.delete(:author_id) # eat selected author
-      redirect_to @quotation, notice: 'Das Zitat wurde aktualisiert.'
+    @authors = Author.filter_by_name_firstname_description(params[:author])
+    logger.debug { "found #{@authors.count} authors for \"#{params[:author]}\"" }
+
+    if params[:commit]
+      logger.debug { "update quotation #{@quotation.inspect}" }
+      if @quotation.update(quotation_params)
+        hint = 'Das Zitat wurde aktualisiert.'
+        hint << " Der Autor „#{Author.find(@quotation.author_id).name}” wurde nicht geändert." if @authors.count != 1
+        return redirect_to @quotation, notice: hint
+      else
+        render :edit, status: :unprocessable_entity
+      end
     else
-      render :edit, status: :unprocessable_entity
+      if @authors.count == 1
+        double_turbo([], @authors.first.id)
+      else
+        render turbo_stream: turbo_stream.update("search_author_results",
+          partial: "quotations/search_author_results", locals: {authors: @authors})
+      end
     end
   end
 
@@ -135,15 +119,14 @@ class QuotationsController < ApplicationController
     if @quotation.destroy
       flash[:notice] = "Das Zitat \"" + truncate(@quotation.quotation, length: 20) + "\" wurde gelöscht."
     end
-    redirect_to quotations_url
+    return redirect_to quotations_url
   end  
 
   # list quotations created by a user
   def list_by_user
     unless User.exists?(:login => params[:user])
       flash[:error] = "Kann Benutzer \"#{params[:user]}\" nicht finden!"
-      redirect_to root_url
-      return false
+      return redirect_to root_url
     end
     
     sql = ["select distinct q.* from quotations q, users u where q.user_id = u.id and u.login = ? order by q.created_at desc", params[:user]]
@@ -154,9 +137,8 @@ class QuotationsController < ApplicationController
   
   def list_by_category
     unless Category.exists? params[:category]
-      flash[:error] = "Kann Kategory \"#{params[:category]}\" nicht finden!"
-      redirect_to root_url
-      return false
+      flash[:error] = "Kann Kategorie \"#{params[:category]}\" nicht finden!"
+      return redirect_to root_url
     end
     @category = Category.find params[:category]
     @quotations = Quotation.paginate_by_sql sql_quotations_for_category(@category.id), :page=>params[:page], :per_page=>5
@@ -168,8 +150,7 @@ class QuotationsController < ApplicationController
   def list_by_author
     unless Author.exists? params[:author]
       flash[:error] = "Kann den Autor \"#{params[:author]}\" nicht finden!"
-      redirect_to root_url
-      return false
+      return redirect_to root_url
     end
     @author = Author.find params[:author]
     @quotations = Quotation.paginate_by_sql sql_quotations_for_author(@author.id), :page=>params[:page], :per_page=>5
@@ -181,8 +162,7 @@ class QuotationsController < ApplicationController
   def list_no_public
     if !current_user or current_user.admin == false
       flash[:error] = "Kein Administrator!"
-     redirect_to quotations_url
-     return false
+     return redirect_to forbidden_url
     end
     @quotations = Quotation.paginate_by_sql 'select * from quotations where public = 0', :page=>params[:page], :per_page=>5
     # check pagination second time with number of pages
@@ -195,11 +175,21 @@ class QuotationsController < ApplicationController
       @quotation = Quotation.find(params[:id])
       rescue
         flash[:error] = "Es gibt kein Zitat mit der ID \"#{params[:id]}\"."
-        redirect_to not_found_url
+        return redirect_to not_found_url
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def quotation_params
-      params.require(:quotation).permit(:search_author, :quotation, :source, :source_link, :public, :category, :pattern, :category_ids => [])
-    end  
+      params.require(:quotation).permit(:author_id, :quotation, :source, :source_link, :public, :category, :pattern, :category_ids => [])
+    end
+
+    # update partial search author field and update partial search author result list together
+    #   authors - array or empty array to make the search author result list disappear
+    #   author_id - fill author field with given
+    def double_turbo(authors, author_id)
+      turbo_stream_add_update("search_author_results", partial: "quotations/search_author_results", locals: {authors: authors})
+      turbo_stream_add_update("search_author", partial: "quotations/search_author", locals: {author_id: author_id })
+      render turbo_stream: turbo_stream_do_actions
+    end
+
 end
