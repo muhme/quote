@@ -67,7 +67,7 @@ class Author < ApplicationRecord
   def Author.filter_by_name_firstname_description(search)
     return [] if search.blank?
     name, firstname, description = search.split(',', 3)
-    sql = "SELECT * from authors where name LIKE '#{name}%' AND public = 1"
+    sql = "SELECT * from authors where name LIKE '#{name}%'"
     sql << " AND firstname LIKE '#{firstname.lstrip}%'" if firstname.present?
     sql << " AND description LIKE '#{description.lstrip}%'" if description.present?
     sql << " ORDER BY name LIMIT 10;"

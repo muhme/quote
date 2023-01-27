@@ -187,6 +187,23 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, 'Zitat wurde aktualisiert.'
     check_this_page page, nil, /Autor:.*second author.*/
   end
+  test "author autocompletion can use non-public authors" do
+    new_author_name = 'Zátopek'
+    new_quote = 'Vogel fliegt, Fisch schwimmt, Mensch läuft.'
+    do_login
+    check_page page, new_author_url, "h1", "Autor anlegen"
+    fill_in 'author_name', with: new_author_name
+    click_on 'Speichern'
+    check_this_page page, "h1", "Autor" # do it before to have Capybara wait until and new author and url is existing
+    check_page page, author_url(Author.find_by_name(new_author_name)), "h1", "Autor"
+    visit new_quotation_url
+    fill_in 'author', with: new_author_name
+    fill_in 'quotation_quotation', with: new_quote
+    click_on 'Speichern'
+    check_this_page page, nil, 'Zitat wurde angelegt.'
+    check_page page, quotation_url(Quotation.last), nil, /Zitat:.*#{new_quote}/
+    check_this_page page, nil, /Autor:.*#{new_author_name}/
+  end
 
   test "edit someone else quote" do
     do_login :second_user, :second_user_password
