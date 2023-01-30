@@ -10,16 +10,23 @@
                 :title => "#{i} Zitat" + (i == 1 ? "" : "e") + " der Kategorie #{category}")
     end
 
-    # author with link and link title with authors number of quotations
-    name = h(@quotation.get_author_name_or_blank)
+    # link to authors detail page
+    author_name = @quotation.get_author_name_or_blank
+    author = link_to(h(author_name), author_path(@quotation.author_id),
+                :alt => "Link zum Autor #{author_name}",
+                :title => "Autor #{author_name}")
+    # link to authors quotes with number of quotations
+    author_quotes = ""
     a = Author.find_by_id(@quotation.author_id)
     i = a.nil? ? 0 : a.quotations.size
-    if (i >= 1)
-        author = link_to(name, {:action => 'list_by_author', :author => @quotation.author_id},
-                :alt => "Zitate des Autors #{name}",
-                :title => "#{i} Zitat" + (i == 1 ? "" : "e") + " des Autors #{name}")
-    else
-        author = name
+    if (i > 1)
+      author_quotes = h(" (")
+      quotes = "#{i} Zitat"
+      quotes += "e" if i > 1
+      author_quotes += link_to(quotes, {:action => 'list_by_author', :author => @quotation.author_id},
+                :alt => "Link zu den Zitaten des Autors #{@author_name}",
+                :title => "#{quotes} des Autors #{author_name}")
+      author_quotes += ")"
     end
 
     # user with links and link number of quotations in link title
@@ -41,7 +48,7 @@
     </tr><tr>
       <td valign=top>Zitat:</td><td><b><%= h(@quotation.quotation) %></b></td>
     </tr><tr>
-      <td valign=top>Autor:</td><td><%= author %></td>
+      <td valign=top>Autor:</td><td><%= author %><%= author_quotes %></td>
     </tr><tr>
       <td valign=top>Quelle:</td><td><%= h(@quotation.source) %></td>
     </tr><tr>

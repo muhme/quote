@@ -22,6 +22,12 @@ second:
   public: true
   user_id: 1
 
+third:
+  id: 3
+  name: third author
+  public: true
+  user_id: 3
+
 public_false:
   name: MyString2
   firstname: MyString2

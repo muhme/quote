@@ -50,15 +50,18 @@ class QuotationsTest < ApplicationSystemTestCase
   end
 
   # linking author's name with that author's quotes #13
+  # linking author from quote #58
   test "multiple quotes with author link" do
     # quote #1 is from author #1 which has multiple quotes
     check_page page, "quotations/1", "h1", "Zitat"
     check_page_source page, /href="\/quotations\/list_by_author\//
+    check_this_page page, nil, /Autor:.*Zitate\)/
   end
   test "single quote with author link" do
-    # quote #3 is from author #2 which has only one single quote
+    # quote #3 is from third author which has only one single quote
     check_page page, "quotations/3", "h1", "Zitat"
-    check_page_source page, /href="\/quotations\/list_by_author\//
+    assert false, "page \"#{page.current_url}\" shows authors quotes" if page.has_text? "Zitate)"
+    assert false, "page \"#{page.current_url}\" shows authors quotes" if page.has_text? "Zitat)"
   end
   # same for user, has to be linked if at least one user exists
   test "multiple quotes with user link" do
