@@ -15,9 +15,9 @@ dann informieren Sie den Betreiber bitte per E-Mail. Die Zitate, die unter Ihr U
 <p>Bei Fehlern oder für Erweiterungswünsche bitte ein <a target="_blank" href="https://github.com/muhme/quote/issues">Ticket</a> erstellen.</p>
 <table id="environment">
   <tr><td>Server</td><td><%= Socket.gethostname %></td></tr>
-  <tr><td>Rails Version</td><td><%= Rails.version %></td></tr>
-  <tr><td>Ruby Version</td><td><%= RUBY_VERSION %></td></tr>
-  <tr><td>Software-Datum</td><td><%= getGitVersion() %></td></tr>
+  <tr><td><a href="https://rubyonrails.org/">Rails</a></td><td><%= Rails.version %></td></tr>
+  <tr><td><a href="https://www.ruby-lang.org/">Ruby</a></td><td><%= RUBY_VERSION %></td></tr>
+  <tr><td><a href="https://github.com/muhme/quote">Software</a></td><td><%= getGitVersion() %></td></tr>
   <tr><td>Umgebung</td><td><%= ENV['RAILS_ENV'] %></td></tr>
 </table>
 
