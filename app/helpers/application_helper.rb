@@ -166,5 +166,9 @@ module ApplicationHelper
   def link_to_joomla(url)
     link_to(url, '/joomla/' + url)
   end
-  
+
+  # return last git checkin date, like "Sun Feb 5 17:58:03 2023 +0100"
+  def getGitVersion
+    @@gitVersion ||= `git log -1 --format=%cd`
+  end
 end
