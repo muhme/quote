@@ -36,7 +36,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     assert page.text.length >= size, "page \"#{page.current_url}\" is with #{page.text.length.to_s} smaller than #{size.to_s}"
     if run_time > MAX_EXECUTION_TIME
       if first_time
-        Rails.logger.debug "time was with ${#run_time} ms too slow, trying second time"
+        Rails.logger.debug "execution time was too slow with #{run_time} ms, trying second time"
         # just take a breath and then try it a second time, maybe the Docker environment was too slow at first
         sleep 1
         check_page page, path, selector, content, size, false

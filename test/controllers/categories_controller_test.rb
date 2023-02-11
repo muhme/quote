@@ -180,13 +180,13 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   test "pagination" do
     # not a number
     get '/categories?page=X'
-    assert_response :not_found
+    assert_response :bad_request
     # have to be positive
     get '/categories?page=-1'
-    assert_response :not_found
+    assert_response :bad_request
     # there is no page zero
     get '/categories?page=0'
-    assert_response :not_found
+    assert_response :bad_request
     # 1st page
     get '/categories?page=1'
     assert_response :success
@@ -195,31 +195,31 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     # out of range
     get '/categories?page=42000000'
-    assert_response :not_found
+    assert_response :bad_request
   end
 
   test "pagination with letter" do
     # not a number
     get '/categories/list_by_letter/A?page=X'
-    assert_response :not_found
+    assert_response :bad_request
     # have to be positive
     get '/categories/list_by_letter/A?page=-1'
-    assert_response :not_found
+    assert_response :bad_request
     # there is no page zero
     get '/categories/list_by_letter/A?page=0'
-    assert_response :not_found
+    assert_response :bad_request
     # 1st page
     get '/categories/list_by_letter/A?page=1'
     assert_response :success
     # out of range
     get '/categories/list_by_letter/A?page=42000000'
-    assert_response :not_found
+    assert_response :bad_request
     # two tests (one before and one after) for list_no_public
     login :admin_user
     get '/categories/list_no_public?page=X'
-    assert_response :not_found
+    assert_response :bad_request
     get '/categories/list_no_public?page=42000000'
-    assert_response :not_found
+    assert_response :bad_request
   end
 
 end

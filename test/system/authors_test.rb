@@ -123,7 +123,7 @@ class AuthorsTest < ApplicationSystemTestCase
 
   test "pagination not found" do
     url = authors_url + '?page=420000'
-    check_page page, url, "h1", "404"
+    check_page page, url, "h1", "400"
     # wrong URL have to be shown
     check_this_page page, nil, url
     check_page_source page, /href=".*quote\/issues/

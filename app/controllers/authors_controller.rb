@@ -1,8 +1,5 @@
 class AuthorsController < ApplicationController
   before_action :set_author, only: [:show, :edit, :update, :destroy]
-  before_action only: [:index, :list_by_letter, :list_no_public] do
-    check_pagination(params[:page], nil)
-  end
 
   # GET /authors
   # get all public for not logged in users and
@@ -20,7 +17,7 @@ class AuthorsController < ApplicationController
   
     @authors = Author.paginate_by_sql(sql, page: params[:page], :per_page => 10)
     # check pagination second time with number of pages
-    check_pagination(params[:page], @authors.total_pages)
+    bad_pagination?(params, @authors.total_pages)
   end
 
   # GET /authors/1
@@ -108,7 +105,7 @@ class AuthorsController < ApplicationController
     sql += ' order by name, firstname'
     @authors = Author.paginate_by_sql [sql, "#{letter.first}%"], :page=>params[:page], :per_page=>10
     # check pagination second time with number of pages
-    check_pagination(params[:page], @authors.total_pages)
+    bad_pagination?(params, @authors.total_pages)
   end
   
   # for admins list all not public authors
@@ -120,7 +117,7 @@ class AuthorsController < ApplicationController
     end
     @authors = Author.paginate_by_sql 'select * from authors where public = 0', :page=>params[:page], :per_page=>10
     # check pagination second time with number of pages
-    check_pagination(params[:page], @authors.total_pages)
+    bad_pagination?(params, @authors.total_pages)
   end
 
   private

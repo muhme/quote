@@ -3,7 +3,7 @@ class StaticPagesController < ApplicationController
 
   def joomla
   end
-  
+
   # dynamic generated humans.txt
   def humans
     # create alphab. sorted list of user's login name with number of quotations, like:
@@ -17,7 +17,7 @@ class StaticPagesController < ApplicationController
       user = User.find(user_id.id)
       @lines << user.login + " (" + user.number_of_quotations.to_s + ")"
     end
-   @lines = @lines.sort_by(&:downcase)
+    @lines = @lines.sort_by(&:downcase)
     render :layout => false #, :content_type => 'text/plain'
     # render plain: "TEAM OK"
   end
@@ -45,13 +45,13 @@ class StaticPagesController < ApplicationController
   # get last three users they have created new quotes, linked to there list of quotes and with a count of there quotes at all
   def list
     # select * from quotations where public = 1 order by rand() limit 1
-    @quotation = Quotation.where(public: true).order(Arel.sql('rand()')).first
+    @quotation = Quotation.where(public: true).order(Arel.sql("rand()")).first
 
     # for inner limit see https://stackoverflow.com/questions/26372511/mysql-order-by-inside-subquery
     sql = "select distinct x.user_id from ( select q.user_id from quotations q order by created_at desc limit 1000) as x limit 0,3"
     quotations = Quotation.find_by_sql(sql)
     @users = []
-    
+
     for i in 0..2
       if i < quotations.size
         login = ""
@@ -64,38 +64,41 @@ class StaticPagesController < ApplicationController
         begin
           count = Quotation.count_by_sql("select count(*) from quotations where user_id = #{quotations[i].user_id}")
           @users[i] = "<a href=\"" +
-                      url_for(:only_path=>true, :controller=>'quotations', :action=>'list_by_user', :user=>login) +
+                      url_for(:only_path => true, :controller => "quotations", :action => "list_by_user", :user => login) +
                       "\">#{login}</a>(#{count})"
         rescue
           @users[i] = login
         end
       else
-        @users[i]=""
+        @users[i] = ""
       end
       i = i + 1
     end
   end
-  
-  # 404, e.g. routed for '*path' catch all
+
+  # 400
+  def bad_request
+    render status: :bad_request, :formats => :html, content_type: "text/html"
+  end
+
+  # 404
   def not_found
-    @original_url = params[:original_url] || request.original_url
-    render :status => 404, :formats => :html, content_type: "text/html"
+    render status: :not_found, :formats => :html, content_type: "text/html"
   end
 
   # 422
   def unprocessable
-    render status: 422
+    render status: :unprocessable_entity, :formats => :html, content_type: "text/html"
   end
 
   # 500
   def internal_server
-    render status: 500
+    render status: :internal_server_error, :formats => :html, content_type: "text/html"
   end
 
   # catch all rule as no route found
   def catch_all
-    @original_url = params[:original_url] || request.original_url
-    logger.error "catch_all #{request.method} \"#{@original_url}\""
-    render 'static_pages/not_found', :formats => :html, status: 404, content_type: "text/html"
+    logger.error "catch_all #{request.method} \"#{request.original_url}\""
+    render "static_pages/not_found", status: :not_found, :formats => :html, content_type: "text/html"
   end
 end

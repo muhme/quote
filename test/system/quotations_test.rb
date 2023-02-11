@@ -276,7 +276,20 @@ class QuotationsTest < ApplicationSystemTestCase
 
   test "pagination not found" do
     url = quotations_url + '?page=420000'
-    check_page page, url, "h1", /Seite nicht gefunden.*404/
+    check_page page, url, "h1", "400"
+    # wrong URL have to be shown
+    check_this_page page, nil, url
+    check_page_source page, /href=".*quote\/issues/
+  end
+
+  # as seen from Internet, getting HTTP error 500 from ActionController::BadRequest with #54
+  test "ActionController BadRequest" do
+    check_page page, "/quotations?page=2&pattern=-6177%25%27%20UNION%20ALL%20SELECT%201693%2C1693%2C1693%2C1693%2C1693%2C1693%2C1693%2C1693%2CCONCAT%280x7171767a71%2C0x4e4c6547675956596d4e4d6958496a6f6a4a4c494f586b5a756745544c6a494a436f596b724b6e47%2C0x71717a6a71%29%2", "h1", "400"
+  end
+
+  test "ActionController BadRequest2" do
+    url = "/quotations?pattern=%ö"
+    check_page page, url, "h1", "400"
     # wrong URL have to be shown
     check_this_page page, nil, url
     check_page_source page, /href=".*quote\/issues/

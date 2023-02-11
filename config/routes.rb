@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   get  'quotations/list_by_category/:category' => 'quotations#list_by_category'
   get  'quotations/list_by_author/:author'     => 'quotations#list_by_author'
   post 'quotations/search_author'              => 'quotations#search_author'
-  get  'quotations/author_selected/:author_id'        => 'quotations#author_selected'
+  get  'quotations/author_selected/:author_id' => 'quotations#author_selected'
 
   # default controller routes
   resources :authors, :categories, :quotations
@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   get 'not_found' => 'static_pages#not_found'
 
   # see https://www.mintbit.com/blog/custom-404-500-error-pages-in-rails
+  get '/400' => 'static_pages#bad_request'
   get '/404' => 'static_pages#not_found'
   get '/500' => 'static_pages#internal_server'
   get '/422' => 'static_pages#unprocessable'

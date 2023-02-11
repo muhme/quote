@@ -1,9 +1,6 @@
 class QuotationsController < ApplicationController
   include ActionView::Helpers::TextHelper # for truncate()
   before_action :set_quotation, only: [:show, :edit, :update, :destroy]
-  before_action only: [:index, :list_by_user, :list_by_author, :list_by_category, :list_no_public] do
-    check_pagination(params[:page], nil)
-  end
 
   # GET /quotations
   # GET /quotations?pattern=berlin
@@ -21,11 +18,11 @@ class QuotationsController < ApplicationController
 
     @quotations = Quotation.paginate_by_sql(sql, page: params[:page], :per_page => 5)
     # check pagination second time with number of pages
-    check_pagination(params[:page], @quotations.total_pages)
+    bad_pagination?(params, @quotations.total_pages)
 
     # give hint on first page if no other notice exist
-    if ! flash[:notice] and ( ! params[:page] or params[:page].to_i == 1 )
-      flash.now[:notice] = 'Die Zitate sind danach sortiert, wann sie eingestellt wurden. Die zuletzt eingestellten Zitate stehen oben.' 
+    if !flash[:notice] and (!params[:page] or params[:page].to_i == 1)
+      flash.now[:notice] = "Die Zitate sind danach sortiert, wann sie eingestellt wurden. Die zuletzt eingestellten Zitate stehen oben."
     end
   end
 
@@ -76,15 +73,14 @@ class QuotationsController < ApplicationController
         double_turbo([], @authors.first.id)
       else
         render turbo_stream: turbo_stream.update("search_author_results",
-          partial: "quotations/search_author_results", locals: {authors: @authors})
+                                                 partial: "quotations/search_author_results", locals: { authors: @authors })
       end
     end
-    
-    rescue Exception => exc
-      logger.error "create quotation failed: #{exc.message}, backtrace:"
-      exc.backtrace.each { |n| logger.error "   #{n}" }
-      flash[:error] = "Das Anlegen des Zitates ist gescheitert! (#{exc.message})"
-      render :new, status: :unprocessable_entity
+  rescue Exception => exc
+    logger.error "create quotation failed: #{exc.message}, backtrace:"
+    exc.backtrace.each { |n| logger.error "   #{n}" }
+    flash[:error] = "Das Anlegen des Zitates ist gescheitert! (#{exc.message})"
+    render :new, status: :unprocessable_entity
   end
 
   # PATCH/PUT /quotations/1
@@ -97,7 +93,7 @@ class QuotationsController < ApplicationController
     if params[:commit]
       logger.debug { "update quotation #{@quotation.inspect}" }
       if @quotation.update(quotation_params)
-        hint = 'Das Zitat wurde aktualisiert.'
+        hint = "Das Zitat wurde aktualisiert."
         hint << " Der Autor „#{Author.find(@quotation.author_id).name}” wurde nicht geändert." if @authors.count != 1
         return redirect_to @quotation, notice: hint
       else
@@ -108,7 +104,7 @@ class QuotationsController < ApplicationController
         double_turbo([], @authors.first.id)
       else
         render turbo_stream: turbo_stream.update("search_author_results",
-          partial: "quotations/search_author_results", locals: {authors: @authors})
+                                                 partial: "quotations/search_author_results", locals: { authors: @authors })
       end
     end
   end
@@ -120,7 +116,7 @@ class QuotationsController < ApplicationController
       flash[:notice] = "Das Zitat \"" + truncate(@quotation.quotation, length: 20) + "\" wurde gelöscht."
     end
     return redirect_to quotations_url
-  end  
+  end
 
   # list quotations created by a user
   def list_by_user
@@ -128,24 +124,24 @@ class QuotationsController < ApplicationController
       flash[:error] = "Kann Benutzer \"#{params[:user]}\" nicht finden!"
       return redirect_to root_url
     end
-    
+
     sql = ["select distinct q.* from quotations q, users u where q.user_id = u.id and u.login = ? order by q.created_at desc", params[:user]]
-    @quotations = Quotation.paginate_by_sql sql, :page=>params[:page], :per_page=>5
+    @quotations = Quotation.paginate_by_sql sql, :page => params[:page], :per_page => 5
     # check pagination second time with number of pages
-    check_pagination(params[:page], @quotations.total_pages)
+    bad_pagination?(params, @quotations.total_pages)
   end
-  
+
   def list_by_category
     unless Category.exists? params[:category]
       flash[:error] = "Kann Kategorie \"#{params[:category]}\" nicht finden!"
       return redirect_to root_url
     end
     @category = Category.find params[:category]
-    @quotations = Quotation.paginate_by_sql sql_quotations_for_category(@category.id), :page=>params[:page], :per_page=>5
+    @quotations = Quotation.paginate_by_sql sql_quotations_for_category(@category.id), :page => params[:page], :per_page => 5
     # check pagination second time with number of pages
-    check_pagination(params[:page], @quotations.total_pages)
+    bad_pagination?(params, @quotations.total_pages)
   end
-  
+
   # select * from `quotations` where q.public = 1 and author_id = ?
   def list_by_author
     unless Author.exists? params[:author]
@@ -153,43 +149,42 @@ class QuotationsController < ApplicationController
       return redirect_to root_url
     end
     @author = Author.find params[:author]
-    @quotations = Quotation.paginate_by_sql sql_quotations_for_author(@author.id), :page=>params[:page], :per_page=>5
+    @quotations = Quotation.paginate_by_sql sql_quotations_for_author(@author.id), :page => params[:page], :per_page => 5
     # check pagination second time with number of pages
-    check_pagination(params[:page], @quotations.total_pages)
+    bad_pagination?(params, @quotations.total_pages)
   end
-  
+
   # for admins list all not public categories
   def list_no_public
     if !current_user or current_user.admin == false
       flash[:error] = "Kein Administrator!"
-     return redirect_to forbidden_url
+      return redirect_to forbidden_url
     end
-    @quotations = Quotation.paginate_by_sql 'select * from quotations where public = 0', :page=>params[:page], :per_page=>5
+    @quotations = Quotation.paginate_by_sql "select * from quotations where public = 0", :page => params[:page], :per_page => 5
     # check pagination second time with number of pages
-    check_pagination(params[:page], @quotations.total_pages)
+    bad_pagination?(params, @quotations.total_pages)
   end
 
   private
 
-    def set_quotation
-      @quotation = Quotation.find(params[:id])
-      rescue
-        flash[:error] = "Es gibt kein Zitat mit der ID \"#{params[:id]}\"."
-        return redirect_to not_found_url
-    end
+  def set_quotation
+    @quotation = Quotation.find(params[:id])
+  rescue
+    flash[:error] = "Es gibt kein Zitat mit der ID \"#{params[:id]}\"."
+    return redirect_to not_found_url
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def quotation_params
-      params.require(:quotation).permit(:author_id, :quotation, :source, :source_link, :public, :category, :pattern, :category_ids => [])
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def quotation_params
+    params.require(:quotation).permit(:author_id, :quotation, :source, :source_link, :public, :category, :pattern, :category_ids => [])
+  end
 
-    # update partial search author field and update partial search author result list together
-    #   authors - array or empty array to make the search author result list disappear
-    #   author_id - fill author field with given
-    def double_turbo(authors, author_id)
-      turbo_stream_add_update("search_author_results", partial: "quotations/search_author_results", locals: {authors: authors})
-      turbo_stream_add_update("search_author", partial: "quotations/search_author", locals: {author_id: author_id })
-      render turbo_stream: turbo_stream_do_actions
-    end
-
+  # update partial search author field and update partial search author result list together
+  #   authors - array or empty array to make the search author result list disappear
+  #   author_id - fill author field with given
+  def double_turbo(authors, author_id)
+    turbo_stream_add_update("search_author_results", partial: "quotations/search_author_results", locals: { authors: authors })
+    turbo_stream_add_update("search_author", partial: "quotations/search_author", locals: { author_id: author_id })
+    render turbo_stream: turbo_stream_do_actions
+  end
 end

@@ -1,3 +1,3 @@
-<h1 class="error">Unverabeitbare Entität (HTTP-Statuscode 422)</h1>
-<p>Die Anfrage „<%= request.original_url %>” konnte nicht verarbeitet werden.</p>
+<h1 class="error">Fehlerhafte Anfrage (HTTP-Statuscode 400)</h1>
+<p>Die Abfrage der Seite „<%= CGI.unescape(request.original_url) %>” führte zu einem Fehler.</p>
 <p>Wenn das jedoch funktionieren sollte, kannst du uns bitte ein <a target="_blank" href="https://github.com/muhme/quote/issues">Ticket</a> mit den Einzelheiten erstellen?</p>

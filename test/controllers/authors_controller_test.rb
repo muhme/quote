@@ -181,13 +181,13 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
   test "pagination" do
     # not a number
     get '/authors?page=X'
-    assert_response :not_found
+    assert_response :bad_request
     # have to be positive
     get '/authors?page=-1'
-    assert_response :not_found
+    assert_response :bad_request
     # there is no page zero
     get '/authors?page=0'
-    assert_response :not_found
+    assert_response :bad_request
     # 1st page
     get '/authors?page=1'
     assert_response :success
@@ -196,31 +196,31 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     # out of range
     get '/authors?page=42000000'
-    assert_response :not_found
+    assert_response :bad_request
   end
 
   test "pagination with letter" do
     # not a number
     get '/authors/list_by_letter/A?page=X'
-    assert_response :not_found
+    assert_response :bad_request
     # have to be positive
     get '/authors/list_by_letter/A?page=-1'
-    assert_response :not_found
+    assert_response :bad_request
     # there is no page zero
     get '/authors/list_by_letter/A?page=0'
-    assert_response :not_found
+    assert_response :bad_request
     # 1st page
     get '/authors/list_by_letter/A?page=1'
     assert_response :success
     # out of range
     get '/authors/list_by_letter/A?page=42000000'
-    assert_response :not_found
+    assert_response :bad_request
     # two tests (one before and one after) for list_no_public
     login :admin_user
     get '/authors/list_no_public?page=X'
-    assert_response :not_found
+    assert_response :bad_request
     get '/authors/list_no_public?page=42000000'
-    assert_response :not_found
+    assert_response :bad_request
   end
   
 end
