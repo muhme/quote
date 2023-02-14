@@ -238,7 +238,7 @@ form#search_author .field {
     font-size: 18px;
 }
 
-div#authors_list {
+div#authors_list, div#categories_list {
     font-size: 80%;
     border: 2px solid darkblue;
     border-top: 0;
@@ -246,12 +246,13 @@ div#authors_list {
     position: absolute;
     z-index: 1;
 }
-div#authors_list a:link {
-    border-bottom: 0;
+div#authors_list a:link, div#categories_list a:link, div.no_bottom_field a:link {
+    border-bottom: 0; /* links without underlines */
 }
 
 table#environment td {
     border:1px solid black;
+    text-align: center;
 }
 
 table#details {
