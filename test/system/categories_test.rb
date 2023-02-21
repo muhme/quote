@@ -4,22 +4,22 @@ class CategoriesTest < ApplicationSystemTestCase
 
   test "category" do
     check_page page, "/categories", "h1", "Kategorie"
-    assert_equal page.title, "Zitat-Service - Kategorien"
+    assert_equal "Zitat-Service – Kategorien", page.title
   end
 
   test "category letter a" do
     check_page page, "/categories/list_by_letter/A", "h1", "Kategorie"
-    assert_equal page.title, "Zitat-Service - Kategorien die mit A beginnen"
+    assert_equal "Zitat-Service – Kategorien die mit A beginnen", page.title
   end
 
   test "category not letter" do
     check_page page, "/categories/list_by_letter/*", "h1", "Kategorie"
-    assert_equal page.title, "Zitat-Service - Kategorien die mit * beginnen"
+    assert_equal "Zitat-Service – Kategorien die mit * beginnen", page.title
   end
 
   test "show category" do
     check_page page, category_url(Category.find_by_category('public_category')), "h1", "Kategorie"
-    assert_equal page.title, "Zitat-Service - Kategorie public_category"
+    assert_equal "Zitat-Service – Kategorie public_category", page.title
   end
   
   # /categories/new
@@ -83,7 +83,7 @@ class CategoriesTest < ApplicationSystemTestCase
 
   test "trailing slash" do
     check_page page, categories_url + '/', "h1", "Kategorie"
-    assert_equal page.title, "Zitat-Service - Kategorien"
+    assert_equal "Zitat-Service – Kategorien", page.title
     # redirected URL w/o slash
     assert_equal page.current_url, categories_url
   end

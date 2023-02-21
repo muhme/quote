@@ -34,13 +34,12 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
   
   test "404 for not existing author without login" do
     get author_url(rand 0..10000000000000)
-    assert_response :redirect
-    follow_redirect!
-    assert_response :missing
+    assert_response :not_found
   end
   test "404 for not existing author with login" do
     login :first_user
     get author_url(rand 0..10000000000000)
+    assert_response :not_found
   end 
 
   test "should show author without login" do

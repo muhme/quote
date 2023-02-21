@@ -1,0 +1,10 @@
+<%= turbo_frame_tag :search_category_results do %>
+  <% if categories.present? and categories.count > 0 %>
+    <div id="categories_list">
+      <% ids = category_ids.present? ? ",#{category_ids.join(',')}" : "" %>
+      <% categories.each do |category| %>
+        <%= link_to Category.category_or_empty(category.id), controller: :quotations, action: :category_selected, ids: "#{category.id}#{ids}-#{rec_ids.join(',')}" %><br />
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

@@ -3,33 +3,33 @@ require "application_system_test_case"
 class AuthorsTest < ApplicationSystemTestCase
 
   # /authors
-  test "author" do
+  test "authors" do
     check_page page, authors_url, "h1", "Autor"
-    assert_equal page.title, "Zitat-Service - Autoren"
+    assert_equal "Zitat-Service – Autoren", page.title
   end
 
   # /authors/list_by_letter/A
   test "author letter a" do
     check_page page, "/authors/list_by_letter/A", "h1", "Autor"
-    assert_equal page.title, "Zitat-Service - Autoren die mit A beginnen"
+    assert_equal "Zitat-Service – Autoren die mit A beginnen", page.title
     
     # slow performance seen with user w/o admin rights logged in
     do_login
     check_this_page page, "a", "Logout"
     check_page page, "/authors/list_by_letter/M", "h1", "Autor"
-    assert_equal page.title, "Zitat-Service - Autoren die mit M beginnen" 
+    assert_equal "Zitat-Service – Autoren die mit M beginnen", page.title
   end
 
   # /authors/list_by_letter/*
   test "author not letter" do
     check_page page, "/authors/list_by_letter/*", "h1", "Autor"
-    assert_equal page.title, "Zitat-Service - Autoren die mit * beginnen"
+    assert_equal "Zitat-Service – Autoren die mit * beginnen", page.title
   end
   
   # e.g. /authors/1
   test "show author" do
     check_page page, author_url(Author.find_by_name('Barbara')), "h1", "Autor"
-    assert_equal page.title, "Zitat-Service - Autor Barbara"
+    assert_equal "Zitat-Service – Autor Barbara", page.title
   end
   
   # /authors/new
@@ -108,7 +108,7 @@ class AuthorsTest < ApplicationSystemTestCase
 
   test "trailing slash" do
     check_page page, authors_url + '/', "h1", "Autor"
-    assert_equal page.title, "Zitat-Service - Autoren"
+    assert_equal "Zitat-Service – Autoren", page.title 
     # redirected URL w/o slash
     assert_equal page.current_url, authors_url
   end

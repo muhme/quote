@@ -4,19 +4,19 @@ class QuotationsTest < ApplicationSystemTestCase
 
   test "quotations" do
     check_page page, quotations_url, "h1", "Zitat"
-    assert_equal page.title, "Zitat-Service - Zitate"
+    assert_equal "Zitat-Service – Zitate", page.title
   end
 
   test "quotations with login" do
     do_login
     check_this_page page, nil, 'Hallo first_user, schön dass Du da bist.'
     check_page page, quotations_url, "h1", "Zitat"
-    assert_equal page.title, "Zitat-Service - Zitate"
+    assert_equal "Zitat-Service – Zitate", page.title
   end
 
   test "list by category w/o login" do
     check_page page, "quotations/list_by_category/" + Category.first.id.to_s, "h1", "Zitate für die Kategorie"
-    assert_equal page.title, "Zitat-Service - Zitate zu public_category"
+    assert_equal "Zitat-Service – Zitate zu public_category", page.title
   end
   test "list by category with login" do
     do_login
@@ -29,7 +29,7 @@ class QuotationsTest < ApplicationSystemTestCase
 
   test "list by user" do
     check_page page, "quotations/list_by_user/" + User.first.login.to_s, "h1", "Zitate von"
-    assert_equal page.title, "Zitat-Service - Zitate des Benutzers first_user"
+    assert_equal "Zitat-Service – Zitate des Benutzers first_user", page.title
   end
   
   test "try to list for not existing user" do
@@ -38,7 +38,7 @@ class QuotationsTest < ApplicationSystemTestCase
 
   test "list by author" do
     check_page page, "quotations/list_by_author/#{authors(:schiller).id}", "h1", /Zitate für den Autor.*Friedrich Schiller/
-    assert_equal page.title, "Zitat-Service - Zitate von Friedrich Schiller"
+    assert_equal "Zitat-Service – Zitate von Friedrich Schiller", page.title
   end
   test "failed to list not existing author" do
     check_page page, "quotations/list_by_author/bli", nil, /Kann den Autor .*bli.* nicht finden!/
@@ -46,7 +46,7 @@ class QuotationsTest < ApplicationSystemTestCase
   
   test "show quote" do
     check_page page, quotation_url(1), "h1", "Zitat"
-    assert_equal page.title, "Zitat-Service - Zitat von Barbara"
+    assert_equal "Zitat-Service – Zitat von Barbara", page.title
   end
 
   # linking author's name with that author's quotes #13
@@ -80,6 +80,7 @@ class QuotationsTest < ApplicationSystemTestCase
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     fill_in 'author', with: 'schiller'
     fill_in 'quotation_source', with: 'jo!'
+    assert page.has_css?(".animated") # wait for autocompletion
     click_on 'Speichern'
     check_this_page page, nil, 'Das Zitat wurde aktualisiert.'
     check_page page, quotation_url(1), nil, /Quelle:.*jo!/
@@ -140,6 +141,7 @@ class QuotationsTest < ApplicationSystemTestCase
     do_login
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     fill_in 'author', with: 'Schiller'
+    assert page.has_css?(".animated") # wait for autocompletion
     fill_in 'quotation_quotation', with: 'Wer sich über die Wirklichkeit nicht hinauswagt, der wird nie die Wahrheit erobern.'
     click_on 'Speichern'
     check_this_page page, nil, 'Zitat wurde aktualisiert.'
@@ -261,7 +263,7 @@ class QuotationsTest < ApplicationSystemTestCase
 
   test "trailing slash" do
     check_page page, quotations_url + '/', "h1", "Zitat"
-    assert_equal page.title, "Zitat-Service - Zitate"
+    assert_equal "Zitat-Service – Zitate", page.title
     # redirected URL w/o slash
     assert_equal page.current_url, quotations_url
   end
@@ -293,6 +295,28 @@ class QuotationsTest < ApplicationSystemTestCase
     # wrong URL have to be shown
     check_this_page page, nil, url
     check_page_source page, /href=".*quote\/issues/
+  end
+
+  test "autocomplete one category" do
+    do_login
+    visit new_quotation_url
+    fill_in 'category', with: 'two'
+    fill_in 'quotation_quotation', with: 'Yes, we can.'
+    assert page.has_css?(".animated") # wait for autocompletion
+    click_on 'Speichern'
+    check_this_page page, nil, 'Zitat wurde angelegt.'
+    new_quote = Quotation.last
+    visit quotation_url(new_quote)
+    check_page page, quotation_url(new_quote), nil, /Zitat:.*Yes, we can/
+    check_this_page page, nil, /Kategorien:.*two/
+  end
+
+  # TODO all category autocompletion tests
+
+  test "autocomplete two categories" do
+  end
+
+  test "autocomplete twenty categories" do
   end
 
   # NICE cannot delete quote created by another user

@@ -9,17 +9,16 @@
   </div>
 <% end %>
 
-<%#= raw "modus: #{modus}<br><br>" %>
-
 <%= form_with(model: quotation, local: true, html: { autocomplete: 'off' }) do |form| %>
 
   <div class="field">
     <%= form.label :quotation, raw('Zitat <span class="example">z.B. Erfahrungen vererben sich nicht - jeder muß sie allein machen.</span>') %><br />
-    <%= form.text_area :quotation, {:cols => 80, :rows => 2, autofocus: true} %>
+    <%= form.text_area :quotation, {:cols => 80, :rows => 2, autofocus: true } %>
   </div>
 
-  <%= render "quotations/search_author", author_id: quotation ? quotation.author_id : 0, modus: modus %>
-  <div id="search_author_results"></div>
+  <%= label_tag :author, raw('Autor <span class="example">(leer lassen, wenn der Autor unbekannt ist)</span>') %>
+  <%= render "quotations/search_author", author_id: quotation ? quotation.author_id : 0, animation: :no %>
+  <%= render "quotations/search_author_results", authors: [] %>
 
   <div class="top_space_field">
     <%= form.label :source, raw('Original-Quelle <span class="example">typischerweise ein Buchtitel, z.B. Gebrauchsanweisung, Glossen und Essays, 1930</span>') %><br />
@@ -31,14 +30,15 @@
     <%= form.text_field :source_link, {:size => 80, :maxlength => 255} %>
   </div>
 
-  <div class="field">
-    <%= form.label :categories, raw('Kategorien <span class="example">(mehrere mit &lt;Strg&gt; auswählen)') %><br />
-    <% category_ids = @quotation ? @quotation.category_ids : [] %>
-    <%= form.collection_select(:category_ids, Category.order(:category), :id, :category, { :selected => category_ids, :name => 'quotation[category_ids][]' }, { :multiple => true } ) %>
+  <%= render "quotations/search_category_collected", categories: @quotation ? @quotation.categories : nil, rec_ids:  Category.check(@quotation), category_id: nil, category_ids: quotation ? quotation.categories.map{|c| c.id} : []%>
+  <div class="no_bottom_field">
+    <%= search_field_tag :category, "", placeholder: "Kategorie anfangen zu tippen ...", oninput: "this.form.requestSubmit()", :size => 40 %>
   </div>
+  <%= render "quotations/search_category_results", categories: [], rec_ids: [] %>
+  <br />
 
   <% if current_user and current_user.admin == true %>
-    <div class="field">
+    <div class="top_space_field">
       <p><label for="author_public">Öffentlich</label><br/>
       <%= form.check_box :public %>
     </div>

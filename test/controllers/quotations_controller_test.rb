@@ -46,15 +46,12 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
   test "404 for not existing quote" do
     id = rand 0..10000000000000
     get quotation_url id
-    assert_response :redirect
-    follow_redirect!
-    assert_response :missing
+    assert_response :not_found
 
     login :first_user
     get quotation_url id
-    assert_response :redirect
-    follow_redirect!
-    assert_response :missing
+    assert_response :not_found
+
   end
   
   test "should show public quote" do

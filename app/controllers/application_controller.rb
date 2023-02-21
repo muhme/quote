@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     else
       sql += " q.public = 1 and"
     end
-    return sql + " q.id in (select cq.quotation_id from categories_quotations cq where cq.category_id = '#{category_id}')"
+    return sql + " q.id in (select cq.quotation_id from categories_quotations cq where cq.category_id = '#{category_id.to_i}')"
   end
 
   # give user context visible quotations for an author
@@ -84,6 +84,7 @@ class ApplicationController < ActionController::Base
   end
 
   # check user is logged in or set error message, redirect to forbidden url and return false
+  # this ends in HTTP 403 and the forbidden page with the msg message set as error
   def logged_in?(msg)
     if current_user
       return true
@@ -151,5 +152,33 @@ class ApplicationController < ActionController::Base
   # ... and run them with one rendering
   def turbo_stream_do_actions()
     @turbo_stream_actions
+  end
+
+  # nice object log
+  def nol(obj, print_array = false)
+    return "nil" if obj.nil?
+    return "\"#{obj}\"" if obj.is_a?(String)
+    return "Integer #{obj}" if obj.is_a?(Integer)
+    return "Array #{obj}" if obj.is_a?(Array) and print_array
+    return "Array with #{obj.count} entries" if obj.is_a?(Array)
+    return "#{obj.class}"
+  end
+
+  # own SQL sanitizer as sanitize_sql_like does nothing for comments (--) and apostroph (')
+  # backslash and apostroph need hash to work, however
+  def my_sql_sanitize(str)
+    # logger.debug { "my_sql_sanitize(#{str})" }
+    if str.present?
+      str = str.gsub(/\\/, { "\\" => "\\\\" }) # backslash self
+      str = str.gsub("--", "\\-\\-")           # SQL comment
+      str = str.gsub("%", "\\%")               # wildcard in searching
+      str = str.gsub("_", "\\_")               # single char
+      str = str.gsub("\[", "\\\[")             # open bracket
+      str = str.gsub("\]", "\\\]")             # close bracket
+      str = str.gsub("\"", "\\\"")             # quotation marks
+      str = str.gsub(/'/, { "'" => "\\'" })    # apostroph
+    end
+    # logger.debug { "my_sql_sanitize(#{str})" }
+    return str
   end
 end

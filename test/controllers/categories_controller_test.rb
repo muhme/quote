@@ -38,16 +38,12 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   
   test "404 for not existing category" do
     id = rand 0..10000000000000
-    get author_url id
-    assert_response :redirect
-    follow_redirect!
-    assert_response :missing
+    get category_url id
+    assert_response :not_found
 
     login :first_user
     get author_url id
-    assert_response :redirect
-    follow_redirect!
-    assert_response :missing
+    assert_response :not_found
   end 
 
   test "should show public category" do

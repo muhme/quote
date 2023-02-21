@@ -19,16 +19,18 @@ Rails.application.routes.draw do
   # dynamic generated humans.txt
   get 'humans.txt' => 'static_pages#humans'
   
-  get  'categories/list_no_public'             => 'categories#list_no_public'
-  get  'categories/list_by_letter/:letter'     => 'categories#list_by_letter', constraints: { letter: /[A-Za-z*]/ }
-  get  'authors/list_no_public'                => 'authors#list_no_public'
-  get  'authors/list_by_letter/:letter'        => 'authors#list_by_letter', constraints: { letter: /[A-Za-z*]/ }
-  get  'quotations/list_no_public'             => 'quotations#list_no_public'
-  get  'quotations/list_by_user/:user'         => 'quotations#list_by_user'
-  get  'quotations/list_by_category/:category' => 'quotations#list_by_category'
-  get  'quotations/list_by_author/:author'     => 'quotations#list_by_author'
-  post 'quotations/search_author'              => 'quotations#search_author'
-  get  'quotations/author_selected/:author_id' => 'quotations#author_selected'
+  get  'categories/list_no_public'              => 'categories#list_no_public'
+  get  'categories/list_by_letter/:letter'      => 'categories#list_by_letter', constraints: { letter: /[A-Za-z*]/ }
+  get  'authors/list_no_public'                 => 'authors#list_no_public'
+  get  'authors/list_by_letter/:letter'         => 'authors#list_by_letter', constraints: { letter: /[A-Za-z*]/ }
+  get  'quotations/list_no_public'              => 'quotations#list_no_public'
+  get  'quotations/list_by_user/:user'          => 'quotations#list_by_user'
+  get  'quotations/list_by_category/:category'  => 'quotations#list_by_category'
+  get  'quotations/list_by_author/:author'      => 'quotations#list_by_author'
+  post 'quotations/search_author'               => 'quotations#search_author'
+  get  'quotations/author_selected/:author_id'  => 'quotations#author_selected'
+  get  'quotations/category_selected/:ids'      => 'quotations#category_selected'
+  get  'quotations/delete_category/(:ids)'      => 'quotations#delete_category'
 
   # default controller routes
   resources :authors, :categories, :quotations

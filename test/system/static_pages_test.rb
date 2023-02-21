@@ -4,27 +4,27 @@ class StaticPagessTest < ApplicationSystemTestCase
 
   test "home" do
     check_page page, "/", "h2", "Dankeschön", 1000
-    assert_equal page.title, "Zitat-Service"
+    assert_equal "Zitat-Service", page.title
   end
   
   test "contact" do
     check_page page, "start/contact", "h1", "Impressum", 500
-    assert_equal page.title, "Zitat-Service - Impressum"
+    assert_equal "Zitat-Service – Impressum", page.title
   end
   
   test "help" do
     check_page page, "start/help", "h1", "Hilfe", 3000
-    assert_equal page.title, "Zitat-Service - Hier wird Dir geholfen!"
+    assert_equal "Zitat-Service – Hier wird Dir geholfen!", page.title
   end
   
   test "project" do
     check_page page, "start/project", "h1", "Projekt", 1500
-    assert_equal page.title, "Zitat-Service - Projekt"
+    assert_equal "Zitat-Service – Projekt", page.title
   end
   
   test "use" do
     check_page page, "start/use", "h1", "Zitate einbinden", 3000
-    assert_equal page.title, "Zitat-Service - Zitate in die eigene Homepage einbinden"
+    assert_equal "Zitat-Service – Zitate in die eigene Homepage einbinden", page.title
   end
   
   test "humans" do
@@ -33,17 +33,17 @@ class StaticPagessTest < ApplicationSystemTestCase
     
   test "joomla" do
     check_page page, "joomla", "h2", "Fehler oder Erweiterungen", 4000
-    assert_equal page.title, "Zitat-Service - Zitate mit Joomla! in die eigene Homepage einbinden"
+    assert_equal "Zitat-Service – Zitate mit Joomla! in die eigene Homepage einbinden", page.title
   end
     
   test "joomla_english" do
     check_page page, "start/joomla_english", "h2", "Examples", 2500
-    assert_equal page.title, "Zitat-Service - Using quotes with Joomla! for the own homepage"
+    assert_equal "Zitat-Service – Using quotes with Joomla! for the own homepage", page.title
   end
 
   test "direct route joomla_english" do
     check_page page, "joomla_english", "h2", "Examples", 2500
-    assert_equal page.title, "Zitat-Service - Using quotes with Joomla! for the own homepage"
+    assert_equal "Zitat-Service – Using quotes with Joomla! for the own homepage", page.title
   end
 
   test "UTF-8 German Umlaut" do

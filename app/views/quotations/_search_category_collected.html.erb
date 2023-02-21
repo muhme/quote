@@ -1,0 +1,26 @@
+<%= turbo_frame_tag :search_category_collected do %>
+  <%#= raw("#{category_ids.class} category_ids=#{category_ids}, #{rec_ids.class} rec_ids=#{rec_ids}<br />") %>
+  <%= hidden_field_tag 'quotation[category_ids][]', category_ids.join(',') %>
+  <%= label_tag :category, raw(category_ids.count.equal?(0) ? 'Kategorien' : nnsp(category_ids.count, "Kategorie: ", "Kategorien: ")) %>
+  <%# so far collected category list, linked to be removed from list %>
+  <% category_ids.each do |id| %>
+    <%# use CSS class="animated" for new added category %>
+    <% css_class = (category_id.present? and category_id == id) ? "animated" : "none"  %>
+    <%# if category is added then empty category field with JavaScript value="" (and not with Turbo Stream to not lose focus) %>
+    <%= javascript_tag 'myCleanField("category")' if category_id.present? and category_id == id %>
+    <%= link_to raw(Category.category_or_empty(id) + image_tag("cross.png", :alt => 'rotes Kreuz', :title => 'Löschen', :border => 0)), { :controller => 'quotations', :action => 'delete_category', ids: "#{(category_ids - [id]).join(',')}-#{rec_ids.join(',')}" }, class: css_class %>
+  <% end %>
+  <%# recommended category list, linked to be added %>
+  <% if rec_ids.present? %>
+    <% ids = category_ids.present? ? ",#{category_ids.join(',')}" : "" %>
+    <% first = true %>
+    <% rec_ids.each do |id| %>
+      <% unless category_ids.include?(id) %>
+        <% category = Category.find(id) %>
+        <%= raw('<span class="example"><br />mit einem Klick hinzufügen: </span>') if first %>
+        <% first = false %>
+        <%= link_to raw('<span class="example">' + Category.category_or_empty(category.id) + '</span>' + image_tag("lightning.png", :alt => 'Blitz', :title => 'Hinzufügen', :border => 0)), controller: :quotations, action: :category_selected, ids: "#{category.id}#{ids}-#{rec_ids.join(',')}" %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

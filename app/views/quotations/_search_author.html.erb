@@ -1,7 +1,6 @@
 <%= turbo_frame_tag :search_author do %>
-  <%= label_tag :author, raw('Autor <span class="example">(Nachnamen anfangen zu tippen oder freilassen, wenn der Autor unbekannt ist)</span>') %>
-  <%= hidden_field_tag 'quotation[author_id]', author_id, :size => 10, :maxlength => 30 %>
+  <%= hidden_field_tag "quotation[author_id]", author_id %>
   <div class="no_bottom_field">
-    <%= search_field_tag :author, author_selected_name(author_id), oninput: "this.form.requestSubmit()", :size => 80 %>
+    <%= search_field_tag :author, author_selected_name(author_id), placeholder: "Nachname anfangen zu tippen ...", oninput: "this.form.requestSubmit()", :size => 80, class: animation %>
   </div>
 <% end %>

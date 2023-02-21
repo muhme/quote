@@ -126,7 +126,7 @@ class AuthorsController < ApplicationController
       @author = Author.find(params[:id])
       rescue
         flash[:error] = "Es gibt keinen Autor mit der ID \"#{params[:id]}\"."
-        redirect_to not_found_url
+        render "static_pages/not_found", status: :not_found
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

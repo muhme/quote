@@ -52,7 +52,7 @@ $ docker exec -it quote_rails /bin/bash
 
 ## History
 
-* 2023 using Hotwire Turbo
+* 2023 using Hotwire Turbo (see [Autocomplete mit Rails & Turbo](https://www.consulting.heikol.de/en/blog/autocomplete-ruby-on-rails-turbo/))
 * 2022 updated to Ruby 3.0 and Rails 7.0.1 ... 7.0.4
 * 2021 updated to Rails 6.1.3 ... 6.1.4
 * 2020 updated to Rails 6.0.2 ... 6.1.0
