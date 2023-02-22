@@ -1,6 +1,6 @@
 # README
 
-muhme/quote - Rails web application, serving [zitat-service.de](https://www.zitat-service.de)
+muhme/quote - Ruby on Rails web application, serving website [zitat-service.de](https://www.zitat-service.de)
 
 ## Docker Containers
 There is a Docker test and development environment prepared. You can create your own test and development instance with the following commands:
@@ -40,15 +40,23 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
 
 ## Testing
 
-Test coverage is greater than 90%, check it by your own:
-* rails test - to run automated unit tests
-* rails test:system - to run automated Selenium system tests with Chrome browser
+<details>
+  <summary>Mini tests and system tests are available for application validation.</dummary>
 
-**Note**
-> If your're using Docker, go into container first with:
-```
-$ docker exec -it quote_rails /bin/bash
-```
+  Test coverage is greater than 90%, check it by your own:
+  * rails test - to run automated minitests
+  * rails test:system - to run automated Selenium system tests with Chrome browser
+
+  **Note**
+  > If your're using Docker, go into container first with:
+  ```
+  $ docker exec -it quote_rails /bin/bash
+  ```
+
+  After running the tests you can find simplecov report in the directory coverage, e.g.:
+  ![simplecov.png](/app/assets/images/simplecov.png)
+
+</details>
 
 ## History
 
