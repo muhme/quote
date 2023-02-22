@@ -41,7 +41,7 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
 ## Testing
 
 <details>
-  <summary>Mini tests and system tests are available for application validation.</dummary>
+  <summary>Mini tests and system tests are available for application validation.</summary>
 
   Test coverage is greater than 90%, check it by your own:
   * rails test - to run automated minitests
@@ -57,6 +57,7 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
   ![simplecov.png](/app/assets/images/simplecov.png)
 
 </details>
+
 
 ## History
 
