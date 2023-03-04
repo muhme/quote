@@ -50,6 +50,17 @@ textarea {
     top: 1cm;
     left: 9em;
     margin-right: 1em;
+    hyphens: auto;
+    orphans: 3;
+    padding: 1em;
+    widows: 3;
+    -ms-hyphenate-limit-chars: auto 5;
+    -ms-hyphenate-limit-lines: 2;
+    -ms-hyphens: auto;
+    -webkit-hyphenate-limit-chars: auto 5;
+    -webkit-hyphenate-limit-lines: 2;
+    -webkit-hyphens: auto;
+    text-align: justify;
 }
 
 pre {
@@ -349,4 +360,14 @@ a.animated {
     animation-name: ligthgreen;
     animation-duration: 5s;
     display: inline-block;
+}
+
+div.large_right {
+    padding: 0 0 1em 0
+}
+@media(min-width:768px) {
+    div.large_right {
+        float: right;
+        padding: 0 0 2em 2em
+    }
 }
