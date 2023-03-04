@@ -52,7 +52,7 @@
     </tr><tr>
       <td valign=top>Quelle:</td><td><%= h(@quotation.source) %></td>
     </tr><tr>
-      <td valign=top>Link zur Quelle:</td><td><%= lh(@quotation.source_link) %></td>
+      <td valign=top>Link&nbsp;zur&nbsp;Quelle:</td><td><%= lh(@quotation.source_link) %></td>
     </tr><tr>
       <td valign=top>Kategorien:</td><td><%= raw categories.join %></td>
     </tr><tr>
@@ -60,7 +60,7 @@
     </tr><tr>
       <td valign=top>Aktualisiert:</td><td><%= nice_date(@quotation.updated_at) %></td>
     </tr><tr>
-      <td valign=top>Eingetragen von:</td><td><%= user %></td>
+      <td valign=top>Eingetragen&nbsp;von:</td><td><%= user %></td>
     </tr><tr>
       <td valign=top>Öffentlich:</td><td><%= @quotation.public? ? "Ja" : "Nein" %></td>
     </tr>
