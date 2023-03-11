@@ -5,6 +5,8 @@ one:
   quotation: public_quotation
   user_id: 1
   author_id: 1 # Barbara
+  source: "Zitat-Service"
+  source_link: "https://www.zitat-service.de"
   public: true
 
 second:

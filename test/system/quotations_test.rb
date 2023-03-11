@@ -125,7 +125,7 @@ class QuotationsTest < ApplicationSystemTestCase
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     fill_in "author", with: "Eva"
     click_on "Speichern"
-    check_this_page page, nil, /Das Zitat wurde aktualisiert. Der Autor .* wurde nicht geändert./
+    check_this_page page, nil, /Das Zitat wurde nicht geändert. Der Autor .* wurde nicht geändert./
     check_this_page page, nil, /Autor:.*Barbara/
   end
   test "author autocompletion not existing author" do
@@ -133,7 +133,7 @@ class QuotationsTest < ApplicationSystemTestCase
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     fill_in "author", with: "brabbel zabbel"
     click_on "Speichern"
-    check_this_page page, nil, /Das Zitat wurde aktualisiert. Der Autor .* wurde nicht geändert./
+    check_this_page page, nil, /Das Zitat wurde nicht geändert. Der Autor .* wurde nicht geändert./
     check_this_page page, nil, /Autor:.*Barbara/
   end
   test "author autocompletion change quote" do
@@ -420,10 +420,9 @@ class QuotationsTest < ApplicationSystemTestCase
   end
 
   test "check update time changes with quote" do
-    do_login
-    check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     last_created = Quotation.find(1).created_at
     last_updated = Quotation.find(1).updated_at
+    do_login
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     fill_in "quotation_quotation", with: "Yes We Can"
     click_on "Speichern"
@@ -435,10 +434,9 @@ class QuotationsTest < ApplicationSystemTestCase
   end
 
   test "check update time changes with author" do
-    do_login
-    check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     last_created = Quotation.find(1).created_at
     last_updated = Quotation.find(1).updated_at
+    do_login
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     fill_in "author", with: "schiller"
     assert page.has_css?(".animated") # wait for autocompletion
@@ -450,10 +448,9 @@ class QuotationsTest < ApplicationSystemTestCase
   end
 
   test "check update time changes with source" do
-    do_login
-    check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     last_created = Quotation.find(1).created_at
     last_updated = Quotation.find(1).updated_at
+    do_login
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     fill_in "quotation_source", with: "The Internet"
     click_on "Speichern"
@@ -465,18 +462,62 @@ class QuotationsTest < ApplicationSystemTestCase
   end
 
   test "check update time changes with link" do
-    do_login
-    check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
     last_created = Quotation.find(1).created_at
     last_updated = Quotation.find(1).updated_at
+    do_login
     check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
-    fill_in "quotation_source_link", with: "https://www.zitat-service.de"
+    fill_in "quotation_source_link", with: "https://github.com/muhme/quote"
     click_on "Speichern"
     check_this_page page, nil, "Zitat wurde aktualisiert."
-    check_this_page page, nil, /Link zur Quelle:.*www.zitat-service.de/
+    check_this_page page, nil, /Link zur Quelle:.*github.com\/muhme\/quote/
     changed_quote = Quotation.find(1)
     assert_equal last_created, changed_quote.created_at
     assert last_updated < changed_quote.updated_at, "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
+  end
+
+  test "check update time changes with adding category" do
+    last_created = Quotation.find(1).created_at
+    last_updated = Quotation.find(1).updated_at
+    do_login
+    check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
+    fill_in "category", with: "tw"
+    check_this_page page, nil, /Kategorie.*two/ # wait for autocompletion
+    click_on "Speichern"
+    check_this_page page, nil, "Zitat wurde aktualisiert."
+    check_this_page page, nil, /Kategorien:.*two/
+    changed_quote = Quotation.find(1)
+    assert_equal last_created, changed_quote.created_at
+    assert last_updated < changed_quote.updated_at, "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
+  end
+
+  test "check update time changes with removing category" do
+    last_created = Quotation.find(1).created_at
+    last_updated = Quotation.find(1).updated_at
+    do_login
+    check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
+    click_on Category.first.category # remove "public_category"
+    check_this_page page, "label", "Kategorien" # wait for autocompletion
+    click_on "Speichern"
+    check_this_page page, nil, "Zitat wurde aktualisiert."
+    check_this_page page, nil, /Kategorien:$/
+    changed_quote = Quotation.find(1)
+    assert_equal last_created, changed_quote.created_at
+    assert last_updated < changed_quote.updated_at, "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
+  end
+
+  test "check update time does not change without change" do
+    last_created = Quotation.find(1).created_at
+    last_updated = Quotation.find(1).updated_at
+    last_quote = Quotation.find(1).quotation
+    do_login
+    check_page page, edit_quotation_url(1), "h1", "Zitat bearbeiten"
+    fill_in "quotation_quotation", with: "cheesecake"
+    fill_in "quotation_quotation", with: last_quote
+    click_on "Speichern"
+    check_this_page page, nil, "Das Zitat wurde nicht geändert."
+    changed_quote = Quotation.find(1)
+    assert_equal last_created, changed_quote.created_at
+    assert_equal last_updated, changed_quote.updated_at
   end
 
   # NICE cannot delete quote created by another user

@@ -83,7 +83,7 @@ class QuotationsController < ApplicationController
   def create
     return unless logged_in? "Anmeldung fehlt, um ein neues Zitat anzulegen!"
     # set @authors and @categories from autocompletion fields and return hidden fields authors ID and category IDs
-    old_author_id, old_category_ids = scan_params_for_create_or_update
+    author_id, category_ids = scan_params_for_create_or_update
 
     if params[:commit]
       @quotation = Quotation.new(quotation_params)
@@ -99,8 +99,8 @@ class QuotationsController < ApplicationController
         render :new, status: :unprocessable_entity
       end
     else
-      turbo_author(old_author_id)
-      turbo_category(nil, old_category_ids, Category.check(params[:quotation][:quotation]))
+      turbo_author(author_id)
+      turbo_category(nil, category_ids, Category.check(params[:quotation][:quotation]))
       render turbo_stream: turbo_stream_do_actions
     end
   rescue Exception => exc
@@ -114,21 +114,33 @@ class QuotationsController < ApplicationController
   def update
     return unless access?(@quotation, :update)
     # set @authors and @categories from autocompletion fields and return hidden fields authors ID and category IDs
-    old_author_id, old_category_ids = scan_params_for_create_or_update
+    author_id, category_ids = scan_params_for_create_or_update
 
     if params[:commit]
-      logger.debug { "update() quotation #{@quotation.inspect}" }
-      if @quotation.update(quotation_params)
-        hint = "Das Zitat wurde aktualisiert."
+      # Are associated categories changed? Compare from params with existing list by hand as changed? does not exist for has_and_belongs_to_many.
+      categories_changed = category_ids.sort != @quotation.category_ids.sort
+      @quotation.assign_attributes(quotation_params)
+      logger.debug { "update() categories_changed=#{categories_changed}, quotation #{@quotation.inspect}" }
+      if @quotation.changed? or categories_changed
+        if @quotation.save
+          # set Quotation.updated_at even if there are changes in associated categories
+          @quotation.touch if categories_changed
+          hint = "Das Zitat wurde aktualisiert."
+          # give hint, e.g. if author autocomplete field is not completed
+          hint << " Der Autor „#{Author.find(@quotation.author_id).name}” wurde nicht geändert." if @authors.count != 1
+          return redirect_to @quotation, notice: hint
+        else
+          render :edit, status: :unprocessable_entity
+        end
+      else # quotation and associated categories are unchanged
+        hint = "Das Zitat wurde nicht geändert."
         # give hint, e.g. if author autocomplete field is not completed
         hint << " Der Autor „#{Author.find(@quotation.author_id).name}” wurde nicht geändert." if @authors.count != 1
         return redirect_to @quotation, notice: hint
-      else
-        render :edit, status: :unprocessable_entity
       end
     else
-      turbo_author(old_author_id)
-      turbo_category(nil, old_category_ids, Category.check(@quotation))
+      turbo_author(author_id)
+      turbo_category(nil, category_ids, Category.check(@quotation))
       render turbo_stream: turbo_stream_do_actions
     end
   end
