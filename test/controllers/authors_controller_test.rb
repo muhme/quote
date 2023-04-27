@@ -33,7 +33,7 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
   end
   
   test "404 for not existing author without login" do
-    get author_url(rand 0..10000000000000)
+    get author_url id: rand(0..10000000000000)
     assert_response :not_found
   end
   test "404 for not existing author with login" do
@@ -43,7 +43,7 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
   end 
 
   test "should show author without login" do
-    get author_url @author_one
+    get author_url id: @author_one
     assert_response :success
   end
   test "should show author with login" do
@@ -87,7 +87,7 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "fail get edit without login" do
-    get edit_author_url @author_one
+    get edit_author_url id: @author_one
     assert_forbidden
   end
   test "should get edit with login for own author" do
@@ -139,7 +139,7 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
   end
   test "fail to destroy author entry without login" do
     assert_no_difference 'Author.count' do
-      delete author_url @author_without_quotes
+      delete author_url id: @author_without_quotes
     end
     assert_forbidden
   end

@@ -1,14 +1,10 @@
-<%
-  authors = "#{@authors.total_entries} "
-  authors += @authors.total_entries == 1 ? "Autor, der" : "Autoren, die"
+<% authors = "#{@authors.total_entries} #{t("g.authors", count: @authors.total_entries)}, #{t(".lastname_starts")} "
   if params[:letter] == "*"
-  	authors += " nicht mit A-Z "
+    authors += " #{t(".not_a_letter")}"
   else
-  	authors += " mit \"" + params[:letter].first + "\" "
-  end
-  authors += @authors.total_entries == 1 ? "beginnt" : "beginnen"
-%>
+    authors += " #{t(".letter", letter: params[:letter].first)}"
+  end %>
 <h1><%= authors %></h1>
 
 <!-- NICE sorting list in view jumps in complete author list, better to sort only authors for this one letter -->
-<%= render 'list_content' %>
+<%= render "list_content" %>

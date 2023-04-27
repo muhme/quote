@@ -51,5 +51,9 @@ module Quote
 
     # see https://www.mintbit.com/blog/custom-404-500-error-pages-in-rails
     config.exceptions_app = self.routes
+
+    config.i18n.available_locales = [:de, :en, :es, :ja, :uk]
+    config.i18n.default_locale = :de
+    config.i18n.fallbacks = true
   end
 end

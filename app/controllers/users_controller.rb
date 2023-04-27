@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @user.active = @user.approved = @user.confirmed = true # NICE email handling
 
     if @user.save
-      redirect_to root_url, notice: "Der Eintrag für den Benutzer \"#{@user.login}\” wurde angelegt."
+      redirect_to root_url, notice: t(".created", user: @user.login)
     else
       render :new, status: :unprocessable_entity
     end
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     unless current_user
-      flash[:error] = "Nicht angemeldet!"
+      flash[:error] = t("users.not_logged_in")
       redirect_to root_url
     end
     @user = current_user
@@ -31,13 +31,13 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     unless current_user
-      flash[:error] = "Nicht angemeldet!"
+      flash[:error] = t("users.not_logged_in")
       redirect_to root_url
       return
     end
 
     if @user.update(user_params)
-      redirect_to root_url, notice: 'Benutzereintrag wurde geändert.'
+      redirect_to root_url, notice: t(".updated", user: @user.login)
     else
       render :edit, status: :unprocessable_entity
     end

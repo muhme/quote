@@ -2,8 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user_session, :current_user, :access?, :has_non_public, :can_edit?, :sql_quotations_for_category, :sql_quotations_for_author
   before_action do
-    bad_request?(params) # check params[bad_request] which means BadRequest exception from Rack middleware
-    bad_pagination?(params) # check params[page] if existing
+    bad_request? # check params[bad_request] which means BadRequest exception from Rack middleware
+    bad_pagination? # check params[page] if existing
   end
 
   rescue_from ActionController::UnknownFormat do |exception|
@@ -12,7 +12,17 @@ class ApplicationController < ActionController::Base
     redirect_to(controller: :static_pages, action: :not_found)
   end
 
+  # include locale param in every URL and set locale
+  def default_url_options
+     { locale: set_locale }
+  end
+
   private
+  
+  # at the moment very simple from language selection or locale param
+  def set_locale
+    I18n.locale = params[:locale] || I18n.locale
+  end
 
   # give user context visible quotations for a category
   def sql_quotations_for_category(category_id)
@@ -43,15 +53,15 @@ class ApplicationController < ActionController::Base
   # action is :read, :update or :destroy
   def access?(obj, action)
     name = obj.class.name # default
-    name = "Autor" if name == "Author"
-    name = "Zitat" if name == "Quotation"
-    name = "Kategorie" if name == "Category"
+    name = t("g.authors", count: 1) if name == "Author"
+    name = t("g.quotes", count: 1) if name == "Quotation"
+    name = t("g.categories", count: 1) if name == "Category"
 
-    msg = "haben"   # default
-    msg = "lesen" if action == :read
-    msg = "ändern" if action == :update
-    msg = "löschen" if action == :destroy
-    msg = "Kein Recht #{name} #{obj.id} zu #{msg}!"
+    msg = t("g.have")   # default
+    msg = t("g.read") if action == :read
+    msg = t("g.update") if action == :update
+    msg = t("g.delete") if action == :destroy
+    msg = t("g.no_right", name: name, id: obj.id, msg: msg)
 
     if current_user and (current_user.admin or current_user.id == obj.user_id)
       # own object or admin has read/write access
@@ -63,17 +73,17 @@ class ApplicationController < ActionController::Base
           return true
         else
           # read access denied
-          msg += " (Nicht öffentlich)"
+          msg += " (#{t("g.not_publics", count: 1)})"
         end
       end
       if current_user
         if current_user.id != obj.user_id
           # read/write other objects denied
-          msg += " (Nicht der eigene Eintrag)"
+          msg += " (#{t("g.not_own_entry")})"
         end
       else
         # not logged in read access denied
-        msg += " (Nicht angemeldet)"
+        msg += " (#{t("g.not_logged_in")})"
       end
     end
 
@@ -119,11 +129,12 @@ class ApplicationController < ActionController::Base
   # called 1st time as before_action
   # called 2nd time after pagination with known number of total_pages
   # in case of problems render HTTP status 400
-  def bad_pagination?(params, total_pages = nil)
+  def bad_pagination?(total_pages = nil)
     if params and params[:page]
       page_number = Integer(params[:page])
-      raise "page #{page_number} <= 0" if page_number <= 0
-      raise "page #{page_number} > #{total_pages}" if total_pages and page_number > total_pages
+      if ((page_number <= 0) or (total_pages and (page_number > total_pages)))
+        raise t("g.bad_pagination.not_existing", page_number: page_number)
+      end
     end
   rescue => e
     logger.error "bad pagination! \"#{e.message}\""
@@ -132,7 +143,7 @@ class ApplicationController < ActionController::Base
   end
 
   # error message from middleware Rack flagged as params[:bad_request]?
-  def bad_request?(params)
+  def bad_request?
     if params and params[:bad_request].present?
       logger.error "bad request! \"#{params[:bad_request]}\""
       flash[:error] = CGI.unescape(params[:bad_request])

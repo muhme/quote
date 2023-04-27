@@ -1,6 +1,6 @@
 <%= turbo_frame_tag :search_author do %>
   <%= hidden_field_tag "quotation[author_id]", author_id %>
   <div class="no_bottom_field">
-    <%= search_field_tag :author, author_selected_name(author_id), placeholder: "Nachname anfangen zu tippen ...", oninput: "this.form.requestSubmit()", :size => 80, class: animation %>
+    <%= search_field_tag :author, author_selected_name(author_id), placeholder: t(".placeholder"), oninput: "this.form.requestSubmit()", :size => 80, class: animation %>
   </div>
 <% end %>

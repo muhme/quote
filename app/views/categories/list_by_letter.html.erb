@@ -1,13 +1,10 @@
-<%
-  categories = "#{@categories.total_entries} "
-  categories += @categories.total_entries == 1 ? "Kategorie, die" : "Kategorien, die"
+<% headline = "#{@categories.total_entries} #{t("g.categories", count: @categories.total_entries)}"
   if params[:letter] == "*"
-  	categories += " nicht mit A-Z "
+  	headline += " #{t(".not_starting_with_a_letter")}"
   else
-  	categories += " mit \"" + params[:letter].first + "\" "
+  	headline += " #{t(".with_initial_letter", letter: params[:letter].first)}"
   end
-  categories += @categories.total_entries == 1 ? "beginnt" : "beginnen"
 %>
-<h1><%= categories %></h1>
+  <h1><%= headline %></h1>
 
-<%= render 'list_content' %>
+  <%= render "list_content" %>

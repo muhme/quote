@@ -6,57 +6,52 @@ module ApplicationHelper
 
     if controller.controller_name == "authors"
       if controller.action_name == "list_by_letter"
-        d += " – Autoren die mit " + params[:letter].first + " beginnen"
+        d += " –  #{t('g.authors', count: 2)}, #{t('layouts.application.starting_with_letter', letter: params[:letter].first)}"
       elsif controller.action_name == "show" and @author.present?
-        d += " – Autor " + @author.get_author_name_or_blank
+        d += " – #{t('g.authors', count: 1)} #{@author.get_author_name_or_blank}"
       else
-        d += " – Autoren"
+        d += " – #{t('g.authors', count: 2)}"
       end
     end
 
     if controller.controller_name == "categories"
-      if controller.action_name == "show" and @category.present?
-        d += " – Kategorie " + @category.category
+      if controller.action_name == "list_by_letter"
+        d += " –  #{t('g.categories', count: 2)}, #{t('layouts.application.starting_with_letter', letter: params[:letter].first)}"
+      elsif controller.action_name == "show" and @category.present?
+        d += " – #{t('g.categories', count: 1)} #{@category.category}"
       else
-        d += " – Kategorien"
-        d += " die mit " + params[:letter].first + " beginnen" if controller.action_name == "list_by_letter"
+        d += " – #{t('g.categories', count: 2)}"
       end
     end
 
     if controller.controller_name == "quotations"
       if controller.action_name == "show" and @quotation.present?
-        d += " – Zitat von " + @quotation.get_author_name_or_blank
+        d += " – #{t('layouts.application.quote_from')} #{@quotation.get_author_name_or_blank}"
       else
-        d += " – Zitate"
-        d += " von " + @author.get_author_name_or_blank if controller.action_name == "list_by_author" and @author.present?
-        d += " zu " + @category.category if controller.action_name == "list_by_category" and @category.present?
-        d += " des Benutzers " + h(params[:user]) if controller.action_name == "list_by_user"
+        d += " – #{t('g.quotes', count: 2)}"
+        d += " #{t('g.from')} #{@author.get_author_name_or_blank}" if controller.action_name == "list_by_author" and @author.present?
+        d += " #{t('g.for')} #{@category.category}" if controller.action_name == "list_by_category" and @category.present?
+        d += " #{t('layouts.application.of_the_user')} #{h(params[:user])}" if controller.action_name == "list_by_user"
       end
     end
 
-    d += " – Fehler 404 - Eintrag nicht gefunden" if controller.action_name == "not_found"
-    d += " – Impressum" if controller.action_name == "contact"
-    d += " – Projekt" if controller.action_name == "project"
-    d += " – Statusreport" if controller.action_name == "report"
-    d += " – Anmelden" if controller.controller_name == "user_sessions" and controller.action_name == "new"
-    d += " – Eintragen" if controller.action_name == "signup"
-    d += " – Hier wird Dir geholfen!" if controller.action_name == "help"
-    d += " – Zitate in die eigene Homepage einbinden" if controller.action_name == "use"
-    d += " – Zitate mit Joomla! in die eigene Homepage einbinden" if controller.action_name == "joomla"
-    d += " – Using quotes with Joomla! for the own homepage" if controller.action_name == "joomla_english"
+    d += " – #{t('layouts.application.not_found')}" if controller.action_name == "not_found"
+    d += " – #{t('layouts.application.contact')}" if controller.action_name == "contact"
+    d += " – #{t('layouts.application.project')}" if controller.action_name == "project"
+    d += " – #{t('layouts.application.register')}" if controller.controller_name == "users" and controller.action_name == "new"
+    d += " – #{t('layouts.application.login')}" if controller.controller_name == "user_sessions" and controller.action_name == "new"
+    d += " – #{t('layouts.application.help')}" if controller.action_name == "help"
+    d += " – #{t('layouts.application.use')}" if controller.action_name == "use"
+    d += " – #{t('layouts.application.joomla')}" if controller.action_name == "joomla"
+    d += " – #{t('layouts.application.joomla_english')}" if controller.action_name == "joomla_english"
 
-    d += ", Seite #{params[:page]}" if params[:page]
+    d += ", #{t('g.page')} #{params[:page]}" if params[:page]
 
     d
   end
 
-  # gives nice number in singular or plural
-  # e.g. "0 Zitate", "1 Zitat", "2 Zitate", "4.711 Zitate"
-  def nnsp(number, singular, plural)
-    return nice_number(number) + " " + (number == 1 ? singular : plural)
-  end
-
   # Produces nice number, e.g. 1.234 instead of 1234
+  # TODO: replace with I18N
   def nice_number(number)
     return number.to_s if number < 1000
     number.to_s.reverse.scan(/\d{1,3}/).join(".").reverse
@@ -73,7 +68,7 @@ module ApplicationHelper
         long_name << field if field.present?
       end
     end
-    return long_name[0, 80]
+    long_name[0, 80]
   end
 
   # gives links to the authors by 1st letter as four-rows-table
@@ -81,14 +76,14 @@ module ApplicationHelper
   # H I J K L M N
   # O P Q R S T U
   # V W X Y Z *
-  def author_links
+  def author_links locale
     init_chars = Author.init_chars
     ret = "<table id=\"letter\"><tr>"
     all = ("A".."Z").to_a
     all << "*"
     for i in 0..(all.length - 1)
       if init_chars.include?(all[i])
-        ret <<= "<td>" + link_to(all[i], :controller => "authors", :action => "list_by_letter", :letter => all[i]) + "</td>"
+        ret <<= "<td>" + link_to(all[i], locale: locale, controller: :authors, action: :list_by_letter, letter: all[i]) + "</td>"
       else
         ret <<= "<td id=\"unused\">#{all[i]}</td>"
       end
@@ -102,14 +97,14 @@ module ApplicationHelper
   # H I J K L M N
   # O P Q R S T U
   # V W X Y Z *
-  def category_links
+  def category_links locale
     init_chars = Category.init_chars
     ret = "<table id=\"letter\"><tr>"
     all = ("A".."Z").to_a
     all << "*"
     for i in 0..(all.length - 1)
       if init_chars.include?(all[i])
-        ret <<= "<td>" + link_to(all[i], :controller => "categories", :action => "list_by_letter", :letter => all[i]) + "</td>"
+        ret <<= "<td>" + link_to(all[i], locale: locale, controller: :categories, action: :list_by_letter, letter: all[i]) + "</td>"
       else
         ret <<= "<td id=\"unused\">#{all[i]}</td>"
       end
@@ -118,6 +113,7 @@ module ApplicationHelper
     ret <<= "</tr></table>"
   end
 
+  # TODO: replace with I18N
   # Produces e.g. "19.12.1961, 06:15 Uhr MEZ", including daylight saving time
   def nice_date(date)
     Time.zone = "Berlin"
@@ -141,9 +137,11 @@ module ApplicationHelper
     link_to(link[8..link.size], link, :popup => true) if link =~ /^https:\/\//i
   end
 
-  # gives an HTML-IMG if the param has the desired value
+  # depending on 3rd param 'bool' if true
+  #   - returns table header 'name' entry and arrow-down-image or
+  #   - returns table header 'name' entry linked with 'link'
   def sorted_img_if(name, link, bool)
-    return bool ? name + image_tag("arrow_down.png", :alt => "Sortiert", :title => "Sortiert", :border => 0) + "</th>" : link
+    bool ? name + image_tag("arrow_down.png", :alt => t('g.arrow_down'), :title => t('g.ordered'), :border => 0) + "</th>" : link
   end
 
   # do an html_escape() and a truncate overall on 40 chars
@@ -181,6 +179,43 @@ module ApplicationHelper
     str = str.gsub("'", "\\'")     # apostroph
     str = str.gsub("\"", "\\\"")   # quotation marks
     str = str.gsub("\\", "\\\\")   # backslash self
-    return str
+    str
   end
+
+  # create form label and description
+  # e.g. 'Nachname <span class="example">z.B. Goethe</span>'
+  def label_and_description(name, sample = nil)
+    ret = name
+    if sample.present?
+      ret << ' <span class="example">'
+      ret << sample
+      ret << '</span>'
+    end
+    raw(ret)
+  end
+
+  # html escape string and return <span> with given class name, or empty string if no string is present
+  def raw_span_class_if_present(class_name, str)
+    str.present? ? raw("<span class=\"#{class_name}\">#{h(str)}</span>") : ""
+  end
+
+  # returns e.g. "🇺🇦 UK – українська" or "🇺🇦 UK" if shorten is true for symbol :uk
+  # falls back to :de for unknown locale 
+  #
+  def string_for_locale(locale, shorten = false)
+    logger.debug { "string_for_locale(#{locale.class} #{locale}, #{shorten})" }
+    locales = {
+      :de => "&#x1F1E9;&#x1F1EA; DE – Deutsch",
+      :en => "&#x1F1FA;&#x1F1F8; EN – english",
+      :es => "&#x1F1EA;&#x1F1F8; ES – español",
+      :ja => "&#x1F1EF;&#x1F1F5; JA – 日本語",
+      :uk => "&#x1F1FA;&#x1F1E6; UK – українська"
+    }
+    locale = :de unless locales.has_key?(locale)
+    ret = locales[locale]
+    ret = ret.split(" – ").first if shorten
+    logger.debug { "string_for_locale ret=\”#{ret}\”" }
+    ret
+  end
+
 end

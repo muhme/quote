@@ -75,10 +75,6 @@ Rails.application.configure do
   host = 'www.zitat-service.de'
   config.action_mailer.default_url_options = { host: host, protocol: 'https' }
 
-  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-  # the I18n.default_locale when a translation cannot be found).
-  config.i18n.fallbacks = true
-
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 
@@ -97,4 +93,5 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
 end

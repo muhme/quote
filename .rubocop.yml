@@ -1,0 +1,37 @@
+# inherit_from: ../.rubocop.yml
+
+require:
+ - rubocop-i18n
+
+AllCops:
+  DisabledByDefault: true
+  Exclude:
+    - 'test/**/*'
+
+# Style/StringLiterals:
+#   EnforcedStyle: single_quotes
+#   Enabled: true
+
+I18n/RailsI18n:
+  Enabled: true
+I18n/GetText:
+  Enabled: false
+# I18n/RailsI18n/DecorateStringFormattingUsingInterpolation:
+#   Enabled: true
+#   AutoCorrect: false
+# I18n/RailsI18n/DecorateString:
+#   Enabled: true
+#   AutoCorrect: false
+# I18n/GetText/DecorateFunctionMessage:
+#   Enabled: true
+#   AutoCorrect: false
+# I18n/GetText/DecorateStringFormattingUsingPercent:
+#   Enabled: true
+#   AutoCorrect: false
+
+
+# Style/Encoding:
+#   Enabled: false
+
+# Layout/LineLength:
+#   Max: 99

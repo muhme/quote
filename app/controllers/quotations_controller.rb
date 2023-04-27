@@ -19,11 +19,11 @@ class QuotationsController < ApplicationController
 
     @quotations = Quotation.paginate_by_sql(sql, page: params[:page], :per_page => 5)
     # check pagination second time with number of pages
-    bad_pagination?(params, @quotations.total_pages)
+    bad_pagination?(@quotations.total_pages)
 
     # give hint on first page if no other notice exist
     if !flash[:notice] and (!params[:page] or params[:page].to_i == 1)
-      flash.now[:notice] = "Die Zitate sind danach sortiert, wann sie eingestellt wurden. Die zuletzt eingestellten Zitate stehen oben."
+      flash.now[:notice] = t(".order")
     end
   end
 
@@ -34,8 +34,8 @@ class QuotationsController < ApplicationController
 
   # GET /quotations/new
   def new
-    return unless logged_in? "Anmeldung fehlt, um ein neues Zitat anzulegen!"
-    @quotation = Quotation.new(:user_id => current_user.id)
+    return unless logged_in? t("quotations.login_missing")
+    @quotation = Quotation.new(user_id: current_user.id)
   end
 
   # GET /quotations/1/edit
@@ -46,7 +46,7 @@ class QuotationsController < ApplicationController
   # GET quotations/author_selected/author_id
   # called from search author result list as a click on a link
   def author_selected
-    return unless logged_in? "Anmeldung fehlt, um ein neues Zitat anzulegen!"
+    return unless logged_in? t("quotations.login_missing")
     turbo_author(nil, params[:author_id])
     render turbo_stream: turbo_stream_do_actions
   end
@@ -56,7 +56,7 @@ class QuotationsController < ApplicationController
   # with all choosen categories left and all recommended categories right from minus separator
   # first entry in the choosen categories list is the new selected category
   def category_selected
-    return unless logged_in? "Anmeldung fehlt, um ein neues Zitat anzulegen!"
+    return unless logged_in? t("quotations.login_missing")
     category_ids = split_two_id_arrays(params[:ids], 0)
     category_id = category_ids[0]
     rec_ids = split_two_id_arrays(params[:ids], 1)
@@ -71,7 +71,7 @@ class QuotationsController < ApplicationController
   # list of remaining categories is empty in case the last category is to delete
   # right from minus separator is the list of recommended categories
   def delete_category
-    return unless logged_in? "Anmeldung fehlt, um ein neues Zitat anzulegen!"
+    return unless logged_in? t("quotations.login_missing")
     category_ids = split_two_id_arrays(params[:ids], 0)
     rec_ids = split_two_id_arrays(params[:ids], 1)
     logger.debug { "delete_category() category_ids=#{nol(category_ids, true)} rec_ids=#{nol(rec_ids, true)}" }
@@ -81,7 +81,7 @@ class QuotationsController < ApplicationController
 
   # POST /quotations
   def create
-    return unless logged_in? "Anmeldung fehlt, um ein neues Zitat anzulegen!"
+    return unless logged_in? t("quotations.login_missing")
     # set @authors and @categories from autocompletion fields and return hidden fields authors ID and category IDs
     author_id, category_ids = scan_params_for_create_or_update
 
@@ -91,10 +91,10 @@ class QuotationsController < ApplicationController
       @quotation.author_id = 0 unless @quotation.author_id # empty author field is an unknown author, which has id 0
       logger.debug { "saving #{@quotation.inspect}" }
       if @quotation.save
-        hint = "Dankeschön, das #{@quotation.id}. Zitat wurde angelegt."
+        hint = t(".created", id: @quotation.id)
         # give hint, e.g. if author autocomplete field is empty and unknown author is used
-        hint << " Als Autor wurde „#{Author.find(@quotation.author_id).name}” verwendet." if @authors.count != 1
-        return redirect_to @quotation, notice: hint
+        hint << " #{t(".author_used", author: Author.find(@quotation.author_id).name)}" if @authors.count != 1
+        return redirect_to quotation_path(@quotation, locale: I18n.locale), notice: hint
       else
         render :new, status: :unprocessable_entity
       end
@@ -106,7 +106,7 @@ class QuotationsController < ApplicationController
   rescue Exception => exc
     logger.error "create quotation failed: #{exc.message}, backtrace:"
     exc.backtrace.each { |n| logger.error "   #{n}" }
-    flash[:error] = "Das Anlegen des Zitates ist gescheitert! (#{exc.message})"
+    flash[:error] = t(".failed", exception: exc.message)
     render :new, status: :unprocessable_entity
   end
 
@@ -125,17 +125,17 @@ class QuotationsController < ApplicationController
         if @quotation.save
           # set Quotation.updated_at even if there are changes in associated categories
           @quotation.touch if categories_changed
-          hint = "Das Zitat wurde aktualisiert."
+          hint = t(".updated")
           # give hint, e.g. if author autocomplete field is not completed
-          hint << " Der Autor „#{Author.find(@quotation.author_id).name}” wurde nicht geändert." if @authors.count != 1
-          return redirect_to @quotation, notice: hint
+          hint << " #{t(".author_unchanged", author: Author.find(@quotation.author_id).name)}" if @authors.count != 1
+          return redirect_to quotation_path(@quotation, locale: I18n.locale), notice: hint
         else
           render :edit, status: :unprocessable_entity
         end
       else # quotation and associated categories are unchanged
-        hint = "Das Zitat wurde nicht geändert."
+        hint = t(".unchanged")
         # give hint, e.g. if author autocomplete field is not completed
-        hint << " Der Autor „#{Author.find(@quotation.author_id).name}” wurde nicht geändert." if @authors.count != 1
+        hint << " #{t(".author_unchanged", author: Author.find(@quotation.author_id).name)}" if @authors.count != 1
         return redirect_to @quotation, notice: hint
       end
     else
@@ -149,7 +149,7 @@ class QuotationsController < ApplicationController
   def destroy
     return unless access?(@quotation, :destroy)
     if @quotation.destroy
-      flash[:notice] = "Das Zitat \"" + truncate(@quotation.quotation, length: 20) + "\" wurde gelöscht."
+      flash[:notice] = t(".deleted", quote: truncate(@quotation.quotation, length: 20))
     end
     return redirect_to quotations_url
   end
@@ -157,48 +157,48 @@ class QuotationsController < ApplicationController
   # list quotations created by a user
   def list_by_user
     unless User.exists?(:login => params[:user])
-      flash[:error] = "Kann Benutzer \"#{params[:user]}\" nicht finden!"
+      flash[:error] = t(".no_user", user: params[:user])
       return redirect_to root_url
     end
 
     sql = ["select distinct q.* from quotations q, users u where q.user_id = u.id and u.login = ? order by q.created_at desc", my_sql_sanitize(params[:user])]
     @quotations = Quotation.paginate_by_sql sql, :page => params[:page], :per_page => 5
     # check pagination second time with number of pages
-    bad_pagination?(params, @quotations.total_pages)
+    bad_pagination?(@quotations.total_pages)
   end
 
   def list_by_category
     unless Category.exists? params[:category]
-      flash[:error] = "Kann Kategorie \"#{params[:category]}\" nicht finden!"
+      flash[:error] = t(".no_category", id: params[:category])
       return redirect_to root_url
     end
     @category = Category.find params[:category]
     @quotations = Quotation.paginate_by_sql sql_quotations_for_category(@category.id), :page => params[:page], :per_page => 5
     # check pagination second time with number of pages
-    bad_pagination?(params, @quotations.total_pages)
+    bad_pagination?(@quotations.total_pages)
   end
 
   # select * from `quotations` where q.public = 1 and author_id = ?
   def list_by_author
     unless Author.exists? params[:author]
-      flash[:error] = "Kann den Autor \"#{params[:author]}\" nicht finden!"
+      flash[:error] = t(".no_author", id: params[:author])
       return redirect_to root_url
     end
     @author = Author.find params[:author]
     @quotations = Quotation.paginate_by_sql sql_quotations_for_author(@author.id), :page => params[:page], :per_page => 5
     # check pagination second time with number of pages
-    bad_pagination?(params, @quotations.total_pages)
+    bad_pagination?(@quotations.total_pages)
   end
 
   # for admins list all not public categories
   def list_no_public
     if !current_user or current_user.admin == false
-      flash[:error] = "Kein Administrator!"
+      flash[:error] = t("g.no_admin")
       return redirect_to forbidden_url
     end
     @quotations = Quotation.paginate_by_sql "select * from quotations where public = 0", :page => params[:page], :per_page => 5
     # check pagination second time with number of pages
-    bad_pagination?(params, @quotations.total_pages)
+    bad_pagination?(@quotations.total_pages)
   end
 
   private
@@ -206,7 +206,7 @@ class QuotationsController < ApplicationController
   def set_quotation
     @quotation = Quotation.find(params[:id])
   rescue
-    flash[:error] = "Es gibt kein Zitat mit der ID \"#{params[:id]}\"."
+    flash[:error] = t("quotations.id_does_not_exist", id: params[:id])
     render "static_pages/not_found", status: :not_found
   end
 

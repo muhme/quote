@@ -17,7 +17,7 @@ class AuthorsController < ApplicationController
   
     @authors = Author.paginate_by_sql(sql, page: params[:page], :per_page => 10)
     # check pagination second time with number of pages
-    bad_pagination?(params, @authors.total_pages)
+    bad_pagination?(@authors.total_pages)
   end
 
   # GET /authors/1
@@ -34,9 +34,8 @@ class AuthorsController < ApplicationController
 
   # GET /authors/new
   def new
-    return unless logged_in? "Anmeldung fehlt, um einen neuen Autor-Eintrag anzulegen!"
-    @author = Author.new
-    @author.user_id = current_user.id
+    return unless logged_in? t("authors.login_missing")
+    @author = Author.new(user_id: current_user.id)
   end
 
   # GET /authors/1/edit only for admin or own user
@@ -46,12 +45,12 @@ class AuthorsController < ApplicationController
 
   # POST /authors
   def create
-    return unless logged_in? "Anmeldung fehlt, um einen neuen Autor-Eintrag anzulegen!"
+    return unless logged_in? t("authors.login_missing")
     @author = Author.new(author_params)
     @author.user_id = current_user.id
 
     if @author.save
-      redirect_to @author, notice: "Der Autor \"" + @author.get_author_name_or_blank + "\" wurde angelegt."
+      return redirect_to author_path(@author, locale: I18n.locale), notice: t(".created", author: @author.get_author_name_or_blank)
     else
       render :new, status: :unprocessable_entity
     end
@@ -60,7 +59,7 @@ class AuthorsController < ApplicationController
     
     rescue Exception => exc
       logger.error "create author failed: #{exc.message}"
-      flash[:error] = "Das Anlegen des Autors \"" + @author.get_author_name_or_blank + "\" ist gescheitert! (#{exc.message})"
+      flash[:error] = t(".failed", author: @author.get_author_name_or_blank, exception: exc.message)
   end
 
   # PATCH/PUT /authors/1
@@ -68,7 +67,7 @@ class AuthorsController < ApplicationController
     return unless access?(@author, :update)
 
     if @author.update author_params
-      redirect_to @author, notice: "Der Eintrag für den Autor \"" + @author.get_author_name_or_blank + "\" wurde aktualisiert."
+      return redirect_to author_path(@author, locale: I18n.locale), notice: t(".updated", author: @author.get_author_name_or_blank)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -79,11 +78,11 @@ class AuthorsController < ApplicationController
     return unless access?(@author, :destroy)
     n = @author.quotations.size
     if n > 0
-      flash[:error] = "Der Author \"" + @author.get_author_name_or_blank + "\" hat #{n} Zitate und kann nicht gelöscht werden."
+      flash[:error] = t(".has_quotes", author: @author.get_author_name_or_blank, number: n)
       redirect_to :action => 'show', :id => @author.id
     else
       if @author.destroy
-        flash[:notice] = "Der Eintrag für den Author \"" + @author.get_author_name_or_blank + "\" wurde gelöscht."
+        flash[:notice] = t(".deleted", author: @author.get_author_name_or_blank)
       end
       redirect_to authors_url
     end
@@ -98,26 +97,26 @@ class AuthorsController < ApplicationController
     elsif letter =~ /[A-Za-z]/
       sql = "select * from authors where name like ?"
     else # not reachable, because route restrictions already forbid it - but, just in case
-      flash[:error] = "Buchstabe fehlt!"
+      flash[:error] = t(".letter_missing")
       redirect_to :action => 'list'
       return
     end
     sql += ' order by name, firstname'
     @authors = Author.paginate_by_sql [sql, "#{letter.first}%"], :page=>params[:page], :per_page=>10
     # check pagination second time with number of pages
-    bad_pagination?(params, @authors.total_pages)
+    bad_pagination?(@authors.total_pages)
   end
   
   # for admins list all not public authors
   def list_no_public
     if !current_user or current_user.admin == false
-      flash[:error] = "Kein Administrator!"
+      flash[:error] = t("g.no_admin")
       redirect_to authors_url
       return false
     end
     @authors = Author.paginate_by_sql 'select * from authors where public = 0', :page=>params[:page], :per_page=>10
     # check pagination second time with number of pages
-    bad_pagination?(params, @authors.total_pages)
+    bad_pagination?(@authors.total_pages)
   end
 
   private
@@ -125,7 +124,7 @@ class AuthorsController < ApplicationController
     def set_author
       @author = Author.find(params[:id])
       rescue
-        flash[:error] = "Es gibt keinen Autor mit der ID \"#{params[:id]}\"."
+        flash[:error] = t("authors.id_does_not_exist", id: params[:id])
         render "static_pages/not_found", status: :not_found
     end
 

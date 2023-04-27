@@ -12,28 +12,44 @@
   </head>
   <body>
     <span id="side">
-      <div id="logo"><a href="/"><%= image_tag("quote_service_32.png", :size => "32x32", :alt => "Logo", :title => "www.zitat-service.de", :border => "0") %></a></div>
-      <%= raw("<p>" + image_tag("user_orange.png", :alt => "Benutzer", :title => "Angemeldet") + " " +
-          link_to(truncate(h(current_user.login), length: 7), edit_user_path(:current))) if current_user %>
-      <%= raw (" " + image_tag("award_star_bronze_1.png", :alt => "Orden", :title => "Administrator")) if current_user and current_user.admin %>
-      <%= raw "</p>" if current_user %>
-      <div id="user_nav"><p>
-        <%= current_user ? link_to('Logout', logout_path) : link_to('Login', login_path) %>
-      </p></div>
-      <p><%= link_to "Zitate", :controller => "quotations" %> <%= link_to("+", :controller => "quotations", :action => "list_no_public") if has_non_public(Quotation) %></p>
-      <p id="letter"><%= link_to "Kategorien", :controller => "categories" %> <%= link_to("+", :controller => "categories", :action => "list_no_public") if has_non_public(Category) %>
-        <%= raw category_links %></p>
-      <p id="letter"><%= link_to "Autoren", :controller => "authors" %> <%= link_to("+", :controller => "authors", :action => "list_no_public") if has_non_public(Author) %>
-        <%= raw author_links %></p>
-      <p><%= link_to "Hilfe",     :controller => "static_pages", :action => "help" %></p>
-      <p><%= link_to "Einbinden", :controller => "static_pages", :action => "use" %></p>
-      <p><%= link_to "Projekt",   :controller => "static_pages", :action => "project" %></p>
-      <p><%= link_to "Impressum", :controller => "static_pages", :action => "contact" %></p>
+      <div id="logo"><a href="/<%= "#{I18n.locale}" %>"><%= image_tag("quote_service_32.png", size: "32x32", class: "logo", alt: t(".logo_alt"), title: "www.zitat-service.de") %></a></div>
+      <div id="locale">
+        <span id="current-language" class="language-selector"><%= raw(string_for_locale(I18n.locale, true)) %> ▾ </span>
+          <div id="language-dropdown" class="hidden">
+            <% [:de, :en, :es, :ja, :uk].each do |locale| %>
+              <%# e.g. 🇺🇦 UK – українська %>
+              <%= raw("<div class='language-option' data-locale='#{locale}'>#{string_for_locale(locale)}</div>") %>
+            <% end %>
+          </div>
+      </div>
+      <% if current_user %>
+        <p>
+          <%= link_to(raw("#{image_tag("user_orange.png", alt: t("g.user"), title: t(".logged_in"))} ") +
+                      truncate(h(current_user.login), length: 7), edit_user_path(locale: I18n.locale, id: current_user.id)) %>
+          <%= raw("#{image_tag("award_star_bronze_1.png", alt: t(".award_alt"), title: t(".admin"))}") if current_user.admin %>
+        </p>
+      <% end %>
+      <div id="user_nav">
+        <p><%= current_user ? link_to('Logout', logout_path(locale: I18n.locale)) : link_to('Login', login_path(locale: I18n.locale)) %></p>
+      </div>
+      <p><%= link_to t("g.quotes", count: 0), locale: I18n.locale, controller: "quotations" %> <%= link_to("+", controller: "quotations", action: "list_no_public") if has_non_public(Quotation) %></p>
+      <p id="letter">
+        <%= link_to t("g.categories", count: 0), locale: I18n.locale, controller: "categories" %> <%= link_to("+", controller: "categories", action: "list_no_public") if has_non_public(Category) %>
+        <div class="flex-center"><%= raw category_links I18n.locale %></div>
+      </p>
+      <p id="letter">
+        <%= link_to t("g.authors", count: 0), controller: "authors" %> <%= link_to("+", controller: "authors", action: "list_no_public") if has_non_public(Author) %>
+        <div class="flex-center"><%= raw author_links I18n.locale %></div>
+      </p>
+      <p><%= link_to t("g.help"),   locale: I18n.locale, controller: :static_pages, action: :help    %></p>
+      <p><%= link_to t(".to_use"),  locale: I18n.locale, controller: :static_pages, action: :use     %></p>
+      <p><%= link_to t(".project"), locale: I18n.locale, controller: :static_pages, action: :project %></p>
+      <p><%= link_to t(".contact"), locale: I18n.locale, controller: :static_pages, action: :contact %></p>
     </span>
     <% if flash[:error] -%>
-      <div id="error"><%= image_tag("exclamation.png", :alt => "rotes Ausrufezeichen", :title => "Achtung", :border => "0") %> <%= flash[:error] %></div>
+      <div id="error"><%= image_tag("exclamation.png", alt: t(".exclamation_alt"), title: t(".exclamation")) %> <%= flash[:error] %></div>
     <% elsif flash[:notice] -%>
-      <div id="notice"><%= image_tag("flag_green.png", :alt => "grüne Fahne", :title => "OK", :border => "0") %> <%= flash[:notice] %></div>
+      <div id="notice"><%= image_tag("flag_green.png", alt: t(".green_flag_alt"), title: t(".green_flag")) %> <%= flash[:notice] %></div>
     <% end -%>
     <div id="content">
       <%= yield %>

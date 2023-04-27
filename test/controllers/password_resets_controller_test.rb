@@ -15,7 +15,7 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
   
   # GET /password_resets/1/edit
   test "fail to reset some users password" do
-    get edit_password_reset_url @first_user
+    get edit_password_reset_url id: @first_user
     assert_redirected_to root_url
     follow_redirect!
     assert_match /Kennwort zurücksetzen für den Benutzereintrag .* ist nicht erlaubt./, @response.body

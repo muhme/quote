@@ -1,0 +1,242 @@
+---
+uk:
+  activerecord:
+    errors:
+      models:
+        category:
+          attributes:
+            category:
+              blank: не може бути порожнім
+              taken: вже використовується
+        quotation:
+          attributes:
+            quotation:
+              taken: вже використовується
+        user:
+          attributes:
+            email:
+              taken: вже використовується
+            login:
+              too_short: Логін занадто короткий
+            password_confirmation:
+              confirmation: не збігається з паролем
+  authors:
+    create:
+      created: Автор "%{author}" створений.
+      failed: Створення автора "%{author}" не вдалося! (%{exception})
+    destroy:
+      deleted: Запис автора "%{author}" видалений.
+      has_quotes: Автор "%{author}" має %{number} цитат і не може бути видалений.
+    edit:
+      edit_author: Редагувати автора
+    form:
+      description: Опис
+      description_sample: напр. німецький поет (1749 - 1832)
+      firstname: Ім'я
+      firstname_sample: напр. Йоганн Вольфганг фон
+      link_sample: напр. http://de.wikipedia.org/wiki/Goethe
+      name: Прізвище
+      name_sample: напр. Гете
+    id_does_not_exist: Автора з ID "%{id}" не існує!
+    list_by_letter:
+      lastname_starts: Прізвище починається
+      letter: з літери "%{letter}"
+      letter_missing: Літера відсутня
+      not_a_letter: не з літери
+    list_content:
+      author_delete: Ви дійсно хочете видалити запис автора "%{author}"?
+      author_new: Створити автора
+    login_missing: Відсутність входу для створення нового запису автора!
+    update:
+      updated: Запис для автора "%{author}" було оновлено.
+  categories:
+    create:
+      created: Категорія "%{category}" створена.
+      failed: Створення категорії "%{category}" не вдалося! (%{exception})
+    destroy:
+      deleted: Категорія "%{category}" видалена.
+      has_quotes: Категорія "%{category}" має %{number} цитат і не може бути видалена.
+    edit:
+      edit_category: Редагувати категорію
+    form:
+      category_sample: У відмінковому відмінку, в однині, напр. Успіх
+      description_sample: "(за потреби примітка)"
+    id_does_not_exist: Категорії з ID "%{id}" не існує!
+    list_by_letter:
+      letter_missing: Не вистачає літери!
+      not_starting_with_a_letter: "– що не починаються на літеру"
+      with_initial_letter: – з початковою літерою "%{letter}"
+    list_content:
+      category_delete: Ви дійсно хочете видалити категорію "%{category}"?
+      category_new: Створити категорію
+    login_missing: Відсутність входу для створення нової категорії!
+    update:
+      updated: Категорія "%{category}" оновлена.
+  g:
+    actions: Дії
+    add: Додати
+    arrow_down: зелена стрілка вниз
+    arrow_undo_alt: стрілка назад
+    authors:
+      few: автори
+      many: авторів
+      one: aвтор
+      other: авторів
+      zero: авторів
+    back: Назад
+    bad_pagination:
+      not_existing: Сторінка %{page_number} не існує!
+    bookmark_or_share: Закладки / Поділитися
+    categories:
+      few: категорії
+      many: категорій
+      one: Категорія
+      other: Категорії
+      zero: категорій немає
+    category: Категорія
+    create: Створити
+    created: Створено
+    delete: Видалити
+    description: Опис
+    edit: Редагувати
+    error:
+      few: "%{count} помилка"
+      many: "%{count} помилок"
+      one: "%{count} помилка"
+      other: "%{count} помилок"
+    eye: Око
+    firstname: Ім'я
+    for: до
+    from: від
+    have: мають
+    help: Допомога
+    id: Внутрішній номер
+    lightning: Блискавка
+    link: Посилання
+    name: Прізвище
+    'no': Ні
+    no_admin: Немає прав адміністратора!
+    no_right: Немає прав %{name} %{id} на %{msg}!
+    not_logged_in: Не ввійшли до системи
+    not_own_entry: Не свій запис
+    not_publics:
+      few: не опубліковано
+      many: не опубліковано
+      one: не опубліковано
+      other: не опубліковано
+    number_of_categories:
+      few: "%{count} категорії"
+      many: "%{count} категорій"
+      one: 1 категорія
+      other: "%{count} категорії"
+      zero: Категорії
+    ordered: Впорядковано
+    page: Сторінка
+    pencil: Олівець
+    public: Публічний
+    quotes:
+      few: Цитати
+      many: котирувань
+      one: Цитата
+      other: котирувань
+      zero: Цитати
+    read: Читати
+    red_cross: Червоний хрест
+    save: Зберегти
+    share: Поділитися
+    show: Переглянути
+    update: Змінити
+    updated: Оновлено
+    user: Користувач
+    'yes': Так
+  layouts:
+    application:
+      admin: Адміністратор
+      award_alt: зірка на стрічці як орден
+      contact: Контакти
+      exclamation: Увага Помилка!
+      exclamation_alt: червоний знак оклику
+      green_flag: Підказка
+      green_flag_alt: зелений прапорець
+      help: Не хвилюйтеся, ми з радістю допоможемо вам!
+      joomla: Цитати з Joomla! на власну домашню сторінку
+      joomla_english: Using quotes with Joomla! for your own homepage
+      logged_in: Увійшли до системи
+      login: Увійти
+      logo_alt: логотип - літера Z зеленого кольору
+      not_found: 'Помилка 404: запис не знайдено'
+      of_the_user: користувача
+      project: Проект
+      quote_from: Цитата від
+      register: Зареєструватися
+      starting_with_letter: починаючи з %{letter}
+      to_use: Використовувати
+      use: Вставити цитати на власну домашню сторінку
+  number:
+    format:
+      delimiter: "."
+      separator: ","
+  password_resets:
+    create:
+      email_not_found: Користувача з електронною адресою "%{email}" не знайдено!
+      email_sent: На адресу "%{email}" відправлено листа з посиланням для скидання пароля.
+    not_allowed: Скидання пароля для входу користувача "%{login}" не дозволяється.
+    update:
+      updated: Пароль для "%{login}" успішно оновлено.
+  quotations:
+    create:
+      author_used: В якості автора було використано „%{author}”.
+      created: Дякуємо, збережене %{id}-те цитату.
+      failed: Не вдалося створити цитату! (%{exception})
+    destroy:
+      deleted: Цитата "%{quote}" була видалена.
+    edit:
+      edit_quotation: Редагування цитати
+    form:
+      author_hint: "(порожньо, якщо автор невідомий)"
+      category_placeholder: Почніть вводити категорію...
+      link_description: посилання на сайт з оригінальним текстом цитати, наприклад, http://www.textlog.de/tucholsky-anweisung.html
+      quotation_sample: наприклад, Досвід не передається - кожен повинен здобувати його самостійно.
+      source: Оригінальне джерело
+      source_description: зазвичай назва книги, наприклад, Посібник, Глоси і есе, 1930 рік
+    id_does_not_exist: Цитати з ID="%{id}" не існує!
+    index:
+      order: Цитати відсортовані за датою створення. Останні створені цитати розташовані вгорі.
+      pattern: з „%{pattern}”
+    list_by_author:
+      no_author: Не можу знайти автора з ID="%{id}"!
+      quotations: від %{author}
+    list_by_category:
+      no_category: Не можу знайти категорію з ID="%{id}"!
+      quotations: для категорії %{category}
+    list_by_user:
+      no_user: Не можу знайти користувача "%{user}"!
+      quotations: користувача %{user}
+    list_content:
+      delete: Ви дійсно хочете видалити цитату „%{quote}”?
+      new: Додати цитату
+    login_missing: Щоб додати нову цитату, потрібно увійти!
+    search_author:
+      placeholder: Почніть вводити прізвище...
+    search_category_collected:
+      one_click: додати з одним натисканням
+    update:
+      author_unchanged: Автор „%{author}” не було змінено.
+      unchanged: Цитата не була змінена.
+      updated: Цитата була оновлена.
+  user_mailer:
+    password_reset:
+      subject: Скидання пароля
+  user_sessions:
+    create:
+      hello: Вітаємо %{user}, раді бачити вас тут.
+      login_failed: Помилка входу!
+  users:
+    create:
+      created: Користувач "%{user}" був створений для вас.
+    not_logged_in: Не увійшли в систему!
+    update:
+      updated: Ваш запис користувача "%{user}" був змінений.
+  will_paginate:
+    next_label: "&raquo;"
+    previous_label: "&laquo;"

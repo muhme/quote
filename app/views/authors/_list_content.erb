@@ -1,40 +1,50 @@
+<!-- @formatter:off -->
 <%= will_paginate @authors %>
 
-<table border=1 cellpadding="5" cellspacing="0">
-    <tr>
-        <th><%= raw sorted_img_if('Name', link_to('Name', :controller => 'authors', :order => 'authors'), params[:order] == 'authors') %>
-        <th>Beschreibung</th>
-        <th><%= raw sorted_img_if('Zitate', link_to('Zitate', :controller => 'authors'), params[:order] != 'authors') %>
-        <th>Aktionen</th>
-    </tr>
-  
-    <%
-    odd_or_even = 0
+<table class="border">
+
+  <tr>
+    <th><%= raw sorted_img_if(t("g.name"), link_to(t("g.name"), controller: "authors", order: "authors"), params[:order] == "authors") %></th>
+    <th><%= t("g.description") %></th>
+    <th><%= raw sorted_img_if(t("g.quotes", count: 2), link_to(t("g.quotes", count: 2), controller: "authors"), params[:order] != "authors") %></th>
+    <th><%= t("g.actions") %></th>
+  </tr>
+
+  <% odd_or_even = 0
     for author in @authors
-        odd_or_even = 1 - odd_or_even
-        quotations = Quotation.find_by_sql(sql_quotations_for_author(author.id)).size
-    %>
-        <tr valign="top" class="ListLine<%= odd_or_even %>">
-            <td><%= raw author_name(author.firstname, author.name) %></td>
-            <td><%= raw th(author.description,40) %></td>
-            <td align="center"><%= link_to quotations.to_s, :controller => 'quotations', :action => 'list_by_author', :author => author.id %></td>
-            <td class="ListActions">
-                <%= link_to image_tag("eye.png", :alt => 'Auge', :title => 'Ansehen', :border => 0), :action => 'show', :id => author %>
-                <% if can_edit?(author.user_id) %>
-                    &nbsp;
-                    <%= link_to image_tag("pencil.png", :alt => 'Stift', :title => 'Bearbeiten', :border => 0), :action => 'edit', :id => author %>
-                    &nbsp;
-                    <% if quotations == 0 %>
-                        <%= link_to image_tag("cancel.png", :alt => 'rotes Kreuz', :title => 'Löschen', :border => 0), { :action => 'destroy', :id => author }, :method => :delete, data: { turbo_method: :delete, turbo_confirm: "Wirklich den Eintrag für den Autor \"" + author.get_author_name_or_blank + "\" löschen?" }  %>
-                    <% end %>
-                <% end %>
-            </td>
-        </tr>
-    <% end %>
+      odd_or_even = 1 - odd_or_even
+      quotations = Quotation.find_by_sql(sql_quotations_for_author(author.id)).size %>
+      <tr valign="top" class="ListLine<%= odd_or_even %>">
+        <td><%= raw author_name(author.firstname, author.name) %></td>
+        <td><%= raw th(author.description, 40) %></td>
+        <td class="center"><%= link_to quotations.to_s, controller: "quotations", action: "list_by_author", author: author.id %></td>
+        <td class="actions">
+          <%= link_to image_tag("eye.png", alt: t("g.eye"), title: t("g.show"), border: 0), action: "show", id: author %>
+          <% if can_edit?(author.user_id) %>
+            &nbsp;
+            <%= link_to image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit"), border: 0 ), action: "edit", id: author %>
+            &nbsp;
+            <% if quotations == 0 %>
+              <%= link_to image_tag("cancel.png", alt: t("g.red_cross"), title: t("g.delete"), border: 0 ),
+                    { action: "destroy", id: author },
+                    method: :delete,
+                    data: {
+                      turbo_method: :delete,
+                      turbo_confirm: t(".author_delete", author: author.get_author_name_or_blank)
+                    }
+              %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <%  end %>
+
 </table>
 
-<%if current_user %>
+<% if current_user %>
   <p class="ListNavi">
-    <%= button_to "Autor anlegen", { :action => "new" }, method: :get %>
+    <%#= button_to t(".author_new"), { action: "new" }, method: :get %>
+    <%#= button_to t(".author_new"), url_for(controller: 'authors', action: 'new', locale: I18n.locale), method: :get %>
+    <%= button_to t(".author_new"), { :action => "new" }, method: :get %>
   </p>
 <% end %>

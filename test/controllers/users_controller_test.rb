@@ -28,7 +28,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Der Eintrag für den Benutzer .*second.* wurde angelegt/, @response.body
+    assert_match /Ein Benutzer „second” wurde für dich angelegt./, @response.body
   end
 
   test "failed to create new user without email address" do
@@ -41,13 +41,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   # user, e.g. /users/1/show
   test "not displaying user details ever" do
-    get user_url(@first_user)
+    get user_url id: @first_user
     assert_response :not_found
     login :first_user
-    get user_url(@first_user)
+    get user_url @first_user
     assert_response :not_found
     login :admin_user
-    get user_url(@first_user)
+    get user_url @first_user
     assert_response :not_found
   end
 
@@ -82,7 +82,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     patch user_url(@first_user), params: { user: { login: @changed_user.login, email: @changed_user.email, password: :changed_user_password, password_confirmation: :changed_user_password } }
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Benutzereintrag wurde geändert/, @response.body
+    assert_match /Dein Benutzereintrag „changed_user” wurde geändert./, @response.body
     get '/logout'
     login :changed_user
     assert_redirected_to root_url
@@ -93,14 +93,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "failed own user change" do
     login :second_user
     assert_no_difference('User.count') do
-      patch user_url(@second_user), params: { user: { email: @first_user.email } }
+      patch user_url(id: @second_user), params: { user: { email: @first_user.email } }
     end
     assert_response :unprocessable_entity # 422
-    assert_match /Email has already been taken/, @response.body
+    assert_match /diese E-Mail Adresse wird bereits genutzt/, @response.body
   end
 
   test "not logged-in try for user update" do
-    patch user_url(@first_user), params: { user: { login: @changed_user.login, email: @changed_user.email, password: :changed_user_password, password_confirmation: :changed_user_password } }
+    patch user_url(id: @first_user), params: { user: { login: @changed_user.login, email: @changed_user.email, password: :changed_user_password, password_confirmation: :changed_user_password } }
     assert_redirected_to root_url
     follow_redirect!
     assert_match /Nicht angemeldet!/, @response.body

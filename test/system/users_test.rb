@@ -43,7 +43,7 @@ class UsersTest < ApplicationSystemTestCase
     fill_in 'user_password', with: 'abcDEF78'
     fill_in 'user_password_confirmation', with: 'abcDEF78'
     click_on 'Speichern'
-    check_this_page page, nil, "Login is too short"
+    check_this_page page, nil, "Login ist zu kurz"
   end
   test "login should use letters" do
     visit new_user_url
@@ -104,7 +104,7 @@ class UsersTest < ApplicationSystemTestCase
     check_page page, 'users/current/edit', nil, "Benutzer-Eintrag aktualisieren"
     fill_in 'user_login', with: 'first_user_changed'
     click_on 'Speichern'
-    check_this_page page, nil, "Benutzereintrag wurde geändert."
+    check_this_page page, nil, "Dein Benutzereintrag „first_user_changed” wurde geändert."
     click_on 'Logout'
     do_login :first_user_changed
     check_this_page page, "a", "Logout"
@@ -116,17 +116,17 @@ class UsersTest < ApplicationSystemTestCase
     fill_in 'user_password', with: new_pw 
     fill_in 'user_password_confirmation', with: "bruqher2reh+"
     click_on 'Speichern'
-    check_this_page page, nil, /doesn't match Password/
+    check_this_page page, nil, /die Kennwörter stimmen nicht überein/
     fill_in 'user_password', with: new_pw 
     fill_in 'user_password_confirmation', with: new_pw
     click_on 'Speichern'
-    check_this_page page, nil, "Benutzereintrag wurde geändert."
+    check_this_page page, nil, "Dein Benutzereintrag „first_user” wurde geändert."
     do_login :first_user, new_pw
     check_this_page page, "a", "Logout"
   end
 
   test "cannot edit user without login" do
-    visit edit_user_url(1)
+    visit edit_user_url(id: 1)
     check_this_page page, nil, "Nicht angemeldet!"
   end
 
@@ -135,7 +135,7 @@ class UsersTest < ApplicationSystemTestCase
     check_page page, 'users/current/edit', nil, "Benutzer-Eintrag aktualisieren"
     fill_in 'user_login', with: ''
     click_on 'Speichern'
-    check_this_page page, nil, "Login is too short"
+    check_this_page page, nil, "Login ist zu kurz"
   end
 
 end

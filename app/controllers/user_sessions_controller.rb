@@ -7,10 +7,10 @@ class UserSessionsController < ApplicationController
   def create
     @user_session = UserSession.new(user_session_params.to_h)
     if @user_session.save
-      flash[:notice] = "Hallo #{current_user.login}, schön dass Du da bist."
-      redirect_to root_url
+      flash[:notice] = t(".hello", user: current_user.login)
+      redirect_to root_path(locale: I18n.locale)
     else
-      flash[:error] = "Die Anmeldung war nicht erfolgreich!"
+      flash[:error] = t(".login_failed")
       render :new, status: :unprocessable_entity
     end
   end

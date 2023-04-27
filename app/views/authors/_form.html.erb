@@ -1,45 +1,50 @@
-<%= form_with(model: author, local: true) do |form| %>
-  <% if author.errors.any? %>
+<!-- @formatter:off -->
+
+<%#= form_with(model: author, url: author_path(author, locale: I18n.locale), method: :patch, local: true) do |form| %>
+<%= form_with(model: author, locale: I18n.locale, local: true) do |form| %>
+  <% if author and author.errors.any? %>
     <div id="error_explanation">
-      <h2><%= author.errors.count %> Fehler</h2>
+      <h2><%= t("g.error", count: author.errors.count) %></h2>
       <ul>
-      <% author.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% author.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="field">
-    <%= form.label :name, raw('Nachname <span class="example">z.B. Goethe</span>') %><br />
+    <%= form.label :name, label_and_description(t(".name"), t(".name_sample")) %><br/>
     <%= form.text_field :name, id: :author_name, autofocus: true %>
   </div>
 
   <div class="field">
-    <%= form.label :firstname, raw('Vorname <span class="example">z.B. Johann Wolfgang von</span>') %><br />
+    <%= form.label :firstname, label_and_description(t(".firstname"), t(".firstname_sample")) %><br/>
     <%= form.text_field :firstname, id: :author_firstname %>
   </div>
 
   <div class="field">
-    <%= form.label :description, raw('Beschreibung <span class="example">z.B. deutscher Dichter (1749 - 1832)</span>')  %><br />
+    <%= form.label :description,
+               label_and_description(t(".description"), t(".description_sample")) %><br/>
     <%= form.text_field :description, id: :author_description %>
   </div>
 
   <div class="field">
-    <%= form.label :link, raw('Link <span class="example">z.B. http://de.wikipedia.org/wiki/Goethe</labe')  %><br />
+    <%= form.label :link, label_and_description(t("g.link"), t(".link_sample")) %><br/>
     <%= form.text_field :link, id: :author_link %>
   </div>
-  
-  <% if current_user and current_user.admin == true %>
+
+  <% if current_user and current_user.admin==true %>
     <div class="field">
-      <p><label for="author_public">Öffentlich</label><br/>
+      <%= form.label :public, label_and_description(t("g.public")) %><br/>
       <%= form.check_box :public %>
     </div>
   <% end %>
 
   <div class="actions">
-    <%= form.submit "Speichern" %>
-    &nbsp; <%= link_to(image_tag("arrow_undo.png", :alt => "Pfeil zurück", :title => "Zurück", :border => "0"), :action => 'index') %>
+    <%= form.submit t("g.save") %>
+    &nbsp;
+    <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: "0"), action: "index" ) %>
   </div>
 
 <% end %>

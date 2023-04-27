@@ -1,0 +1,227 @@
+---
+de:
+  activerecord:
+    errors:
+      models:
+        category:
+          attributes:
+            category:
+              blank: kann nicht leer sein
+              taken: diese Kategorie gibt es bereits
+        quotation:
+          attributes:
+            quotation:
+              taken: dieses Zitat gibt es bereits
+        user:
+          attributes:
+            email:
+              taken: diese E-Mail Adresse wird bereits genutzt
+            login:
+              too_short: Login ist zu kurz
+            password_confirmation:
+              confirmation: die Kennwörter stimmen nicht überein
+  authors:
+    create:
+      created: Der Autor "%{author}" wurde angelegt.
+      failed: Das Anlegen des Autors "%{author}" ist gescheitert! (%{exception})
+    destroy:
+      deleted: Der Eintrag für den Autor "%{author}" wurde gelöscht.
+      has_quotes: Der Autor "%{author}" hat %{number} Zitate und kann nicht gelöscht werden.
+    edit:
+      edit_author: Autor bearbeiten
+    form:
+      description: Beschreibung
+      description_sample: z.B. deutscher Dichter (1749 - 1832)
+      firstname: Vorname
+      firstname_sample: z.B. Johann Wolfgang von
+      link_sample: z.B. http://de.wikipedia.org/wiki/Goethe
+      name: Nachname
+      name_sample: z.B. Goethe
+    id_does_not_exist: Es gibt keinen Autor mit der ID "%{id}".
+    list_by_letter:
+      lastname_starts: Nachname beginnt
+      letter: mit dem Buchstaben „%{letter}”
+      letter_missing: Letter missing
+      not_a_letter: nicht mit einem Buchstaben
+    list_content:
+      author_delete: Wirklich den Eintrag für den Autor "%{author}" löschen?
+      author_new: Autor anlegen
+    login_missing: Anmeldung fehlt, um einen neuen Autor-Eintrag anzulegen!
+    update:
+      updated: Der Eintrag für den Autor "%{author}" wurde aktualisiert.
+  categories:
+    create:
+      created: Die Kategorie "%{category}" wurde angelegt.
+      failed: Das Anlegen der Kategorie "%{category}" ist gescheitert! (%{exception})
+    destroy:
+      deleted: Die Kategorie "%{category}" wurde gelöscht.
+      has_quotes: Die Kategorie "%{category}" ist %{number} Zitaten zugeordnet und kann nicht gelöscht werden.
+    edit:
+      edit_category: Kategorie bearbeiten
+    form:
+      category_sample: Substantiviert, im Singular, z.B. Erfolg
+      description_sample: "(ggf. eine Anmerkung)"
+    id_does_not_exist: Es gibt keine Kategorie mit der ID "%{id}".
+    list_by_letter:
+      letter_missing: Buchstabe fehlt!
+      not_starting_with_a_letter: "– nicht mit einem Buchstaben beginnend"
+      with_initial_letter: "– mit dem Anfangsbuchstaben „%{letter}”"
+    list_content:
+      category_delete: Wirklich die Kategorie "%{category}" löschen?
+      category_new: Kategorie anlegen
+    login_missing: Anmeldung fehlt, um eine neue Kategorie anzulegen!
+    update:
+      updated: Die Kategorie "%{category}" wurde aktualisiert.
+  g:
+    actions: Aktionen
+    add: Hinzufügen
+    arrow_down: grüner Pfeil nach unten
+    arrow_undo_alt: Pfeil zurück
+    authors:
+      one: Autor
+      other: Autoren
+    back: Zurück
+    bad_pagination:
+      not_existing: Die Seite %{page_number} gibt es nicht!
+    bookmark_or_share: Lesezeichen / Weitersagen
+    categories:
+      one: Kategorie
+      other: Kategorien
+    category: Kategorie
+    create: Anlegen
+    created: Erstellt
+    delete: Löschen
+    description: Beschreibung
+    edit: Bearbeiten
+    error:
+      one: "%{count} Fehler"
+      other: "%{count} Fehler"
+    eye: Auge
+    firstname: Vornamen
+    for: zu
+    from: von
+    have: haben
+    help: Hilfe
+    id: Interne Nr.
+    lightning: Blitz
+    link: Link
+    name: Name
+    'no': Nein
+    no_admin: Kein Administrator!
+    no_right: Kein Recht %{name} %{id} zu %{msg}!
+    not_logged_in: Nicht angemeldet
+    not_own_entry: Nicht der eigene Eintrag
+    not_publics:
+      one: nicht veröffentlichter
+      other: nicht veröffentlichte
+    number_of_categories:
+      one: 1 Kategorie
+      other: "%{count} Kategorien"
+      zero: Kategorien
+    ordered: Sortiert
+    page: Seite
+    pencil: Stift
+    public: Öffentlich
+    quotes:
+      one: Zitat
+      other: Zitate
+    read: lesen
+    red_cross: Rotes Kreuz
+    save: Speichern
+    share: Teilen
+    show: Ansehen
+    update: ändern
+    updated: Aktualisiert
+    user: Benutzer
+    'yes': Ja
+  layouts:
+    application:
+      admin: Administrator
+      award_alt: ein Stern am Band als Orden
+      contact: Impressum
+      exclamation: Achtung Fehler!
+      exclamation_alt: rotes Ausrufezeichen
+      green_flag: Hinweis
+      green_flag_alt: grüne Fahne
+      help: Keine Sorge, wir helfen Dir gerne weiter!
+      joomla: Zitate mit Joomla! in die eigene Homepage einbinden
+      joomla_english: Using quotes with Joomla! for your own homepage
+      logged_in: Angemeldet
+      login: Anmelden
+      logo_alt: das Logo – der Buchstabe Z in grün
+      not_found: 'Fehler 404: Eintrag nicht gefunden'
+      of_the_user: des Benutzers
+      project: Projekt
+      quote_from: Zitat von
+      register: Registrieren
+      starting_with_letter: die mit %{letter} beginnen
+      to_use: Einbinden
+      use: Zitate in die eigene Homepage einbinden
+  number:
+    format:
+      delimiter: "."
+      separator: ","
+  password_resets:
+    create:
+      email_not_found: Es wurde kein Benutzer mit der E-Mail "%{email}" gefunden!
+      email_sent: Eine E-Mail mit dem Link zum Zurücksetzen des Kennwortes wurde an "%{email}" geschickt.
+    not_allowed: Kennwort zurücksetzen für den Benutzereintrag "%{login}" ist nicht erlaubt.
+    update:
+      updated: Das Kennwort für "%{login}" wurde erfolgreich aktualisiert.
+  quotations:
+    create:
+      author_used: Als Autor wurde „%{author}” verwendet.
+      created: Dankeschön, das %{id}. Zitat wurde angelegt.
+      failed: Das Anlegen des Zitates ist gescheitert! (%{exception})
+    destroy:
+      deleted: Das Zitat "%{quote}" wurde gelöscht.
+    edit:
+      edit_quotation: Zitat bearbeiten
+    form:
+      author_hint: "(leer lassen, wenn der Autor unbekannt ist)"
+      category_placeholder: Kategorie anfangen zu tippen ...
+      link_description: zu einer Website mit dem Original-Text der das Zitat enthält, z.B. http://www.textlog.de/tucholsky-anweisung.html
+      quotation_sample: z.B. Erfahrungen vererben sich nicht - jeder muß sie allein machen.
+      source: Original-Quelle
+      source_description: typischerweise ein Buchtitel, z.B. Gebrauchsanweisung, Glossen und Essays, 1930
+    id_does_not_exist: Es gibt kein Zitat mit der ID="%{id}"!
+    index:
+      order: Die Zitate sind danach sortiert, wann sie eingestellt wurden. Die zuletzt eingestellten Zitate stehen oben.
+      pattern: mit „%{pattern}”
+    list_by_author:
+      no_author: Kann keinen Autor mit der ID="%{id}" finden!
+      quotations: von %{author}
+    list_by_category:
+      no_category: Kann keine Kategorie mit der ID="%{id}" finden!
+      quotations: für die Kategorie %{category}
+    list_by_user:
+      no_user: Kann keinen Benutzer "%{user}" finden!
+      quotations: des Benutzers %{user}
+    list_content:
+      delete: Wirklich das Zitat „%{quote}” löschen?
+      new: Zitat anlegen
+    login_missing: Anmeldung fehlt, um ein neues Zitat anzulegen!
+    search_author:
+      placeholder: Nachname anfangen zu tippen ...
+    search_category_collected:
+      one_click: mit einem Klick hinzufügen
+    update:
+      author_unchanged: Der Autor „%{author}” wurde nicht geändert.
+      unchanged: Das Zitat wurde nicht geändert.
+      updated: Das Zitat wurde aktualisiert.
+  user_mailer:
+    password_reset:
+      subject: Zurücksetzen des Kennwortes
+  user_sessions:
+    create:
+      hello: Hallo %{user}, schön dass Du da bist.
+      login_failed: Die Anmeldung war nicht erfolgreich!
+  users:
+    create:
+      created: Ein Benutzer „%{user}” wurde für dich angelegt.
+    not_logged_in: Nicht angemeldet!
+    update:
+      updated: Dein Benutzereintrag „%{user}” wurde geändert.
+  will_paginate:
+    next_label: "&raquo;"
+    previous_label: "&laquo;"

@@ -12,7 +12,7 @@
 
     # link to authors detail page
     author_name = @quotation.get_author_name_or_blank
-    author = link_to(h(author_name), author_path(@quotation.author_id),
+    author = link_to(h(author_name), author_path(id: @quotation.author_id),
                 :alt => "Link zum Autor #{author_name}",
                 :title => "Autor #{author_name}")
     # link to authors quotes with number of quotations

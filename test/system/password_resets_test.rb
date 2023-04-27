@@ -21,7 +21,8 @@ class PasswordResetsTest < ApplicationSystemTestCase
   test "password reset link given" do
     do_login :bla, :bli, /Login - Die Anmeldung/
     check_this_page page, nil, "Die Anmeldung war nicht erfolgreich!"
-    assert_link "Kennwort mit einer E-Mail zurücksetzen", href: "/password_resets/new"
+    check_this_page page, nil, "Kennwort mit einer E-Mail zurücksetzen"
+    check_page_source page, /href=".*\/password_resets\/new/
   end
 
   # TODO fails on docker-machine as link is hard-coded zitat-service.de and needs to be set from $DOCKER_HOST

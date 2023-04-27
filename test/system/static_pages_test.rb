@@ -14,7 +14,7 @@ class StaticPagessTest < ApplicationSystemTestCase
   
   test "help" do
     check_page page, "start/help", "h1", "Hilfe", 3000
-    assert_equal "Zitat-Service – Hier wird Dir geholfen!", page.title
+    assert_equal "Zitat-Service – Keine Sorge, wir helfen Dir gerne weiter!", page.title
   end
   
   test "project" do
@@ -38,12 +38,12 @@ class StaticPagessTest < ApplicationSystemTestCase
     
   test "joomla_english" do
     check_page page, "start/joomla_english", "h2", "Examples", 2500
-    assert_equal "Zitat-Service – Using quotes with Joomla! for the own homepage", page.title
+    assert_equal "Zitat-Service – Using quotes with Joomla! for your own homepage", page.title
   end
 
   test "direct route joomla_english" do
     check_page page, "joomla_english", "h2", "Examples", 2500
-    assert_equal "Zitat-Service – Using quotes with Joomla! for the own homepage", page.title
+    assert_equal "Zitat-Service – Using quotes with Joomla! for your own homepage", page.title
   end
 
   test "UTF-8 German Umlaut" do
@@ -70,7 +70,7 @@ class StaticPagessTest < ApplicationSystemTestCase
   end
   
   test "HTML lang" do
-    [root_url, joomla_url, authors_url, author_url(Author.find_by_name('Barbara'))].each {
+    [root_url, joomla_url, authors_url, author_url(id: Author.find_by_name('Barbara'))].each {
       |url|
         visit url
         assert page.source.match('<html lang="de">')

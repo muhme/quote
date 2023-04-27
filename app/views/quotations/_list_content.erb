@@ -1,37 +1,39 @@
 <%= will_paginate @quotations %>
 
-<table border=1 cellpadding="5" cellspacing="0">
-    <tr>
-        <th>Zitat</th>
-        <th>Aktionen</th>
-    </tr>
-    <%
-      odd_or_even = 0
-      for quotation in @quotations
-        odd_or_even = 1 - odd_or_even
-    %>
-    <tr valign="top" class="ListLine<%= odd_or_even %>">
+<table class="border">
+  <tr>
+    <th>Zitat</th>
+    <th>Aktionen</th>
+  </tr>
+  <%
+    odd_or_even = 0
+    for quotation in @quotations
+      odd_or_even = 1 - odd_or_even
+  %>
+      <tr valign="top" class="ListLine<%= odd_or_even %>">
         <td class="ListQuote">
-            <span class="ListQuote"><%= h(quotation.quotation) %></span><br>
-            <% me = quotation.get_author_and_source_name
-               unless me.blank? -%>
-                <span class="ListSource"><%= h(me) %></span>
-            <% end -%>
-        <td class="ListActions">
-                <%= link_to image_tag("eye.png", :alt => 'Auge', :title => 'Ansehen', :border => 0), {:action => 'show', :id => quotation} %>
-        <% if can_edit?(quotation.user_id) %>
-                &nbsp;
-                <%= link_to image_tag("pencil.png", :alt => 'Stift', :title => 'Bearbeiten', :border => 0), :action => 'edit', :id => quotation %>
-                &nbsp;
-                <%= link_to image_tag("cancel.png", :alt => 'rotes Kreuz', :title => 'Löschen', :border => 0), { :action => 'destroy', :id => quotation }, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Wirklich das Zitat \"" + truncate(quotation.quotation, length: 20) + "\" löschen?" } %>
-        <% end %>
+          <span class="ListQuote"><%= h(quotation.quotation) %></span><br />
+          <%= raw_span_class_if_present('ListSource', quotation.get_author_and_source_name) %>
+        </td><td class="actions">
+          <%= link_to image_tag("eye.png", :alt => t("g.eye"), :title => t("g.show"), :border => 0), {:action => 'show', :id => quotation} %>
+          <% if can_edit?(quotation.user_id) %>
+            <%= link_to image_tag("pencil.png", :alt => t("g.pencil"), :title => t("g.edit"), :border => 0), :action => 'edit', :id => quotation %>
+            <%= link_to image_tag("cancel.png", :alt => t("g.red_cross"), :title => t("g.delete"), :border => 0),
+                  { :action => 'destroy', :id => quotation },
+                  method: :delete,
+                  data: {
+                    turbo_method: :delete,
+                    turbo_confirm: t(".delete", quote: truncate(quotation.quotation, length: 20) )
+                  }
+            %>
+          <% end %>
         </td>
-    </tr>
-<% end %>
+      </tr>
+    <% end %>
 </table>
 
-<%if current_user %>
+<% if current_user %>
   <p class="ListNavi">
-    <%= button_to "Zitat anlegen", { :action => "new" }, method: :get %>
+    <%= button_to t(".new"), { :action => "new" }, method: :get %>
   </p>
 <% end %>

@@ -34,13 +34,13 @@ textarea {
 }
 
 #side {
-    position: fixed;
     background: #bb88bb;
     padding: 8px;
     border: 1px solid black;
     display: block;
     /* in combination with width necessary for IE6 */
     width: 6em;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
 }
 
 #content {
@@ -85,6 +85,12 @@ a:visited {
 
 a:hover {
     background-color: #bb88bb;
+}
+
+a:link img,
+a:visited img {
+    text-decoration: none;
+    border-bottom: none;
 }
 
 div.randomquote * a {
@@ -156,11 +162,16 @@ tr.ListLine0 td {
     padding: 8px;
     margin-left: 9em;
 }
-
-.quote,
-.author,
 .center {
     text-align: center;
+    vertical-align: middle;
+}
+.flex-center,
+.quote,
+.author {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #notice {
@@ -180,8 +191,17 @@ tr.ListLine0 td {
     overflow: hidden;
 }
 
+span#side div, span#side p {
+    text-align: center;
+}
+
 #logo {
-    padding: 12px 1px 24px 24px;
+    /* padding: 12px 1px 24px 24px;*/
+    padding: 12px 0 24px 0;
+}
+
+.logo:hover {
+    content: image-url("quote_service_32_black.png");
 }
 
 .ListSource,
@@ -245,7 +265,6 @@ tr.ListLine0 td {
 
 .ListActions {
     vertical-align: middle;
-    width: 90px;
     text-align: center;
 }
 
@@ -264,9 +283,18 @@ tr.ListLine0 td {
     color: #777;
 }
 
+.border,
+.border th,
+.border td {
+    border: 1px solid black;
+    padding: 5px;
+    border-collapse: collapse;
+    vertical-align: top;
+}
+
 table#letter {
     padding: 0px;
-    margin: 0px;
+    margin: 0.2em 0 0 0;
 }
 
 table#letter td {
@@ -291,9 +319,12 @@ dt {
     font-weight: bold;
 }
 
+table {
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+}
+
 table#quote_collections th {
     text-align: left;
-
 }
 
 .field {
@@ -305,6 +336,12 @@ table#quote_collections th {
     margin-top: 1em;
 }
 
+input {
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+input[type="submit"]:hover {
+    background-color: #bb88bb;
+}
 .button_to input {
     font-size: 18px;
 }
@@ -365,9 +402,46 @@ a.animated {
 div.large_right {
     padding: 0 0 1em 0
 }
+
 @media(min-width:768px) {
     div.large_right {
         float: right;
         padding: 0 0 2em 2em
     }
+}
+
+/* locale */
+#locale {
+    margin-bottom: 12px;
+}
+.language-selector {
+    cursor: pointer;
+}
+
+#language-dropdown {
+    position: absolute;
+    background-color: #ddffdd;
+    opacity: 1;
+    min-width: 220px;
+    border: 1px black solid;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+    z-index: 2000;
+}
+
+.language-option {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.language-option:hover {
+    background-color: #bb88bb;
+}
+.language-selector:hover {
+    color: white;
+    background-color: black;
+}
+
+.hidden {
+    display: none;
+    border: 1px solid green;
 }

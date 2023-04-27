@@ -8,13 +8,6 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal "Zitat-Service", page_title
   end
   
-  test "nnsp method" do
-    assert_equal "0 Zitate", nnsp(0, 'Zitat', 'Zitate')
-    assert_equal "1 Zitat",  nnsp(1, 'Zitat', 'Zitate')
-    assert_equal "2 Zitate", nnsp(2, 'Zitat', 'Zitate')
-    assert_equal "4.711 Zitate", nnsp(4711, 'Zitat', 'Zitate')
-  end
-  
   test "nice_number method" do
     assert_equal "1.234", nice_number(1234)
     assert_equal "0", nice_number(0)

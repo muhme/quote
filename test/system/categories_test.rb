@@ -9,16 +9,16 @@ class CategoriesTest < ApplicationSystemTestCase
 
   test "category letter a" do
     check_page page, "/categories/list_by_letter/A", "h1", "Kategorie"
-    assert_equal "Zitat-Service – Kategorien die mit A beginnen", page.title
+    assert_equal "Zitat-Service – Kategorien, die mit A beginnen", page.title
   end
 
   test "category not letter" do
     check_page page, "/categories/list_by_letter/*", "h1", "Kategorie"
-    assert_equal "Zitat-Service – Kategorien die mit * beginnen", page.title
+    assert_equal "Zitat-Service – Kategorien, die mit * beginnen", page.title
   end
 
   test "show category" do
-    check_page page, category_url(Category.find_by_category('public_category')), "h1", "Kategorie"
+    check_page page, category_url(id: Category.find_by_category('public_category')), "h1", "Kategorie"
     assert_equal "Zitat-Service – Kategorie public_category", page.title
   end
   
@@ -30,7 +30,7 @@ class CategoriesTest < ApplicationSystemTestCase
     fill_in 'category_name', with: new_category_name
     click_on 'Speichern'
     check_this_page page, "h1", "Kategorie" # do it before to have Capybara wait until and new category is existing
-    cu = category_url(Category.find_by_category(new_category_name))
+    cu = category_url(id: Category.find_by_category(new_category_name))
     check_page page, cu, "h1", "Kategorie"
     # delete
     visit "/categories/list_by_letter/S"
@@ -45,7 +45,7 @@ class CategoriesTest < ApplicationSystemTestCase
     check_page page, new_category_url, "h1", "Kategorie anlegen"
     fill_in 'category_name', with: ''
     click_on 'Speichern'
-    check_this_page page, nil, "Category can't be blank"
+    check_this_page page, nil, "Category kann nicht leer sein"
   end
 
   # NICE cannot delete category created by another user
@@ -58,18 +58,18 @@ class CategoriesTest < ApplicationSystemTestCase
 
   test "edit own category" do
     do_login
-    check_page page, edit_category_url(1), "h1", "Kategorie bearbeiten"
+    check_page page, edit_category_url(id: 1), "h1", "Kategorie bearbeiten"
     fill_in 'category_name', with: 'better name'
     click_on 'Speichern'
     check_this_page page, nil, /Kategorie .* wurde aktualisiert/
-    check_page page, quotation_url(1), nil, /Kategorie.*better name/
+    check_page page, quotation_url(id: 1), nil, /Kategorien:.*better name/
   end
   test "edit own category fails" do
     do_login
-    check_page page, edit_category_url(1), "h1", "Kategorie bearbeiten"
+    check_page page, edit_category_url(id: 1), "h1", "Kategorie bearbeiten"
     fill_in 'category_name', with: ''
     click_on 'Speichern'
-    check_this_page page, nil, "Category can't be blank"
+    check_this_page page, nil, "Category kann nicht leer sein"
   end
 
   test "admin needed to list not public categories" do
@@ -78,7 +78,7 @@ class CategoriesTest < ApplicationSystemTestCase
   test "list not public categories" do
     do_login :admin_user, :admin_user_password
     check_this_page page, nil, 'Hallo admin_user, schön dass Du da bist.'
-    check_page page, categories_list_no_public_url, "h1", "Nicht-Öffentliche Kategorien"
+    check_page page, categories_list_no_public_url, "h1", "Nicht veröffentlichte Kategorien"
   end
 
   test "trailing slash" do

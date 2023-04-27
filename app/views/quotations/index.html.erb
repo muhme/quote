@@ -1,12 +1,4 @@
 <% pattern = h(params[:pattern]) %>
-<h1><%= nnsp(@quotations.total_entries, 'Zitat', 'Zitate') %> <%= " mit \"#{pattern}\"" unless pattern.blank? %></h1>
+<h1><%= "#{number_with_delimiter(@quotations.total_entries)} #{t('g.quotes', count: @quotations.total_entries)}" %> <%= " #{t(".pattern", pattern: pattern)}" if pattern.present? %></h1>
 
 <%= render :partial => 'list_content' %>
-
-<% if current_user %>
-    <p class="ListNavi">
-    <% form_tag(:action=> 'new') do %>
-      <%= submit_tag "Neu" %>
-    <% end %>
-    </p>
-<% end %>

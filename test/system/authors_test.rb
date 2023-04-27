@@ -11,24 +11,24 @@ class AuthorsTest < ApplicationSystemTestCase
   # /authors/list_by_letter/A
   test "author letter a" do
     check_page page, "/authors/list_by_letter/A", "h1", "Autor"
-    assert_equal "Zitat-Service – Autoren die mit A beginnen", page.title
+    assert_equal "Zitat-Service – Autoren, die mit A beginnen", page.title
     
     # slow performance seen with user w/o admin rights logged in
     do_login
     check_this_page page, "a", "Logout"
     check_page page, "/authors/list_by_letter/M", "h1", "Autor"
-    assert_equal "Zitat-Service – Autoren die mit M beginnen", page.title
+    assert_equal "Zitat-Service – Autoren, die mit M beginnen", page.title
   end
 
   # /authors/list_by_letter/*
   test "author not letter" do
     check_page page, "/authors/list_by_letter/*", "h1", "Autor"
-    assert_equal "Zitat-Service – Autoren die mit * beginnen", page.title
+    assert_equal "Zitat-Service – Autoren, die mit * beginnen", page.title
   end
   
   # e.g. /authors/1
   test "show author" do
-    check_page page, author_url(Author.find_by_name('Barbara')), "h1", "Autor"
+    check_page page, author_url(id: Author.find_by_name('Barbara')), "h1", "Autor"
     assert_equal "Zitat-Service – Autor Barbara", page.title
   end
   
@@ -48,12 +48,12 @@ class AuthorsTest < ApplicationSystemTestCase
     fill_in 'author_name', with: new_author_name
     click_on 'Speichern'
     check_this_page page, "h1", "Autor" # do it before to have Capybara wait until and new author and url is existing
-    check_page page, author_url(Author.find_by_name(new_author_name)), "h1", "Autor"
+    check_page page, author_url(id: Author.find_by_name(new_author_name)), "h1", "Autor"
     # it is possible to have two authors with the same name
     check_page page, new_author_url, "h1", "Autor anlegen"
     fill_in 'author_name', with: new_author_name
     click_on 'Speichern'
-    check_page page, author_url(Author.last), "h1", "Autor"
+    check_page page, author_url(id: Author.last), "h1", "Autor"
   end
 
   test "delete author" do
@@ -63,7 +63,7 @@ class AuthorsTest < ApplicationSystemTestCase
     fill_in 'author_name', with: new_author_name
     click_on 'Speichern'
     check_this_page page, "h1", "Autor" # do it before to have Capybara wait until and new author and url is existing
-    au = author_url(Author.find_by_name(new_author_name))
+    au = author_url(id: Author.find_by_name(new_author_name))
     check_page page, au, "h1", "Autor"
     # delete
     visit "/authors/list_by_letter/X"
@@ -83,15 +83,15 @@ class AuthorsTest < ApplicationSystemTestCase
 
   test "edit own author" do
     do_login
-    check_page page, edit_author_url(1), "h1", "Author bearbeiten"
+    check_page page, edit_author_url(id: 1), "h1", "Autor bearbeiten"
     fill_in 'author_name', with: 'jo!'
     click_on 'Speichern'
     check_this_page page, nil, /Der Eintrag für den Autor .* wurde aktualisiert/
-    check_page page, quotation_url(1), nil, /Autor:.*jo!/ 
+    check_page page, quotation_url(id: 1), nil, /Autor:.*jo!/ 
   end
   test "edit own author fails" do
     do_login
-    check_page page, edit_author_url(1), "h1", "Author bearbeiten"
+    check_page page, edit_author_url(id: 1), "h1", "Autor bearbeiten"
     fill_in 'author_name', with: ''
     click_on 'Speichern'
     check_this_page page, nil, 'Vorname oder Nachname muss gesetzt sein'
@@ -103,7 +103,7 @@ class AuthorsTest < ApplicationSystemTestCase
   test "list not public authors" do
     do_login :admin_user, :admin_user_password
     check_this_page page, nil, 'Hallo admin_user, schön dass Du da bist.'
-    check_page page, authors_list_no_public_url, "h1", "Nicht-Öffentliche Autoren"
+    check_page page, authors_list_no_public_url, "h1", "Nicht veröffentlichte Autoren"
   end
 
   test "trailing slash" do

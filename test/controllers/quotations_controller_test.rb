@@ -45,7 +45,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
   
   test "404 for not existing quote" do
     id = rand 0..10000000000000
-    get quotation_url id
+    get quotation_url id: id
     assert_response :not_found
 
     login :first_user
@@ -55,7 +55,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
   end
   
   test "should show public quote" do
-    get quotation_url @quotation_one
+    get quotation_url id: @quotation_one
     assert_response :success
     login :first_user
     get quotation_url @quotation_one
@@ -63,7 +63,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "not public quote" do
-    get quotation_url @quotation_public_false
+    get quotation_url id: @quotation_public_false
     assert_forbidden
     login :second_user
     get quotation_url @quotation_public_false
@@ -101,7 +101,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get edit" do
-    get edit_quotation_url @quotation_one
+    get edit_quotation_url id: @quotation_one
     assert_forbidden
     login :first_user
     get edit_quotation_url @quotation_one
@@ -135,7 +135,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
 
   test "destroy quotation" do
     assert_no_difference 'Quotation.count' do
-      delete quotation_url @quotation_one
+      delete quotation_url id: @quotation_one
     end
     assert_forbidden
     login :second_user

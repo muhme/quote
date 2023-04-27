@@ -56,6 +56,11 @@ gem "scrypt", "~> 3.0"
 # to remove trailing slashes from URLs
 gem 'rack-rewrite'
 
+gem 'rails-i18n', '~> 7.0.0'
+
+# Terser minifies JavaScript files by wrapping TerserJS to be accessible in Ruby
+gem "terser", "~> 1.1"
+
 group :development, :test do
 
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -65,6 +70,11 @@ group :development, :test do
   gem 'selenium-webdriver'
   # code coverage for Ruby
   gem 'simplecov', require: false
+  # find and manage missing and unused translations
+  gem 'i18n-tasks', '~> 1.0', require: false
+  gem 'rubocop', require: false
+  gem 'rubocop-i18n', require: false
+  gem 'erb-formatter', require: false
 end
 
 group :development do
@@ -77,5 +87,3 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen'
 end
-
-gem "terser", "~> 1.1"

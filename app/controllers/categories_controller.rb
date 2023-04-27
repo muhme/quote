@@ -14,7 +14,7 @@ class CategoriesController < ApplicationController
 
     @categories = Category.paginate_by_sql(sql, page: params[:page], :per_page => 10)
     # check pagination second time with number of pages
-    bad_pagination?(params, @categories.total_pages)
+    bad_pagination?(@categories.total_pages)
   end
 
   # GET /categories/1
@@ -24,9 +24,8 @@ class CategoriesController < ApplicationController
 
   # GET /categories/new
   def new
-    return unless logged_in? "Anmeldung fehlt, um eine neue Kategorie anzulegen!"
-    @category = Category.new
-    @category.user_id = current_user.id
+    return unless logged_in? t("categories.login_missing")
+    @category = Category.new(user_id: current_user.id)
   end
 
   # GET /categories/1/edit only for admin or own user
@@ -36,18 +35,18 @@ class CategoriesController < ApplicationController
 
   # POST /categories
   def create
-    return unless logged_in? "Anmeldung fehlt, um eine neue Kategorie anzulegen!"
+    return unless logged_in? t("categories.login_missing")
     @category = Category.new(category_params)
     @category.user_id = current_user.id
 
     if @category.save
-      redirect_to @category, notice: "Die Kategorie \"#{@category.category}\" wurde angelegt."
+      return redirect_to category_path(@category, locale: I18n.locale), notice: t(".created", category: @category.category)
     else
-      render :new, status: :unprocessable_entity
+      render :new, locale: I18n.locale, status: :unprocessable_entity
     end
   rescue Exception => exc
     logger.error "create category failed: #{exc.message}"
-    flash[:error] = "Das Anlegen des Autors \"#{@category.category}\" ist gescheitert! (#{exc.message})"
+    flash[:error] = t(".failed", category: @category.category, exception: exc.message)
   end
 
   # PATCH/PUT /categories/1
@@ -55,7 +54,7 @@ class CategoriesController < ApplicationController
     return unless access?(@category, :update)
 
     if @category.update category_params
-      redirect_to @category, notice: "Kategorie \"#{@category.category}\" wurde aktualisiert."
+      return redirect_to category_path(@category, locale: I18n.locale), notice: t(".updated", category: @category.category)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -66,11 +65,11 @@ class CategoriesController < ApplicationController
     return unless access?(@category, :destroy)
     n = @category.quotation_ids.size
     if n > 0
-      flash[:error] = "Die Kategorie \"#{@category.category}\" hat #{n} Zitate und kann nicht gelöscht werden."
+      flash[:error] = t(".has_quotes", category: @category.category, number: n)
       redirect_to :action => "show", :id => @category.id
     else
       if @category.destroy
-        flash[:notice] = "Kategorie \"#{@category.category}\" wurde gelöscht."
+        flash[:notice] = t(".deleted", category: @category.category)
       end
       redirect_to categories_url
     end
@@ -85,26 +84,26 @@ class CategoriesController < ApplicationController
     elsif letter =~ /[A-Za-z*]/
       sql = "select * from categories where category like ?"
     else # not reachable, because route restrictions already forbid it - but, just in case
-      flash[:error] = "Buchstabe fehlt!"
+      flash[:error] = t(".letter_missing")
       redirect_to :action => "list"
       return
     end
     sql += " order by category"
     @categories = Category.paginate_by_sql [sql, "#{letter.first}%"], :page => params[:page], :per_page => 10
     # check pagination second time with number of pages
-    bad_pagination?(params, @categories.total_pages)
+    bad_pagination?(@categories.total_pages)
   end
 
   # for admins list all not public categories
   def list_no_public
     if !current_user or current_user.admin == false
-      flash[:error] = "Kein Administrator!"
+      flash[:error] = t("g.no_admin")
       redirect_to categories_url
       return false
     end
     @categories = Category.paginate_by_sql "select * from categories where public = 0", :page => params[:page], :per_page => 10
     # check pagination second time with number of pages
-    bad_pagination?(params, @categories.total_pages)
+    bad_pagination?(@categories.total_pages)
   end
 
   private
@@ -113,7 +112,7 @@ class CategoriesController < ApplicationController
   def set_category
     @category = Category.find(params[:id])
   rescue
-    flash[:error] = "Es gibt keine Kategorie mit der ID \"#{params[:id]}\"."
+    flash[:error] = t("categories.id_does_not_exist", id: params[:id])
     render "static_pages/not_found", status: :not_found
   end
 

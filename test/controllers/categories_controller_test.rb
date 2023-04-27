@@ -38,7 +38,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   
   test "404 for not existing category" do
     id = rand 0..10000000000000
-    get category_url id
+    get category_url id: id
     assert_response :not_found
 
     login :first_user
@@ -47,7 +47,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end 
 
   test "should show public category" do
-    get category_url @category_one
+    get category_url id: @category_one
     assert_response :success
     login :first_user
     get category_url @category_one
@@ -55,18 +55,18 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
   
   test "not public category" do
-    get category_url @category_public_false
+    get category_url id: @category_public_false
     assert_forbidden
     login :second_user
-    get category_url @category_public_false
+    get category_url id: @category_public_false
     assert_forbidden
     get '/logout'
     login :first_user
-    get category_url @category_one
+    get category_url id: @category_one
     assert_response :success
     get '/logout'
     login :admin_user
-    get category_url @category_public_false
+    get category_url id: @category_public_false
     assert_response :success
   end
   
@@ -85,13 +85,13 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
       login :first_user
       post categories_url, params: { category: { category: "Game", description: "new category description" } }
     end
-    assert_redirected_to category_url(Category.last)
+    assert_redirected_to category_url(Category.last, locale: I18n.default_locale)
     category = Category.find_by_category 'Game'
     assert_not category.public
   end
 
   test "edit category" do
-    get edit_category_url @category_one
+    get edit_category_url id: @category_one
     assert_forbidden
     login :first_user
     get edit_category_url @category_one
@@ -110,14 +110,18 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     login :first_user
     patch category_url(@category_one), params: { category: { description: "hu" } }
     assert_redirected_to category_url @category_one
+    assert_equal Category.find(@category_one.id).description, "hu"
     get '/logout'
     login :admin_user
     patch category_url(@category_one), params: { category: { description: "hu hu" } }
     assert_redirected_to category_url @category_one
+    assert_equal Category.find(@category_one.id).description, "hu hu"
     get '/logout' 
     patch category_url(@category_one), params: { category: { description: "hu hu hu" } }
     assert_forbidden
+    assert_equal Category.find(@category_one.id).description, "hu hu"
   end
+  
   test "return to edit if validation fails" do
     login :first_user
     patch category_url(@category_one), params: { category: { category: '' } }
@@ -127,13 +131,13 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "destroy category" do
     assert_no_difference 'Category.count' do
-      delete category_url @category_without_quotes
+      delete category_url id: @category_without_quotes
     end
     assert_forbidden
 
     login :second_user
     assert_no_difference 'Category.count' do
-      delete category_url @category_without_quotes
+      delete category_url id: @category_without_quotes
     end
     assert_forbidden
     get '/logout'
@@ -171,7 +175,6 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     get categories_list_no_public_url
     assert_response :success
   end
-
 
   test "pagination" do
     # not a number

@@ -1,36 +1,227 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
+---
 en:
+  activerecord:
+    errors:
+      models:
+        category:
+          attributes:
+            category:
+              blank: can't be blank
+              taken: has already been taken
+        quotation:
+          attributes:
+            quotation:
+              taken: has already been taken
+        user:
+          attributes:
+            email:
+              taken: has already been taken
+            login:
+              too_short: Login is too short
+            password_confirmation:
+              confirmation: doesn't match password
+  authors:
+    create:
+      created: The author "%{author}" has been created.
+      failed: The creation of the author "%{author}" has failed! (%{exception})
+    destroy:
+      deleted: The entry for the author "%{author}" has been deleted.
+      has_quotes: The author "%{author}" has %{number} quotes and cannot be deleted.
+    edit:
+      edit_author: Edit author
+    form:
+      description: Description
+      description_sample: e.g. German poet (1749-1832)
+      firstname: First Name
+      firstname_sample: e.g. Johann Wolfgang von
+      link_sample: e.g. http://en.wikipedia.org/wiki/Goethe
+      name: Last Name
+      name_sample: e.g. Goethe
+    id_does_not_exist: There is no author with the ID "%{id}".
+    list_by_letter:
+      lastname_starts: Last Name begins
+      letter: with the letter "%{letter}"
+      letter_missing: Letter missing
+      not_a_letter: not with a letter
+    list_content:
+      author_delete: Really delete the entry for the author "%{author}"?
+      author_new: Create Author
+    login_missing: Login is missing to create a new author entry!
+    update:
+      updated: The entry for the author "%{author}" has been updated.
+  categories:
+    create:
+      created: The category "%{category}" has been created.
+      failed: The creation of the category "%{category}" has failed! (%{exception})
+    destroy:
+      deleted: The category "%{category}" has been deleted.
+      has_quotes: The category "%{category}" is assigned to %{number} quotes and cannot be deleted.
+    edit:
+      edit_category: Edit Category
+    form:
+      category_sample: Noun, singular, e.g., Success
+      description_sample: "(optional note)"
+    id_does_not_exist: There is no category with the ID "%{id}".
+    list_by_letter:
+      letter_missing: Letter missing!
+      not_starting_with_a_letter: "– not starting with a letter"
+      with_initial_letter: – with initial letter "%{letter}"
+    list_content:
+      category_delete: Really delete the category "%{category}"?
+      category_new: Create Category
+    login_missing: Login missing to create a new category!
+    update:
+      updated: The category "%{category}" has been updated.
+  g:
+    actions: Actions
+    add: Add
+    arrow_down: green arrow down
+    arrow_undo_alt: Arrow back
+    authors:
+      one: Author
+      other: Authors
+    back: Back
+    bad_pagination:
+      not_existing: Page %{page_number} does not exist!
+    bookmark_or_share: Bookmark / Share
+    categories:
+      one: Category
+      other: Categories
+    category: Category
+    create: Create
+    created: Created
+    delete: Delete
+    description: Description
+    edit: Edit
+    error:
+      one: "%{count} Error"
+      other: "%{count} Errors"
+    eye: Eye
+    firstname: First name
+    for: to
+    from: from
+    have: have
+    help: Help
+    id: Internal No.
+    lightning: Lightning
+    link: Link
+    name: Name
+    'no': false
+    no_admin: Not an Administrator!
+    no_right: No right to %{name} %{id} %{msg}!
+    not_logged_in: Not logged in
+    not_own_entry: Not your own entry
+    not_publics:
+      one: not published
+      other: not published
+    number_of_categories:
+      one: 1 category
+      other: "%{count} categories"
+      zero: categories
+    ordered: Sorted
+    page: Page
+    pencil: Pencil
+    public: Public
+    quotes:
+      one: Quote
+      other: Quotes
+    read: read
+    red_cross: Red cross
+    save: Save
+    share: Share
+    show: View
+    update: change
+    updated: Updated
+    user: User
+    'yes': true
+  layouts:
+    application:
+      admin: Administrator
+      award_alt: a star on a ribbon as a medal
+      contact: Contact
+      exclamation: Attention Error!
+      exclamation_alt: red exclamation mark
+      green_flag: Note
+      green_flag_alt: green flag
+      help: Don't worry, we're happy to help!
+      joomla: Integrate quotes into your own homepage with Joomla!
+      joomla_english: Using quotes with Joomla! for your own homepage
+      logged_in: Logged in
+      login: Log in
+      logo_alt: the logo - the letter Z in green
+      not_found: 'Error 404: Entry not found'
+      of_the_user: of the user
+      project: Project
+      quote_from: Quote from
+      register: Register
+      starting_with_letter: starting with %{letter}
+      to_use: Embed
+      use: Embed quotes into your own homepage
+  number:
+    format:
+      delimiter: "."
+      separator: ","
+  password_resets:
+    create:
+      email_not_found: No user found with the email "%{email}"!
+      email_sent: An email with the password reset link has been sent to "%{email}".
+    not_allowed: Resetting the password for user entry "%{login}" is not allowed.
+    update:
+      updated: The password for "%{login}" has been successfully updated.
+  quotations:
+    create:
+      author_used: Author used was "%{author}."
+      created: Thank you, the %{id} quote has been added.
+      failed: Adding the quote failed! (%{exception})
+    destroy:
+      deleted: The quote "%{quote}" has been deleted.
+    edit:
+      edit_quotation: Edit quote
+    form:
+      author_hint: "(leave empty if the author is unknown)"
+      category_placeholder: Start typing category...
+      link_description: to a website with the original text containing the quote, e.g. http://www.textlog.de/tucholsky-anweisung.html
+      quotation_sample: e.g. Experiences are not inheritable - everyone must make them alone.
+      source: Original source
+      source_description: typically a book title, e.g. User Guide, Satires and Essays, 1930
+    id_does_not_exist: There is no quote with the ID="%{id}"!
+    index:
+      order: The quotes are sorted by when they were added. The most recently added quotes are at the top.
+      pattern: with "%{pattern}"
+    list_by_author:
+      no_author: Cannot find an author with the ID="%{id}"!
+      quotations: by %{author}
+    list_by_category:
+      no_category: Cannot find a category with the ID="%{id}"!
+      quotations: for the category %{category}
+    list_by_user:
+      no_user: Cannot find a user "%{user}"!
+      quotations: of the user %{user}
+    list_content:
+      delete: Really delete the quote "%{quote}"?
+      new: Add quote
+    login_missing: Login is missing to add a new quote!
+    search_author:
+      placeholder: Start typing last name...
+    search_category_collected:
+      one_click: add with one click
+    update:
+      author_unchanged: The author "%{author}" has not been changed.
+      unchanged: The quote has not been changed.
+      updated: The quote has been updated.
+  user_mailer:
+    password_reset:
+      subject: Reset password
+  user_sessions:
+    create:
+      hello: Hello %{user}, nice to have you here.
+      login_failed: Login was not successful!
+  users:
+    create:
+      created: A user "%{user}" has been created for you.
+    not_logged_in: Not logged in!
+    update:
+      updated: Your user entry "%{user}" has been changed.
   will_paginate:
-    previous_label: '&laquo;'
-    next_label: '&raquo;'
-    
+    next_label: "&raquo;"
+    previous_label: "&laquo;"

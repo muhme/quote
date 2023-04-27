@@ -1,2 +1,2 @@
-<h1>Zitate für die Kategorie "<%= @category.category %>"</h1>
+<h1><%= "#{number_with_delimiter(@quotations.total_entries)} #{t('g.quotes', count: @quotations.total_entries)} #{t(".quotations", category: @category.category)}" %></h1>
 <%= render :partial => 'list_content' %>

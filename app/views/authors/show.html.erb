@@ -1,44 +1,50 @@
-<h1>Autor</h1>
+<!-- @formatter:off -->
+<h1><%= t("g.authors", count: 1) %></h1>
+
 <table id="details">
+  <tr>
+    <td><%= t("g.id") %>:</td>
+    <td><%= h(@author.id) %></td>
+  </tr><tr>
+    <td><%= t("g.name") %>:</td>
+    <td><b><%= h(@author.name) %></b></td>
+  </tr><tr>
+    <td><%= t("g.firstname") %>:</td>
+    <td><b><%= h(@author.firstname) %></b></td>
+  </tr><tr>
+    <td><%= t("g.description") %>:</td>
+    <td><%= h(@author.description) %></td>
+  </tr><tr>
+    <td><%= t("g.link") %>:</td>
+    <td><%= lh(@author.link) %></td>
+  </tr><tr>
+    <td><%= t("g.created") %>:</td>
+    <td><%= nice_date(@author.created_at) %></td>
+  </tr>
+  <% if @author.created_at != @author.updated_at %>
     <tr>
-      <td valign=top>Interne Nr.</td><td><%= h(@author.id) %></td>
+      <td><%= t("g.updated") %>:</td>
+      <td><%= nice_date(@author.updated_at) %></td>
     </tr>
-    <tr>
-      <td valign=top>Name</td><td><b><%= h(@author.name) %></b></td>
-    </tr>
-    <tr>
-      <td valign=top>Vorname</td><td><b><%= h(@author.firstname) %></b></td>
-    </tr>
-    <tr>
-      <td valign=top>Beschreibung</td><td><%= h(@author.description) %></td>
-    </tr>
-    <tr>
-      <td valign=top>Link</td><td><%= lh(@author.link) %></td>
-    </tr>
-    <tr>
-      <td valign=top>Angelegt</td><td><%= nice_date(@author.created_at) %></td>
-    </tr>
-    <% if @author.created_at != @author.updated_at %>
-      <tr>
-        <td valign=top>Aktualisiert</td><td><%= nice_date(@author.updated_at) %></td>
-      </tr>
-    <% end %>
-    <tr>
-      <td valign=top>Benutzer</td><td><%= hu(@author.user_id) %></td>
-    </tr>
-    <tr>
-      <td valign=top>Öffentlich</td><td><%= @author.public? ? "Ja" : "Nein" %></td>
-    </tr>
-    <tr>
-      <td valign=top>Zitate</td><td><%=
-    	  link_to(@author.quotation_ids.size.to_s, :controller => 'quotations', :action => 'list_by_author', :author => @author.id)%></td>
-    </tr>
+  <% end %>
+  <tr>
+    <td><%= t("g.user") %>:</td>
+    <td><%= hu(@author.user_id) %></td>
+  </tr><tr>
+    <td><%= t("g.public") %>:</td>
+    <td><%= @author.public? ? t("g.yes") : t("g.no") %></td>
+  </tr><tr>
+    <td><%= t("g.quotes", count: @author.quotation_ids.size) %></td>
+    <td><%= link_to(@author.quotation_ids.size.to_s, controller: "quotations", action: "list_by_author", author: @author.id) %></td>
+  </tr>
 </table>
 
-<p>
-<% if can_edit?(@author.user_id) %>
-    <%= link_to(image_tag("pencil.png", :alt => 'Stift', :title => 'Bearbeiten', :border => 0), {:action => 'edit', :id => @author.id}, :class => "not_dashed")%> &nbsp;
-<% end %>
-<%= link_to(image_tag("sm-plus.gif", :alt => 'Share', :title => 'Lesezeichen / Weitersagen', :border => 0), 'http://www.addthis.com/bookmark.php', :class => "not_dashed")%> &nbsp;
-<%= link_to(image_tag("arrow_undo.png", :alt => 'Zurück-Pfeil', :title => 'Zurück', :border => 0), {:action => 'index'}, :class => "not_dashed")%>
+<p class="actions">
+  <% if can_edit?(@author.user_id) %>
+    <%= link_to(image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit"), border: 0), action: "edit", id: @author.id) %>
+    &nbsp;
+  <% end %>
+  <%= link_to(image_tag("sm-plus.gif", alt: t("g.share"), title: t("g.bookmark_or_share"), border: 0), "http://www.addthis.com/bookmark.php") %>
+  &nbsp;
+  <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: 0), action: "index") %>
 </p>

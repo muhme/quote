@@ -1,52 +1,57 @@
-<% if quotation and quotation.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= quotation.errors.count %> Fehler</h2>
-    <ul>
-    <% quotation.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
-
-<%= form_with(model: quotation, local: true, html: { autocomplete: 'off' }) do |form| %>
+<!-- @formatter:off -->
+<%#= form_with(model: quotation, url: quotation_path(quotation, locale: I18n.locale), method: :patch, local: true, html: { autocomplete: 'off' }) do |form| %>
+<%= form_with(model: quotation, locale: I18n.locale, local: true, html: { autocomplete: 'off' }) do |form| %>
+  <% if quotation and quotation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t("g.error", count: quotation.errors.count) %></h2>
+      <ul>
+        <% quotation.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="field">
-    <%= form.label :quotation, raw('Zitat <span class="example">z.B. Erfahrungen vererben sich nicht - jeder muß sie allein machen.</span>') %><br />
-    <%= form.text_area :quotation, {:cols => 80, :rows => 2, autofocus: true } %>
+    <%= form.label :quotation, label_and_description(t("g.quotes", count: 1), t(".quotation_sample")) %><br/>
+    <%= form.text_area :quotation, { cols: 80, rows: 2, autofocus: true } %>
   </div>
 
-  <%= label_tag :author, raw('Autor <span class="example">(leer lassen, wenn der Autor unbekannt ist)</span>') %>
+  <%= label_tag :author, label_and_description(t("g.authors", count: 1), t(".author_hint")) %>
   <%= render "quotations/search_author", author_id: quotation ? quotation.author_id : 0, animation: :no %>
   <%= render "quotations/search_author_results", authors: [] %>
 
   <div class="top_space_field">
-    <%= form.label :source, raw('Original-Quelle <span class="example">typischerweise ein Buchtitel, z.B. Gebrauchsanweisung, Glossen und Essays, 1930</span>') %><br />
-    <%= form.text_field :source, {:size => 80, :maxlength => 255} %>
+    <%= form.label :source, label_and_description(t(".source"), t(".source_description")) %><br/>
+    <%= form.text_field :source, { size: 80, maxlength: 255 } %>
   </div>
 
   <div class="field">
-    <%= form.label :source, raw('Link <span class="example">zu einer Website mit dem Original-Text der das Zitat enthält, z.B. http://www.textlog.de/tucholsky-anweisung.html') %><br />
-    <%= form.text_field :source_link, {:size => 80, :maxlength => 255} %>
+    <%= form.label :source, label_and_description(t("g.link"), t(".link_description")) %><br/>
+    <%= form.text_field :source_link, { size: 80, maxlength: 255 } %>
   </div>
 
-  <%= render "quotations/search_category_collected", categories: @quotation ? @quotation.categories : nil, rec_ids:  Category.check(@quotation), category_id: nil, category_ids: quotation ? quotation.categories.map{|c| c.id} : []%>
+  <%= render "quotations/search_category_collected",
+        categories: @quotation ? @quotation.categories : nil,
+        rec_ids: Category.check(@quotation),
+        category_id: nil,
+        category_ids: quotation ? quotation.categories.map { |c| c.id } : [] %>
   <div class="no_bottom_field">
-    <%= search_field_tag :category, "", placeholder: "Kategorie anfangen zu tippen ...", oninput: "this.form.requestSubmit()", :size => 40 %>
+    <%= search_field_tag :category, "", placeholder: t(".category_placeholder"), oninput: "this.form.requestSubmit()", size: 40 %>
   </div>
   <%= render "quotations/search_category_results", categories: [], rec_ids: [] %>
-  <br />
 
   <% if current_user and current_user.admin == true %>
     <div class="top_space_field">
-      <p><label for="author_public">Öffentlich</label><br/>
+      <label for="author_public"><%= t("g.public") %></label><br/>
       <%= form.check_box :public %>
     </div>
   <% end %>
 
   <div class="actions">
-    <%= form.submit "Speichern" %>
-    &nbsp; <%= link_to(image_tag("arrow_undo.png", :alt => "Pfeil zurück", :title => "Zurück", :border => "0"), :action => 'index') %>
+    <%= form.submit t("g.save") %>
+    &nbsp;
+    <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: "0"), action: "index" ) %>
   </div>
 
 <% end %>

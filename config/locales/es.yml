@@ -1,0 +1,227 @@
+---
+es:
+  activerecord:
+    errors:
+      models:
+        category:
+          attributes:
+            category:
+              blank: No puede estar en blanco
+              taken: esta categoría ya existe
+        quotation:
+          attributes:
+            quotation:
+              taken: esta cita ya existe
+        user:
+          attributes:
+            email:
+              taken: este correo ya está en uso
+            login:
+              too_short: El inicio es demasiado corto
+            password_confirmation:
+              confirmation: Las contraseñas no coinciden
+  authors:
+    create:
+      created: El autor "%{author}" ha sido creado.
+      failed: ¡La creación del autor "%{author}" ha fallado! (%{exception})
+    destroy:
+      deleted: La entrada para el autor "%{author}" ha sido eliminada.
+      has_quotes: El autor "%{author}" tiene %{number} citas y no se puede borrar.
+    edit:
+      edit_author: Editar autor
+    form:
+      description: Descripción
+      description_sample: por ejemplo, poeta alemán (1749-1832)
+      firstname: Nombre de pila
+      firstname_sample: por ejemplo, Johann Wolfgang von
+      link_sample: por ejemplo, http://es.wikipedia.org/wiki/Goethe
+      name: Apellido
+      name_sample: por ejemplo, Goethe
+    id_does_not_exist: No existe ningún autor con el ID "%{id}".
+    list_by_letter:
+      lastname_starts: Apellido comienza
+      letter: con la letra "%{letter}"
+      letter_missing: no empieza con una letra
+      not_a_letter: no con una letra
+    list_content:
+      author_delete: ¿Realmente borrar la entrada para el autor "%{author}"?
+      author_new: Crear un autor
+    login_missing: "¡Falta el login para crear una nueva entrada de autor!"
+    update:
+      updated: Se ha actualizado la entrada del autor "%{author}".
+  categories:
+    create:
+      created: La categoría "%{category}" ha sido creada.
+      failed: ¡La creación de la categoría "%{category}" ha fallado! (%{exception})
+    destroy:
+      deleted: La categoría "%{category}" ha sido eliminada.
+      has_quotes: La categoría "%{category}" está asignada a %{number} citas y no se puede eliminar.
+    edit:
+      edit_category: Editar categoría
+    form:
+      category_sample: Sustantivo, singular, por ejemplo, éxito
+      description_sample: "(una nota, en su caso)"
+    id_does_not_exist: No existe una categoría con el ID "%{id}".
+    list_by_letter:
+      letter_missing: ¡Falta una letra!"
+      not_starting_with_a_letter: "– que no empieza por una letra"
+      with_initial_letter: – con la letra inicial "%{letter}"
+    list_content:
+      category_delete: ¿Realmente borrar la categoría "%{category}"?
+      category_new: Crear una categoría
+    login_missing: "¡Falta el login para crear una nueva categoría!"
+    update:
+      updated: La categoría "%{category}" ha sido actualizada.
+  g:
+    actions: Acciones
+    add: Añadir
+    arrow_down: flecha verde hacia abajo
+    arrow_undo_alt: Flecha atrás
+    authors:
+      one: Autor
+      other: Autores
+    back: Volver
+    bad_pagination:
+      not_existing: La página %{page_number} ¡no existe!
+    bookmark_or_share: Añadir a favoritos / Compartir
+    categories:
+      one: Categoría
+      other: Categorías
+    category: Categoría
+    create: Crear
+    created: Creado
+    delete: Borrar
+    description: Descripción
+    edit: Editar
+    error:
+      one: "%{count} error"
+      other: "%{count} errores"
+    eye: Ojo
+    firstname: Nombres
+    for: de
+    from: tener
+    have: tienen
+    help: Asistencia
+    id: Nº interno
+    lightning: haz de luz
+    link: Enlace
+    name: Nombre
+    'no': false
+    no_admin: "¡No hay administrador!"
+    no_right: "¡No hay derecho %{name} %{id} a %{msg}!"
+    not_logged_in: No registrado
+    not_own_entry: No es su propia entrada
+    not_publics:
+      one: no publicada
+      other: Entradas no publicadas
+    number_of_categories:
+      one: 1 categoría
+      other: "%{count} categorías"
+      zero: categorías
+    ordered: Ordenado
+    page: Página
+    pencil: la pluma
+    public: Público
+    quotes:
+      one: Cita
+      other: Citas
+    read: leído
+    red_cross: Cruz roja
+    save: Guardar
+    share: Compartir
+    show: Ver
+    update: cambiar
+    updated: Actualizado
+    user: usuarios
+    'yes': Sí
+  layouts:
+    application:
+      admin: Administrador
+      award_alt: una estrella en una cinta como medalla
+      contact: Contacto
+      exclamation: "¡Error de atención!"
+      exclamation_alt: signo de exclamación rojo
+      green_flag: Nota
+      green_flag_alt: bandera verde
+      help: "¡No te preocupes, estamos felices de ayudar!"
+      joomla: "¡Integra citas en tu propia página de inicio con Joomla!"
+      joomla_english: Usando citas con Joomla! para tu propia página de inicio
+      logged_in: Conectado
+      login: Iniciar sesión
+      logo_alt: el logotipo - la letra Z en verde
+      not_found: 'Error 404: Entrada no encontrada'
+      of_the_user: del usuario
+      project: Proyecto
+      quote_from: Cita de
+      register: Registrarse
+      starting_with_letter: empezando con %{letter}
+      to_use: Insertar
+      use: Insertar citas en tu propia página de inicio
+  number:
+    format:
+      delimiter: "."
+      separator: ","
+  password_resets:
+    create:
+      email_not_found: ¡No se encontró un usuario con el correo electrónico "%{email}"!
+      email_sent: Se ha enviado un correo electrónico con el enlace para restablecer la contraseña a "%{email}".
+    not_allowed: No está permitido restablecer la contraseña para la entrada de usuario "%{login}".
+    update:
+      updated: La contraseña para "%{login}" se ha actualizado correctamente.
+  quotations:
+    create:
+      author_used: El autor utilizado fue "%{author}."
+      created: Gracias, se ha agregado la cita %{id}.
+      failed: "¡Error al agregar la cita! (%{exception})"
+    destroy:
+      deleted: La cita "%{quote}" ha sido eliminada.
+    edit:
+      edit_quotation: Editar cita
+    form:
+      author_hint: "(dejar en blanco si el autor es desconocido)"
+      category_placeholder: Comienza a escribir la categoría...
+      link_description: a un sitio web con el texto original que contiene la cita, por ejemplo, http://www.textlog.de/tucholsky-anweisung.html
+      quotation_sample: por ejemplo, Las experiencias no son heredables, cada uno debe vivirlas por sí mismo.
+      source: Fuente original
+      source_description: típicamente un título de libro, por ejemplo, Guía del usuario, Sátiras y Ensayos, 1930
+    id_does_not_exist: ¡No hay una cita con la ID="%{id}"!
+    index:
+      order: Las citas están ordenadas por fecha de adición. Las citas agregadas más recientemente están en la parte superior.
+      pattern: con "%{pattern}"
+    list_by_author:
+      no_author: ¡No se puede encontrar un autor con la ID="%{id}"!
+      quotations: de %{author}
+    list_by_category:
+      no_category: ¡No se puede encontrar una categoría con la ID="%{id}"!
+      quotations: para la categoría %{category}
+    list_by_user:
+      no_user: ¡No se puede encontrar un usuario "%{user}"!
+      quotations: del usuario %{user}
+    list_content:
+      delete: ¿Realmente quieres eliminar la cita "%{quote}"?
+      new: Añadir cita
+    login_missing: "¡Falta el login para añadir una nueva cita!"
+    search_author:
+      placeholder: Comienza a escribir el apellido...
+    search_category_collected:
+      one_click: agregar con un solo clic
+    update:
+      author_unchanged: El autor "%{author}" no ha sido cambiado.
+      unchanged: La cita no ha sido cambiada.
+      updated: La cita ha sido actualizada.
+  user_mailer:
+    password_reset:
+      subject: Restablecer contraseña
+  user_sessions:
+    create:
+      hello: Hola %{user}, es un gusto tenerte aquí.
+      login_failed: "¡El inicio de sesión no fue exitoso!"
+  users:
+    create:
+      created: Se ha creado un usuario "%{user}" para ti.
+    not_logged_in: "¡No has iniciado sesión!"
+    update:
+      updated: Tu entrada de usuario "%{user}" ha sido modificada.
+  will_paginate:
+    next_label: "&raquo;"
+    previous_label: "&laquo;"

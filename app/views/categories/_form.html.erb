@@ -1,34 +1,37 @@
+<!-- @formatter:off -->
 <%= form_with(model: category, local: true) do |form| %>
-<% if category.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(category.errors.count, "error") %> verhindert das Speichern der Kategorie:</h2>
- 
-    <ul>
-    <% category.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+  <% if category and category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t("g.error", count: category.errors.count) %></h2>
+      <ul>
+        <% category.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <div class="field">
-    <%= form.label "Kategorie:" %><br />
+    <%= form.label :category, label_and_description(t("g.category"), t(".category_sample")) %><br/>
     <%= form.text_field :category, id: :category_name, autofocus: true %>
   </div>
+
   <div class="field">
-    <%= form.label "Beschreibung:" %><br />
-    <%= form.text_area :description, id: :category_description %>
-  </div>  
+    <%= form.label :description, label_and_description(t("g.description"), t(".description_sample")) %><br/>
+    <%= form.text_field :description, id: :category_description %>
+  </div>
 
   <% if current_user and self.current_user.admin %>
     <div class="field">
-      <p><label for="author_public">Öffentlich</label><br/>
+      <%= form.label :public, label_and_description(t("g.public")) %><br/>
       <%= form.check_box :public %>
     </div>
   <% end %>
-  
+
   <div class="actions">
-    <%= form.submit "Speichern" %>
-    &nbsp; <%= link_to(image_tag("arrow_undo.png", :alt => "Pfeil zurück", :title => "Zurück", :border => "0"), :action => 'index') %>
+    <%= form.submit t("g.save") %>
+    &nbsp;
+    <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: "0"), action: "index") %>
   </div>
+
 <% end %>
