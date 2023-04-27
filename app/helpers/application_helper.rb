@@ -185,7 +185,7 @@ module ApplicationHelper
   # create form label and description
   # e.g. 'Nachname <span class="example">z.B. Goethe</span>'
   def label_and_description(name, sample = nil)
-    ret = name
+    ret = name.dup
     if sample.present?
       ret << ' <span class="example">'
       ret << sample
