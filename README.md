@@ -61,6 +61,7 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
 
 ## History
 
+* 2023 translated web application interface in English 🇺🇸, español 🇪🇸, 日本語 🇯🇵 und українська 🇺🇦
 * 2023 using Hotwire Turbo (see [Autocomplete mit Rails & Turbo](https://www.consulting.heikol.de/en/blog/autocomplete-ruby-on-rails-turbo/))
 * 2022 updated to Ruby 3.0 and Rails 7.0.1 ... 7.0.4
 * 2021 updated to Rails 6.1.3 ... 6.1.4
