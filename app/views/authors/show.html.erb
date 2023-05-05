@@ -20,6 +20,9 @@
   </tr><tr>
     <td><%= t("g.created") %>:</td>
     <td><%= nice_date(@author.created_at) %></td>
+  </tr><tr>
+    <td><%= t("g.by_the_user") %>:</td>
+    <td><%= hu(@author.user_id) %></td>
   </tr>
   <% if @author.created_at != @author.updated_at %>
     <tr>
@@ -28,9 +31,6 @@
     </tr>
   <% end %>
   <tr>
-    <td><%= t("g.user") %>:</td>
-    <td><%= hu(@author.user_id) %></td>
-  </tr><tr>
     <td><%= t("g.public") %>:</td>
     <td><%= @author.public? ? t("g.yes") : t("g.no") %></td>
   </tr><tr>

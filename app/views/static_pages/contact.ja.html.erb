@@ -1,0 +1,27 @@
+<h1>著作権情報</h1>
+<p>Heiko Lübbe 「ハイコ・リュッベは」、ウェブサイト <a href="https://www.zitat-service.de">zitat-service.de</a> のコンテンツに対して責任を負います。</p>
+<p>
+<%= image_tag("contact.png", :alt => "住所、メール、電話、ファックスを含む連絡先情報", :title => "お問い合わせ") %>
+</p>
+<h2>著作権</h2>
+<p>あなたが著者またはその遺産管理者として、ここで引用されることを望まない場合は、
+メールでオペレータにお知らせください。あなたの著作権に該当する引用は直ちに削除されます。
+</p>
+<h2>ウェブサイトの可用性</h2>
+<p>オペレータは、サービスをできるだけ中断なく提供するよう努力します。しかし、すべての注意を払ってもダウンタイムは避けられません。オペレータは、いつでもオファーを変更または中止する権利を留保します。エラーのないファイルやフォーマットが原因で中断やその他の障害が発生した場合、保証は一切行いません。
+<h2>外部リンクの利用に関する注意</h2>
+<p>外部リンクされたページは、初回リンク時にチェックされます。ただし、外部リンクされたページの変更は常にチェックされません。オペレータが、外部リンクが提供された特定のオファーが民事または刑事責任を引き起こすことに気付いた場合、または他者からそのような情報を受け取った場合、オペレータはそのオファーへのリンクを削除します。</p>
+<h2>デザイン & 開発</h2>
+<p>エラーや拡張リクエストがある場合は、<a target="_blank" href="https://github.com/muhme/quote/issues">チケット</a>を作成してください。</p>
+<table id="environment">
+  <tr><td><%= image_tag("tux.png", :alt => "Tux", :title => "TuxはLinuxのマスコットです")%>サーバー</td><td><%= Socket.gethostname %></td></tr>
+  <tr><td><a href="https://rubyonrails.org/">Rails</a></td><td><%= Rails.version %></td></tr>
+  <tr><td><%= image_tag("ruby.png", :alt => "ルビー", :title => "プログラミング言
+言語 Ruby のためのルビー")%><a href="https://www.ruby-lang.org/">Ruby</a></td><td><%= RUBY_VERSION %></td></tr>
+  <tr><td><a href="https://github.com/muhme/quote">ソフトウェア</a></td><td><%= getGitVersion() %></td></tr>
+  <tr><td>環境</td><td><%= ENV['RAILS_ENV'] %></td></tr>
+</table>
+
+<p>ウェブアプリケーション <a href="https://www.zitat-service.de">www.zitat-service.de</a> は以下によって作成されました。</p><p><a style="border: 0px;" href="https://www.consulting.heikol.de">
+    <%= image_tag("systemberatung.png", :alt => "consulting.heiko.de へのリンク", :title => "システムコンサルティング Heiko Lübbe") %></a>
+</p>

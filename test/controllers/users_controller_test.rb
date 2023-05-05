@@ -36,7 +36,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       post users_url, params: { user: { login: "test", email: "bla" , password: "123QWEasd", password_confirmation: "123QWEasd" } }
     end
     assert_response :unprocessable_entity # 422
-    assert_match /Email should look like an email address./, @response.body
+    assert_match /E-Mail sollte wie eine E-Mail Adresse aussehen./, @response.body
   end
 
   # user, e.g. /users/1/show
@@ -74,7 +74,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "failed login" do
     post user_sessions_url, :params => { :user_session => { :login => 'bla', :password => 'bli' } }
     assert_response :unprocessable_entity
-    assert_match /Login is not valid/, @response.body
+    assert_match /Benutzername ist nicht gültig/, @response.body
   end
 
   test "own user update" do
@@ -96,7 +96,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       patch user_url(id: @second_user), params: { user: { email: @first_user.email } }
     end
     assert_response :unprocessable_entity # 422
-    assert_match /diese E-Mail Adresse wird bereits genutzt/, @response.body
+    assert_match /E-Mail wird bereits verwendet/, @response.body
   end
 
   test "not logged-in try for user update" do

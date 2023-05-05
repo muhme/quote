@@ -187,9 +187,9 @@ module ApplicationHelper
   def label_and_description(name, sample = nil)
     ret = name.dup
     if sample.present?
-      ret << ' <span class="example">'
+      ret << ' <span class="example">('
       ret << sample
-      ret << '</span>'
+      ret << ')</span>'
     end
     raw(ret)
   end

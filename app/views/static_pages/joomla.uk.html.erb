@@ -1,0 +1,64 @@
+<h1>Цитати в <%= link_to(image_tag("joomla.png", :alt => "Joomla! Logo", :title => "Joomla!", :border => "0"), 'https://www.joomla.org', :class => 'not_dashed') %> вбудовувати</h1>
+<p>Ця сторінка описує можливості для вбудовування цитат з <a href="https://www.zitat-service.de">www.zitat-service.de</a> в <a href="https://www.joomla.org">CMS Joomla!</a>. Безкоштовно та без реклами можна відображати випадкові цитати в Joomla! від авторів, категорій або власної колекції цитат.</p>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_4_small.png", :alt => "Joomla! 3.0 Модульні призначення", :title => "Joomla! 3.0 Модульні призначення", :border => "1"), asset_url('joomla_30_4.png'), :class => "not_dashed") %></div>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_1_small.png", :alt => "Joomla! 3.0 Статус опубліковано", :title => "Joomla! 3.0 Деталі", :border => "1"),  asset_url('joomla_30_1.png'), :class => "not_dashed") %></div>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_0_small.png", :alt => "Joomla! 3.0 Встановлення модулів", :title => "Joomla! 3.0 Встановлення модулів", :border => "1"),  asset_url('joomla_30_0.png'), :class => "not_dashed") %></div>
+<h2>Для Joomla! Версія 3
+<%=
+	image_tag("joomla30.png", :alt => "Joomla! 3.0 сумісний", :title => "Joomla! 3.0 сумісний")
+%>
+</h2>
+<p>Версія модуля 1.4.2 від 4 жовтня 2019 використовує TLS (https) та підтримує автоматичний механізм оновлення. Для встановлення в Joomla! Backend як адміністратор:</p>
+<ul>
+  <li>встановіть модуль mod_zitat_service_de через "Розширення | Встановити" з наступної веб-адреси:<br />
+https://www.zitat-service.de/joomla/mod_zitat_service_de_1.4.2.zip,</li>
+  <li>потім встановіть статус модуля на "Опубліковано" через "Розширення | Модулі",</li>
+  <li>встановіть бажану позицію в шаблоні (наприклад, position-7) та</li>
+  <li>призначте модуль до бажаних меню (наприклад, "На всіх сторінках").</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_2_small.png", :alt => "Joomla! 3.0 Базові параметри", :title => "Joomla! 3.0 Базові параметри", :border => "1"), asset_url('joomla_30_2.png'), :class => "not_dashed") %></div>
+<p>За допомогою базових параметрів модуля можна відображати цитати:</p>
+<ul>
+  <li>від одного автора (наприклад, Гете),</li>
+  <li>з однієї категорії (наприклад, Футбол) або</li>
+  <li>обмежити відображення цитат тими, які ви самі встановили, вказавши, наприклад, своє ім'я користувача.</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_3_small.png", :alt => "Joomla! 3.0 Статус опубліковано", :title => "Joomla! 3.0 Деталі", :border => "1"), asset_url('joomla_30_3.png'), :class => "not_dashed") %></div>
+<p>За замовчуванням цитати відкриваються в тому ж вікні. За допомогою додаткових параметрів можна:</p>
+<ul>
+  <li>вказати назву вікна (наприклад, quote), і тоді цитати, посилання на джерело та авторські посилання відкриватимуться в новому вікні.</li>
+  <li>За допомогою методу запиту можна налаштувати, як отримується цитата. Рекомендований метод запиту - асинхронний за допомогою JavaScript у веб-браузері. Завантаження сторінки прискорюється, оскільки цитата отримується після завантаження сторінки. Ця опція також обов'язкова, якщо отримання цитати з Joomla! неможливе, наприклад, через вимкнення allow_url_fopen в PHP.</li>
+  <li>Оскільки при асинхронному методі запиту цитата отримується після того, як сторінка вже була сформована, наступні модулі можуть "стрибати". Тому модуль повинен бути останнім у послідовності (щоб знизу було місце) або зберігати горизонтальне місце. Мінімальна висота модуля може бути вказана за допомогою останнього параметра, якщо не існує власного CSS. Висоту можна вказати, наприклад, 20ex або 100px. Для тестування висоти категорія WebDesignTest добре підходить, оскільки вона містить найкоротші та найдовші цитати.</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("parameter_small.png", :alt => "Joomla! 1.5 Параметри модуля", :title => "Joomla! 1.5 Параметри модуля", :border => "1"), asset_url('parameter.png'), :class => "not_dashed") %></div>
+<h2>Налаштування відображення</h2>
+<p>Відображення цитати можна налаштувати за допомогою каскадних таблиць стилів (CSS).
+DIV-елемент класу <i>quote</i> охоплює всю цитату, тут можна встановити рамку. У цьому DIV-елементі знаходяться два DIV-елементи класів <i>quotation</i> для самої цитати та <i>source</i> для автора та джерела.
+Наступний приклад видаляє стандартну декорацію посилання (підкреслення), встановлює чорний шрифт для цитати та збільшує його розмір. Джерело (з посиланням або без нього) буде відображено сірим кольором:</p>
+<div class="code">
+div.quote * a {<br>
+&nbsp;&nbsp;text-decoration:none;<br>
+&nbsp;&nbsp;color: black;<br>
+&nbsp;&nbsp;font-size: larger;<br>
+}<br>
+div.quote div.source, div.quote div.source a {<br>
+&nbsp;&nbsp;color: gray;<br>
+}
+</div>
+<p style="clear: both;">У Joomla! рядки слід додати до використовуваного шаблону (наприклад, для шаблону beez у файл beez/css/template.css).</p>
+<h2>Обмеження та обробка помилок</h2>
+<p>Модуль Joomla! може бути включений лише один раз на веб-сторінку при асинхронному виклику.</p>
+<p>Якщо <pp>allow_url_fopen</pp> на сервері вимкнено, то буде вставлено JavaScript, який відображає цитату. Якщо користувач також вимкнув JavaScript у веб-браузері, то завжди відображатиметься одна й та ж цитата, і це буде задокументовано у HTML-коментарі.</p>
+<p>Для отримання цитати встановлюється тайм-аут у 3 секунди. Якщо відповідь сервера займає більше часу, то буде відображена стандартна цитата, а повідомлення про помилку знаходиться у HTML-коментарі у вихідному коді сторінки.</p>
+
+<h2>Приклад інтеграції в Joomla</h2>
+<p>Цитати категорії "English", розфарбовані в стилі веб-сайту (станом на 1 травня 2023 р.):</p>
+<div class=""><%= image_tag("joomla_sample.gif", :alt => "Цитата білим шрифтом з джерелом жовтого кольору", :title => "Приклад від www.digitalflem.com", size: '440x126') %></div>
+<p><a target="_blank" href="https://www.digitalflem.com/">Digital Fantasy Legacy Modder (FLEM)</a></p>
+
+<h2>Помилки або розширення</h2>
+<p>
+Якщо ви виявили помилку або хотіли б отримати розширення, будь ласка, створіть квиток GitHub <a target="_blank" href="https://github.com/muhme/quote/issues">тут</a>.</p>
+<p>Повернутися до загального використання та використання через IFRAME: <%= link_to(image_tag("arrow_undo.png", :alt => "Стрілка назад", :title => "Назад", :border => "0"), {:action => 'use'}, :class => 'not_dashed') %></p>
+<hr>
+<p style="font-size:small;">Логотипи Joomla! захищені авторським правом <a href="http://www.opensourcematters.org">OpenSourceMatters</a>.</p>

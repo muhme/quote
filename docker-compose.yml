@@ -1,9 +1,9 @@
 # docker-compose.yaml - compose five docker images to run zitat-service.de
 # - mariadb with loaded test data
-# - phpmysqladmin
-# - rails web application
-# - Selenium with headless chrome and VNC server for testing
-# - maildev SMTP server for testing emails
+# - phpMySqlAdmin
+# - ruby on rails web application zitat-service.de
+# - Selenium with headless chrome with locale de and VNC server for system tests
+# - maildev SMTP server for testing mails
 
 version: '3.5'
 services:
@@ -20,13 +20,13 @@ services:
       MYSQL_DATABASE: quote_development
       MYSQL_USER: quote_development
       MYSQL_PASSWORD: quote_development
-    restart: always
+    restart: unless-stopped
   mysqladmin:
     container_name: quote_mysqladmin
     image: phpmyadmin/phpmyadmin
     ports:
       - "8101:80"
-    restart: always
+    restart: unless-stopped
     depends_on:
       - db
   rails:
@@ -40,20 +40,25 @@ services:
       QUOTE_DATABASE_PASSWORD: quote_development      
     ports:
       - "8102:3000"
+    restart: unless-stopped
     depends_on:
       - db
       - chrome
   chrome:
     container_name: quote_chrome
-    image: selenium/standalone-chrome
+    build:
+      context: .
+      dockerfile: chrome.Dockerfile
     ports:
       - "8104:5900" # VNC
       - "8105:7900" # noVNC http://localhost:8105/?autoconnect=1&resize=scale&password=secret
     volumes:
       - /dev/shm:/dev/shm
     shm_size: '2gb'
+    restart: unless-stopped
   maildev:
     container_name: quote_maildev
     image: maildev/maildev
     ports:
       - "8106:1080"
+    restart: unless-stopped

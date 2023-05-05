@@ -1,13 +1,40 @@
 ---
 en:
   activerecord:
+    attributes:
+      author:
+        description: Description
+        firstname: First name
+        link: Link
+        name: Last name
+      category:
+        category: Category
+        description: Description
+      quotation:
+        quotation: Quote
+        source: Source
+        source_link: Link to the source
+      user:
+        email: E-mail
+        login: Username
+        password: Password
+        password_confirmation: Password confirmation
     errors:
+      messages:
+        record_invalid: 'Record is invalid: %{errors}'
+        restrict_dependent_destroy:
+          has_many: Cannot delete '%{record}' because dependent %{dependent} exist.
+          has_one: Cannot delete '%{record}' because a dependent %{dependent} exists.
       models:
+        author:
+          first_or_last_name_needed: First name or last name must be set
         category:
           attributes:
             category:
               blank: can't be blank
-              taken: has already been taken
+              taken: '"%{value}" already exists'
+          one: Category
+          other: Categories
         quotation:
           attributes:
             quotation:
@@ -17,9 +44,38 @@ en:
             email:
               taken: has already been taken
             login:
-              too_short: Login is too short
+              too_short: is too short (at least %{count} characters)
             password_confirmation:
               confirmation: doesn't match password
+    models:
+      author: Author
+      category: Category
+      quotation: Quote
+      user: User
+  authlogic:
+    attributes:
+      user_session:
+        email: email
+        login: login
+        password: password
+        remember_me: remember me
+    error_messages:
+      consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account is disabled.
+      email_invalid: should look like an email address.
+      email_invalid_international: should look like an international email address.
+      general_credentials_error: Login/Password combination is not valid
+      login_blank: can not be blank
+      login_invalid: should use only letters, numbers, spaces, and .-_@+ please.
+      login_not_found: is not valid
+      no_authentication_details: You did not provide any details for authentication.
+      not_active: Your account is not active
+      not_approved: Your account is not approved
+      not_confirmed: Your account is not confirmed
+      password_blank: can not be blank
+      password_invalid: is not valid
+      session_invalid: 'Your session is invalid and has the following errors:'
+    models:
+      user_session: UserSession
   authors:
     create:
       created: The author "%{author}" has been created.
@@ -60,7 +116,7 @@ en:
       edit_category: Edit Category
     form:
       category_sample: Noun, singular, e.g., Success
-      description_sample: "(optional note)"
+      description_sample: optional note
     id_does_not_exist: There is no category with the ID "%{id}".
     list_by_letter:
       letter_missing: Letter missing!
@@ -72,6 +128,24 @@ en:
     login_missing: Login missing to create a new category!
     update:
       updated: The category "%{category}" has been updated.
+  errors:
+    messages:
+      blank: must not be empty
+      empty: must not be empty
+      equal_to: must be equal to %{count}
+      even: must be straight
+      greater_than: must be greater than %{count}
+      greater_than_or_equal_to: must be greater than or equal to %{count}
+      less_than: must be smaller than %{count}
+      less_than_or_equal_to: must be less than or equal to %{count}
+      not_a_number: is not a number
+      not_an_integer: must be an integer
+      odd: must be odd
+      other_than: must be other than %{count}
+      present: must be empty
+      too_long: is too long (maximum %{count} characters)
+      too_short: is too short (at least %{count} characters)
+      wrong_length: has the wrong length (should have %{count} characters)
   g:
     actions: Actions
     add: Add
@@ -84,6 +158,7 @@ en:
     bad_pagination:
       not_existing: Page %{page_number} does not exist!
     bookmark_or_share: Bookmark / Share
+    by_the_user: by the user
     categories:
       one: Category
       other: Categories
@@ -147,8 +222,9 @@ en:
       joomla: Integrate quotes into your own homepage with Joomla!
       joomla_english: Using quotes with Joomla! for your own homepage
       logged_in: Logged in
-      login: Log in
+      login: Login
       logo_alt: the logo - the letter Z in green
+      logout: Logout
       not_found: 'Error 404: Entry not found'
       of_the_user: of the user
       project: Project
@@ -165,7 +241,17 @@ en:
     create:
       email_not_found: No user found with the email "%{email}"!
       email_sent: An email with the password reset link has been sent to "%{email}".
+    edit:
+      change: Here you can set a new password for the username "%{login}".
+      set_new_password: Set new password
+      twice: Please enter the new password twice.
+    new:
+      email: E-mail address
+      email_description: that you had used for registration
+      self_service: You can reset the password for your user entry yourself. You will receive an email with a link to reset your password.
+      send: Send email
     not_allowed: Resetting the password for user entry "%{login}" is not allowed.
+    password_reset: Reset password
     update:
       updated: The password for "%{login}" has been successfully updated.
   quotations:
@@ -178,8 +264,9 @@ en:
     edit:
       edit_quotation: Edit quote
     form:
-      author_hint: "(leave empty if the author is unknown)"
+      author_hint: leave empty if the author is unknown
       category_placeholder: Start typing category...
+      link: Link to original source
       link_description: to a website with the original text containing the quote, e.g. http://www.textlog.de/tucholsky-anweisung.html
       quotation_sample: e.g. Experiences are not inheritable - everyone must make them alone.
       source: Original source
@@ -200,11 +287,21 @@ en:
     list_content:
       delete: Really delete the quote "%{quote}"?
       new: Add quote
+    list_no_public:
+      non_public_quotes: Non-public Quotes
     login_missing: Login is missing to add a new quote!
+    new:
+      new: Create Quote
     search_author:
       placeholder: Start typing last name...
     search_category_collected:
       one_click: add with one click
+    show:
+      author_link: Link to author "%{author}"
+      author_quotes: "(%{count} quotes)"
+      of_category: of the category "%{category}"
+      of_user: of the user "%{user}"
+      quotes_link: '%{count} citations by author "%{author}"'
     update:
       author_unchanged: The author "%{author}" has not been changed.
       unchanged: The quote has not been changed.
@@ -216,9 +313,23 @@ en:
     create:
       hello: Hello %{user}, nice to have you here.
       login_failed: Login was not successful!
+    new:
+      already: If you've already created a username, you can reset your password using your email →
+      doit: Log In
+      login: Please register
+      no_user: You do not have a user yet?<br />Then please create a user yourself. Then you can create and edit quotes →
   users:
     create:
       created: A user "%{user}" has been created for you.
+    edit:
+      update: Update User Entry
+    form:
+      confirmation_sample: please repeat the password
+      email_sample: e.g. olivia@gmail.com
+      login_sample: e.g. olivia
+      password_sample: at least 8 characters long
+    new:
+      new: Create User Entry
     not_logged_in: Not logged in!
     update:
       updated: Your user entry "%{user}" has been changed.

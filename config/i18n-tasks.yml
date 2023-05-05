@@ -124,12 +124,12 @@ translation:
 # - 'simple_form.{placeholders,hints,labels}.*'
 # - 'simple_form.{error_notification,required}.:'
 ignore_unused:
-  - activerecord.errors.models.category.*
-  - activerecord.errors.models.quotation.*
-  - activerecord.errors.models.user.*
+  - activerecord.*
+  - errors.messages.*
   - layouts.application.*
   - will_paginate.*
   - number.format.*
+  - authlogic.*
 
 ## Exclude these keys from the `i18n-tasks eq-base' report:
 # ignore_eq_base:

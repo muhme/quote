@@ -1,0 +1,64 @@
+<h1><%= link_to(image_tag("joomla.png", :alt => "Joomla! ロゴ", :title => "Joomla!", :border => "0"), 'https://www.joomla.org', :class => 'not_dashed') %> における引用の組み込み</h1>
+<p>このページでは、<a href="https://www.zitat-service.de">www.zitat-service.de</a> の引用を <a href="https://www.joomla.org">CMS Joomla!</a>に組み込む方法について説明します。無料で広告なしで、Joomla! で著者、カテゴリ、または独自の引用コレクションからランダム引用を表示できます。</p>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_4_small.png", :alt => "Joomla! 3.0 モジュール割り当て", :title => "Joomla! 3.0 モジュール割り当て", :border => "1"), asset_url('joomla_30_4.png'), :class => "not_dashed") %></div>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_1_small.png", :alt => "Joomla! 3.0 ステータス公開", :title => "Joomla! 3.0 詳細", :border => "1"),  asset_url('joomla_30_1.png'), :class => "not_dashed") %></div>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_0_small.png", :alt => "Joomla! 3.0 モジュールインストール", :title => "Joomla! 3.0 モジュールインストール", :border => "1"),  asset_url('joomla_30_0.png'), :class => "not_dashed") %></div>
+<h2>Joomla! バージョン 3 用
+<%=
+	image_tag("joomla30.png", :alt => "Joomla! 3.0 互換", :title => "Joomla! 3.0 互換")
+%>
+</h2>
+<p>モジュールバージョン 1.4.2（2019年10月4日）は、TLS（https）を使用し、自動更新メカニズムに対応しています。Joomla! バックエンドの管理者としてインストールするには：</p>
+<ul>
+  <li>次のウェブアドレスから mod_zitat_service_de モジュールを "拡張機能 | インストール" でインストールします：<br />
+https://www.zitat-service.de/joomla/mod_zitat_service_de_1.4.2.zip,</li>
+  <li>次に "拡張機能 | モジュール" でモジュールを "公開" に設定します。</li>
+  <li>テンプレート内で希望する位置を設定します（例：position-7）、</li>
+  <li>モジュールを希望するメニューに割り当てます（例：「すべてのページ」）。</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_2_small.png", :alt => "Joomla! 3.0 基本オプション", :title => "Joomla! 3.0 基本オプション", :border => "1"), asset_url('joomla_30_2.png'), :class => "not_dashed") %></div>
+<p>モジュールの基本オプションを使用して、表示される引用を：</p>
+<ul>
+  <li>著者に限定する（例：ゲーテ）、</li>
+  <li>カテゴリに限定する（例：サッカー）、または</li>
+  <li>自分自身などのユーザー名で設定した引用に限定する。</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_3_small.png", :alt => "Joomla! 3.0 ステータス公開", :title => "Joomla! 3.0 詳細", :border => "1"), asset_url('joomla_30_3.png'), :class => "not_dashed") %></div>
+<p>デフォルトでは、引用は同じウィンドウで開きます。オプションのパラメーターを使って：</p>
+<ul>
+  <li>ウィンドウの名前（例：quote）を指定し、引用、ソース、または著者のリンクが新しいウィンドウで開くようにする。</li>
+  <li>引用がどのように取得されるかを設定するための取得方法。推奨される取得方法は、Webブラウザー内のJavaScriptを使った非同期取得です。このオプションは、Joomlaからの引用の取得ができない場合にも必要です。例えば、PHPでallow_url_fopenがオフになっている場合などです。</li>
+  <li>非同期取得方法では、引用がページ構築後に取得されるため、後続のモジュールが<i>ジャンプ</i>することがあります。そのため、モジュールは一連の最後に配置する必要があります（下にスペースがあるようにするため）または、水平方向にスペースを確保する必要があります。独自のCSSがない場合、最後のパラメーターでモジュールの最小の高さを指定できます。高さは、例えば20exや100pxで指定できます。高さをテストするには、WebDesignTestカテゴリが適しています。これは、最も短い引用と最も長い引用が含まれているからです。</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("parameter_small.png", :alt => "Joomla! 1.5 モジュールパラメータ", :title => "Joomla! 1.5 モジュールパラメータ", :border => "1"), asset_url('parameter.png'), :class => "not_dashed") %></div>
+<h2>表示のカスタマイズ</h2>
+<p>引用の表示は、cascading stylesheets（CSS）を使用してカスタマイズできます。
+<i>quote</i>クラスのDIV要素は、引用全体を囲んでいます。ここで、例えば枠を設定できます。含まれるのは、<i>quotation</i>クラスのDIV要素と引用、<i>source</i>クラスのDIV要素と著者、およびソースです。
+次の例では、標準のリンクデコレーション（下線）を削除し、引用を黒い文字で、通常よりも大きく表示します。そして、ソース（リンクあり・なしを問わず）がグレーで表示されるようになります。</p>
+<div class="code">
+div.quote * a {<br>
+&nbsp;&nbsp;text-decoration:none;<br>
+&nbsp;&nbsp;color: black;<br>
+&nbsp;&nbsp;font-size: larger;<br>
+}<br>
+div.quote div.source, div.quote div.source a {<br>
+&nbsp;&nbsp;color: gray;<br>
+}
+</div>
+<p style="clear: both;">Joomlaでは、これらの行を使用しているテンプレートに追加します（例：beezテンプレートの場合は、beez/css/template.cssファイルに追加します）。</p>
+<h2>制限事項とエラー処理</h2>
+<p>Joomlaモジュールは、非同期呼び出しの場合、1つのWebページに1回しか埋め込むことができません。</p>
+<p>サーバー上で<pp>allow_url_fopen</pp>が無効になっている場合、引用を表示するためにJavaScriptが挿入されます。また、ユーザーがWebブラウザでJavaScriptを無効にしている場合、常に同じ引用が表示され、HTMLコメントでそれが記録されます。</p>
+<p>引用の取得には、タイムアウトが3秒間設定されています。サーバーからの取得に時間がかかる場合、標準の引用が表示され、エラーメッセージはページのソースコード内のHTMLコメントとして記載されます。</p>
+
+<h2>Joomlaでの組み込み例</h2>
+<p>カテゴリ「English」の引用を、ウェブサイトのスタイルに合わせてカラー化（2023年5月1日現在）：</p>
+<div class=""><%= image_tag("joomla_sample.gif", :alt => "白い文字での引用と黄色での情報源", :title => "www.digitalflem.comの例", size: '440x126') %></div>
+<p><a target="_blank" href="https://www.digitalflem.com/">デジタル ファンタジー レガシー モッダー（FLEM）</a></p>
+
+<h2>エラーや拡張機能</h2>
+<p>
+もしエラーが見つかったり、拡張機能が欲しい場合は、GitHubの<a target="_blank" href="https://github.com/muhme/quote/issues">チケット</a>を作成してください。</p>
+<p>一般的な組み込みとIFRAMEを使用した組み込みに戻る：<%= link_to(image_tag("arrow_undo.png", :alt => "戻る矢印", :title => "戻る", :border => "0"), {:action => 'use'}, :class => 'not_dashed') %></p>
+<hr>
+<p style="font-size: small;">Joomla!のロゴは、<a href="http://www.opensourcematters.org">OpenSourceMatters</a>の著作権があります。</p>

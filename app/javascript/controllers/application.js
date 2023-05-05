@@ -56,7 +56,7 @@ document.addEventListener("turbo:load", () => {
   languageOptions.forEach(function (option) {
     option.addEventListener("click", (event) => {
       const selectedLocale = option.getAttribute("data-locale");
-      console.debug ("click event, selectedLocale=" + selectedLocale);
+      // console.debug ("click event, selectedLocale=" + selectedLocale);
       const currentUrl = window.location.pathname;
       const localePattern = /(\/(de|en|es|ja|uk))/;
       let newUrl;
@@ -70,6 +70,7 @@ document.addEventListener("turbo:load", () => {
         newUrl = `/${selectedLocale}${currentUrl}`;
       }
       // Navigate to the updated URL
+      // console.debug ("newUrl=" + newUrl);
       window.location.href = newUrl;
     });
   });

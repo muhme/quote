@@ -1,0 +1,46 @@
+<h1>Embedding Quotes</h1>
+<p>
+You can embed the quotes on your homepage.
+Try calling this URL: <a href="https://www.zitat-service.de/quote?category=English" target="_blank">https://www.zitat-service.de/quote?category=English</a>. By refreshing the page, you will receive the next random quote in your browser.
+</p>
+<h2>Joomla</h2>
+<p>The integration with the CMS Joomla is described here: <a href="/en/joomla">joomla</a>.</p>
+<h2>IFRAME and CSS</h2>
+<p>
+Integration into your pages is done with inline frames (iframe) and can be adapted to your site with cascading stylesheets (CSS). Here's an example of what it looks like:
+</p>
+<iframe src="https://www.zitat-service.de/quote?style=https://www.zitat-service.de/quote.css&category=English" frameborder="1" scrolling="auto" width="700"></iframe>
+<p>The iframe entry on this page is:
+<div class="code">&lt;iframe src="https://www.zitat-service.de/quote?style=https://www.zitat-service.de/quote.css&category=English" frameborder="1" scrolling="auto" width="700"&gt;&lt;/iframe&gt;</div>
+</p>
+<p style="clear: both;">Simply use it for your first test.</p>
+<h2>CSS</h2>
+<p>Once you have successfully integrated the iframe into your site,
+you can create a CSS file according to your preferences.
+You can use <a href="https://www.zitat-service.de/quote.css">quote.css</a> as a template and adapt it to your needs. Include your custom CSS with the <code>style</code> parameter</b>.
+The DIV element of the <i>quote</i> class wraps around the entire quote, where you can, for example, set a border. It contains two DIV elements of the <i>quotation</i> class for the quote and the <i>source</i> class for the author and source.
+<h2>Parameters</h2>
+<p>For the quote query, you can use the parameters
+<i>category</i> for the category, <i>user</i> for the username of the quote creator, and <i>author</i> for the name of the quote author, in addition to the <i>style</i> parameter for the stylesheet.
+You will then receive quotes only from that category, by that user, or by the author with that last name.
+For example, you can get quotes from Einstein with:
+<div class="code">https://www.zitat-service.de/quote?author=Einstein</code></div>
+<p style="clear: both;">With the <i>content_only</i> parameter, the quote is delivered with CSS DIVs only, without an HTML header.</p>
+<p>With the <i>encoding</i> parameter, you can specify the encoding. The default is ISO-8859-1, but you can change it to, for example, UTF-8 with this parameter.</p>
+<p>
+Another parameter is <i>window</i>. Without this parameter, links open in the current window (_parent). With <i>window=quote</i>, for example, links open in a new window.</p>
+</p>
+<p>You can also combine the parameters. For example, to query all quotes from user "heiko" in the category "WasBedeutetLiebe" and include a stylesheet, you would use:
+<div class="code">https://www.zitat-service.de/quote?user=heiko&category=WasBedeutetLiebe&style=https://www.zitat-service.de/quote.css</code></div>
+<h2 style="clear: both; margin-top: 3em;">Practical Examples</h2>
+<p>For inspiration, here are some websites that have integrated the Quote Service (as of May 1, 2023):</p>
+<ul>
+  <li><a target="_blank" href="http://szloszjar.com">Georg Szloszjar</a> (Joomla)</li>
+  <li><a target="_blank" href="https://www.ewattingen.com">Michael Faller – WebDesign und mehr</a> (Joomla, new tab)</li>
+  <li><a target="_blank" href="https://www.augederseele.de">Foto- und Videoblog von Angel und Andreas</a> (Joomla)</li>
+  <li><a target="_blank" href="http://www.dombergen.de/vwl">dombergen.de/vwl</a> (Joomla, category Geld, author Keynes)</li>
+  <li><a target="_blank" href="https://buggy-club-schweiz.ch">Buggy Club Schweiz</a> (Joomla)</li>
+  <li><a target="_blank" href="https://samariter-niedergoesgen.ch">Samariterverein Niedergösgen</a> (Joomla)</li>
+  <li><a target="_blank" href="https://www.consulting.heikol.de">Systemberatung Heiko Lübbe</a> (Hugo, category programming, user heiko)</li>
+  <li><a target="_blank" href="https://www.heikol.de">Hausseite Heiko Lübbe</a> (iframe)</li>
+</ul>

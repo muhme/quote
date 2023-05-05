@@ -1,0 +1,64 @@
+<h1>Integrar citas en <%= link_to(image_tag("joomla.png", :alt => "Joomla! Logo", :title => "Joomla!", :border => "0"), 'https://www.joomla.org', :class => 'not_dashed') %></h1>
+<p>Esta página describe las posibilidades de integrar las citas de <a href="https://www.zitat-service.de">www.zitat-service.de</a> en el <a href="https://www.joomla.org">CMS Joomla!</a>. Las citas aleatorias en Joomla! de autores, categorías o de su propia colección de citas se pueden mostrar de forma gratuita y sin publicidad.</p>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_4_small.png", :alt => "Joomla! 3.0 Asignación de módulo", :title => "Joomla! 3.0 Asignación de módulo", :border => "1"), asset_url('joomla_30_4.png'), :class => "not_dashed") %></div>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_1_small.png", :alt => "Joomla! 3.0 Estado Publicado", :title => "Joomla! 3.0 Detalles", :border => "1"),  asset_url('joomla_30_1.png'), :class => "not_dashed") %></div>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_0_small.png", :alt => "Joomla! 3.0 Instalación del módulo", :title => "Joomla! 3.0 Instalación del módulo", :border => "1"),  asset_url('joomla_30_0.png'), :class => "not_dashed") %></div>
+<h2>Para Joomla! Versión 3
+<%=
+	image_tag("joomla30.png", :alt => "Compatible con Joomla! 3.0", :title => "Compatible con Joomla! 3.0")
+%>
+</h2>
+<p>La versión del módulo 1.4.2 del 4 de octubre de 2019 utiliza TLS (https) y admite el mecanismo de actualización automática. Para la instalación en el backend de Joomla! como administrador:</p>
+<ul>
+  <li>instalar el módulo mod_zitat_service_de a través de "Extensiones | Instalar" desde la siguiente dirección web:<br />
+https://www.zitat-service.de/joomla/mod_zitat_service_de_1.4.2.zip,</li>
+  <li>luego establecer el módulo en "Publicado" a través de "Extensiones | Módulos",</li>
+  <li>configurar la posición deseada en la plantilla (por ejemplo, position-7) y</li>
+  <li>asignar el módulo a los menús deseados (por ejemplo, "En todas las páginas").</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_2_small.png", :alt => "Joomla! 3.0 Opcionesbásicas", :title => "Joomla! 3.0 Opciones básicas", :border => "1"), asset_url('joomla_30_2.png'), :class => "not_dashed") %></div>
+<p>Con las opciones básicas del módulo, es posible mostrar las citas:</p>
+<ul>
+  <li>de un autor (por ejemplo, Goethe),</li>
+  <li>de una categoría (por ejemplo, Fútbol) o</li>
+  <li>restringir a las citas personalizadas con un nombre de usuario, por ejemplo, el propio.</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_3_small.png", :alt => "Joomla! 3.0 Estado Publicado", :title => "Joomla! 3.0 Detalles", :border => "1"), asset_url('joomla_30_3.png'), :class => "not_dashed") %></div>
+<p>De forma predeterminada, las citas se abren en la misma ventana. Con los parámetros opcionales se puede:</p>
+<ul>
+  <li>especificar el nombre de una ventana (por ejemplo, quote) y las citas, enlaces de fuente y/o autor se abrirán en una nueva ventana.</li>
+  <li>Con el método de consulta, se puede configurar cómo se obtiene la cita. El método de consulta recomendado es Asíncrono con JavaScript en el navegador web. El rendimiento de la página se acelera al obtener la cita después de la construcción de la página. Esta opción también es obligatoria si no es posible recuperar la cita desde Joomla, por ejemplo, porque allow_url_fopen en PHP está desactivado.</li>
+  <li>Debido a que con el método de consulta asíncrona, la cita se obtiene después de que la página ya se haya construido, los módulos siguientes pueden <i>saltar</i>. El módulo, por lo tanto, debe ser el último en una serie (para que haya espacio hacia abajo) o se debe mantener un espacio horizontal. La altura mínima del módulo se puede especificar con el último parámetro, si no existe un CSS propio. La altura se puede especificar, por ejemplo, con 20ex o 100px. La categoría WebDesignTest es adecuada para probar la altura, ya que contiene las citas más cortas y largas.</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("parameter_small.png", :alt => "Joomla! 1.5 Parámetros del módulo", :title => "Joomla! 1.5 Parámetros del módulo", :border => "1"), asset_url('parameter.png'), :class => "not_dashed") %></div>
+<h2>Personalización de la apariencia</h2>
+<p>La apariencia de la cita se puede ajustar mediante hojas de estilo en cascada (CSS).
+El elemento DIV de la clase <i>quote</i> rodea toda la cita, aquí puedes establecer, por ejemplo, un borde. Contiene dos elementos DIV de las clases <i>quotation</i> para la cita y <i>source</i> para el autor y la fuente.
+Elsiguiente ejemplo elimina la decoración del enlace predeterminado (subrayado), establece el texto de la cita en letra negra y más grande de lo normal. La fuente (con o sin enlace) se muestra en gris:</p>
+<div class="code">
+div.quote * a {<br>
+&nbsp;&nbsp;text-decoration:none;<br>
+&nbsp;&nbsp;color: black;<br>
+&nbsp;&nbsp;font-size: larger;<br>
+}<br>
+div.quote div.source, div.quote div.source a {<br>
+&nbsp;&nbsp;color: gray;<br>
+}
+</div>
+<p style="clear: both;">En Joomla, las líneas deben agregarse al archivo template.css correspondiente del template utilizado (por ejemplo, para el template beez, al archivo beez/css/template.css).</p>
+<h2>Limitaciones y manejo de errores</h2>
+<p>El módulo Joomla solo se puede incluir una vez en una página web cuando se utiliza una llamada asíncrona.</p>
+<p>Si <pp>allow_url_fopen</pp> está desactivado en el servidor, se insertará JavaScript para mostrar la cita. Si el usuario también ha desactivado JavaScript en el navegador web, siempre se mostrará la misma cita y se documentará con un comentario HTML.</p>
+<p>Se establece un tiempo de espera de 3 segundos para obtener la cita. Si la recuperación del servidor tarda más, se mostrará una cita predeterminada y el mensaje de error se encontrará como comentario HTML en el código fuente de la página.</p>
+
+<h2>Ejemplo de integración en Joomla</h2>
+<p>Citas de la categoría "English", coloreadas en el estilo del sitio web (al 1 de mayo de 2023):</p>
+<div class=""><%= image_tag("joomla_sample.gif", :alt => "Cita en letra blanca y fuente en amarillo", :title => "Ejemplo de www.digitalflem.com", size: '440x126') %></div>
+<p><a target="_blank" href="https://www.digitalflem.com/">Digital Fantasy Legacy Modder (FLEM)</a></p>
+
+<h2>Errores o mejoras</h2>
+<p>
+Si encuentras un error o deseas una mejora, por favor crea un <a target="_blank" href="https://github.com/muhme/quote/issues">ticket en GitHub</a>.</p>
+<p>Regresar a la integración general y a través de IFRAME: <%= link_to(image_tag("arrow_undo.png", :alt => "Flecha hacia atrás", :title => "Regresar", :border => "0"), {:action => 'use'}, :class => 'not_dashed') %></p>
+<hr>
+<p style="font-size: small;">Los logotipos de Joomla! están bajo el Copyright de <a href="http://www.opensourcematters.org">OpenSourceMatters</a>.

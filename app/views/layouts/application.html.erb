@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<%= request.path.eql?('/start/joomla_english') ? 'en' : 'de' %>">
+<html lang="<%= I18n.locale.to_s %>">
   <head>
     <title><%= page_title %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -30,7 +30,7 @@
         </p>
       <% end %>
       <div id="user_nav">
-        <p><%= current_user ? link_to('Logout', logout_path(locale: I18n.locale)) : link_to('Login', login_path(locale: I18n.locale)) %></p>
+        <p><%= current_user ? link_to(t(".logout"), logout_path(locale: I18n.locale)) : link_to(t('.login'), login_path(locale: I18n.locale)) %></p>
       </div>
       <p><%= link_to t("g.quotes", count: 0), locale: I18n.locale, controller: "quotations" %> <%= link_to("+", controller: "quotations", action: "list_no_public") if has_non_public(Quotation) %></p>
       <p id="letter">

@@ -1,8 +1,8 @@
-<h1>Kennwort aktualisieren</h1>
+<h1><%= t('password_resets.password_reset') %></h1>
 
-<% if @user.errors.any? %>
+<% if @user and @user.errors.any? %>
   <div id="error_explanation">
-    <h2><%= @user.errors.count %> Fehler</h2>
+    <h2><%= t("g.error", count: @user.errors.count) %></h2>
     <ul>
     <% @user.errors.full_messages.each do |message| %>
       <li><%= message %></li>
@@ -11,14 +11,14 @@
   </div>
 <% end %>
  
-<p>Hier kannst das Kennwort für den Benutzernamen "<%= h(@user.login) %>" mit der E-Mail "<%= h(@user.email) %>" ändern.</p>
-<p>Bitte das neue Kennwort zweimal eingeben.</p>
+<p><%= t('.change', login: h(@user.login)) %></p>
+<p><%= t('.twice') %></p>
  
 <%= form_tag password_reset_path, :method => :put do %>
   <%= hidden_field_tag(:login, @user.login) %>
-  <%= label_tag(:password, "Neues Kennwort") %><br />
-  <%= password_field_tag(:password, '', autofocus: true) %><br /><br />
-  <%= label_tag(:password, "Neues Kennwort wiederholen") %><br />
+  <%= label_tag(:password, t('activerecord.attributes.user.password')) %><br />
+  <%= password_field_tag(:password, :password, autofocus: true) %><br /><br />
+  <%= label_tag(:password, t('activerecord.attributes.user.password_confirmation')) %><br />
   <%= password_field_tag :password_confirmation %><br /><br />
-  <%= submit_tag "Kennwort aktualisieren" %>
+  <%= submit_tag t('.set_new_password') %>
 <% end %>

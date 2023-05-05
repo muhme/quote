@@ -10,7 +10,7 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
   test "get password reset page" do
     get new_password_reset_url
     assert_response :success
-    assert_match /Kennwort zurücksetzen/, @response.body
+    assert_match /Passwort zurücksetzen/, @response.body
   end
   
   # GET /password_resets/1/edit
@@ -18,14 +18,14 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
     get edit_password_reset_url id: @first_user
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Kennwort zurücksetzen für den Benutzereintrag .* ist nicht erlaubt./, @response.body
+    assert_match /Das Zurücksetzen des Passworts für den Benutzereintrag .* ist nicht erlaubt./, @response.body
   end
 
   # POST /password_resets
   test "fail for not existing email address" do
     post password_resets_url, :params => { :email => 'bla' }
     assert_response :unprocessable_entity # 422
-    assert_match /Es wurde kein Benutzer mit der E-Mail.*bla.*gefunden!/, @response.body
+    assert_match /Kein Benutzer mit der E-Mail .*bla.* gefunden!/, @response.body
   end
 
   # POST /password_resets
@@ -33,7 +33,7 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
     post password_resets_url, :params => { :email => @first_user.email }
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Eine E-Mail mit dem Link zum Zurücksetzen des Kennwortes wurde an .*#{@first_user.email}.* geschickt./, @response.body
+    assert_match /Eine E-Mail mit dem Link zum Zurücksetzen des Passworts wurde an .*#{@first_user.email}.* gesendet./, @response.body
     # try reset now
     last_email = ActionMailer::Base.deliveries.last
     #    <a href=3D"http://zitat-service.de/password_resets/V6mb1Fjyd4e7B_d4DAw=
@@ -44,12 +44,12 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
     url = pt + "/edit?login=" + @first_user.login
     get url
     assert_response :success
-    assert_match /Hier kannst das Kennwort für den Benutzernamen .* ändern./, @response.body
+    assert_match /Hier kannst Du ein neues Passwort für den Benutzernamen .* setzen./, @response.body
     # do it, e.g. http://192.168.99.100:8102/password_resets/qh2cSjNijWcZ4iwaeuAD
     put pt, params: { :login => @first_user.login, :password => 'new45678', :password_confirmation => 'new45678'}
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Das Kennwort für .* wurde erfolgreich aktualisiert./, @response.body
+    assert_match /Das Passwort für .* wurde erfolgreich aktualisiert./, @response.body
   end
 
   # POST /password_resets
@@ -62,7 +62,7 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
     post password_resets_url, :params => { :email => @first_user.email }
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Eine E-Mail mit dem Link zum Zurücksetzen des Kennwortes wurde an .*#{@first_user.email}.* geschickt./, @response.body
+    assert_match /Eine E-Mail mit dem Link zum Zurücksetzen des Passworts wurde an .*#{@first_user.email}.* gesendet./, @response.body
   end
 
 end

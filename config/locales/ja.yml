@@ -1,13 +1,40 @@
 ---
 ja:
   activerecord:
+    attributes:
+      author:
+        description: 商品説明
+        firstname: 氏名（ふりがな
+        link: リンク
+        name: ラストネーム
+      category:
+        category: カテゴリー
+        description: 商品説明
+      quotation:
+        quotation: 引用元
+        source: ソース
+        source_link: ソースへのリンク
+      user:
+        email: 電子メール
+        login: ユーザー名
+        password: パスワード
+        password_confirmation: パスワードの確認
     errors:
+      messages:
+        record_invalid: レコードは無効です：%{errors}。
+        restrict_dependent_destroy:
+          has_many: 依存する%{dependent}が存在するため、'%{record}'を削除できません。
+          has_one: 依存する%{dependent}が存在するため、'%{record}'を削除することができない。
       models:
+        author:
+          first_or_last_name_needed: 姓または名を設定する必要があります
         category:
           attributes:
             category:
               blank: 空白にできません
-              taken: 既に取得されています
+              taken: '"%{value}" は既に存在する。'
+          one: カテゴリー
+          other: カテゴリー
         quotation:
           attributes:
             quotation:
@@ -17,13 +44,42 @@ ja:
             email:
               taken: 既に取得されています
             login:
-              too_short: ログインが短すぎます
+              too_short: が短すぎる（少なくとも%{count}文字以上）
             password_confirmation:
               confirmation: パスワードが一致しません
+    models:
+      author: 著者名
+      category: カテゴリー
+      quotation: 引用元
+      user: ユーザー
+  authlogic:
+    attributes:
+      user_session:
+        email: メール
+        login: ユーザー名
+        password: 暗号
+        remember_me: 覚えていて
+    error_messages:
+      consecutive_failed_logins_limit_exceeded: 連続ログイン失敗の制限を超えたため、アカウントが無効になりました。
+      email_invalid: は、電子メールアドレスのように見えるはずです。
+      email_invalid_international: は、国際的な電子メールアドレスのように見えるはずです。
+      general_credentials_error: ログイン/パスワードの組み合わせが無効です
+      login_blank: かききれない
+      login_invalid: はアルファベット、数字、スペース、.-_@+ のみでお願いします。
+      login_not_found: は通用しない
+      no_authentication_details: 認証のための詳細が記載されていません。
+      not_active: あなたのアカウントはアクティブではありません
+      not_approved: アカウントが承認されない
+      not_confirmed: お客様のアカウントが確認されていない
+      password_blank: かききれない
+      password_invalid: は通用しない
+      session_invalid: あなたのセッションは無効であり、以下のエラーがあります：
+    models:
+      user_session: ユーザーセッション
   authors:
     create:
       created: 著者 "%{author}" が作成されました。
-      failed: 著者 "%{author}" の作成に失敗しました！ (%{exception})
+      failed: 著者 "%{author}" の作成に失敗しました！ 「%{exception}」
     destroy:
       deleted: 著者 "%{author}" のエントリが削除されました。
       has_quotes: 著者 "%{author}" には %{number} の引用があり、削除できません。
@@ -31,7 +87,7 @@ ja:
       edit_author: 著者を編集
     form:
       description: 説明
-      description_sample: 例：ドイツの詩人 (1749 - 1832)
+      description_sample: 例：ドイツの詩人 「1749 - 1832」
       firstname: 名
       firstname_sample: 例：ヨハン・ヴォルフガング・フォン
       link_sample: 例：http://de.wikipedia.org/wiki/Goethe
@@ -52,7 +108,7 @@ ja:
   categories:
     create:
       created: カテゴリ "%{category}" が作成されました。
-      failed: カテゴリ "%{category}" の作成に失敗しました！ (%{exception})
+      failed: カテゴリ "%{category}" の作成に失敗しました！ 「%{exception}」
     destroy:
       deleted: カテゴリ "%{category}" が削除されました。
       has_quotes: カテゴリ "%{category}" は %{number} の引用に割り当てられており、削除できません。
@@ -60,7 +116,7 @@ ja:
       edit_category: カテゴリを編集
     form:
       category_sample: 名詞化されたもの、単数形、例：成功
-      description_sample: "（必要に応じてコメント）"
+      description_sample: 必要に応じてコメント
     id_does_not_exist: ID "%{id}" のカテゴリは存在しません。
     list_by_letter:
       letter_missing: 文字が欠けています！
@@ -72,6 +128,24 @@ ja:
     login_missing: 新しいカテゴリを作成するためのログインがありません！
     update:
       updated: カテゴリ "%{category}" が更新されました。
+  errors:
+    messages:
+      blank: 蛻の殻であってはならない
+      empty: 蛻の殻であってはならない
+      equal_to: は%{count}と等しくなければならない。
+      even: いなかくさい
+      greater_than: は%{count}より大きくなければならない。
+      greater_than_or_equal_to: は%{count}以上でなければならない。
+      less_than: は%{count}より小さくなければならない。
+      less_than_or_equal_to: は%{count}以下でなければならない。
+      not_a_number: は数ではない
+      not_an_integer: は整数でなければならない
+      odd: 奇異に映るはず
+      other_than: は %{count} 以外でなければならない。
+      present: 須らく
+      too_long: が長すぎる（最大%{count}文字）。
+      too_short: が短すぎる（少なくとも%{count}文字以上）
+      wrong_length: の長さが間違っている（%{count}文字でなければならない）
   g:
     actions: アクション
     add: 追加
@@ -84,6 +158,7 @@ ja:
     bad_pagination:
       not_existing: ページ %{page_number} は存在しません！
     bookmark_or_share: ブックマーク/共有
+    by_the_user: ユーザーによる
     categories:
       one: カテゴリ
       other: カテゴリー
@@ -101,7 +176,7 @@ ja:
     for: に
     from: から
     have: 持っている
-    help: 助ける
+    help: ヘルプ
     id: 内部番号
     lightning: 雷
     link: リンク
@@ -149,6 +224,7 @@ ja:
       logged_in: ログイン済み
       login: ログイン
       logo_alt: ロゴ - 緑の Z 文字
+      logout: ログアウト
       not_found: 'エラー 404: エントリが見つかりません'
       of_the_user: ユーザーの
       project: プロジェクト
@@ -165,21 +241,32 @@ ja:
     create:
       email_not_found: メール "%{email}" に関連するユーザーが見つかりません！
       email_sent: パスワードをリセットするリンクが "%{email}" に送信されました。
+    edit:
+      change: ここでは、ユーザー名「%{login}」の新しいパスワードを設定することができます。
+      set_new_password: 新しいパスワードを設定する
+      twice: 新しいパスワードを2回入力してください。
+    new:
+      email: 電子メールアドレス
+      email_description: 登録に使っていたもの
+      self_service: ユーザーエントリーのパスワードは、お客様ご自身で再設定することができます。パスワードをリセットするためのリンクが記載された電子メールが送信されます。
+      send: メール送信
     not_allowed: ユーザーエントリ "%{login}" のパスワードリセットは許可されていません。
+    password_reset: パスワードの再設定
     update:
       updated: "%{login} のパスワードが正常に更新されました"
   quotations:
     create:
       author_used: 著者として "%{author}" が使用されました。
       created: ありがとう、%{id} 番目の引用が作成されました。
-      failed: 引用の作成に失敗しました！ (%{exception})
+      failed: 引用の作成に失敗しました！ 「%{exception}」
     destroy:
       deleted: 引用 "%{quote}" が削除されました。
     edit:
       edit_quotation: 引用を編集
     form:
-      author_hint: "（著者が不明の場合は空白にしてください）"
+      author_hint: 著者が不明の場合は空白にしてください
       category_placeholder: カテゴリを入力し始める...
+      link: 原典へのリンク
       link_description: オリジナルテキストを含むウェブサイトへのリンク。例：http://www.textlog.de/tucholsky-anweisung.html
       quotation_sample: 例：経験は遺伝しない - それぞれの人が独自に獲得する必要がある。
       source: オリジナルソース
@@ -200,11 +287,21 @@ ja:
     list_content:
       delete: 本当に引用 「%{quote}」 を削除しますか？
       new: 引用を作成
+    list_no_public:
+      non_public_quotes: 非公開の見積もり
     login_missing: 新しい引用を作成するにはログインが必要です！
+    new:
+      new: 見積もり作成
     search_author:
       placeholder: 姓を入力し始める...
     search_category_collected:
       one_click: 1回のクリックで追加
+    show:
+      author_link: 著者へのリンク "%{author}"
+      author_quotes: "「%{count}の引用」"
+      of_category: カテゴリー"%{category}"の。
+      of_user: ユーザー"%{user}"の。
+      quotes_link: '%{count}著者"%{author}"からの引用です。'
     update:
       author_unchanged: 著者 "%{author}" は変更されませんでした。
       unchanged: 引用は変更されませんでした。
@@ -216,9 +313,23 @@ ja:
     create:
       hello: こんにちは %{user}、おかえりなさい。
       login_failed: ログインに失敗しました！
+    new:
+      already: すでにユーザー名を作成されている場合は、その電子メールを使って →
+      doit: ログイン
+      login: ご登録ください
+      no_user: まだユーザーをお持ちでないのですか？<br />それなら、ご自身で作成してください。そうすると、引用の作成と編集ができるようになります →
   users:
     create:
       created: あなたのためにユーザー「%{user}」が作成されました。
+    edit:
+      update: ユーザーエントリーの更新
+    form:
+      confirmation_sample: パスワードの再入力をお願いします
+      email_sample: 例）miyuki@gmail.com
+      login_sample: 例えば、みゆきのように
+      password_sample: 8文字以上
+    new:
+      new: ユーザーエントリーの作成
     not_logged_in: ログインされていません！
     update:
       updated: ユーザーエントリ「%{user}」が変更されました。

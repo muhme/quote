@@ -107,6 +107,7 @@ GEM
     debug (1.7.1)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    deepl-rb (2.5.3)
     docile (1.4.0)
     erb-formatter (0.4.2)
       syntax_tree (~> 5.0)
@@ -320,6 +321,7 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  deepl-rb
   erb-formatter
   i18n-tasks (~> 1.0)
   importmap-rails

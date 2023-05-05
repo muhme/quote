@@ -9,7 +9,7 @@ class UserMailerTest < ActionMailer::TestCase
   test "password_reset" do
     @first_user.reset_perishable_token!
     mail = UserMailer.password_reset(@first_user)
-    assert_equal "Zurücksetzen des Kennwortes", mail.subject
+    assert_equal "Zurücksetzen des Passwortes", mail.subject
     assert_equal [@first_user.email], mail.to
     assert_equal ["heiko.luebbe@zitat-service.de"], mail.from
     assert_match "mit dem folgenden Link", mail.body.encoded

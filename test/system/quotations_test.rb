@@ -96,7 +96,7 @@ class QuotationsTest < ApplicationSystemTestCase
     check_page page, edit_quotation_url(id: 2), "h1", "Zitat bearbeiten"
     fill_in "quotation_quotation", with: "jo!"
     click_on "Speichern"
-    check_this_page page, nil, "dieses Zitat gibt es bereits"
+    check_this_page page, nil, "Zitat gibt es bereits"
   end
 
   test "author autocompletion select one in the list" do
@@ -245,7 +245,7 @@ class QuotationsTest < ApplicationSystemTestCase
     visit new_quotation_url
     fill_in "quotation_quotation", with: "Yes, we can."
     click_on "Speichern"
-    check_this_page page, nil, "dieses Zitat gibt es bereits"
+    check_this_page page, nil, "Zitat gibt es bereits"
   end
 
   test "GET creating new quote requires login" do
@@ -469,7 +469,7 @@ class QuotationsTest < ApplicationSystemTestCase
     fill_in "quotation_source_link", with: "https://github.com/muhme/quote"
     click_on "Speichern"
     check_this_page page, nil, "Zitat wurde aktualisiert."
-    check_this_page page, nil, /Link zur Quelle:.*github.com\/muhme\/quote/
+    check_this_page page, nil, /Link zur Original-Quelle:.*github.com\/muhme\/quote/
     changed_quote = Quotation.find(1)
     assert_equal last_created, changed_quote.created_at
     assert last_updated < changed_quote.updated_at, "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"

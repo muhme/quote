@@ -1,0 +1,47 @@
+<h1>Welcome to the Quote Service zitat-service.de</h1>
+<p>Anyone can contribute quotes here. Quotes can be sorted by <%= link_to("authors", locale: locale, controller: :authors) %> or
+  <%= link_to("categories", locale: locale, controller: :categories) %> and be
+  <%= link_to("embedded into your own website", locale: locale, controller: :static_pages, action: :use) %>.</p>
+<p>
+  <%= form_tag("/quotations", method: "get") do %>
+    <%= text_field_tag(:pattern, '', autofocus: true) %>
+    <%= submit_tag("Find") %>
+    <%= raw("in all #{link_to(nice_number(Quotation.count) + " quotes", locale: locale, controller: :quotations)}") %>
+  <% end %>
+</p>
+<% unless @quotation.nil? %>
+  <p>
+    <div class="randomquote_title">Random Quote</div>
+      <div class="randomquote">
+      <span class="ListQuote"><%= raw h(@quotation.quotation) %></span><br>
+      <% me = @quotation.get_linked_author_and_source -%>
+      <% unless me.blank? -%>
+        <span class="ListSource"><%= raw me %></span>
+      <% end -%>
+    </div>
+  </p>
+<% end %>
+<h2>Thank You</h2>
+<p><%= User.count %> users have signed up. The most recently added quotes are from <%= raw @users[0] %>, <%= raw @users[1] %> and <%= raw @users[2] %>.</p>
+<h2>News</h2>
+<dl>
+  <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> May 5th, 2023</dt>
+    <dd>Added the languages
+      <%= link_to(raw("English &#x1F1FA;&#x1F1F8;"), root_url(locale: :en)) %>,
+      <%= link_to(raw("español &#x1F1EA;&#x1F1F8;"), root_url(locale: :es)) %>,
+      <%= link_to(raw("日本語 &#x1F1EF;&#x1F1F5;"), root_url(locale: :ja)) %> and
+      <%= link_to(raw("українська &#x1F1FA;&#x1F1E6;"), root_url(locale: :uk)) %>.
+    If you are a native speaker, please help us improve the machine translation.</dd>
+  <dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> September 24th, 2019</dt>
+    <dd>There is a new Joomla! module for supporting TLS (https) and the Joomla update mechanism: <%= link_to 'Embed/Joomla', :action => 'joomla' %>.</dd>
+  <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> March 24tn, 2018</dt>
+    <dd>Web server relocation to Frankfurt am Main with the provider <a href="https://digitalocean.com/">DigitalOcean</a>.</dd>
+  <dt><%= image_tag("exclamation.png", :alt => "explanation", :title => "Attention!") %> November 26th, 2012</dt>
+    <dd>Please do not add quotes from Karl Valentin, Erich Kästner, or Heinz Erhardt (see <%= link_to 'Copyright', :action => 'help', :anchor => 'copyright' %>).</dd>
+  <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> July 16th, 2011</dt>
+    <dd><a href="humans.txt">humans.txt</a> (We are People, Not Machines) – Thank you!</dd>
+  <dt><%= image_tag("award_star_bronze_1.png", :alt => "admin", :title => "Administrator") %> September 12th, 2010</dt>
+    <dd><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> is now helping us manage the quotes. Thank you!</dd>
+  <dt><%= image_tag("pencil.png", :alt => "pencil", :title => "Pencil") %> November 22nd, 2009</dt>
+    <dd>The category <%= link_to('WebDesignTest', controller: :quotations, action: :list_by_category, category: 287 ) %> includes the shortest and longest quotes.</dd>
+</dl>

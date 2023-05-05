@@ -1,0 +1,47 @@
+<h1>引用サービスへようこそ zitat-service.de</h1>
+<p>誰でも引用を投稿できます。<%= link_to("著者", locale: locale, controller: :authors) %> または
+  <%= link_to("カテゴリ", locale: locale, controller: :categories) %> で引用をソートし、
+  <%= link_to("自分のウェブサイトに埋め込む", locale: locale, controller: :static_pages, action: :use) %> ことができます。</p>
+<p>
+  <%= form_tag("/quotations", method: "get") do %>
+    <%= text_field_tag(:pattern, '', autofocus: true) %>
+    <%= submit_tag("検索") %>
+    <%= raw("すべての#{link_to(nice_number(Quotation.count) + " 引用", locale: locale, controller: :quotations)}") %>
+  <% end %>
+</p>
+<% unless @quotation.nil? %>
+  <p>
+    <div class="randomquote_title">ランダム引用</div>
+      <div class="randomquote">
+      <span class="ListQuote"><%= raw h(@quotation.quotation) %></span><br>
+      <% me = @quotation.get_linked_author_and_source -%>
+      <% unless me.blank? -%>
+        <span class="ListSource"><%= raw me %></span>
+      <% end -%>
+    </div>
+  </p>
+<% end %>
+<h2>ありがとうございます</h2>
+<p><%= User.count %> 人のユーザーが登録されています。最近投稿された引用は <%= raw @users[0] %>, <%= raw @users[1] %> そして <%= raw @users[2] %> によるものです。</p>
+<h2>ニュース</h2>
+<dl>
+  <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 2023年5月5日</dt>
+    <dd>言語
+      <%= link_to(raw("English &#x1F1FA;&#x1F1F8;"), root_url(locale: :en)) %>,
+      <%= link_to(raw("español &#x1F1EA;&#x1F1F8;"), root_url(locale: :es)) %>,
+      <%= link_to(raw("日本語 &#x1F1EF;&#x1F1F5;"), root_url(locale: :ja)) %> および
+      <%= link_to(raw("українська &#x1F1FA;&#x1F1E6;"), root_url(locale: :uk)) %> が追加されました。
+    ネイティブの方は、機械翻訳の改善にご協力をお願いします。</dd>
+  <dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> 2019年9月24日</dt>
+    <dd>TLS (https) サポートと Joomla 更新メカニズムのための新しい Joomla! モジュールがあります：<%= link_to '埋め込み/Joomla', :action => 'joomla' %>.</dd>
+  <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record")  %> 2018年3月24日</dt>
+    <dd>ウェブサーバーをフランクフルト・アム・マインの運営者 <a href="https://digitalocean.com/">DigitalOcean</a> に移転。</dd>
+  <dt><%= image_tag("exclamation.png", :alt => "explamination", :title => "注意!") %> 2012年11月26日</dt>
+    <dd>カール・ヴァレンティン、エーリッヒ・ケストナー、ハインツ・エアハルトの引用は投稿しないでください（<%= link_to '著作権', :action => 'help', :anchor => 'urheberrecht' %> を参照）。</dd>
+  <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 2011年7月16日</dt>
+    <dd><a href="humans.txt">humans.txt</a> (私たちは人間です、機械ではありません) – ありがとう！</dd>
+  <dt><%= image_tag("award_star_bronze_1.png", :alt => "admin", :title => "管理者") %> 2010年9月12日</dt>
+    <dd><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> が引用の管理を手伝ってくれるようになりました。ありがとう！</dd>
+  <dt><%= image_tag("pencil.png", :alt => "pencil", :title => "Pencil") %> 2009年11月22日</dt>
+    <dd>カテゴリ <%= link_to('WebDesignTest', controller: :quotations, action: :list_by_category, category: 287 ) %> には最短および最長の引用が含まれています。</dd>
+</dl>

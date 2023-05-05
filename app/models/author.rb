@@ -78,7 +78,7 @@ class Author < ApplicationRecord
 
     def first_or_last_name
       if name.blank? and firstname.blank?
-        errors.add(:base, "Vorname oder Nachname muss gesetzt sein")
+        errors.add(:base, :first_or_last_name_needed)
       end
     end
 

@@ -1,25 +1,81 @@
 ---
 de:
   activerecord:
+    attributes:
+      author:
+        description: Beschreibung
+        firstname: Vorname
+        link: Link
+        name: Nachname
+      category:
+        category: Kategorie
+        description: Beschreibung
+      quotation:
+        quotation: Zitat
+        source: Quelle
+        source_link: Link zur Quelle
+      user:
+        email: E-Mail
+        login: Benutzername
+        password: Passwort
+        password_confirmation: Passwort-Bestätigung
     errors:
+      messages:
+        record_invalid: 'Datensatz ist ungültig: %{errors}'
+        restrict_dependent_destroy:
+          has_many: Kann '%{record}' nicht löschen, da abhängige %{dependent} existieren.
+          has_one: Kann '%{record}' nicht löschen, da ein abhängiges %{dependent} existiert.
       models:
+        author:
+          first_or_last_name_needed: Vorname oder Nachname muss gesetzt sein
         category:
           attributes:
             category:
               blank: kann nicht leer sein
-              taken: diese Kategorie gibt es bereits
+              taken: "„%{value}” gibt es bereits"
+          one: Kategorie
+          other: Kategories
         quotation:
           attributes:
             quotation:
-              taken: dieses Zitat gibt es bereits
+              taken: gibt es bereits
         user:
           attributes:
             email:
-              taken: diese E-Mail Adresse wird bereits genutzt
+              taken: wird bereits verwendet
             login:
-              too_short: Login ist zu kurz
+              too_short: ist zu kurz (mindestens %{count} Zeichen)
             password_confirmation:
-              confirmation: die Kennwörter stimmen nicht überein
+              confirmation: unterscheidet sich vom Passwort
+    models:
+      author: Autor
+      category: Kategorie
+      quotation: Zitat
+      user: Benutzer
+  authlogic:
+    attributes:
+      user_session:
+        email: e-Mail
+        login: Benutzername
+        password: Passwort
+        remember_me: mich erinnern
+    error_messages:
+      consecutive_failed_logins_limit_exceeded: Limit für aufeinanderfolgende fehlgeschlagene Anmeldungen überschritten, Konto ist deaktiviert.
+      email_invalid: sollte wie eine E-Mail Adresse aussehen.
+      email_invalid_international: sollte wie eine internationale E-Mail-Adresse aussehen.
+      general_credentials_error: Benutzername oder Passwort sind nicht gültig
+      login_blank: kann nicht leer sein
+      login_invalid: bitte nur Buchstaben, Zahlen, Leerzeichen und .-_@+ verwenden.
+      login_not_found: ist nicht gültig
+      no_authentication_details: Du hast keine Angaben zur Authentifizierung gemacht.
+      not_active: Dein Konto ist nicht aktiv
+      not_approved: Dein Konto ist nicht genehmigt
+      not_confirmed: Dein Konto ist nicht bestätigt
+      password_blank: kann nicht leer sein
+      password_invalid: ist nicht gültig
+      session_invalid: 'Deine Sitzung ist ungültig und weist die folgenden Fehler auf:'
+    models:
+      user_session: UserSession
   authors:
     create:
       created: Der Autor "%{author}" wurde angelegt.
@@ -60,7 +116,7 @@ de:
       edit_category: Kategorie bearbeiten
     form:
       category_sample: Substantiviert, im Singular, z.B. Erfolg
-      description_sample: "(ggf. eine Anmerkung)"
+      description_sample: ggf. eine Anmerkung
     id_does_not_exist: Es gibt keine Kategorie mit der ID "%{id}".
     list_by_letter:
       letter_missing: Buchstabe fehlt!
@@ -72,6 +128,24 @@ de:
     login_missing: Anmeldung fehlt, um eine neue Kategorie anzulegen!
     update:
       updated: Die Kategorie "%{category}" wurde aktualisiert.
+  errors:
+    messages:
+      blank: darf nicht leer sein
+      empty: darf nicht leer sein
+      equal_to: muss gleich %{count} sein
+      even: muss gerade sein
+      greater_than: muss größer als %{count} sein
+      greater_than_or_equal_to: muss größer oder gleich %{count} sein
+      less_than: muss kleiner als %{count} sein
+      less_than_or_equal_to: muss kleiner oder gleich %{count} sein
+      not_a_number: ist keine Zahl
+      not_an_integer: muss eine ganze Zahl sein
+      odd: muss ungerade sein
+      other_than: muss anders als %{count} sein
+      present: muss leer sein
+      too_long: ist zu lang (maximal %{count} Zeichen)
+      too_short: ist zu kurz (mindestens %{count} Zeichen)
+      wrong_length: hat die falsche Länge (sollte %{count} Zeichen haben)
   g:
     actions: Aktionen
     add: Hinzufügen
@@ -84,6 +158,7 @@ de:
     bad_pagination:
       not_existing: Die Seite %{page_number} gibt es nicht!
     bookmark_or_share: Lesezeichen / Weitersagen
+    by_the_user: durch den Benutzer
     categories:
       one: Kategorie
       other: Kategorien
@@ -147,8 +222,9 @@ de:
       joomla: Zitate mit Joomla! in die eigene Homepage einbinden
       joomla_english: Using quotes with Joomla! for your own homepage
       logged_in: Angemeldet
-      login: Anmelden
+      login: Login
       logo_alt: das Logo – der Buchstabe Z in grün
+      logout: Logout
       not_found: 'Fehler 404: Eintrag nicht gefunden'
       of_the_user: des Benutzers
       project: Projekt
@@ -163,11 +239,21 @@ de:
       separator: ","
   password_resets:
     create:
-      email_not_found: Es wurde kein Benutzer mit der E-Mail "%{email}" gefunden!
-      email_sent: Eine E-Mail mit dem Link zum Zurücksetzen des Kennwortes wurde an "%{email}" geschickt.
-    not_allowed: Kennwort zurücksetzen für den Benutzereintrag "%{login}" ist nicht erlaubt.
+      email_not_found: Kein Benutzer mit der E-Mail „%{email}” gefunden!
+      email_sent: Eine E-Mail mit dem Link zum Zurücksetzen des Passworts wurde an "%{email}" gesendet.
+    edit:
+      change: Hier kannst Du ein neues Passwort für den Benutzernamen „%{login}” setzen.
+      set_new_password: Neues Passwort setzen
+      twice: Bitte das neue Passwort zweimal eingeben.
+    new:
+      email: E-Mail-Adresse
+      email_description: die Du zur Anmeldung benutzt hattest
+      self_service: Das Passwort für Deinen Benutzereintrag kannst Du selbst zurücksetzen. Dazu wird Dir eine E-Mail mit einem Link zum Zurücksetzen geschickt.
+      send: E-Mail schicken
+    not_allowed: Das Zurücksetzen des Passworts für den Benutzereintrag "%{login}" ist nicht erlaubt.
+    password_reset: Passwort zurücksetzen
     update:
-      updated: Das Kennwort für "%{login}" wurde erfolgreich aktualisiert.
+      updated: Das Passwort für "%{login}" wurde erfolgreich aktualisiert.
   quotations:
     create:
       author_used: Als Autor wurde „%{author}” verwendet.
@@ -178,10 +264,11 @@ de:
     edit:
       edit_quotation: Zitat bearbeiten
     form:
-      author_hint: "(leer lassen, wenn der Autor unbekannt ist)"
+      author_hint: leer lassen, wenn der Autor unbekannt ist
       category_placeholder: Kategorie anfangen zu tippen ...
-      link_description: zu einer Website mit dem Original-Text der das Zitat enthält, z.B. http://www.textlog.de/tucholsky-anweisung.html
-      quotation_sample: z.B. Erfahrungen vererben sich nicht - jeder muß sie allein machen.
+      link: Link zur Original-Quelle
+      link_description: zu einer Website mit dem Original-Text, der das Zitat enthält, z.B. http://www.textlog.de/tucholsky-anweisung.html
+      quotation_sample: z.B. Erfahrungen vererben sich nicht – jeder muß sie allein machen.
       source: Original-Quelle
       source_description: typischerweise ein Buchtitel, z.B. Gebrauchsanweisung, Glossen und Essays, 1930
     id_does_not_exist: Es gibt kein Zitat mit der ID="%{id}"!
@@ -200,25 +287,49 @@ de:
     list_content:
       delete: Wirklich das Zitat „%{quote}” löschen?
       new: Zitat anlegen
+    list_no_public:
+      non_public_quotes: Nicht-Öffentliche Zitate
     login_missing: Anmeldung fehlt, um ein neues Zitat anzulegen!
+    new:
+      new: Zitat Anlegen
     search_author:
       placeholder: Nachname anfangen zu tippen ...
     search_category_collected:
       one_click: mit einem Klick hinzufügen
+    show:
+      author_link: Link zum Autor „%{author}”
+      author_quotes: "(%{count} Zitate)"
+      of_category: der Kategorie „%{category}”
+      of_user: des Benutzeres „%{user}”
+      quotes_link: "%{count} Zitate des Autors „%{author}”"
     update:
       author_unchanged: Der Autor „%{author}” wurde nicht geändert.
       unchanged: Das Zitat wurde nicht geändert.
       updated: Das Zitat wurde aktualisiert.
   user_mailer:
     password_reset:
-      subject: Zurücksetzen des Kennwortes
+      subject: Zurücksetzen des Passwortes
   user_sessions:
     create:
       hello: Hallo %{user}, schön dass Du da bist.
-      login_failed: Die Anmeldung war nicht erfolgreich!
+      login_failed: Fehler bei der Anmeldung!
+    new:
+      already: Wenn Du schon einen Benutzernamen angelegt hattest, dann kannst Du mit Deiner E-Mail das →
+      doit: Anmelden
+      login: Bitte melde Dich an
+      no_user: 'Du hast noch keinen Benutzer?<br />Dann lege Dir bitte selbst einen Benutzer an. Dann kannst Du Zitate anlegen und bearbeiten → '
   users:
     create:
       created: Ein Benutzer „%{user}” wurde für dich angelegt.
+    edit:
+      update: Benutzer-Eintrag aktualisieren
+    form:
+      confirmation_sample: bitte das Passwort wiederholen
+      email_sample: z.B. emma@web.de
+      login_sample: z.B. emma
+      password_sample: mindestens 8 Zeichen lang
+    new:
+      new: Benutzereintrag anlegen
     not_logged_in: Nicht angemeldet!
     update:
       updated: Dein Benutzereintrag „%{user}” wurde geändert.

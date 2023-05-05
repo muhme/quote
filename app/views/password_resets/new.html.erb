@@ -1,12 +1,12 @@
-<h1>Kennwort zurücksetzen</h1>
+<h1><%= t('password_resets.password_reset') %></h1>
  
-<p>Das Kennwort für Deinen Benutzereintrag kannst Du selbst zurücksetzen. Dazu wird Dir eine E-Mail mit einem Link zum Zurücksetzen geschickt.</p>
+<p><%= t('.self_service') %></p>
  
 <div class="actions">
   <%= form_tag password_resets_path do %>
-    <%= label_tag(:email, "Email-Adresse") %><br />
+    <%= label_tag(:email, label_and_description(t(".email"), t(".email_description"))) %><br />
     <%= text_field_tag(:email, '', autofocus: true) %><br /><br />
-    <%= submit_tag "Email schicken" %>
-    &nbsp; <%= link_to(image_tag("arrow_undo.png", :alt => "Pfeil zurück", :title => "Zurück", :border => "0"), root_url) %>
+    <%= submit_tag t('.send') %>
+    &nbsp; <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: "0"), root_url) %>
+  <% end %>
 </div>
-<% end %>

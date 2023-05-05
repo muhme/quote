@@ -1,0 +1,33 @@
+<h1>Help</h1>
+<p>Glad you're here. The Quote Service zitat-service.de provides you with a personalized collection of quotes sorted by authors and categories. After <%= link_to 'logging in', '/en/login' %>, you can create your own quotes. We have already collected <%= nice_number(Quotation.count) %> quotes from <%= nice_number(Author.count) %> authors and organized them into <%= nice_number(Category.count) %> categories. Our service has been available since 2007 and is completely free of charge and ad-free.</p>
+<p>If you would like to embed our quotes on your own homepage, you can find instructions on how to do so at <a href="/en/start/use">Embed</a>.</p>
+
+<h2>Welcome</h2>
+<p>To return to the home page of the web application, simply click on the logo <%= image_tag("quote_service_16.png", :alt => "Logo", :title => "www.zitat-service.de") %> in the top left corner. There you have e.g. a text search over all quotes.</p>
+
+<div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Creating a quote is shown.", :title => "View", :border => 1, size: '466x315') %><br />Example: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/en/quotations/898' %></div>
+<h2>Language Selection</h2>
+<p>By clicking on the flag, you can select the desired language.<br />Direct access is also possible, e.g., for English with:<br /><a href="https://www.zitat-service.de/en/">https://www.zitat-service.de/en/</a>.
+
+<h2>Quotes</h2>
+<p>In the list of <%= link_to 'quotes', '/en/quotations' %>, you can view all the details of a quote by clicking on the eye <%= image_tag("eye.png", :alt => "Eye", :title => "View") %>. If you are logged in, you can enter new quotes. You can only modify your own quotes with the pencil <%= image_tag("pencil.png", :alt => "Pencil", :title => "Edit") %> or delete them with the red cross <%= image_tag("cancel.png", :alt => "Red cross", :title => "Delete") %>.</p>
+<p>When adding a new quote, you can select the author by typing the first letters of their last name. If you do not know the author, simply leave the field blank.</p>
+<p>Please provide the original source for your quote, such as the book title. If you know of a document on the internet where the quote can be found in the original text, please provide the link. Do not link to pages where you can buy the book or other information.</p>
+<p>You can assign as many categories to your quote as you like. Categories that have already been found as words in the quote can be added with a click on the lightning bolt <%= image_tag("lightning.png", :alt => "Lightning bolt", :title => "Mark for suggestions") %> icon.</p>
+<p>If you find that an author or category is missing, you can add them yourself. Click on <%= link_to 'Create Author', '/en/authors/new' %> or <%= link_to 'Create Category', '/en/categories/new' %>. Afterwards you can add the author or category by editing your quote.</p>
+<h2 id="copyright">Copyright</h2>
+<p>Please note that quotes are also subject to German copyright law. This means that copyrighted works may not be used without the author's permission. Individual quotes are
+allowed, but there should be no more than five to ten quotes per author. When it comes to translations, keep in mind that the translator enjoys copyright protection just like an author.</p>
+<p>To use a quote in accordance with copyright law, you must provide a source citation. This usually consists of the book title, publication year, and page number.</p>
+<p>As there have been reports of cease and desist orders, we do not accept quotes from Karl Valentin, Erich Kästner, or Heinz Erhardt (see, for example, <a href="http://www1.wdr.de/themen/archiv/sp_urheberrecht/valentin100.html">Karl Valentin und die Anwälte</a>, WDR 2012).</p>
+</p>
+<p>Quotes from authors who have been deceased for more than 70 years are in the public domain and can be used freely.</p>
+<h2>Categories</h2>
+<p>In our collection, all quotes are assigned to specific topics, such as <%= link_to "Glück", '/en/quotations/list_by_category/7' %> (Happiness), <%= link_to "Mensch", '/en/quotations/list_by_category/32' %> (Human) or <%= link_to "Lächeln", '/en/quotations/list_by_category/139' %> (Smile). A quote can be assigned to multiple categories. You can view all the created <%= link_to 'categories', '/en/categories' %>. When you click on the eye <%= image_tag("eye.png", :alt => "Eye", :title => "View") %>, you can see further details about a category. If you have created a category yourself, you can also modify it by clicking on the pencil <%= image_tag("pencil.png", :alt => "Pencil", :title => "Edit") %> or delete it by clicking on the red cross <%= image_tag("cancel.png", :alt => "Red cross", :title => "Delete") %>. A category can only be deleted if no quotes are assigned to it.</p>
+<h2>Authors</h2>
+<p>When you view the list of <%= link_to 'authors', '/en/authors' %>, you can click on the eye <%= image_tag("eye.png", :alt => "Eye", :title => "View") %> to see more details about an author. If you have created an author yourself, you can edit them using the pencil <%= image_tag("pencil.png", :alt => "Pencil", :title => "Edit") %>. You can also see how many quotes are assigned to an author and display all quotes from that author.</p>
+<p>You can only delete an author you created with the red cross <%= image_tag("cancel.png", :alt => "Red cross", :title => "Delete") %> if no quotes are assigned to them.</p>
+<h2>Visibility</h2>
+<p>When you add new quotes, categories, or authors, they are initially visible only to you. An administrator must approve them before they become visible to everyone. If you make further changes later, they will again be visible only to you until an administrator approves them again. This restriction is intended to prevent quotes from being misused on websites.</p>
+<h2>Errors or Extensions</h2>
+<p>If you discover a bug or want a feature enhancement, please create an <a target="_blank" href="https://github.com/muhme/quote/issues">issue</a> for us. We will address your concern as soon as possible.</p>

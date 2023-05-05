@@ -1,0 +1,63 @@
+<h1>Integrating Quotes in <%= link_to(image_tag("joomla.png", :alt => "Joomla! Logo", :title => "Joomla!", :border => "0"), 'https://www.joomla.org', :class => 'not_dashed') %> </h1>
+<p>This page describes the options for integrating quotes from <a href="https://www.zitat-service.de">www.zitat-service.de</a> into the <a href="https://www.joomla.org">CMS Joomla!</a>. Random quotes from authors, categories, or your own quote collection can be displayed in Joomla! free of charge and without advertising. Most quotes are in German, but you have a nice selection of English quotations with category 'English'.</p>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_4_small.png", :alt => "Joomla! 3.0 Module Assignment", :title => "Joomla! 3.0 Module Assignment", :border => "1"), asset_url('joomla_30_4.png'), :class => "not_dashed") %></div>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_1_small.png", :alt => "Joomla! 3.0 Published Status", :title => "Joomla! 3.0 Details", :border => "1"),  asset_url('joomla_30_1.png'), :class => "not_dashed") %></div>
+<div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_0_small.png", :alt => "Joomla! 3.0 Module Installation", :title => "Joomla! 3.0 Module Installation", :border => "1"),  asset_url('joomla_30_0.png'), :class => "not_dashed") %></div>
+<h2>For Joomla! Version 3
+<%=
+	image_tag("joomla30.png", :alt => "Joomla! 3.0 compatible", :title => "Joomla! 3.0 compatible")
+%>
+</h2>
+<p>Module version 1.4.2 from October 4, 2019 uses TLS (https) and supports the automatic update mechanism. For installation in the Joomla! backend as an administrator:</p>
+<ul>
+  <li>install the mod_zitat_service_de module via "Extensions | Install" from the following web address:<br />
+https://www.zitat-service.de/joomla/mod_zitat_service_de_1.4.2.zip,</li>
+  <li>then set the module to "Published" via "Extensions | Modules",</li>
+  <li>set the desired position in the template (e.g., position-7), and</li>
+  <li>assign the module to the desired menus (e.g., "On all pages").</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_2_small.png", :alt => "Joomla! 3.0 Basic Options", :title => "Joomla! 3.0 Basic Options", :border => "1"), asset_url('joomla_30_2.png'), :class => "not_dashed") %></div>
+<p>With the basic options of the module, it is possible to display the quotes:</p>
+<ul>
+  <li>by a specific author (e.g., Goethe),</li>
+  <li>from a category (e.g., English) or</li>
+  <li>limited to your own custom quotes with a username, such as your own.</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_3_small.png", :alt => "Joomla! 3.0 Published Status", :title => "Joomla! 3.0 Details", :border => "1"), asset_url('joomla_30_3.png'), :class => "not_dashed") %></div>
+<p>By default, the quotes open in the same window. With the optional parameters, you can:</p>
+<ul>
+  <li>specify a window name (e.g., quote) and the quote, source, or author links will then open in a new window.</li>
+  <li>Set the query method for fetching the quote. The recommended query method is Asynchronous with JavaScript in the web browser. This speeds up the page load by fetching the quote after the page has been built. This option is also mandatory if the quote retrieval from Joomla is not possible, e.g., because allow_url_fopen in PHP is turned off.</li>
+  <li>Since the asynchronous query method fetches the quote after the page has been built, subsequent modules may <i>jump</i>. The module should therefore be the last in a row (so there is space below) or a horizontal space should be reserved. The minimum height of the module can be specified with the last parameter if no custom CSS exists. The height can be specified with, for example, 20ex or 100px. The WebDesignTest category is suitable for testing the height as it contains the shortest and longest quotes.</li>
+</ul>
+<div style="clear: both; float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("parameter_small.png", :alt => "Joomla! 1.5 Module Parameters", :title => "Joomla! 1.5 Module Parameters", :border => "1"), asset_url('parameter.png'), :class => "not_dashed") %></div>
+<h2>Adjusting the Style</h2>
+<p>The appearance of the quote can be customized using cascading stylesheets (CSS). The DIV element of the class <i>quote</i> encloses the entire quote, where you can set a border, for example. It contains two DIV elements of the classes <i>quotation</i> for the quote and <i>source</i> for the author and source.
+The following example removes the default link decoration (underline), sets the quote in black font and larger than normal. The source (whether with or without a link) is then displayed in gray:</p>
+<div class="code">
+div.quote * a {<br>
+&nbsp;&nbsp;text-decoration:none;<br>
+&nbsp;&nbsp;color: black;<br>
+&nbsp;&nbsp;font-size: larger;<br>
+}<br>
+div.quote div.source, div.quote div.source a {<br>
+&nbsp;&nbsp;color: gray;<br>
+}
+</div>
+<p style="clear: both;">In Joomla, the lines should be added to the used template (e.g., for the beez template, add it to the file beez/css/template.css).</p>
+<h2>Limitations and Error Handling</h2>
+<p>The Joomla module can only be included once on a webpage when using asynchronous calls.</p>
+<p>If <pp>allow_url_fopen</pp> is disabled on the server, JavaScript will be inserted to display the quote. If the user also has JavaScript disabled in their web browser, the same quote will always be displayed, and an HTML comment will document this.</p>
+<p>A timeout of 3 seconds is set for fetching the quote. If the retrieval from the server takes longer, a default quote will be displayed, and the error message can be found as an HTML comment in the page source code.</p>
+
+<h2>Example of an Integration in Joomla</h2>
+<p>Quotes from the "English" category, colored in the style of the website (as of May 1, 2023):</p>
+<div class=""><%= image_tag("joomla_sample.gif", :alt => "Quote in white font and source in yellow", :title => "Example from www.digitalflem.com", size: '440x126') %></div>
+<p><a target="_blank" href="https://www.digitalflem.com/">Digital Fantasy Legacy Modder (FLEM)</a></p>
+
+<h2>Bugs or Enhancements</h2>
+<p>
+If you have discovered a bug or have a feature request, please create a GitHub <a target="_blank" href="https://github.com/muhme/quote/issues">Issue</a>.</p>
+<p>Back to the general integration and using an IFRAME: <%= link_to(image_tag("arrow_undo.png", :alt => "Arrow back", :title => "Back", :border => "0"), {:action => 'use'}, :class => 'not_dashed') %></p>
+<hr>
+<p style="font-size: small;">Joomla! logos are copyrighted by <a href="http://www.opensourcematters.org">OpenSourceMatters</a>.

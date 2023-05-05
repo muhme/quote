@@ -53,16 +53,6 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get joomla_english" do
-    get start_joomla_english_url
-    assert_response :success
-  end
-
-  test "should get direct jump to joomla_english" do
-    get joomla_english_url
-    assert_response :success
-  end
-
   test "should get project" do
     get start_project_url
     assert_response :success

@@ -1,0 +1,32 @@
+<h1>Ayuda</h1>
+<p>Me alegra que estés aquí. El Servicio de Citas zitat-service.de te proporciona una colección personalizada de citas ordenadas por autores y categorías. Después de <%= link_to 'iniciar sesión', '/es/login' %>, puedes crear tus propias citas. Ya hemos recopilado <%= nice_number(Quotation.count) %> citas de <%= nice_number(Author.count) %> autores y las hemos organizado en <%= nice_number(Category.count) %> categorías. Nuestro servicio está disponible desde 2007 y es completamente gratuito y sin publicidad.</p>
+<p>Si deseas incrustar nuestras citas en tu propia página de inicio, puedes encontrar instrucciones sobre cómo hacerlo en <a href="/es/start/use">Incrustar</a>.</p>
+
+<h2>Bienvenida</h2>
+<p>Para volver a la página principal de la aplicación web, simplemente haz clic en el logo <%= image_tag("quote_service_16.png", :alt => "Logo", :title => "www.zitat-service.de") %> en la esquina superior izquierda. Ahí tienes, por ejemplo, una búsqueda de texto de todas las citas.</p>
+
+<div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Se muestra cómo crear una cita.", :title => "Ver", :border => 1, size: '466x315') %><br />Ejemplo: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/es/quotations/898' %></div>
+<h2>Selección de idioma</h2>
+<p>Al hacer clic en la bandera, puedes seleccionar el idioma deseado.<br />El acceso directo también es posible, por ejemplo, para inglés con:<br /><a href="https://www.zitat-service.de/en/">https://www.zitat-service.de/en/</a>.
+
+<h2>Citas</h2>
+<p>En la lista de <%= link_to 'citas', '/es/quotations' %>, puedes ver todos los detalles de una cita haciendo clic en el ojo <%= image_tag("eye.png", :alt => "Ojo", :title => "Ver") %>. Si has iniciado sesión, puedes ingresar nuevas citas. Solo puedes modificar tus propias citas con el lápiz <%= image_tag("pencil.png", :alt => "Lápiz", :title => "Editar") %> o eliminarlas con la cruz roja <%= image_tag("cancel.png", :alt => "Cruz roja", :title => "Eliminar") %>.</p>
+<p>Al agregar una nueva cita, puedes seleccionar al autor escribiendo las primeras letras de su apellido. Si no conoces al autor, simplemente deja el campo en blanco.</p>
+<p>Por favor, proporciona la fuente original de tu cita, como el título del libro. Si conoces un documento en Internet donde se pueda encontrar la cita en el texto original, proporciona el enlace. No enlaces a páginas donde se pueda comprar el libro u otra información.</p>
+<p>Puedes asignar tantas categorías a tu cita como desees. Las categorías que ya se han encontrado como palabras en la cita se pueden agregar con un clic en el icono de rayo <%= image_tag("lightning.png", :alt => "Rayo", :title => "Marcar para sugerencias") %> .</p>
+<p>Si encuentras que falta un autor o una categoría, puedes agregarlos tú mismo. Haz clic en <%= link_to 'Crear Autor','/es/authors/new' %> o <%= link_to 'Crear Categoría', '/es/categories/new' %>. Después, puedes agregar el autor o la categoría editando tu cita.</p>
+<h2 id="copyright">Derechos de autor</h2>
+<p>Ten en cuenta que las citas también están sujetas a la ley alemana de derechos de autor. Esto significa que las obras protegidas por derechos de autor no pueden utilizarse sin el permiso del autor. Se permiten citas individuales, pero no deben haber más de cinco a diez citas por autor. En cuanto a las traducciones, ten en cuenta que el traductor goza de protección de derechos de autor al igual que un autor.</p>
+<p>Para utilizar una cita de acuerdo con la ley de derechos de autor, debes proporcionar una cita de la fuente. Esto generalmente consiste en el título del libro, año de publicación y número de página.</p>
+<p>Ya que ha habido informes de órdenes de cesar y desistir, no aceptamos citas de Karl Valentin, Erich Kästner o Heinz Erhardt (ver, por ejemplo, <a href="http://www1.wdr.de/themen/archiv/sp_urheberrecht/valentin100.html">Karl Valentin und die Anwälte</a>, WDR 2012).</p>
+</p>
+<p>Las citas de autores que han fallecido hace más de 70 años están en el dominio público y pueden usarse libremente.</p>
+<h2>Categorías</h2>
+<p>En nuestra colección, todas las citas se asignan a temas específicos, como <%= link_to "Glück", '/es/quotations/list_by_category/7' %> (Felicidad), <%= link_to "Mensch", '/es/quotations/list_by_category/32' %> (Humano) o <%= link_to "Lächeln", '/es/quotations/list_by_category/139' %> (Sonrisa). Una cita puede asignarse a varias categorías. Puedes ver todas las <%= link_to 'categorías', '/es/categories' %> creadas. Al hacer clic en el ojo <%= image_tag("eye.png", :alt => "Ojo", :title => "Ver") %>, puedes ver más detalles sobre una categoría. Si has creado una categoría tú mismo, también puedes modificarla haciendo clic en el lápiz <%= image_tag("pencil.png", :alt => "Lápiz", :title => "Editar") %> o eliminarla haciendo clic en la cruz roja <%= image_tag("cancel.png", :alt => "Cruz roja", :title => "Eliminar") %>. Una categoría solo se puede eliminar si no hay citas asignadas a ella.</p>
+<h2>Autores</h2>
+<p>Al ver la lista de <%= link_to 'autores', '/es/authors' %>, puedes hacer clic en el ojo <%= image_tag("eye.png", :alt => "Ojo", :title => "Ver") %> para ver más detalles sobre un autor. Si has creado un autor tú mismo, puedes editarlo usando el lápiz <%= image_tag("pencil.png", :alt => "Lápiz", :title => "Editar") %>. También puedes ver cuántas citas están asignadas a un autor y mostrar todas las citas de ese autor.</p>
+<p>Solo puedes eliminar un autor que tú creaste con la cruz roja <%= image_tag("cancel.png", :alt => "Cruz roja", :title =>"Eliminar") %> si no hay citas asignadas a ellos.</p>
+<h2>Visibilidad</h2>
+<p>Cuando agregas nuevas citas, categorías o autores, inicialmente solo son visibles para ti. Un administrador debe aprobarlos antes de que sean visibles para todos. Si realizas más cambios después, nuevamente serán visibles solo para ti hasta que un administrador los apruebe nuevamente. Esta restricción tiene la intención de evitar que las citas sean mal utilizadas en sitios web.</p>
+<h2>Errores o Extensiones</h2>
+<p>Si descubres un error o deseas solicitar una extensión, por favor crea un <a target="_blank" href="https://github.com/muhme/quote/issues">ticket</a> para nosotros. Abordaremos tu inquietud lo más pronto posible.</p>

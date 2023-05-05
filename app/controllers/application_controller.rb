@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_action do
     bad_request? # check params[bad_request] which means BadRequest exception from Rack middleware
     bad_pagination? # check params[page] if existing
+    set_locale # needed to set locale for each request
   end
 
   rescue_from ActionController::UnknownFormat do |exception|
@@ -14,14 +15,28 @@ class ApplicationController < ActionController::Base
 
   # include locale param in every URL and set locale
   def default_url_options
-     { locale: set_locale }
+    { locale: I18n.locale }
   end
 
   private
-  
+
   # at the moment very simple from language selection or locale param
   def set_locale
-    I18n.locale = params[:locale] || I18n.locale
+    # already set or get very simple from browser or use default
+    if params[:locale] && I18n.available_locales.include?(params[:locale].to_sym)
+      logger.debug { "set_locale from params #{params[:locale]}" }
+      I18n.locale = params[:locale]
+    else
+      hal = request.env["HTTP_ACCEPT_LANGUAGE"]
+      extracted_locale = hal && hal.scan(/^[a-z]{2}/).first
+      if extracted_locale && I18n.available_locales.include?(extracted_locale.to_sym)
+        logger.debug { "set_locale from HTTP_ACCEPT_LANGUAGE=\"#{hal}\" #{extracted_locale}" }
+        I18n.locale = extracted_locale
+      else
+        logger.debug { "set_locale default #{I18n.default_locale}" }
+        I18n.locale = I18n.default_locale
+      end
+    end
   end
 
   # give user context visible quotations for a category

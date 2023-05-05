@@ -45,7 +45,7 @@ class CategoriesTest < ApplicationSystemTestCase
     check_page page, new_category_url, "h1", "Kategorie anlegen"
     fill_in 'category_name', with: ''
     click_on 'Speichern'
-    check_this_page page, nil, "Category kann nicht leer sein"
+    check_this_page page, nil, "Kategorie kann nicht leer sein"
   end
 
   # NICE cannot delete category created by another user
@@ -69,7 +69,7 @@ class CategoriesTest < ApplicationSystemTestCase
     check_page page, edit_category_url(id: 1), "h1", "Kategorie bearbeiten"
     fill_in 'category_name', with: ''
     click_on 'Speichern'
-    check_this_page page, nil, "Category kann nicht leer sein"
+    check_this_page page, nil, "Kategorie kann nicht leer sein"
   end
 
   test "admin needed to list not public categories" do

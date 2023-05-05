@@ -50,8 +50,9 @@ Rails.application.routes.draw do
     get "/500" => "static_pages#internal_server"
     get "/422" => "static_pages#unprocessable"
 
+    # catch all
+    match "*path" => "static_pages#catch_all", via: :all
+    
   end
 
-  # catch all
-  match "*path" => "static_pages#catch_all", via: :all
 end

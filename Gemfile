@@ -72,6 +72,7 @@ group :development, :test do
   gem 'simplecov', require: false
   # find and manage missing and unused translations
   gem 'i18n-tasks', '~> 1.0', require: false
+  gem 'deepl-rb'
   gem 'rubocop', require: false
   gem 'rubocop-i18n', require: false
   gem 'erb-formatter', require: false
@@ -87,3 +88,4 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen'
 end
+

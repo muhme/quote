@@ -1,0 +1,26 @@
+<h1>Imprint</h1>
+<p>Heiko Lübbe is responsible for the content of the website <a href="https://www.zitat-service.de">zitat-service.de</a>:</p>
+<p>
+<%= image_tag("contact.png", :alt => "Contact information including address, email, phone, and fax", :title => "Contact") %>
+</p>
+<h2>Copyright</h2>
+<p>If you, as the author or the estate administrator, wish not to be quoted here,
+please inform the operator by email. The quotes that fall under your copyright will be deleted immediately.
+</p>
+<h2>Availability of the Website</h2>
+<p>The operator will endeavor to offer the service as interruption-free as possible. However, despite all care, downtimes cannot be ruled out. The operator reserves the right to change or discontinue the offer at any time. No guarantee is assumed for interruptions or other disruptions caused by files not created error-free or formats not structured error-free.
+<h2>Note on the Use of External Links</h2>
+<p>Externally linked pages are checked when initially linking. However, changes in externally linked pages are not constantly checked. If the operator becomes aware or is informed by others that a specific offer, to which an external link was provided, triggers civil or criminal liability, the operator will remove the reference to this offer.</p>
+<h2>Design &amp; Development</h2>
+<p>For errors or extension requests, please create a <a target="_blank" href="https://github.com/muhme/quote/issues">ticket</a>.</p>
+<table id="environment">
+  <tr><td><%= image_tag("tux.png", :alt => "Tux", :title => "Tux is the mascot for Linux")%>Server</td><td><%= Socket.gethostname %></td></tr>
+  <tr><td><a href="https://rubyonrails.org/">Rails</a></td><td><%= Rails.version %></td></tr>
+  <tr><td><%= image_tag("ruby.png", :alt => "Ruby", :title => "Ruby for the programming language Ruby")%><a href="https://www.ruby-lang.org/">Ruby</a></td><td><%= RUBY_VERSION %></td></tr>
+  <tr><td><a href="https://github.com/muhme/quote">Software</a></td><td><%= getGitVersion() %></td></tr>
+  <tr><td>Environment</td><td><%= ENV['RAILS_ENV'] %></td></tr>
+</table>
+
+<p>The web application <a href="https://www.zitat-service.de">www.zitat-service.de</a> was created by:</p><p><a style="border: 0px;" href="https://www.consulting.heikol.de/en/">
+    <%= image_tag("systemberatung.png", :alt => "Link to English version of consulting.heiko.de", :title => "System Consulting Heiko Lübbe") %></a>
+</p>

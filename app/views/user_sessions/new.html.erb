@@ -1,29 +1,30 @@
-<h1>Login - Die Anmeldung</h1>
+<h1><%= t(".login") %></h1>
 
 <%= form_for @user_session do |f| %>
-  <% if @user_session.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@user_session.errors.count, "error") %> prohibited:</h2>
-    <ul>
-      <% @user_session.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-  <p>Wenn Du schon einen Benutzernamen angelegt hattest, dann kannst Du das <%= link_to 'Kennwort mit einer E-Mail zurücksetzen', :controller => 'password_resets', :action => 'new' %>.</p>
-<% end %>
+
+  <% if @user_session and @user_session.errors.any? %>
+      <div id="error_explanation">
+      <h2><%= t("g.error", count: @user_session.errors.count) %></h2>
+      <ul>
+        <% @user_session.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+    <p><%= raw("#{t(".already")} #{link_to t("password_resets.password_reset"), :controller => 'password_resets', :action => 'new'}") %>.</p>
+  <% end %>
   
 <div class="field">
-  <%= f.label "Benutzername" %><br />
+  <%= f.label t('activerecord.attributes.user.login') %><br />
   <%= f.text_field :login, autofocus: true %>
 </div>
 <div class="field">
-  <%= f.label "Kennwort" %><br />
+  <%= f.label t('activerecord.attributes.user.password') %><br />
   <%= f.password_field :password %><br />
 </div>
 <div class="actions">
-    <%= f.submit "Anmelden" %>
+    <%= f.submit t('.doit') %>
 </div>
 <% end %>
 
-<p>Du hast noch keinen Benutzer?<br>Dann lege Dir bitte selbst einen Benutzer an. Dann kannst Du Zitate anlegen und bearbeiten: <%= link_to "Register", new_user_path %></p>
+<p><%= raw("#{t('.no_user')} #{link_to(t('users.new.new'), new_user_path)}") %></p>

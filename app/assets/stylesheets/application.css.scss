@@ -35,7 +35,7 @@ textarea {
 
 #side {
     background: #bb88bb;
-    padding: 8px;
+    padding: 0.5em;
     border: 1px solid black;
     display: block;
     /* in combination with width necessary for IE6 */
@@ -44,15 +44,13 @@ textarea {
 }
 
 #content {
-    /* ie 7 shows h1 truncated in the top, so therefore I add 3 px space in the top */
-    padding: 3px 0px 0px 0px;
     position: absolute;
-    top: 1cm;
+    top: 2rem;
     left: 9em;
     margin-right: 1em;
     hyphens: auto;
     orphans: 3;
-    padding: 1em;
+    padding: 0em;
     widows: 3;
     -ms-hyphenate-limit-chars: auto 5;
     -ms-hyphenate-limit-lines: 2;
@@ -97,6 +95,7 @@ div.randomquote * a {
     border: none;
 }
 
+.actions a,
 .ListActions a,
 #side * a,
 a.not_dashed {
@@ -162,10 +161,12 @@ tr.ListLine0 td {
     padding: 8px;
     margin-left: 9em;
 }
+
 .center {
     text-align: center;
     vertical-align: middle;
 }
+
 .flex-center,
 .quote,
 .author {
@@ -174,24 +175,24 @@ tr.ListLine0 td {
     align-items: center;
 }
 
-#notice {
-    position: absolute;
-    left: 9em;
-    color: #006400;
-    /* darkgreen */
-    height: 1.8cm;
-    overflow: hidden;
-}
-
+#notice,
 #error {
     position: absolute;
     left: 9em;
-    color: red;
-    height: 1.8cm;
+    top: 1em;
     overflow: hidden;
 }
 
-span#side div, span#side p {
+#notice {
+    color: #006400;
+}
+
+#error {
+    color: red;
+}
+
+span#side div,
+span#side p {
     text-align: center;
 }
 
@@ -277,6 +278,7 @@ span#side div, span#side p {
     border: 1px solid black;
     padding: 5px;
     margin: 5px;
+    text-align: left;
 }
 
 .example {
@@ -323,7 +325,7 @@ table {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
 }
 
-table#quote_collections th {
+table * {
     text-align: left;
 }
 
@@ -339,9 +341,11 @@ table#quote_collections th {
 input {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
+
 input[type="submit"]:hover {
     background-color: #bb88bb;
 }
+
 .button_to input {
     font-size: 18px;
 }
@@ -369,8 +373,15 @@ table#environment td {
 }
 
 table#details {
-    background-color: #ddffdd;
     /* make show detail tables non-transparent */
+    background-color: #ddffdd;
+    border-spacing: 0 0.5ex;
+    border: 1px solid black;
+    padding: 0.5em;
+    margin-bottom: 0.5em
+}
+table#details tr:not(:last-child) td {
+    border-bottom: 1px solid #DDD;
 }
 
 @keyframes ligthgreen {
@@ -414,6 +425,7 @@ div.large_right {
 #locale {
     margin-bottom: 12px;
 }
+
 .language-selector {
     cursor: pointer;
 }
@@ -436,6 +448,7 @@ div.large_right {
 .language-option:hover {
     background-color: #bb88bb;
 }
+
 .language-selector:hover {
     color: white;
     background-color: black;

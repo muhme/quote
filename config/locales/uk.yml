@@ -1,13 +1,40 @@
 ---
 uk:
   activerecord:
+    attributes:
+      author:
+        description: Опис
+        firstname: Ім'я та прізвище
+        link: Посилання
+        name: Прізвище
+      category:
+        category: Категорія
+        description: Опис
+      quotation:
+        quotation: Цитата
+        source: Джерело
+        source_link: Посилання на джерело
+      user:
+        email: Електронна пошта
+        login: Ім'я користувача
+        password: Пароль
+        password_confirmation: Підтвердження пароля
     errors:
+      messages:
+        record_invalid: 'Запис є недійсним: %{errors}'
+        restrict_dependent_destroy:
+          has_many: Неможливо видалити '%{record}', оскільки існують залежний %{dependent}.
+          has_one: Неможливо видалити '%{record}', оскільки існує залежний %{dependent}.
       models:
+        author:
+          first_or_last_name_needed: Ім'я або прізвище повинно бути вказано
         category:
           attributes:
             category:
               blank: не може бути порожнім
-              taken: вже використовується
+              taken: '"%{value}" вже існує'
+          one: Категорія
+          other: Категорії
         quotation:
           attributes:
             quotation:
@@ -17,9 +44,38 @@ uk:
             email:
               taken: вже використовується
             login:
-              too_short: Логін занадто короткий
+              too_short: занадто короткий (принаймні %{count} символів)
             password_confirmation:
-              confirmation: не збігається з паролем
+              confirmation: Пароль не підходить
+    models:
+      author: Автор
+      category: Категорія
+      quotation: Цитата
+      user: Користувач
+  authlogic:
+    attributes:
+      user_session:
+        email: електронна пошта
+        login: Ім'я користувача
+        password: пароль
+        remember_me: пам'ятай мене
+    error_messages:
+      consecutive_failed_logins_limit_exceeded: Перевищено ліміт послідовних невдалих входів, обліковий запис вимкнено.
+      email_invalid: має виглядати як адреса електронної пошти.
+      email_invalid_international: має виглядати як міжнародна електронна адреса.
+      general_credentials_error: Комбінація Логін/Пароль не дійсна
+      login_blank: не може бути порожнім
+      login_invalid: слід використовувати лише літери, цифри, пробіли та .-_@+, будь ласка.
+      login_not_found: не є дійсним
+      no_authentication_details: Ви не надали жодних даних для автентифікації.
+      not_active: Ваш обліковий запис не активний
+      not_approved: Ваш обліковий запис не підтверджено
+      not_confirmed: Ваш обліковий запис не підтверджено
+      password_blank: не може бути порожнім
+      password_invalid: не є дійсним
+      session_invalid: 'Ваш сеанс недійсний і має наступні помилки:'
+    models:
+      user_session: UserSession
   authors:
     create:
       created: Автор "%{author}" створений.
@@ -60,7 +116,7 @@ uk:
       edit_category: Редагувати категорію
     form:
       category_sample: У відмінковому відмінку, в однині, напр. Успіх
-      description_sample: "(за потреби примітка)"
+      description_sample: за потреби примітка
     id_does_not_exist: Категорії з ID "%{id}" не існує!
     list_by_letter:
       letter_missing: Не вистачає літери!
@@ -72,6 +128,24 @@ uk:
     login_missing: Відсутність входу для створення нової категорії!
     update:
       updated: Категорія "%{category}" оновлена.
+  errors:
+    messages:
+      blank: не повинно бути порожнім
+      empty: не повинно бути порожнім
+      equal_to: має дорівнювати %{count}
+      even: повинні бути прямими
+      greater_than: має бути більшим за %{count}
+      greater_than_or_equal_to: має бути більшим або рівним %{count}
+      less_than: має бути меншим за %{count}
+      less_than_or_equal_to: має бути меншим або рівним %{count}
+      not_a_number: не є числом
+      not_an_integer: має бути цілим числом
+      odd: має бути дивним
+      other_than: має бути відмінним від %{count}
+      present: має бути порожнім
+      too_long: занадто довгий (не більше %{count} символів)
+      too_short: занадто короткий (принаймні %{count} символів)
+      wrong_length: має неправильну довжину (має бути %{count} символів)
   g:
     actions: Дії
     add: Додати
@@ -82,17 +156,18 @@ uk:
       many: авторів
       one: aвтор
       other: авторів
-      zero: авторів
+      zero: Автор
     back: Назад
     bad_pagination:
       not_existing: Сторінка %{page_number} не існує!
     bookmark_or_share: Закладки / Поділитися
+    by_the_user: користувачем
     categories:
       few: категорії
       many: категорій
       one: Категорія
       other: Категорії
-      zero: категорій немає
+      zero: Категорій
     category: Категорія
     create: Створити
     created: Створено
@@ -100,7 +175,7 @@ uk:
     description: Опис
     edit: Редагувати
     error:
-      few: "%{count} помилка"
+      few: "%{count} помилки"
       many: "%{count} помилок"
       one: "%{count} помилка"
       other: "%{count} помилок"
@@ -129,7 +204,7 @@ uk:
       many: "%{count} категорій"
       one: 1 категорія
       other: "%{count} категорії"
-      zero: Категорії
+      zero: Категорій
     ordered: Впорядковано
     page: Сторінка
     pencil: Олівець
@@ -164,13 +239,14 @@ uk:
       logged_in: Увійшли до системи
       login: Увійти
       logo_alt: логотип - літера Z зеленого кольору
+      logout: Виходь
       not_found: 'Помилка 404: запис не знайдено'
       of_the_user: користувача
       project: Проект
       quote_from: Цитата від
       register: Зареєструватися
       starting_with_letter: починаючи з %{letter}
-      to_use: Використовувати
+      to_use: Будовувати
       use: Вставити цитати на власну домашню сторінку
   number:
     format:
@@ -180,7 +256,17 @@ uk:
     create:
       email_not_found: Користувача з електронною адресою "%{email}" не знайдено!
       email_sent: На адресу "%{email}" відправлено листа з посиланням для скидання пароля.
+    edit:
+      change: Тут ви можете встановити новий пароль для імені користувача "%{login}".
+      set_new_password: Встановіть новий пароль
+      twice: Будь ласка, введіть новий пароль двічі.
+    new:
+      email: Адреса електронної пошти
+      email_description: який ви використовували для реєстрації
+      self_service: Ви можете самостійно скинути пароль для входу в систему. На вашу електронну пошту буде надіслано лист із посиланням для зміни пароля.
+      send: Надіслати електронну пошту
     not_allowed: Скидання пароля для входу користувача "%{login}" не дозволяється.
+    password_reset: Скинути пароль
     update:
       updated: Пароль для "%{login}" успішно оновлено.
   quotations:
@@ -193,8 +279,9 @@ uk:
     edit:
       edit_quotation: Редагування цитати
     form:
-      author_hint: "(порожньо, якщо автор невідомий)"
+      author_hint: порожньо, якщо автор невідомий
       category_placeholder: Почніть вводити категорію...
+      link: Посилання на першоджерело
       link_description: посилання на сайт з оригінальним текстом цитати, наприклад, http://www.textlog.de/tucholsky-anweisung.html
       quotation_sample: наприклад, Досвід не передається - кожен повинен здобувати його самостійно.
       source: Оригінальне джерело
@@ -215,11 +302,21 @@ uk:
     list_content:
       delete: Ви дійсно хочете видалити цитату „%{quote}”?
       new: Додати цитату
+    list_no_public:
+      non_public_quotes: Непублічні котирування
     login_missing: Щоб додати нову цитату, потрібно увійти!
+    new:
+      new: Створити пропозицію
     search_author:
       placeholder: Почніть вводити прізвище...
     search_category_collected:
       one_click: додати з одним натисканням
+    show:
+      author_link: Посилання на автора "%{author}"
+      author_quotes: "(%{count} лапки)"
+      of_category: категорії "%{category}"
+      of_user: користувача "%{user}"
+      quotes_link: '%{count} Цитати автора "%{author}"'
     update:
       author_unchanged: Автор „%{author}” не було змінено.
       unchanged: Цитата не була змінена.
@@ -231,9 +328,23 @@ uk:
     create:
       hello: Вітаємо %{user}, раді бачити вас тут.
       login_failed: Помилка входу!
+    new:
+      already: Якщо ви вже створили ім'я користувача, ви можете використовувати свою електронну пошту для створення →
+      doit: Увійдіть в систему
+      login: Будь ласка, зареєструйтесь
+      no_user: Ви ще не маєте користувача? <br />Тоді, будь ласка, створіть його самостійно. Тоді ви зможете створювати та редагувати цитати →
   users:
     create:
       created: Користувач "%{user}" був створений для вас.
+    edit:
+      update: Оновлення запису користувача
+    form:
+      confirmation_sample: будь ласка, повторіть пароль
+      email_sample: наприклад, olena@ukr.net
+      login_sample: наприклад, oлена
+      password_sample: щонайменше 8 символів завдовжки
+    new:
+      new: Створити запис користувача
     not_logged_in: Не увійшли в систему!
     update:
       updated: Ваш запис користувача "%{user}" був змінений.

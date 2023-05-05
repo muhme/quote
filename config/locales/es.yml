@@ -1,13 +1,40 @@
 ---
 es:
   activerecord:
+    attributes:
+      author:
+        description: Descripción
+        firstname: Nombre
+        link: Enlace
+        name: Apellido
+      category:
+        category: Categoría
+        description: Descripción
+      quotation:
+        quotation: Cita
+        source: Fuente
+        source_link: Enlace a la fuente
+      user:
+        email: Correo electrónico
+        login: Nombre de usuario
+        password: Contraseña
+        password_confirmation: Confirmación de contraseña
     errors:
+      messages:
+        record_invalid: 'El registro no es válido: %{errors}'
+        restrict_dependent_destroy:
+          has_many: No se puede eliminar '%{record}' porque existe %{dependent} dependiente.
+          has_one: No se puede eliminar %{record} porque existe un %{dependent} dependiente.
       models:
+        author:
+          first_or_last_name_needed: Nombre o apellidos
         category:
           attributes:
             category:
               blank: No puede estar en blanco
-              taken: esta categoría ya existe
+              taken: '"%{value}" ya existe'
+          one: Categoría
+          other: Categorías
         quotation:
           attributes:
             quotation:
@@ -17,9 +44,38 @@ es:
             email:
               taken: este correo ya está en uso
             login:
-              too_short: El inicio es demasiado corto
+              too_short: es demasiado corto (al menos %{count} caracteres)
             password_confirmation:
               confirmation: Las contraseñas no coinciden
+    models:
+      author: Autor
+      category: Categoría
+      quotation: Cita
+      user: Usuario
+  authlogic:
+    attributes:
+      user_session:
+        email: correo electrónico
+        login: Nombre de usuario
+        password: contraseña
+        remember_me: acuérdate de mí
+    error_messages:
+      consecutive_failed_logins_limit_exceeded: Se ha superado el límite de inicios de sesión fallidos consecutivos, la cuenta está desactivada.
+      email_invalid: debe parecerse a una dirección de correo electrónico.
+      email_invalid_international: debe parecerse a una dirección de correo electrónico internacional.
+      general_credentials_error: La combinación Login/Contraseña no es válida
+      login_blank: no puede estar en blanco
+      login_invalid: debe usar sólo letras, números, espacios y .-_@+ por favor.
+      login_not_found: no es válido
+      no_authentication_details: No ha facilitado ningún dato para la autenticación.
+      not_active: Su cuenta no está activa
+      not_approved: Su cuenta no está aprobada
+      not_confirmed: Su cuenta no está confirmada
+      password_blank: no puede estar en blanco
+      password_invalid: no es válido
+      session_invalid: 'Su sesión no es válida y tiene los siguientes errores:'
+    models:
+      user_session: UserSession
   authors:
     create:
       created: El autor "%{author}" ha sido creado.
@@ -60,7 +116,7 @@ es:
       edit_category: Editar categoría
     form:
       category_sample: Sustantivo, singular, por ejemplo, éxito
-      description_sample: "(una nota, en su caso)"
+      description_sample: una nota, en su caso
     id_does_not_exist: No existe una categoría con el ID "%{id}".
     list_by_letter:
       letter_missing: ¡Falta una letra!"
@@ -72,6 +128,24 @@ es:
     login_missing: "¡Falta el login para crear una nueva categoría!"
     update:
       updated: La categoría "%{category}" ha sido actualizada.
+  errors:
+    messages:
+      blank: no debe estar vacío
+      empty: no debe estar vacío
+      equal_to: debe ser igual a %{count}
+      even: debe ser recto
+      greater_than: debe ser mayor que %{count}
+      greater_than_or_equal_to: debe ser mayor o igual que %{count}
+      less_than: debe ser menor que %{count}
+      less_than_or_equal_to: debe ser menor o igual que %{count}
+      not_a_number: no es un número
+      not_an_integer: debe ser un número entero
+      odd: debe ser impar
+      other_than: debe ser distinto de %{count}
+      present: debe estar vacío
+      too_long: es demasiado largo (máximo %{count} caracteres)
+      too_short: es demasiado corto (al menos %{count} caracteres)
+      wrong_length: tiene una longitud incorrecta (debería tener %{count} caracteres)
   g:
     actions: Acciones
     add: Añadir
@@ -84,6 +158,7 @@ es:
     bad_pagination:
       not_existing: La página %{page_number} ¡no existe!
     bookmark_or_share: Añadir a favoritos / Compartir
+    by_the_user: por el usuario
     categories:
       one: Categoría
       other: Categorías
@@ -101,7 +176,7 @@ es:
     for: de
     from: tener
     have: tienen
-    help: Asistencia
+    help: Ayuda
     id: Nº interno
     lightning: haz de luz
     link: Enlace
@@ -149,6 +224,7 @@ es:
       logged_in: Conectado
       login: Iniciar sesión
       logo_alt: el logotipo - la letra Z en verde
+      logout: Salir
       not_found: 'Error 404: Entrada no encontrada'
       of_the_user: del usuario
       project: Proyecto
@@ -165,7 +241,17 @@ es:
     create:
       email_not_found: ¡No se encontró un usuario con el correo electrónico "%{email}"!
       email_sent: Se ha enviado un correo electrónico con el enlace para restablecer la contraseña a "%{email}".
+    edit:
+      change: Aquí puede establecer una nueva contraseña para el nombre de usuario "%{login}".
+      set_new_password: Establecer nueva contraseña
+      twice: Por favor, introduzca la nueva contraseña dos veces.
+    new:
+      email: Correo electrónico
+      email_description: que había utilizado para registrarse
+      self_service: Usted mismo puede restablecer la contraseña de su entrada de usuario. Se le enviará un correo electrónico con un enlace para restablecer la contraseña.
+      send: Enviar correo electrónico
     not_allowed: No está permitido restablecer la contraseña para la entrada de usuario "%{login}".
+    password_reset: Restablecer contraseña
     update:
       updated: La contraseña para "%{login}" se ha actualizado correctamente.
   quotations:
@@ -178,8 +264,9 @@ es:
     edit:
       edit_quotation: Editar cita
     form:
-      author_hint: "(dejar en blanco si el autor es desconocido)"
+      author_hint: dejar en blanco si el autor es desconocido
       category_placeholder: Comienza a escribir la categoría...
+      link: Enlace a la fuente original
       link_description: a un sitio web con el texto original que contiene la cita, por ejemplo, http://www.textlog.de/tucholsky-anweisung.html
       quotation_sample: por ejemplo, Las experiencias no son heredables, cada uno debe vivirlas por sí mismo.
       source: Fuente original
@@ -200,11 +287,21 @@ es:
     list_content:
       delete: ¿Realmente quieres eliminar la cita "%{quote}"?
       new: Añadir cita
+    list_no_public:
+      non_public_quotes: Citas no públicas
     login_missing: "¡Falta el login para añadir una nueva cita!"
+    new:
+      new: Crear presupuesto
     search_author:
       placeholder: Comienza a escribir el apellido...
     search_category_collected:
       one_click: agregar con un solo clic
+    show:
+      author_link: Enlace al autor "%{author}"
+      author_quotes: "(%{count} citas)"
+      of_category: de la categoría "%{category}"
+      of_user: del usuario "%{user}"
+      quotes_link: '%{count} Citas del autor "%{author}"'
     update:
       author_unchanged: El autor "%{author}" no ha sido cambiado.
       unchanged: La cita no ha sido cambiada.
@@ -216,9 +313,23 @@ es:
     create:
       hello: Hola %{user}, es un gusto tenerte aquí.
       login_failed: "¡El inicio de sesión no fue exitoso!"
+    new:
+      already: Si ya ha creado un nombre de usuario, puede utilizar su dirección de correo electrónico para crear la carpeta →
+      doit: Conectarse
+      login: Por favor, regístrese
+      no_user: Todavía no tienes un usuario?<br />Entonces, por favor, crea uno tú mismo. Entonces podrá crear y editar citas →
   users:
     create:
       created: Se ha creado un usuario "%{user}" para ti.
+    edit:
+      update: Actualizar entrada de usuario
+    form:
+      confirmation_sample: repita la contraseña
+      email_sample: 'por ejemplo: lucia@gmail.com'
+      login_sample: por ejemplo, lucia
+      password_sample: al menos 8 caracteres
+    new:
+      new: Crear entrada de usuario
     not_logged_in: "¡No has iniciado sesión!"
     update:
       updated: Tu entrada de usuario "%{user}" ha sido modificada.

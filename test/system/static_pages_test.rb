@@ -35,16 +35,6 @@ class StaticPagessTest < ApplicationSystemTestCase
     check_page page, "joomla", "h2", "Fehler oder Erweiterungen", 4000
     assert_equal "Zitat-Service – Zitate mit Joomla! in die eigene Homepage einbinden", page.title
   end
-    
-  test "joomla_english" do
-    check_page page, "start/joomla_english", "h2", "Examples", 2500
-    assert_equal "Zitat-Service – Using quotes with Joomla! for your own homepage", page.title
-  end
-
-  test "direct route joomla_english" do
-    check_page page, "joomla_english", "h2", "Examples", 2500
-    assert_equal "Zitat-Service – Using quotes with Joomla! for your own homepage", page.title
-  end
 
   test "UTF-8 German Umlaut" do
     check_page page, "start/use", "p", "für", 3000
@@ -67,16 +57,6 @@ class StaticPagessTest < ApplicationSystemTestCase
   end
   test "500 internal server error" do
     check_page(page, "/500", "h1", "HTTP-Statuscode 500", 150)
-  end
-  
-  test "HTML lang" do
-    [root_url, joomla_url, authors_url, author_url(id: Author.find_by_name('Barbara'))].each {
-      |url|
-        visit url
-        assert page.source.match('<html lang="de">')
-    }
-    visit start_joomla_english_url
-    assert page.source.match('<html lang="en">')
   end
   
 end

@@ -1,4 +1,3 @@
-<p>English readers please jump to <%= link_to 'joomla_english', :action => 'joomla_english' %>.</p>
 <h1>Zitate in <%= link_to(image_tag("joomla.png", :alt => "Joomla! Logo", :title => "Joomla!", :border => "0"), 'https://www.joomla.org', :class => 'not_dashed') %> einbinden</h1>
 <p>Diese Seite beschreibt die Möglichkeiten zum Einbinden der Zitate von <a href="https://www.zitat-service.de">www.zitat-service.de</a> in das <a href="https://www.joomla.org">CMS Joomla!</a>. Kosten- und Werbefrei können Zufalls-Zitate in Joomla! von Autoren, Kategorien oder der eigenen Zitatesammlung angezeigt werden.</p>
 <div style="float: right; margin: 4ex 0 4ex 2em;"><%= link_to(image_tag("joomla_30_4_small.png", :alt => "Joomla! 3.0 Modulzuweisung", :title => "Joomla! 3.0 Modulzuweisung", :border => "1"), asset_url('joomla_30_4.png'), :class => "not_dashed") %></div>
@@ -51,10 +50,12 @@ div.quote div.source, div.quote div.source a {<br>
 <p>Das Joomla-Modul kann bei asynchronem Aufruf nur einmal auf einer Webseite eingebunden werden.</p>
 <p>Wenn <pp>allow_url_fopen</pp> auf dem Server ausgeschalten ist, dann wird JavaScript eingefügt mit dem das Zitat angezeigt wird. Hat der Benutzer außerdem JavaScript im Web-Browser ausgeschaltet, dann wird immer das gleiche Zitat angezeigt und ein HTML-Kommentar dokumentiert das.</p>
 <p>Für das Holen des Zitats wird ein Timeout von 3 Sekunden gesetzt. Wenn der Abruf vom Server länger dauert, dann wird ein Standard-Zitat angezeigt und die Fehlermeldung findet sich als HTML-Kommentar im Seiten-Quelltext.</p>
+
 <h2>Beispiel einer Einbindung in Joomla</h2>
-<ul>
-  <li><a target="_blank" href="https://www.digitalflem.com/">Digital Fantasy Legacy Modder (FLEM)</a> - Zitate der Kategorie „English”, koloriert im Stil der Website</li> (Stand: 27. September 2022)
-</ul>
+<p>Zitate der Kategorie „English”, koloriert im Stil der Website</li> (Stand: 1. Mai 2023):</p>
+<div class=""><%= image_tag("joomla_sample.gif", :alt => "Zitat in weißer Schrift, beim schweben über den Link in grün und mit Quelle in Gelb", :title => "Beispiel von www.digitalflem.com", size: '440x126') %></div>
+<p><a target="_blank" href="https://www.digitalflem.com/">Digital Fantasy Legacy Modder (FLEM)</a></p>
+
 <h2>Fehler oder Erweiterungen</h2>
 <p>
 Wenn Du einen Fehler entdeckt hast oder Dir eine Erweiterung wünschst, dann erstelle bitte ein GitHub <a target="_blank" href="https://github.com/muhme/quote/issues">Ticket</a>.</p>
