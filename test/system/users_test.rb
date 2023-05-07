@@ -3,9 +3,32 @@ require "application_system_test_case"
 class UsersTest < ApplicationSystemTestCase
 
   # /users
-  test "visiting the index" do
-    visit users_url
-    assert_selector "h1", text: /Seite nicht gefunden.*404/
+  test "not possible to visit the index w/o login" do
+    up = users_path(locale: :de)
+    visit root_url
+    assert_no_match(/"#{Regexp.quote(up)}"/, page.source)
+    visit up
+    assert_selector "h1", text: /Zugriff wurde verweigert.*403/
+  end
+  test "not possible to visit the index as non-admin" do
+    up = users_path(locale: :de)
+    do_login
+    assert_no_match(/"#{Regexp.quote(up)}"/, page.source)
+    sleep 3
+    visit up
+    assert_selector "h1", text: /Zugriff wurde verweigert.*403/
+        sleep 3
+  end
+  test "visiting the index as admin" do
+    up = users_path(locale: :de)
+    do_login :admin_user, :admin_user_password
+    visit root_url
+    assert page.source.match(/"#{Regexp.quote(up)}"/)
+    click_link "Benutzer", href: up
+    assert_selector "h1", text: /Benutzereinträge mit Zitaten/
+    visit root_url
+    visit up
+    assert_selector "h1", text: /Benutzereinträge mit Zitaten/
   end
   
   # /user

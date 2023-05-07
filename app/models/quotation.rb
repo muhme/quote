@@ -12,6 +12,10 @@ class Quotation < ApplicationRecord
   def Quotation.count_non_public
     return count_by_sql("select count(*) from quotations where public = 0")
   end
+
+  def Quotation.count_users_quotations(user_id)
+    Quotation.count_by_sql("select count(*) from quotations where user_id = #{user_id}")
+  end
   
   # returns - with links if exist - authors name and quotations source name or blank
   # returns "", "authors name", "source" or "authors name, source"

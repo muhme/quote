@@ -1,0 +1,33 @@
+<!-- @formatter:off -->
+<h1><%= t(".title") %></h1>
+
+<%= will_paginate @users %>
+
+<table class="border">
+
+  <thead>
+    <tr>
+      <th><%= t("activerecord.attributes.user.login") %></th>
+      <th><%= t("g.quotes", count: 2) %></th>
+      <th><%= t("activerecord.attributes.user.email") %></th>
+      <th><%= t("g.created") %></th>
+      <th><%= t(".last_login_at") %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <% count = Quotation.count_users_quotations(user.id) %>
+      <tr>
+        <td><%= user.login %></td>
+        <td class="text-right"><%=
+          link_to(count, url_for(only_path: true, controller: "quotations", action: "list_by_user", user: user.login))
+        %></td>
+        <td><%= user.email %></td>
+        <td><%= raw nice_date(user.created_at).gsub(",", "<br />") %></td>
+        <td><%= raw nice_date(user.updated_at).gsub(",", "<br />") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>

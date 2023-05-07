@@ -328,6 +328,9 @@ de:
       email_sample: z.B. emma@web.de
       login_sample: z.B. emma
       password_sample: mindestens 8 Zeichen lang
+    index:
+      last_login_at: Letztes Login
+      title: Benutzereinträge mit Zitaten
     new:
       new: Benutzereintrag anlegen
     not_logged_in: Nicht angemeldet!

@@ -328,6 +328,9 @@ es:
       email_sample: 'por ejemplo: lucia@gmail.com'
       login_sample: por ejemplo, lucia
       password_sample: al menos 8 caracteres
+    index:
+      last_login_at: Último acceso
+      title: Entradas de usuarios con citas
     new:
       new: Crear entrada de usuario
     not_logged_in: "¡No has iniciado sesión!"

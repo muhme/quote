@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
     # default controller routes
     resources :authors, :categories, :quotations
-    resources :users, except: [:index, :show, :destroy]
+    resources :users, except: [:show, :destroy]
     resources :user_sessions, except: [:index, :show, :edit, :update]
     resources :password_resets, :only => [:new, :create, :edit, :update]
 

@@ -328,6 +328,9 @@ ja:
       email_sample: 例）miyuki@gmail.com
       login_sample: 例えば、みゆきのように
       password_sample: 8文字以上
+    index:
+      last_login_at: 最終ログイン
+      title: 引用文献のあるユーザーエントリー
     new:
       new: ユーザーエントリーの作成
     not_logged_in: ログインされていません！

@@ -343,6 +343,9 @@ uk:
       email_sample: наприклад, olena@ukr.net
       login_sample: наприклад, oлена
       password_sample: щонайменше 8 символів завдовжки
+    index:
+      last_login_at: Останній вхід
+      title: Записи користувачів з цитуванням
     new:
       new: Створити запис користувача
     not_logged_in: Не увійшли в систему!

@@ -43,6 +43,20 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users
+  def index
+    if !current_user or current_user.admin == false
+      flash[:error] = t("g.no_admin")
+      render "static_pages/forbidden", status: :not_found
+      return false
+    end
+
+    sql =  "select distinct u.* from users u, quotations q where u.id = q.user_id order by login"
+    @users = User.paginate_by_sql(sql, page: params[:page], :per_page => 10)
+    # check pagination second time with number of pages
+    bad_pagination?(@users.total_pages)
+  end
+
   # DELETE /users/1 not allowed
   # def destroy
   # end

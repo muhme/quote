@@ -15,7 +15,7 @@ en:
         source: Source
         source_link: Link to the source
       user:
-        email: E-mail
+        email: Mail
         login: Username
         password: Password
         password_confirmation: Password confirmation
@@ -246,7 +246,7 @@ en:
       set_new_password: Set new password
       twice: Please enter the new password twice.
     new:
-      email: E-mail address
+      email: Mail address
       email_description: that you had used for registration
       self_service: You can reset the password for your user entry yourself. You will receive an email with a link to reset your password.
       send: Send email
@@ -328,6 +328,9 @@ en:
       email_sample: e.g. olivia@gmail.com
       login_sample: e.g. olivia
       password_sample: at least 8 characters long
+    index:
+      last_login_at: Last Login
+      title: User Entries with Quotes
     new:
       new: Create User Entry
     not_logged_in: Not logged in!
