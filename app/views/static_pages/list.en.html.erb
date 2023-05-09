@@ -3,7 +3,7 @@
   <%= link_to("categories", locale: locale, controller: :categories) %> and be
   <%= link_to("embedded into your own website", locale: locale, controller: :static_pages, action: :use) %>.</p>
 <p>
-  <%= form_tag("/quotations", method: "get") do %>
+  <%= form_tag(url_for(controller: :quotations, locale: I18n.locale), method: :get) do %>
     <%= text_field_tag(:pattern, '', autofocus: true) %>
     <%= submit_tag("Find") %>
     <%= raw("in all #{link_to(nice_number(Quotation.count) + " quotes", locale: locale, controller: :quotations)}") %>

@@ -3,7 +3,7 @@
   <%= link_to("カテゴリ", locale: locale, controller: :categories) %> で引用をソートし、
   <%= link_to("自分のウェブサイトに埋め込む", locale: locale, controller: :static_pages, action: :use) %> ことができます。</p>
 <p>
-  <%= form_tag("/quotations", method: "get") do %>
+  <%= form_tag(url_for(controller: :quotations, locale: I18n.locale), method: :get) do %>
     <%= text_field_tag(:pattern, '', autofocus: true) %>
     <%= submit_tag("検索") %>
     <%= raw("すべての#{link_to(nice_number(Quotation.count) + " 引用", locale: locale, controller: :quotations)}") %>

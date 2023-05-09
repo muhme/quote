@@ -3,7 +3,7 @@
   <%= link_to("Kategorien", locale: locale, controller: :categories) %> sortiert können die Zitate
   <%= link_to("in die eigene Webseite eingebunden", locale: locale, controller: :static_pages, action: :use) %> werden.</p>
 <p>
-  <%= form_tag("/quotations", method: "get") do %>
+  <%= form_tag(url_for(controller: :quotations, locale: I18n.locale), method: :get) do %>
     <%= text_field_tag(:pattern, '', autofocus: true) %>
     <%= submit_tag("Finden") %>
     <%= raw("in allen #{link_to(nice_number(Quotation.count) + " Zitaten", locale: locale, controller: :quotations)}") %>

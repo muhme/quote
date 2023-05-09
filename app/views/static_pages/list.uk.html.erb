@@ -3,7 +3,7 @@
   <%= link_to("категоріями", locale: locale, controller: :categories) %> та
   <%= link_to("вбудовувати їх у власний веб-сайт", locale: locale, controller: :static_pages, action: :use) %> .</p>
 <p>
-  <%= form_tag("/quotations", method: "get") do %>
+  <%= form_tag(url_for(controller: :quotations, locale: I18n.locale), method: :get) do %>
     <%= text_field_tag(:pattern, '', autofocus: true) %>
     <%= submit_tag("Знайти") %>
     <%= raw("серед усіх #{link_to(nice_number(Quotation.count) + " цитат", locale: locale, controller: :quotations)}") %>
