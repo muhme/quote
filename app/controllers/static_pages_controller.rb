@@ -64,7 +64,7 @@ class StaticPagesController < ApplicationController
         begin
           count = Quotation.count_by_sql("select count(*) from quotations where user_id = #{quotations[i].user_id}")
           @users[i] = "<a href=\"" +
-                      url_for(:only_path => true, :controller => "quotations", :action => "list_by_user", :user => login) +
+                      url_for(:only_path => true, :controller => "quotations", :action => "list_by_user", :user => quotations[i].user_id) +
                       "\">#{login}</a>(#{count})"
         rescue
           @users[i] = login

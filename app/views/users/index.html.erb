@@ -21,7 +21,7 @@
       <tr>
         <td><%= user.login %></td>
         <td class="text-right"><%=
-          link_to(count, url_for(only_path: true, controller: "quotations", action: "list_by_user", user: user.login))
+          link_to(count, url_for(only_path: true, controller: "quotations", action: "list_by_user", user: user.id))
         %></td>
         <td><%= user.email %></td>
         <td><%= raw nice_date(user.created_at).gsub(",", "<br />") %></td>

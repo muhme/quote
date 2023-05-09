@@ -26,7 +26,7 @@
     u = User.find_by_id(@quotation.user_id)
     i = u.nil? ? 0 : u.quotations.size
     if (i >= 1)
-        user = link_to(name, {action: :list_by_user, user: name},
+        user = link_to(name, {action: :list_by_user, user: @quotation.user_id},
                  title: "#{i} #{t("g.quotes", count: i)} #{t(".of_user", user: name)}")
     else
         user = name

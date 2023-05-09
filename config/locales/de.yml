@@ -282,7 +282,7 @@ de:
       no_category: Kann keine Kategorie mit der ID="%{id}" finden!
       quotations: für die Kategorie %{category}
     list_by_user:
-      no_user: Kann keinen Benutzer "%{user}" finden!
+      no_user: Kann keinen Benutzer mit der ID="%{user}" finden!
       quotations: des Benutzers „%{user}”
     list_content:
       delete: Wirklich das Zitat „%{quote}” löschen?

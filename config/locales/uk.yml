@@ -297,7 +297,7 @@ uk:
       no_category: Не можу знайти категорію з ID="%{id}"!
       quotations: для категорії %{category}
     list_by_user:
-      no_user: Не можу знайти користувача "%{user}"!
+      no_user: Не можу знайти користувача з ID="%{user}"!
       quotations: користувача "%{user}"
     list_content:
       delete: Ви дійсно хочете видалити цитату „%{quote}”?

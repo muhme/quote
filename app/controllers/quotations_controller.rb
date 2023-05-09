@@ -156,12 +156,12 @@ class QuotationsController < ApplicationController
 
   # list quotations created by a user
   def list_by_user
-    unless User.exists?(:login => params[:user])
+    unless User.exists?(:id => params[:user])
       flash[:error] = t(".no_user", user: params[:user])
       return redirect_to root_url
     end
 
-    sql = ["select distinct q.* from quotations q, users u where q.user_id = u.id and u.login = ? order by q.created_at desc", my_sql_sanitize(params[:user])]
+    sql = ["select distinct * from quotations where user_id = ? order by created_at desc", my_sql_sanitize(params[:user])]
     @quotations = Quotation.paginate_by_sql sql, :page => params[:page], :per_page => 5
     # check pagination second time with number of pages
     bad_pagination?(@quotations.total_pages)

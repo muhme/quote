@@ -30,7 +30,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
   end
   
   test "list_by_user method" do
-    get '/quotations/list_by_user/' + users(:first_user).login
+    get '/quotations/list_by_user/1'
     assert_response :success
     get '/quotations/list_by_user/jhrefoqg'
     assert_redirected_to root_url
@@ -197,7 +197,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     # repeat tests for other paginate_by_sql with two tests each (one before and one after)
     get '/quotations/list_by_user/first_user?page=X'
     assert_response :bad_request
-    get '/quotations/list_by_user/first_user?page=42000000'
+    get '/quotations/list_by_user/1?page=42000000'
     assert_response :bad_request
     get '/quotations/list_by_author/1?page=X'
     assert_response :bad_request

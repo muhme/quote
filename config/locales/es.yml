@@ -282,7 +282,7 @@ es:
       no_category: ¡No se puede encontrar una categoría con la ID="%{id}"!
       quotations: para la categoría %{category}
     list_by_user:
-      no_user: ¡No se puede encontrar un usuario "%{user}"!
+      no_user: ¡No se puede encontrar un usuario con la ID="%{user}"!
       quotations: del usuario "%{user}"
     list_content:
       delete: ¿Realmente quieres eliminar la cita "%{quote}"?

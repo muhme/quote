@@ -282,7 +282,7 @@ ja:
       no_category: ID=「%{id}」 のカテゴリが見つかりません！
       quotations: カテゴリ %{category} の引用
     list_by_user:
-      no_user: ユーザー 「%{user}」 が見つかりません！
+      no_user: ユーザー ID=「%{user}」 が見つかりません！
       quotations: ユーザー 「%{user}」 の引用
     list_content:
       delete: 本当に引用 「%{quote}」 を削除しますか？

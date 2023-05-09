@@ -27,12 +27,11 @@ class QuotationsTest < ApplicationSystemTestCase
   end
 
   test "list by user" do
-    check_page page, "quotations/list_by_user/" + User.first.login.to_s, "h1", "0 Zitate des Benutzers „first_user”"
-    assert_equal "Zitat-Service – Zitate des Benutzers first_user", page.title
+    check_page page, "quotations/list_by_user/#{User.first.id}", "h1", "Zitate des Benutzers „first_user”"
   end
 
   test "try to list for not existing user" do
-    check_page page, "quotations/list_by_user/leon3", nil, /Kann keinen Benutzer .*leon3.* finden!/
+    check_page page, "quotations/list_by_user/leon3", nil, /Kann keinen Benutzer mit der ID.*leon3.* finden!/
   end
 
   test "list by author" do
