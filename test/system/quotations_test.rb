@@ -27,7 +27,7 @@ class QuotationsTest < ApplicationSystemTestCase
   end
 
   test "list by user" do
-    check_page page, "quotations/list_by_user/" + User.first.login.to_s, "h1", "0 Zitate des Benutzers first_user"
+    check_page page, "quotations/list_by_user/" + User.first.login.to_s, "h1", "0 Zitate des Benutzers „first_user”"
     assert_equal "Zitat-Service – Zitate des Benutzers first_user", page.title
   end
 

@@ -298,7 +298,7 @@ uk:
       quotations: для категорії %{category}
     list_by_user:
       no_user: Не можу знайти користувача "%{user}"!
-      quotations: користувача %{user}
+      quotations: користувача "%{user}"
     list_content:
       delete: Ви дійсно хочете видалити цитату „%{quote}”?
       new: Додати цитату

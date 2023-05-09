@@ -279,11 +279,11 @@ ja:
       no_author: ID="%{id}" の著者が見つかりません！
       quotations: "%{author} からの引用"
     list_by_category:
-      no_category: ID="%{id}" のカテゴリが見つかりません！
+      no_category: ID=「%{id}」 のカテゴリが見つかりません！
       quotations: カテゴリ %{category} の引用
     list_by_user:
-      no_user: ユーザー "%{user}" が見つかりません！
-      quotations: ユーザー %{user} の引用
+      no_user: ユーザー 「%{user}」 が見つかりません！
+      quotations: ユーザー 「%{user}」 の引用
     list_content:
       delete: 本当に引用 「%{quote}」 を削除しますか？
       new: 引用を作成

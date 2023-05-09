@@ -283,7 +283,7 @@ de:
       quotations: für die Kategorie %{category}
     list_by_user:
       no_user: Kann keinen Benutzer "%{user}" finden!
-      quotations: des Benutzers %{user}
+      quotations: des Benutzers „%{user}”
     list_content:
       delete: Wirklich das Zitat „%{quote}” löschen?
       new: Zitat anlegen

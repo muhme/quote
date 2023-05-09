@@ -283,7 +283,7 @@ en:
       quotations: for the category %{category}
     list_by_user:
       no_user: Cannot find a user "%{user}"!
-      quotations: of the user %{user}
+      quotations: of the user "%{user}"
     list_content:
       delete: Really delete the quote "%{quote}"?
       new: Add quote

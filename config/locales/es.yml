@@ -283,7 +283,7 @@ es:
       quotations: para la categoría %{category}
     list_by_user:
       no_user: ¡No se puede encontrar un usuario "%{user}"!
-      quotations: del usuario %{user}
+      quotations: del usuario "%{user}"
     list_content:
       delete: ¿Realmente quieres eliminar la cita "%{quote}"?
       new: Añadir cita
