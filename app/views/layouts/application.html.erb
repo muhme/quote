@@ -10,7 +10,7 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-  <body>
+  <body class="locale_<%= I18n.locale.to_s %>">
     <span id="side">
       <div id="logo"><a href="/<%= "#{I18n.locale}" %>"><%= image_tag("quote_service_32.png", size: "32x32", class: "logo", alt: t(".logo_alt"), title: "www.zitat-service.de") %></a></div>
       <div id="locale">
