@@ -438,24 +438,29 @@ div.large_right {
     position: absolute;
     background-color: #ddffdd;
     opacity: 1;
-    min-width: 220px;
+    min-width: 100px;
     border: 1px black solid;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
-    z-index: 2000;
+    z-index: 20;
 }
 
 .language-option {
-    padding: 8px 12px;
+    padding: 6px;
     cursor: pointer;
 }
-
+span#side div.language-option {
+    text-align: left;
+}
 .language-option:hover {
     background-color: #bb88bb;
 }
-
 .language-selector:hover {
     color: white;
     background-color: black;
+}
+.flags {
+    display: inline-block;
+    width: 5ch;
 }
 
 .hidden {

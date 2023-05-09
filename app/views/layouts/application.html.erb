@@ -17,7 +17,7 @@
         <span id="current-language" class="language-selector"><%= raw(string_for_locale(I18n.locale, true)) %> ▾ </span>
           <div id="language-dropdown" class="hidden">
             <% [:de, :en, :es, :ja, :uk].each do |locale| %>
-              <%# e.g. 🇺🇦 UK – українська %>
+              <%# e.g. 🇺🇦 UK – Українська %>
               <%= raw("<div class='language-option' data-locale='#{locale}'>#{string_for_locale(locale)}</div>") %>
             <% end %>
           </div>

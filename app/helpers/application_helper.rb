@@ -205,11 +205,11 @@ module ApplicationHelper
   def string_for_locale(locale, shorten = false)
     logger.debug { "string_for_locale(#{locale.class} #{locale}, #{shorten})" }
     locales = {
-      :de => "&#x1F1E9;&#x1F1EA; DE – Deutsch",
-      :en => "&#x1F1FA;&#x1F1F8; EN – english",
-      :es => "&#x1F1EA;&#x1F1F8; ES – español",
-      :ja => "&#x1F1EF;&#x1F1F5; JA – 日本語",
-      :uk => "&#x1F1FA;&#x1F1E6; UK – українська"
+      :de => '<span class="flags">&#x1F1E9;&#x1F1EA; DE</span> – Deutsch',
+      :en => '<span class="flags">&#x1F1FA;&#x1F1F8; EN</span> – English',
+      :es => '<span class="flags">&#x1F1EA;&#x1F1F8; ES</span> – Español',
+      :ja => '<span class="flags">&#x1F1EF;&#x1F1F5; JA</span> – 日本語',
+      :uk => '<span class="flags">&#x1F1FA;&#x1F1E6; UK</span> – Українська'
     }
     locale = :de unless locales.has_key?(locale)
     ret = locales[locale]
