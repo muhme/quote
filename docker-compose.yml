@@ -12,14 +12,13 @@ services:
     build:
       context: .
       dockerfile: db.Dockerfile
-    image: mariadb
     volumes:
       - .:/var/www
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: quote_development
-      MYSQL_USER: quote_development
-      MYSQL_PASSWORD: quote_development
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: quote_development
+      MARIADB_USER: quote_development
+      MARIADB_PASSWORD: quote_development
     restart: unless-stopped
   mysqladmin:
     container_name: quote_mysqladmin
