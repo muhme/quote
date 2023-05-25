@@ -1,4 +1,4 @@
-<h1>Welcome to the Quote Service zitat-service.de</h1>
+<h1>Welcome to the quote service zitat-service.de</h1>
 <p>Anyone can contribute quotes here. Quotes can be sorted by <%= link_to("authors", locale: locale, controller: :authors) %> or
   <%= link_to("categories", locale: locale, controller: :categories) %> and be
   <%= link_to("embedded into your own website", locale: locale, controller: :static_pages, action: :use) %>.</p>
@@ -28,9 +28,9 @@
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> May 5th, 2023</dt>
     <dd>Added the languages
       <%= link_to(raw("English &#x1F1FA;&#x1F1F8;"), root_url(locale: :en)) %>,
-      <%= link_to(raw("español &#x1F1EA;&#x1F1F8;"), root_url(locale: :es)) %>,
+      <%= link_to(raw("Español &#x1F1EA;&#x1F1F8;"), root_url(locale: :es)) %>,
       <%= link_to(raw("日本語 &#x1F1EF;&#x1F1F5;"), root_url(locale: :ja)) %> and
-      <%= link_to(raw("українська &#x1F1FA;&#x1F1E6;"), root_url(locale: :uk)) %>.
+      <%= link_to(raw("Українська &#x1F1FA;&#x1F1E6;"), root_url(locale: :uk)) %>.
     If you are a native speaker, please help us improve the machine translation.</dd>
   <dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> September 24th, 2019</dt>
     <dd>There is a new Joomla! module for supporting TLS (https) and the Joomla update mechanism: <%= link_to 'Embed/Joomla', :action => 'joomla' %>.</dd>
@@ -39,7 +39,7 @@
   <dt><%= image_tag("exclamation.png", :alt => "explanation", :title => "Attention!") %> November 26th, 2012</dt>
     <dd>Please do not add quotes from Karl Valentin, Erich Kästner, or Heinz Erhardt (see <%= link_to 'Copyright', :action => 'help', :anchor => 'copyright' %>).</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> July 16th, 2011</dt>
-    <dd><a href="humans.txt">humans.txt</a> (We are People, Not Machines) – Thank you!</dd>
+    <dd><a href="humans.txt">humans.txt</a> (We are people, not machines) – Thank you!</dd>
   <dt><%= image_tag("award_star_bronze_1.png", :alt => "admin", :title => "Administrator") %> September 12th, 2010</dt>
     <dd><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> is now helping us manage the quotes. Thank you!</dd>
   <dt><%= image_tag("pencil.png", :alt => "pencil", :title => "Pencil") %> November 22nd, 2009</dt>
