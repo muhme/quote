@@ -58,5 +58,9 @@ class StaticPagessTest < ApplicationSystemTestCase
   test "500 internal server error" do
     check_page(page, "/500", "h1", "HTTP-Statuscode 500", 150)
   end
-  
+
+  test "author link" do  
+    visit root_url
+    check_page_source page, '<link type="text/plain" rel="author" href="/humans.txt">'
+  end
 end
