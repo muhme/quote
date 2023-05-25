@@ -5,27 +5,28 @@
 
   <tr>
     <th><%= raw sorted_img_if(t("g.category"), link_to(t("g.category"), controller: "categories", order: "categories"), params[:order] == "categories") %></th>
-    <th><%= t("g.description") %></th>
     <th><%= raw sorted_img_if(t("g.quotes", count: 2), link_to(t("g.quotes", count: 2), controller: "categories"), params[:order] != "categories") %></th>
+    <th><%= image_tag("comment.png", alt: t("g.comments", count: 2), title: t("g.comments", count: 2)) %></th>
     <th><%= t("g.actions") %></th>
   </tr>
 
   <% odd_or_even = 0
     for category in @categories
       odd_or_even = 1 - odd_or_even
-      quotations = Quotation.find_by_sql(sql_quotations_for_category(category.id)).size %>
+      quotations = Quotation.find_by_sql(sql_quotations_for_category(category.id)).size
+      number_of_comments = Comment.number_of(category) %>
       <tr valign="top" class="ListLine<%= odd_or_even %>">
         <td><%= raw th(category.category, 40) %></td>
-        <td><%= raw th(category.description, 40) %></td>
         <td class="center"><%= link_to quotations.to_s, controller: "quotations", action: "list_by_category", category: category.id %></td>
+        <td class="center"><%= number_of_comments if number_of_comments > 0 %></td>
         <td class="ListActions">
-          <%= link_to image_tag("eye.png", alt: "g.eye", title: "g.show", border: 0), locale: I18n.locale, action: "show", id: category %>
+          <%= link_to image_tag("eye.png", alt: "g.eye", title: "g.show"), locale: I18n.locale, action: "show", id: category %>
           <% if can_edit?(category.user_id) %>
             &nbsp;
-            <%= link_to image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit"), border: 0), locale: I18n.locale, action: "edit", id: category %>
+            <%= link_to image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit")), locale: I18n.locale, action: "edit", id: category %>
             &nbsp;
-            <% if quotations == 0 %>
-              <%= link_to image_tag("cancel.png", alt: t("g.red_cross"), title: t("g.delete"), border: 0),  
+            <% if quotations == 0 and number_of_comments == 0 %>
+              <%= link_to image_tag("cancel.png", alt: t("g.red_cross"), title: t("g.delete")),  
               { locale: I18n.locale, action: "destroy", id: category },
               method: :delete,
               data: {
@@ -44,4 +45,6 @@
   <p class="ListNavi">
     <%= button_to t(".category_new"), { locale: I18n.locale, action: :new }, method: :get %>
   </p>
+<% else %>
+  <p class="opacity-50 font-size-smaller "><%= raw t(".needs_login", login_link: link_to(t('layouts.application.login'), login_path(locale: I18n.locale))) %></p>
 <% end %>

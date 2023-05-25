@@ -10,6 +10,8 @@ uk:
       category:
         category: Категорія
         description: Опис
+      comment:
+        comment: Коментар
       quotation:
         quotation: Цитата
         source: Джерело
@@ -27,9 +29,16 @@ uk:
           has_one: Неможливо видалити '%{record}', оскільки існує залежний %{dependent}.
       models:
         author:
+          attributes:
+            base:
+              has_comments: Автор з коментарями не може бути видалений
+              has_quotes: Автор з цитатами не може бути видалений
           first_or_last_name_needed: Ім'я або прізвище повинно бути вказано
         category:
           attributes:
+            base:
+              has_comments: Категорію з коментарями не можна видалити
+              has_quotes: Категорію з пропозиціями не можна видалити
             category:
               blank: не може бути порожнім
               taken: '"%{value}" вже існує'
@@ -37,6 +46,8 @@ uk:
           other: Категорії
         quotation:
           attributes:
+            base:
+              has_comments: Цитата з коментарями не може бути видалена
             quotation:
               taken: вже використовується
         user:
@@ -82,7 +93,6 @@ uk:
       failed: Створення автора "%{author}" не вдалося! (%{exception})
     destroy:
       deleted: Запис автора "%{author}" видалений.
-      has_quotes: Автор "%{author}" має %{number} цитат і не може бути видалений.
     edit:
       edit_author: Редагувати автора
     form:
@@ -102,6 +112,7 @@ uk:
     list_content:
       author_delete: Ви дійсно хочете видалити запис автора "%{author}"?
       author_new: Створити автора
+      needs_login: Увійдіть за допомогою %{login_link}, щоб додати тут авторів.
     login_missing: Відсутність входу для створення нового запису автора!
     update:
       updated: Запис для автора "%{author}" було оновлено.
@@ -111,12 +122,10 @@ uk:
       failed: Створення категорії "%{category}" не вдалося! (%{exception})
     destroy:
       deleted: Категорія "%{category}" видалена.
-      has_quotes: Категорія "%{category}" має %{number} цитат і не може бути видалена.
     edit:
       edit_category: Редагувати категорію
     form:
       category_sample: У відмінковому відмінку, в однині, напр. Успіх
-      description_sample: за потреби примітка
     id_does_not_exist: Категорії з ID "%{id}" не існує!
     list_by_letter:
       letter_missing: Не вистачає літери!
@@ -125,9 +134,20 @@ uk:
     list_content:
       category_delete: Ви дійсно хочете видалити категорію "%{category}"?
       category_new: Створити категорію
+      needs_login: Увійдіть за допомогою %{login_link}, щоб додати сюди категорії.
     login_missing: Відсутність входу для створення нової категорії!
     update:
       updated: Категорія "%{category}" оновлена.
+  comments:
+    comment:
+      commented_on: прокоментували
+      delete: Дійсно видалити коментар "%{comment}"?
+      updated_at: оновлено на
+    destroy:
+      deleted: Коментар "%{comment}" було вилучено.
+    id_does_not_exist: Не існує коментарів з ідентифікатором %{id}!
+    new:
+      needs_login: Увійдіть за допомогою %{login_link}, щоб додавати коментарі тут.
   errors:
     messages:
       blank: не повинно бути порожнім
@@ -151,6 +171,8 @@ uk:
     add: Додати
     arrow_down: зелена стрілка вниз
     arrow_undo_alt: стрілка назад
+    author: Автор
+    author_alt: Зображення жінки з довгим волоссям і червоним топом
     authors:
       few: автори
       many: авторів
@@ -169,8 +191,12 @@ uk:
       other: Категорії
       zero: Категорій
     category: Категорія
+    category_alt: Зображення організаційної структури, один вищий квадрат над трьома підлеглими квадратами
+    comment: Коментар
+    comments: Коментарі
     create: Створити
     created: Створено
+    date: Дата та час
     delete: Видалити
     description: Опис
     edit: Редагувати
@@ -188,6 +214,7 @@ uk:
     id: Внутрішній номер
     lightning: Блискавка
     link: Посилання
+    locale: Мова
     name: Прізвище
     'no': Ні
     no_admin: Немає прав адміністратора!
@@ -209,11 +236,13 @@ uk:
     page: Сторінка
     pencil: Олівець
     public: Публічний
+    quote: Цитата
+    quote_alt: Літера Z зеленого кольору, як на логотипі
     quotes:
-      few: Цитати
-      many: котирувань
+      few: Цитата
+      many: Цитати
       one: Цитата
-      other: котирувань
+      other: Цитат
       zero: Цитати
     read: Читати
     red_cross: Червоний хрест
@@ -301,6 +330,7 @@ uk:
       quotations: користувача "%{user}"
     list_content:
       delete: Ви дійсно хочете видалити цитату „%{quote}”?
+      needs_login: Увійдіть за допомогою %{login_link}, щоб додавати цитати тут.
       new: Додати цитату
     list_no_public:
       non_public_quotes: Непублічні котирування

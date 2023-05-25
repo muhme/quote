@@ -59,6 +59,7 @@ textarea {
     -webkit-hyphenate-limit-lines: 2;
     -webkit-hyphens: auto;
     text-align: justify;
+    width: calc(100% - 10em);
 }
 
 pre {
@@ -85,6 +86,7 @@ a:hover {
     background-color: #bb88bb;
 }
 
+a.no-decoration,
 a:link img,
 a:visited img {
     text-decoration: none;
@@ -324,7 +326,7 @@ table#letter td {
     /* hack? to disable transparency for tr */
 }
 
-table#letter td#unused {
+.gray-text, table#letter td#unused {
     color: gray;
 }
 
@@ -337,6 +339,7 @@ dt {
     font-weight: bold;
 }
 
+.table,
 table {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
 }
@@ -388,6 +391,7 @@ table#environment td {
     text-align: center;
 }
 
+.table,
 table#details {
     /* make show detail tables non-transparent */
     background-color: #ddffdd;
@@ -396,6 +400,7 @@ table#details {
     padding: 0.5em;
     margin-bottom: 0.5em
 }
+.border-bottom,
 table#details tr:not(:last-child) td {
     border-bottom: 1px solid #DDD;
 }
@@ -482,4 +487,60 @@ span#side div.language-option {
 
 .padding-left-2em {
     padding-left: 2em;
+}
+
+.opacity-25 {
+    opacity: 0.25;
+}
+.opacity-50 {
+    opacity: 0.5;
+}
+
+.font-size-smaller {
+    font-size: smaller;
+}
+
+div#comments.table {
+    background-color: #ddffdd;
+    border-spacing: 0 0.5ex;
+    border: 1px solid black;
+    padding: 0.5em;
+    margin-top: 1em;
+    display: table;
+    border-collapse: collapse;
+}
+div.tdata {
+    padding: 1px;
+}
+div.tdata:blank {
+  background-color: red;
+}
+div.td {
+    display: table-cell;
+    padding: 0px;
+}
+div.tr {
+    display: table-row;
+}
+div.table-row-group {
+    display: table-row-group;
+}
+div.padding-cell {
+    padding: 2px 4px 2px 4px;
+}
+
+.float-right {
+    float: right;
+}
+.float-left {
+    float: left;
+}
+.clear-both-after::after {
+    clear: both;
+}
+.padding-bottom-4px {
+    padding: 0 0 4px 0;
+}
+.padding-top-4px {
+    padding: 4px 0 0 0;
 }

@@ -5,7 +5,7 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @author_one = authors(:one)
     @author_public_false = authors(:public_false)
-    @author_without_quotes = authors(:without_quotes)
+    @author_without_quotes_and_comments = authors(:without_quotes_and_comments)
     activate_authlogic
   end
   
@@ -133,27 +133,27 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
   test "should destroy own author entry" do
     login :first_user
     assert_difference('Author.count', -1) do
-      delete author_url @author_without_quotes
+      delete author_url @author_without_quotes_and_comments
     end
     assert_redirected_to authors_url
   end
   test "fail to destroy author entry without login" do
     assert_no_difference 'Author.count' do
-      delete author_url id: @author_without_quotes
+      delete author_url id: @author_without_quotes_and_comments
     end
     assert_forbidden
   end
   test "fail to destroy other users author entry" do
     login :second_user
     assert_no_difference 'Author.count' do
-      delete author_url @author_without_quotes
+      delete author_url @author_without_quotes_and_comments
     end
     assert_forbidden
   end
   test "should destroy author entry as admin" do
     login :admin_user
     assert_difference('Author.count', -1) do
-      delete author_url @author_without_quotes
+      delete author_url @author_without_quotes_and_comments
     end
     assert_redirected_to authors_url
   end
@@ -162,7 +162,16 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference 'Author.count' do
       delete author_url @author_one
     end
-    assert_redirected_to author_url(@author_one)
+    assert_response :unprocessable_entity # 422
+    assert_equal author_url(@author_one), request.original_url
+  end
+  test "not able to delete author with comments" do
+    login :first_user
+    assert_no_difference 'Author.count' do
+      delete author_url (authors :with_one_comment)
+    end
+    assert_response :unprocessable_entity # 422
+    assert_equal author_url(authors :with_one_comment), request.original_url
   end
 
   test "list_no_public method" do

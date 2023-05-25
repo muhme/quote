@@ -2,6 +2,7 @@ class QuotationsController < ApplicationController
   include ActionView::Helpers::TextHelper # for truncate()
   before_action :set_quotation, only: [:show, :edit, :update, :destroy]
   before_action :category_ids_param_to_array
+  before_action :set_comments, only: [:show, :destroy]
 
   # GET /quotations
   # GET /quotations?pattern=berlin
@@ -149,9 +150,14 @@ class QuotationsController < ApplicationController
   def destroy
     return unless access?(@quotation, :destroy)
     if @quotation.destroy
-      flash[:notice] = t(".deleted", quote: truncate(@quotation.quotation, length: 20))
+      flash[:notice] = e = t(".deleted", quote: truncate(@quotation.quotation, length: 20))
+      logger.debug { "destroyed quotation ID=#{@quotation.id} – #{e}" }
+      redirect_to quotations_url
+    else
+      flash[:error] = e = @quotation.errors.any? ? @quotation.errors.first.full_message : "error"
+      logger.error "destroy quotation ID=#{@quotation.id} – failed with #{e}"
+      render :show, status: :unprocessable_entity
     end
-    return redirect_to quotations_url
   end
 
   # list quotations created by a user
@@ -331,4 +337,10 @@ end
 def split_two_id_arrays(param, pos)
   splitted = param.split("-") if param
   return param && splitted[pos] ? splitted[pos].split(",").map(&:to_i) : []
+end
+
+def set_comments
+  @comments = Comment.where(commentable: @quotation)
+  @commentable_type = "Quotation"
+  @commentable_id = @quotation.id
 end

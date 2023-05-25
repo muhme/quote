@@ -16,6 +16,7 @@ one:
   public: true
   user_id: 1
 
+# "second author" w/ one quote and w/ one comment, owned by first_user
 second:
   id: 2
   name: second author
@@ -29,6 +30,7 @@ third:
   user_id: 3
 
 public_false:
+  id: 4
   name: MyString2
   firstname: MyString2
   description: MyString Two
@@ -36,12 +38,22 @@ public_false:
   public: false
   user_id: 1
 
-without_quotes:
+without_quotes_and_comments:
+  id: 5
   name: Author Entry not related to any quotation
   user_id: 1
 
+with_one_comment:
+  id: 6
+  name: Author with one comment and w/o quotes
+  user_id: 1
+  public: true
+  created_at: 2023-05-01 12:00:00
+  updated_at: 2023-05-10 12:00:00
+
 # real world
 schiller:
+  id: 7
   name: "Schiller"
   firstname: "Friedrich"
   description: "deutscher Dichter und Philosoph (1759 - 1805)"
@@ -49,6 +61,7 @@ schiller:
   user_id: 1
 
 all_fields_max_sizes:
+  id: 8
   name:        <%= ("name-field max size 64 " + 'X' * 64)[0,64] %>
   firstname:   <%= ("firstname-field max size 64 " + 'X' * 64)[0,64] %>
   link:        <%= ("link-field max size 255 " + 'X' * 255)[0,255] %>
@@ -56,18 +69,22 @@ all_fields_max_sizes:
   user_id: 1
 
 only_name:
+  id: 9
   name: "author with only name field set"
   user_id: 1
 
 only_firstname:
+  id: 10
   firstname: "author with only firstname field set"
   user_id: 1
 
 only_description:
+  id: 11
   description: "author with only description field set"
   user_id: 1
 
 name_and_firstname:
+  id: 12
   name: "name field"
   firstname: "firstname field"
   user_id: 1

@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_comments, only: [:show, :destroy]
 
   # GET /categories
   def index
@@ -63,15 +64,14 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   def destroy
     return unless access?(@category, :destroy)
-    n = @category.quotation_ids.size
-    if n > 0
-      flash[:error] = t(".has_quotes", category: @category.category, number: n)
-      redirect_to :action => "show", :id => @category.id
-    else
-      if @category.destroy
-        flash[:notice] = t(".deleted", category: @category.category)
-      end
+    if @category.destroy
+      flash[:notice] = e = t(".deleted", category: @category.category)
+      logger.debug { "destroy category ID=#{@category.id} – #{e}" }
       redirect_to categories_url
+    else
+      flash[:error] = e = @category.errors.any? ? @category.errors.first.full_message : "error"
+      logger.error "destroy category ID=#{@category.id} – failed with #{e}"
+      render :show, status: :unprocessable_entity
     end
   end
 
@@ -116,8 +116,14 @@ class CategoriesController < ApplicationController
     render "static_pages/not_found", status: :not_found
   end
 
+  def set_comments
+    @comments = Comment.where(commentable: @category)
+    @commentable_type = "Category"
+    @commentable_id = @category.id
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def category_params
-    params.require(:category).permit(:category, :description, :public)
+    params.require(:category).permit(:category, :public)
   end
 end

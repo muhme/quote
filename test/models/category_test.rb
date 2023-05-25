@@ -6,7 +6,6 @@ class CategoryTest < ActiveSupport::TestCase
     @category = Category.new()
     @category.user_id = User.first.id
     @category.category = "programming"
-    @category.description = "All related to computer programming languages."
   end
   
   test "validate setup" do
@@ -23,9 +22,8 @@ class CategoryTest < ActiveSupport::TestCase
     assert_not @category.valid?
   end
   
-  test "category name and description max length" do
+  test "category name max length" do
     @category.category = "a" * 64
-    @category.description = "a" * 255
     assert @category.valid?
   end
   
@@ -41,24 +39,6 @@ class CategoryTest < ActiveSupport::TestCase
     @category.save
     duplicate = @category.dup
     duplicate.category = "Test"
-    assert_not duplicate.valid?
-  end
-  
-  test "category description should not be too long" do
-    @category.description = "a" * 256
-    assert_not @category.valid?
-  end
-  
-  test "category description could be empty" do
-    @category.description = ""
-    assert @category.valid?
-  end
-  
-  test "category description don't need to be unique" do
-    @category.description = "not unique"
-    @category.save
-    duplicate = @category.dup
-    @category.category = "test2"
     assert_not duplicate.valid?
   end
   

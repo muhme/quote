@@ -1,0 +1,56 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  comment: Erster Kommentar in Deutsch für Kategorie 1 von dem ersten Benutzer
+  locale: de
+  user_id: 1
+  created_at: 2023-05-10 15:32:58
+  updated_at: 2023-05-10 15:32:58
+  commentable_type: Category
+  commentable_id: 1
+
+category_with_one_comment:
+  comment: comment in українська for category "with_one_comment"
+  locale: uk
+  user_id: 2
+  created_at: 2023-05-01 12:00:00
+  updated_at: 2023-05-10 12:00:00
+  commentable_type: Category
+  commentable_id: 6
+
+author_second:
+  comment: second author with one comment
+  locale: es
+  user_id: 1
+  commentable_type: Author
+  commentable_id: 2
+
+author_with_one_comment:
+  comment: 日本語 comment for author with one comment
+  locale: ja
+  user_id: 1
+  created_at: 2023-05-01 12:00:00
+  updated_at: 2023-05-10 12:00:00
+  commentable_type: Author
+  commentable_id: 6
+
+quotations_with_one_comment:
+  comment: Comentarios en español for quotation "with_one_comment"
+  locale: uk
+  user_id: 2
+  created_at: 2023-05-01 12:00:00
+  updated_at: 2023-05-10 12:00:00
+  commentable_type: Quotation
+  commentable_id: 5
+
+# create 1'000 comments - just in case
+<% 100.upto(1100) do |i| %>
+fix_<%= i %>:
+  id: <%= i %>
+  comment: This is comment number <%= i-99 %> of 1'000
+  commentable_type: Category
+  commentable_id: 5 # category with_1000_comments
+  user_id: 1
+  locale: "en"
+<% end %>
+

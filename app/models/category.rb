@@ -2,9 +2,9 @@ class Category < ApplicationRecord
   
   belongs_to :user
   has_and_belongs_to_many :quotations
-
+  has_many :comments, as: :commentable
+  before_destroy :check_quotes_and_comments
   validates :category, presence: true, length: { maximum: 64 }, uniqueness: { case_sensitive: false }
-  validates :description, presence: false, length: { maximum: 255 }, uniqueness: false
 
   # count all non-public categories
   def Category.count_non_public
@@ -80,4 +80,19 @@ class Category < ApplicationRecord
     end
     return ret
   end
+
+  private
+
+  # don't delete categories with quotes or comments
+  def check_quotes_and_comments
+    if quotations.any?
+      errors.add :base, :has_quotes
+      throw :abort
+    end
+    if comments.any?
+      errors.add :base, :has_comments
+      throw :abort
+    end
+  end
+
 end

@@ -3,7 +3,8 @@ class Quotation < ApplicationRecord
   belongs_to :user
   belongs_to :author
   has_and_belongs_to_many :categories
-  
+  has_many :comments, as: :commentable
+  before_destroy :check_comments
   validates :quotation, presence: true, length: { maximum: 512 }, uniqueness: {case_sensitive: false}
   validates :source, presence: false, length: { maximum: 255 }, uniqueness: false
   validates :source_link, presence: false, length: { maximum: 255 }, uniqueness: false
@@ -41,6 +42,16 @@ class Quotation < ApplicationRecord
     ret += ", " unless ret.blank? or self.source.blank?
     ret += self.source unless self.source.blank?
     ret
+  end
+
+  private
+
+  # don't delete quotes with comments
+  def check_comments
+    if comments.any?
+      errors.add :base, :has_comments
+      throw :abort
+    end
   end
 
 end

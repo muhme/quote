@@ -79,11 +79,11 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create category" do
-    post categories_url, params: { category: { category: "Game", description: "new category description" } }
+    post categories_url, params: { category: { category: "Game" } }
     assert_forbidden
     assert_difference('Category.count') do
       login :first_user
-      post categories_url, params: { category: { category: "Game", description: "new category description" } }
+      post categories_url, params: { category: { category: "Game" } }
     end
     assert_redirected_to category_url(Category.last, locale: I18n.default_locale)
     category = Category.find_by_category 'Game'
@@ -108,18 +108,18 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "update category" do
     login :first_user
-    patch category_url(@category_one), params: { category: { description: "hu" } }
+    patch category_url(@category_one), params: { category: { category: "hu" } }
     assert_redirected_to category_url @category_one
-    assert_equal Category.find(@category_one.id).description, "hu"
+    assert_equal Category.find(@category_one.id).category, "hu"
     get '/logout'
     login :admin_user
-    patch category_url(@category_one), params: { category: { description: "hu hu" } }
+    patch category_url(@category_one), params: { category: { category: "hu hu" } }
     assert_redirected_to category_url @category_one
-    assert_equal Category.find(@category_one.id).description, "hu hu"
+    assert_equal Category.find(@category_one.id).category, "hu hu"
     get '/logout' 
-    patch category_url(@category_one), params: { category: { description: "hu hu hu" } }
+    patch category_url(@category_one), params: { category: { category: "hu hu hu" } }
     assert_forbidden
-    assert_equal Category.find(@category_one.id).description, "hu hu"
+    assert_equal Category.find(@category_one.id).category, "hu hu"
   end
   
   test "return to edit if validation fails" do
@@ -147,21 +147,28 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
       delete category_url @category_without_quotes
     end
     assert_redirected_to categories_url
-    get '/logout'
-
-    # not able to delete category with quote
+  end
+  test "not able to delete category with quote" do
     login :first_user
-    assert_difference('Category.count', 0) do
+    assert_no_difference('Category.count') do
       delete category_url @category_one
     end
-    assert_response :redirect
-    get '/logout'
-
+    assert_response :unprocessable_entity # 422
+    assert_equal category_url(@category_one), request.original_url
+  end
+  test "delete category as admin" do
     login :admin_user
     assert_difference('Category.count', -1) do
       delete category_url @category_public_false
     end
     assert_redirected_to categories_url
+  end
+  test "not able to delete category with comments" do
+    login :first_user
+    assert_no_difference 'Category.count'  do
+      delete category_url (categories :with_one_comment)
+    end
+    assert_response :unprocessable_entity # 422
   end
   
   test "list_no_public method" do

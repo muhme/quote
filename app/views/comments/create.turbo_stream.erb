@@ -1,0 +1,6 @@
+<%= turbo_stream.before "end_of_comments" do %>
+  <%= render partial: "comments/comment", locals: { comment: @comment } %>
+<% end %>
+<%= turbo_stream.after "end_of_comments" do %>
+  <%= javascript_tag 'myCleanField("comment_comment")' %>
+<% end %>

@@ -1,0 +1,18 @@
+<%= turbo_frame_tag dom_id(@comment) do %>
+  <% if @comment and @comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t("g.error", count: @comment.errors.count) %></h2>
+      <ul>
+        <% @comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form_tag(url_for(controller: :comments, action: :update, locale: I18n.locale), method: :patch) do |form| %>
+    <%= text_field_tag 'comment[comment]', @comment.comment, id: 'edit_comment', size: 80, maxlength: 512, autofocus: true, onload: 'moveCursorToEnd("comment_comment")' %>
+    <%= hidden_field_tag 'comment[locale]', I18n.locale %>
+    <%= submit_tag t("g.update") %>
+  <% end %>
+  <%= javascript_tag 'myMoveCursorToEnd("comment_comment")' %>
+<% end %>

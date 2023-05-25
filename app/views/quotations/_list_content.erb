@@ -3,29 +3,35 @@
 <table class="border">
   <tr>
     <th><%= t("g.quotes", count: 2) %></th>
+    <th><%= image_tag("comment.png", alt: t("g.comments", count: 2), title: t("g.comments", count: 2)) %></th>
     <th><%= t("g.actions") %></th>
   </tr>
   <%
     odd_or_even = 0
     for quotation in @quotations
       odd_or_even = 1 - odd_or_even
+      number_of_comments = Comment.number_of(quotation)
   %>
       <tr valign="top" class="ListLine<%= odd_or_even %>">
         <td class="ListQuote">
           <span class="ListQuote"><%= h(quotation.quotation) %></span><br />
           <%= raw_span_class_if_present('ListSource', quotation.get_author_and_source_name) %>
-        </td><td class="actions">
+        </td>
+        <td class="center"><%= number_of_comments if number_of_comments > 0 %></td>
+        <td class="actions">
           <%= link_to image_tag("eye.png", :alt => t("g.eye"), :title => t("g.show"), :border => 0), {:action => 'show', :id => quotation} %>
           <% if can_edit?(quotation.user_id) %>
             <%= link_to image_tag("pencil.png", :alt => t("g.pencil"), :title => t("g.edit"), :border => 0), :action => 'edit', :id => quotation %>
-            <%= link_to image_tag("cancel.png", :alt => t("g.red_cross"), :title => t("g.delete"), :border => 0),
-                  { :action => 'destroy', :id => quotation },
-                  method: :delete,
-                  data: {
-                    turbo_method: :delete,
-                    turbo_confirm: t(".delete", quote: truncate(quotation.quotation, length: 20) )
-                  }
-            %>
+            <% if number_of_comments == 0 %>
+              <%= link_to image_tag("cancel.png", :alt => t("g.red_cross"), :title => t("g.delete"), :border => 0),
+                    { :action => 'destroy', :id => quotation },
+                    method: :delete,
+                    data: {
+                      turbo_method: :delete,
+                      turbo_confirm: t(".delete", quote: truncate(quotation.quotation, length: 20) )
+                    }
+              %>
+            <% end %>
           <% end %>
         </td>
       </tr>
@@ -36,4 +42,6 @@
   <p class="ListNavi">
     <%= button_to t(".new"), { :action => "new" }, method: :get %>
   </p>
+<% else %>
+  <p class="opacity-50 font-size-smaller "><%= raw t(".needs_login", login_link: link_to(t('layouts.application.login'), login_path(locale: I18n.locale))) %></p>
 <% end %>

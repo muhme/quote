@@ -81,4 +81,28 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal author_selected_name(authors(:name_and_firstname).id), "name field, firstname field"
   end
 
+  test "string for locale" do
+    assert_match /DE/, string_for_locale
+    assert_match /DE/, string_for_locale(nil)
+    assert_match /DE/, string_for_locale(nil, true)
+    assert_match /DE/, string_for_locale("de")
+    assert_match /DE/, string_for_locale("quark cake")
+    assert_match /DE/, string_for_locale("de", true)
+    assert_match /DE/, string_for_locale("de", false)
+    assert_match /Deutsch/, string_for_locale("de", false)
+    refute_match /Deutsch/, string_for_locale("de", true)
+    assert_match /EN/, string_for_locale("en", false)
+    assert_match /English/, string_for_locale("en", false)
+    refute_match /English/, string_for_locale("en", true)
+    assert_match /ES/, string_for_locale("es", false)
+    assert_match /Español/, string_for_locale("es", false)
+    refute_match /Español/, string_for_locale("es", true)
+    assert_match /JA/, string_for_locale("ja", false)
+    assert_match /日本語/, string_for_locale("ja", false)
+    refute_match /日本語/, string_for_locale("ja", true)
+    assert_match /UK/, string_for_locale("uk", false)
+    assert_match /Українська/, string_for_locale("uk", false)
+    refute_match /Українська/, string_for_locale("uk", true)
+  end
+
 end

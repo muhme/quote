@@ -7,24 +7,27 @@
     <th><%= raw sorted_img_if(t("g.name"), link_to(t("g.name"), controller: "authors", order: "authors"), params[:order] == "authors") %></th>
     <th><%= t("g.description") %></th>
     <th><%= raw sorted_img_if(t("g.quotes", count: 2), link_to(t("g.quotes", count: 2), controller: "authors"), params[:order] != "authors") %></th>
+    <th><%= image_tag("comment.png", alt: t("g.comments", count: 2), title: t("g.comments", count: 2)) %></th>
     <th><%= t("g.actions") %></th>
   </tr>
 
   <% odd_or_even = 0
     for author in @authors
       odd_or_even = 1 - odd_or_even
-      quotations = Quotation.find_by_sql(sql_quotations_for_author(author.id)).size %>
+      quotations = Quotation.find_by_sql(sql_quotations_for_author(author.id)).size
+      number_of_comments = Comment.number_of(author) %>
       <tr valign="top" class="ListLine<%= odd_or_even %>">
         <td><%= raw author_name(author.firstname, author.name) %></td>
         <td><%= raw th(author.description, 40) %></td>
         <td class="center"><%= link_to quotations.to_s, controller: "quotations", action: "list_by_author", author: author.id %></td>
+        <td class="center"><%= number_of_comments if number_of_comments > 0 %></td>
         <td class="actions">
           <%= link_to image_tag("eye.png", alt: t("g.eye"), title: t("g.show"), border: 0), action: "show", id: author %>
           <% if can_edit?(author.user_id) %>
             &nbsp;
             <%= link_to image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit"), border: 0 ), action: "edit", id: author %>
             &nbsp;
-            <% if quotations == 0 %>
+            <% if quotations == 0 and number_of_comments == 0 %>
               <%= link_to image_tag("cancel.png", alt: t("g.red_cross"), title: t("g.delete"), border: 0 ),
                     { action: "destroy", id: author },
                     method: :delete,
@@ -47,4 +50,6 @@
     <%#= button_to t(".author_new"), url_for(controller: 'authors', action: 'new', locale: I18n.locale), method: :get %>
     <%= button_to t(".author_new"), { :action => "new" }, method: :get %>
   </p>
+<% else %>
+    <p class="opacity-50 font-size-smaller "><%= raw t(".needs_login", login_link: link_to(t('layouts.application.login'), login_path(locale: I18n.locale))) %></p>
 <% end %>

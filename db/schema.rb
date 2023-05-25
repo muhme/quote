@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_01_29_164141) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_10_160246) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,7 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_29_164141) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "authors", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "authors", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name", limit: 64
     t.string "firstname", limit: 64
     t.string "description"
@@ -51,9 +51,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_29_164141) do
     t.index ["user_id"], name: "index_authors_on_user_id"
   end
 
-  create_table "categories", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "categories", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "category", limit: 64, null: false
-    t.string "description"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "public", default: false
@@ -62,14 +61,26 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_29_164141) do
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
-  create_table "categories_quotations", id: false, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "categories_quotations", id: false, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.bigint "category_id", null: false
     t.bigint "quotation_id", null: false
     t.index ["category_id", "quotation_id"], name: "index_categories_quotations_on_category_id_and_quotation_id"
     t.index ["quotation_id", "category_id"], name: "index_categories_quotations_on_quotation_id_and_category_id"
   end
 
-  create_table "quotations", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "comment", limit: 512
+    t.string "locale", limit: 8
+    t.string "commentable_type"
+    t.bigint "commentable_id"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "quotations", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "quotation", limit: 512, null: false
     t.string "source"
     t.string "source_link"
@@ -83,7 +94,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_29_164141) do
     t.index ["user_id"], name: "index_quotations_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "users", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "email", limit: 64
     t.string "crypted_password"
     t.string "password_salt"
@@ -104,6 +115,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_01_29_164141) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "authors", "users"
   add_foreign_key "categories", "users"
+  add_foreign_key "comments", "users"
   add_foreign_key "quotations", "authors"
   add_foreign_key "quotations", "users"
 end

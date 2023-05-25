@@ -67,23 +67,24 @@ class ApplicationController < ActionController::Base
   #
   # action is :read, :update or :destroy
   def access?(obj, action)
-    name = obj.class.name # default
+    name = obj&.class&.name # default
     name = t("g.authors", count: 1) if name == "Author"
     name = t("g.quotes", count: 1) if name == "Quotation"
     name = t("g.categories", count: 1) if name == "Category"
+    name = t("g.comments", count: 1) if name == "Comment"
 
     msg = t("g.have")   # default
     msg = t("g.read") if action == :read
     msg = t("g.update") if action == :update
     msg = t("g.delete") if action == :destroy
-    msg = t("g.no_right", name: name, id: obj.id, msg: msg)
+    msg = t("g.no_right", name: name, id: obj&.id, msg: msg)
 
-    if current_user and (current_user.admin or current_user.id == obj.user_id)
+    if current_user and (current_user.admin or current_user.id == obj&.user_id)
       # own object or admin has read/write access
       return true
     else
       if action == :read
-        if obj.public == true
+        if obj&.public == true
           # public read access
           return true
         else
@@ -92,7 +93,7 @@ class ApplicationController < ActionController::Base
         end
       end
       if current_user
-        if current_user.id != obj.user_id
+        if current_user.id != obj&.user_id
           # read/write other objects denied
           msg += " (#{t("g.not_own_entry")})"
         end

@@ -10,24 +10,32 @@ one:
   public: true
 
 second:
-    id: 2
-    quotation: second_quotation
-    user_id: 1
-    author_id: 2 # second author
-    public: true
+  id: 2
+  quotation: second_quotation
+  user_id: 1
+  author_id: 2 # second author
+  public: true
 
 third:
-    id: 3
-    quotation: third_quotation
-    user_id: 2   # user #2 has only one single quote, see system/test/single quote with user link
-    author_id: 3 # third author has only one single quote, see system/test/single quote with author link
-    public: true
+  id: 3
+  quotation: third_quotation
+  user_id: 2   # user #2 has only one single quote, see system/test/single quote with user link
+  author_id: 3 # third author has only one single quote, see system/test/single quote with author link
+  public: true
 
 public_false:
+  id: 4
   quotation: public_false
   user_id: 1
   author_id: 1
   public: false
+
+with_one_comment:
+  id: 5
+  quotation: Con un comentario
+  user_id: 1
+  author_id: 1
+  public: true
 
 # create ten thousend quotes (April 2018 we have 1,332)
 <% 100.upto(10100) do |i| %>

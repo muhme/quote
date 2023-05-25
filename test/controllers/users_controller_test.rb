@@ -14,7 +14,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   # user list don't have to be available
   test "should get index" do
     get users_url
-    assert_response :missing
+    assert_response :forbidden
   end
 
   test "should get new" do

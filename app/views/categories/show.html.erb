@@ -10,9 +10,6 @@
     <td><%= t("g.name") %>:</td>
     <td><b><%= h(@category.category) %></b></td>
   </tr><tr>
-    <td><%= t("g.description") %>:</td>
-    <td><%= h(@category.description) %></td>
-  </tr><tr>
     <td><%= t("g.created") %>:</td>
     <td><%= nice_date @category.created_at %></td>
   </tr><tr>
@@ -46,5 +43,8 @@
   <% end %>
   <%= link_to(image_tag("sm-plus.gif", alt: t("g.share"), title: t("g.bookmark_or_share"), border: 0), "http://www.addthis.com/bookmark.php") %>
   &nbsp;
-  <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: 0), action: "index") %>
+  <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: 0), controller: "categories", action: "index") %>
 </p>
+
+<%= render partial: "comments/show",
+      locals: {commentable_type: @commentable_type, commentable_id: @commentable_id, comments: @comments} %>

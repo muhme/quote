@@ -1,5 +1,5 @@
 <!-- @formatter:off -->
-<h1><%= t("g.authors", count: 1) %></h1>
+<h1><%= t("g.author") %></h1>
 
 <table id="details">
   <tr>
@@ -48,3 +48,6 @@
   &nbsp;
   <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: 0), action: "index") %>
 </p>
+
+<%= render partial: "comments/show",
+      locals: {commentable_type: @commentable_type, commentable_id: @commentable_id, comments: @comments} %>

@@ -200,10 +200,10 @@ module ApplicationHelper
   end
 
   # returns e.g. "🇺🇦 UK – українська" or "🇺🇦 UK" if shorten is true for symbol :uk
-  # falls back to :de for unknown locale 
+  # falls back to :de for unknown locale or nil 
   #
-  def string_for_locale(locale, shorten = false)
-    logger.debug { "string_for_locale(#{locale.class} #{locale}, #{shorten})" }
+  def string_for_locale(locale = "de", shorten = false)
+    # logger.debug { "string_for_locale(#{locale.class} #{locale}, #{shorten})" }
     locales = {
       :de => '<span class="flags">&#x1F1E9;&#x1F1EA; DE</span> – Deutsch',
       :en => '<span class="flags">&#x1F1FA;&#x1F1F8; EN</span> – English',
@@ -211,10 +211,12 @@ module ApplicationHelper
       :ja => '<span class="flags">&#x1F1EF;&#x1F1F5; JA</span> – 日本語',
       :uk => '<span class="flags">&#x1F1FA;&#x1F1E6; UK</span> – Українська'
     }
-    locale = :de unless locales.has_key?(locale)
-    ret = locales[locale]
+
+    l = locale&.to_sym&.downcase
+    l = :de unless locales.has_key?(l)
+    ret = locales[l]
     ret = ret.split(" – ").first if shorten
-    logger.debug { "string_for_locale ret=\”#{ret}\”" }
+    # logger.debug { "string_for_locale ret=\”#{ret}\”" }
     ret
   end
 

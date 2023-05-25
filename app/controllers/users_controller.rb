@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   def index
     if !current_user or current_user.admin == false
       flash[:error] = t("g.no_admin")
-      render "static_pages/forbidden", status: :not_found
+      render "static_pages/forbidden", status: :forbidden
       return false
     end
 

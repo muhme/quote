@@ -7,6 +7,7 @@ class UserMailerTest < ActionMailer::TestCase
   end
 
   test "password_reset" do
+    I18n.locale = "de"
     @first_user.reset_perishable_token!
     mail = UserMailer.password_reset(@first_user)
     assert_equal "Zurücksetzen des Passwortes", mail.subject

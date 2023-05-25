@@ -21,6 +21,7 @@ module Quote
     def call(env)
       @app.call(env)
     rescue => e #  ActionController::BadRequest from Rack::QueryParser::InvalidParameterError
+      Rails.logger.error "Middleware Error Exception=#{e.message}"
       env["QUERY_STRING"] = "bad_request=" + CGI.escape(e.message) + "!"
       @app.call(env)
     end

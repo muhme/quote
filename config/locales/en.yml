@@ -10,6 +10,8 @@ en:
       category:
         category: Category
         description: Description
+      comment:
+        comment: Comment
       quotation:
         quotation: Quote
         source: Source
@@ -27,9 +29,16 @@ en:
           has_one: Cannot delete '%{record}' because a dependent %{dependent} exists.
       models:
         author:
+          attributes:
+            base:
+              has_comments: Author with comments can not be deleted
+              has_quotes: Author with quotes can not be deleted
           first_or_last_name_needed: First name or last name must be set
         category:
           attributes:
+            base:
+              has_comments: Category with comments can not be deleted
+              has_quotes: Category with quotes can not be deleted
             category:
               blank: can't be blank
               taken: '"%{value}" already exists'
@@ -37,6 +46,8 @@ en:
           other: Categories
         quotation:
           attributes:
+            base:
+              has_comments: Quote with comments can not be deleted
             quotation:
               taken: has already been taken
         user:
@@ -82,7 +93,6 @@ en:
       failed: The creation of the author "%{author}" has failed! (%{exception})
     destroy:
       deleted: The entry for the author "%{author}" has been deleted.
-      has_quotes: The author "%{author}" has %{number} quotes and cannot be deleted.
     edit:
       edit_author: Edit author
     form:
@@ -102,6 +112,7 @@ en:
     list_content:
       author_delete: Really delete the entry for the author "%{author}"?
       author_new: Create Author
+      needs_login: Log in with %{login_link} to add authors here.
     login_missing: Login is missing to create a new author entry!
     update:
       updated: The entry for the author "%{author}" has been updated.
@@ -111,12 +122,10 @@ en:
       failed: The creation of the category "%{category}" has failed! (%{exception})
     destroy:
       deleted: The category "%{category}" has been deleted.
-      has_quotes: The category "%{category}" is assigned to %{number} quotes and cannot be deleted.
     edit:
       edit_category: Edit Category
     form:
       category_sample: Noun, singular, e.g., Success
-      description_sample: optional note
     id_does_not_exist: There is no category with the ID "%{id}".
     list_by_letter:
       letter_missing: Letter missing!
@@ -125,9 +134,20 @@ en:
     list_content:
       category_delete: Really delete the category "%{category}"?
       category_new: Create Category
+      needs_login: Log in with %{login_link} to add categories here.
     login_missing: Login missing to create a new category!
     update:
       updated: The category "%{category}" has been updated.
+  comments:
+    comment:
+      commented_on: commented on
+      delete: Really delete the comment "%{comment}"?
+      updated_at: updated on
+    destroy:
+      deleted: The comment "%{comment}" has been deleted.
+    id_does_not_exist: There is no comment with the ID %{id}!
+    new:
+      needs_login: Log in with %{login_link} to add comments here.
   errors:
     messages:
       blank: must not be empty
@@ -151,6 +171,8 @@ en:
     add: Add
     arrow_down: green arrow down
     arrow_undo_alt: Arrow back
+    author: Author
+    author_alt: Picture of woman with long hair and red top
     authors:
       one: Author
       other: Authors
@@ -163,8 +185,12 @@ en:
       one: Category
       other: Categories
     category: Category
+    category_alt: Image of an organizational structure, one superior square above three subordinate squares
+    comment: Comment
+    comments: Comments
     create: Create
     created: Created
+    date: Date & Time
     delete: Delete
     description: Description
     edit: Edit
@@ -180,6 +206,7 @@ en:
     id: Internal No.
     lightning: Lightning
     link: Link
+    locale: Language
     name: Name
     'no': false
     no_admin: Not an Administrator!
@@ -197,6 +224,8 @@ en:
     page: Page
     pencil: Pencil
     public: Public
+    quote: Quote
+    quote_alt: Letter Z in green, as in logo
     quotes:
       one: Quote
       other: Quotes
@@ -205,7 +234,7 @@ en:
     save: Save
     share: Share
     show: View
-    update: change
+    update: Change
     updated: Updated
     user: User
     'yes': true
@@ -286,6 +315,7 @@ en:
       quotations: of the user "%{user}"
     list_content:
       delete: Really delete the quote "%{quote}"?
+      needs_login: Log in with %{login_link} to add quotes here.
       new: Add quote
     list_no_public:
       non_public_quotes: Non-public Quotes

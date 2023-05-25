@@ -10,6 +10,8 @@ es:
       category:
         category: Categoría
         description: Descripción
+      comment:
+        comment: Comentario
       quotation:
         quotation: Cita
         source: Fuente
@@ -27,9 +29,16 @@ es:
           has_one: No se puede eliminar %{record} porque existe un %{dependent} dependiente.
       models:
         author:
+          attributes:
+            base:
+              has_comments: El autor con comentarios no puede ser eliminado
+              has_quotes: El autor con citas no puede ser eliminado
           first_or_last_name_needed: Nombre o apellidos
         category:
           attributes:
+            base:
+              has_comments: La categoría con comentarios no se puede eliminar
+              has_quotes: La categoría con citas no se puede eliminar
             category:
               blank: No puede estar en blanco
               taken: '"%{value}" ya existe'
@@ -37,6 +46,8 @@ es:
           other: Categorías
         quotation:
           attributes:
+            base:
+              has_comments: Las citas con comentarios no se pueden borrar
             quotation:
               taken: esta cita ya existe
         user:
@@ -82,7 +93,6 @@ es:
       failed: ¡La creación del autor "%{author}" ha fallado! (%{exception})
     destroy:
       deleted: La entrada para el autor "%{author}" ha sido eliminada.
-      has_quotes: El autor "%{author}" tiene %{number} citas y no se puede borrar.
     edit:
       edit_author: Editar autor
     form:
@@ -102,6 +112,7 @@ es:
     list_content:
       author_delete: ¿Realmente borrar la entrada para el autor "%{author}"?
       author_new: Crear un autor
+      needs_login: Inicia sesión con %{login_link} para añadir autores aquí.
     login_missing: "¡Falta el login para crear una nueva entrada de autor!"
     update:
       updated: Se ha actualizado la entrada del autor "%{author}".
@@ -111,12 +122,10 @@ es:
       failed: ¡La creación de la categoría "%{category}" ha fallado! (%{exception})
     destroy:
       deleted: La categoría "%{category}" ha sido eliminada.
-      has_quotes: La categoría "%{category}" está asignada a %{number} citas y no se puede eliminar.
     edit:
       edit_category: Editar categoría
     form:
       category_sample: Sustantivo, singular, por ejemplo, éxito
-      description_sample: una nota, en su caso
     id_does_not_exist: No existe una categoría con el ID "%{id}".
     list_by_letter:
       letter_missing: ¡Falta una letra!"
@@ -125,9 +134,20 @@ es:
     list_content:
       category_delete: ¿Realmente borrar la categoría "%{category}"?
       category_new: Crear una categoría
+      needs_login: Inicia sesión con %{login_link} para añadir categorías aquí.
     login_missing: "¡Falta el login para crear una nueva categoría!"
     update:
       updated: La categoría "%{category}" ha sido actualizada.
+  comments:
+    comment:
+      commented_on: comentado en
+      delete: ¿Realmente borrar el comentario "%{comment}"?
+      updated_at: actualizado el
+    destroy:
+      deleted: Se ha eliminado el comentario "%{comment}".
+    id_does_not_exist: "¡No hay ningún comentario con el ID %{id}!"
+    new:
+      needs_login: Inicia sesión con %{login_link} para añadir comentarios aquí.
   errors:
     messages:
       blank: no debe estar vacío
@@ -151,6 +171,8 @@ es:
     add: Añadir
     arrow_down: flecha verde hacia abajo
     arrow_undo_alt: Flecha atrás
+    author: Autor
+    author_alt: Foto de una mujer con pelo largo y top rojo
     authors:
       one: Autor
       other: Autores
@@ -163,8 +185,12 @@ es:
       one: Categoría
       other: Categorías
     category: Categoría
+    category_alt: Imagen de una estructura organizativa, un cuadrado superior sobre tres cuadrados subordinados
+    comment: Comentario
+    comments: Comentarios
     create: Crear
     created: Creado
+    date: Fecha y hora
     delete: Borrar
     description: Descripción
     edit: Editar
@@ -180,6 +206,7 @@ es:
     id: Nº interno
     lightning: haz de luz
     link: Enlace
+    locale: Idioma
     name: Nombre
     'no': false
     no_admin: "¡No hay administrador!"
@@ -197,6 +224,8 @@ es:
     page: Página
     pencil: la pluma
     public: Público
+    quote: Cita
+    quote_alt: Letra Z en verde, como en el logotipo
     quotes:
       one: Cita
       other: Citas
@@ -205,7 +234,7 @@ es:
     save: Guardar
     share: Compartir
     show: Ver
-    update: cambiar
+    update: Cambiar
     updated: Actualizado
     user: usuarios
     'yes': Sí
@@ -286,6 +315,7 @@ es:
       quotations: del usuario "%{user}"
     list_content:
       delete: ¿Realmente quieres eliminar la cita "%{quote}"?
+      needs_login: Inicia sesión con %{login_link} para añadir citas aquí.
       new: Añadir cita
     list_no_public:
       non_public_quotes: Citas no públicas

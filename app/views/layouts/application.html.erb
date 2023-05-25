@@ -42,7 +42,10 @@
         <div class="flex-center"><%= raw author_links I18n.locale %></div>
       </p>
       <% if current_user and current_user.admin %>
-        <p><%= link_to t("activerecord.models.user"), locale: I18n.locale, controller: :users, action: :index %></p>
+        <p>
+          <%= link_to t("activerecord.models.user"), locale: I18n.locale, controller: :users, action: :index %><br/>
+          <%= link_to t("g.comments", count: 2), locale: I18n.locale, controller: :comments, action: :index %>
+        </p>
       <% end %>
       <p><%= link_to t("g.help"),   locale: I18n.locale, controller: :static_pages, action: :help    %></p>
       <p><%= link_to t(".to_use"),  locale: I18n.locale, controller: :static_pages, action: :use     %></p>

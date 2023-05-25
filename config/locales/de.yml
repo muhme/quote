@@ -10,6 +10,8 @@ de:
       category:
         category: Kategorie
         description: Beschreibung
+      comment:
+        comment: Kommentar
       quotation:
         quotation: Zitat
         source: Quelle
@@ -27,9 +29,16 @@ de:
           has_one: Kann '%{record}' nicht löschen, da ein abhängiges %{dependent} existiert.
       models:
         author:
+          attributes:
+            base:
+              has_comments: Autor mit Kommentaren kann nicht gelöscht werden
+              has_quotes: Autor mit Zitaten kann nicht gelöscht werden
           first_or_last_name_needed: Vorname oder Nachname muss gesetzt sein
         category:
           attributes:
+            base:
+              has_comments: Kategorie mit Kommentaren kann nicht gelöscht werden
+              has_quotes: Kategorie mit Zitaten kann nicht gelöscht werden
             category:
               blank: kann nicht leer sein
               taken: "„%{value}” gibt es bereits"
@@ -37,6 +46,8 @@ de:
           other: Kategories
         quotation:
           attributes:
+            base:
+              has_comments: Zitat mit Kommentaren kann nicht gelöscht werden
             quotation:
               taken: gibt es bereits
         user:
@@ -78,11 +89,10 @@ de:
       user_session: UserSession
   authors:
     create:
-      created: Der Autor "%{author}" wurde angelegt.
-      failed: Das Anlegen des Autors "%{author}" ist gescheitert! (%{exception})
+      created: Der Autor „%{author}” wurde angelegt.
+      failed: Das Anlegen des Autors „%{author}” ist gescheitert! (%{exception})
     destroy:
-      deleted: Der Eintrag für den Autor "%{author}" wurde gelöscht.
-      has_quotes: Der Autor "%{author}" hat %{number} Zitate und kann nicht gelöscht werden.
+      deleted: Der Eintrag für den Autor „%{author}” wurde gelöscht.
     edit:
       edit_author: Autor bearbeiten
     form:
@@ -93,41 +103,51 @@ de:
       link_sample: z.B. http://de.wikipedia.org/wiki/Goethe
       name: Nachname
       name_sample: z.B. Goethe
-    id_does_not_exist: Es gibt keinen Autor mit der ID "%{id}".
+    id_does_not_exist: Es gibt keinen Autor mit der ID %{id}!
     list_by_letter:
       lastname_starts: Nachname beginnt
       letter: mit dem Buchstaben „%{letter}”
       letter_missing: Letter missing
       not_a_letter: nicht mit einem Buchstaben
     list_content:
-      author_delete: Wirklich den Eintrag für den Autor "%{author}" löschen?
+      author_delete: Wirklich den Eintrag für den Autor „%{author}” löschen?
       author_new: Autor anlegen
+      needs_login: Mit %{login_link} anmelden, um hier Autoren hinzuzufügen.
     login_missing: Anmeldung fehlt, um einen neuen Autor-Eintrag anzulegen!
     update:
-      updated: Der Eintrag für den Autor "%{author}" wurde aktualisiert.
+      updated: Der Eintrag für den Autor „%{author}” wurde aktualisiert.
   categories:
     create:
-      created: Die Kategorie "%{category}" wurde angelegt.
-      failed: Das Anlegen der Kategorie "%{category}" ist gescheitert! (%{exception})
+      created: Die Kategorie „%{category}” wurde angelegt.
+      failed: Das Anlegen der Kategorie „%{category}” ist gescheitert! (%{exception})
     destroy:
-      deleted: Die Kategorie "%{category}" wurde gelöscht.
-      has_quotes: Die Kategorie "%{category}" ist %{number} Zitaten zugeordnet und kann nicht gelöscht werden.
+      deleted: Die Kategorie „%{category}” wurde gelöscht.
     edit:
       edit_category: Kategorie bearbeiten
     form:
       category_sample: Substantiviert, im Singular, z.B. Erfolg
-      description_sample: ggf. eine Anmerkung
-    id_does_not_exist: Es gibt keine Kategorie mit der ID "%{id}".
+    id_does_not_exist: Es gibt keine Kategorie mit der ID %{id}!
     list_by_letter:
       letter_missing: Buchstabe fehlt!
       not_starting_with_a_letter: "– nicht mit einem Buchstaben beginnend"
       with_initial_letter: "– mit dem Anfangsbuchstaben „%{letter}”"
     list_content:
-      category_delete: Wirklich die Kategorie "%{category}" löschen?
+      category_delete: Wirklich die Kategorie „%{category}” löschen?
       category_new: Kategorie anlegen
+      needs_login: Mit %{login_link} anmelden, um hier Kategorien hinzuzufügen.
     login_missing: Anmeldung fehlt, um eine neue Kategorie anzulegen!
     update:
-      updated: Die Kategorie "%{category}" wurde aktualisiert.
+      updated: Die Kategorie „%{category}” wurde aktualisiert.
+  comments:
+    comment:
+      commented_on: kommentierte am
+      delete: Wirklich den Kommentar „%{comment}” löschen?
+      updated_at: aktualisiert am
+    destroy:
+      deleted: Der Kommentar „%{comment}” wurde gelöscht.
+    id_does_not_exist: Es gibt keinen Kommentar mit der ID %{id}!
+    new:
+      needs_login: Mit %{login_link} anmelden, um hier Kommentare hinzuzufügen.
   errors:
     messages:
       blank: darf nicht leer sein
@@ -151,6 +171,8 @@ de:
     add: Hinzufügen
     arrow_down: grüner Pfeil nach unten
     arrow_undo_alt: Pfeil zurück
+    author: Autor
+    author_alt: Bild einer Frau mit langen Haaren und rotem Oberteil
     authors:
       one: Autor
       other: Autoren
@@ -163,8 +185,14 @@ de:
       one: Kategorie
       other: Kategorien
     category: Kategorie
+    category_alt: Bild einer Organisationsstruktur, ein übergeordnetes Quadrat über drei untergeordneten Quadraten
+    comment: Kommentar
+    comments:
+      one: Kommentar
+      other: Kommentare
     create: Anlegen
     created: Erstellt
+    date: Datum & Uhrzeit
     delete: Löschen
     description: Beschreibung
     edit: Bearbeiten
@@ -180,6 +208,7 @@ de:
     id: Interne Nr.
     lightning: Blitz
     link: Link
+    locale: Sprache
     name: Name
     'no': Nein
     no_admin: Kein Administrator!
@@ -197,6 +226,8 @@ de:
     page: Seite
     pencil: Stift
     public: Öffentlich
+    quote: Zitat
+    quote_alt: Buchstabe Z in grün, wie im Logo
     quotes:
       one: Zitat
       other: Zitate
@@ -205,7 +236,7 @@ de:
     save: Speichern
     share: Teilen
     show: Ansehen
-    update: ändern
+    update: Ändern
     updated: Aktualisiert
     user: Benutzer
     'yes': Ja
@@ -240,7 +271,7 @@ de:
   password_resets:
     create:
       email_not_found: Kein Benutzer mit der E-Mail „%{email}” gefunden!
-      email_sent: Eine E-Mail mit dem Link zum Zurücksetzen des Passworts wurde an "%{email}" gesendet.
+      email_sent: Eine E-Mail mit dem Link zum Zurücksetzen des Passworts wurde an „%{email}” gesendet.
     edit:
       change: Hier kannst Du ein neues Passwort für den Benutzernamen „%{login}” setzen.
       set_new_password: Neues Passwort setzen
@@ -250,17 +281,17 @@ de:
       email_description: die Du zur Anmeldung benutzt hattest
       self_service: Das Passwort für Deinen Benutzereintrag kannst Du selbst zurücksetzen. Dazu wird Dir eine E-Mail mit einem Link zum Zurücksetzen geschickt.
       send: E-Mail schicken
-    not_allowed: Das Zurücksetzen des Passworts für den Benutzereintrag "%{login}" ist nicht erlaubt.
+    not_allowed: Das Zurücksetzen des Passworts für den Benutzereintrag „%{login}” ist nicht erlaubt.
     password_reset: Passwort zurücksetzen
     update:
-      updated: Das Passwort für "%{login}" wurde erfolgreich aktualisiert.
+      updated: Das Passwort für „%{login}” wurde erfolgreich aktualisiert.
   quotations:
     create:
       author_used: Als Autor wurde „%{author}” verwendet.
       created: Dankeschön, das %{id}. Zitat wurde angelegt.
       failed: Das Anlegen des Zitates ist gescheitert! (%{exception})
     destroy:
-      deleted: Das Zitat "%{quote}" wurde gelöscht.
+      deleted: Das Zitat „%{quote}” wurde gelöscht.
     edit:
       edit_quotation: Zitat bearbeiten
     form:
@@ -271,21 +302,22 @@ de:
       quotation_sample: z.B. Erfahrungen vererben sich nicht – jeder muß sie allein machen.
       source: Original-Quelle
       source_description: typischerweise ein Buchtitel, z.B. Gebrauchsanweisung, Glossen und Essays, 1930
-    id_does_not_exist: Es gibt kein Zitat mit der ID="%{id}"!
+    id_does_not_exist: Es gibt kein Zitat mit der ID %{id}!
     index:
       order: Die Zitate sind danach sortiert, wann sie eingestellt wurden. Die zuletzt eingestellten Zitate stehen oben.
       pattern: mit „%{pattern}”
     list_by_author:
-      no_author: Kann keinen Autor mit der ID="%{id}" finden!
+      no_author: Kann keinen Autor mit der ID=„%{id}” finden!
       quotations: von %{author}
     list_by_category:
-      no_category: Kann keine Kategorie mit der ID="%{id}" finden!
+      no_category: Kann keine Kategorie mit der ID=„%{id}” finden!
       quotations: für die Kategorie %{category}
     list_by_user:
-      no_user: Kann keinen Benutzer mit der ID="%{user}" finden!
+      no_user: Kann keinen Benutzer mit der ID=„%{user}” finden!
       quotations: des Benutzers „%{user}”
     list_content:
       delete: Wirklich das Zitat „%{quote}” löschen?
+      needs_login: Mit %{login_link} anmelden, um hier Zitate hinzuzufügen.
       new: Zitat anlegen
     list_no_public:
       non_public_quotes: Nicht-Öffentliche Zitate

@@ -10,6 +10,8 @@ ja:
       category:
         category: カテゴリー
         description: 商品説明
+      comment:
+        comment: コメント
       quotation:
         quotation: 引用元
         source: ソース
@@ -27,9 +29,16 @@ ja:
           has_one: 依存する%{dependent}が存在するため、'%{record}'を削除することができない。
       models:
         author:
+          attributes:
+            base:
+              has_comments: コメント付き作家は削除できません
+              has_quotes: 引用文献のある著者を削除することはできません
           first_or_last_name_needed: 姓または名を設定する必要があります
         category:
           attributes:
+            base:
+              has_comments: コメント付きカテゴリーは削除できません
+              has_quotes: 引用文のあるカテゴリは削除できません
             category:
               blank: 空白にできません
               taken: '"%{value}" は既に存在する。'
@@ -37,6 +46,8 @@ ja:
           other: カテゴリー
         quotation:
           attributes:
+            base:
+              has_comments: コメント付きの引用は削除できません
             quotation:
               taken: 既に取得されています
         user:
@@ -82,7 +93,6 @@ ja:
       failed: 著者 "%{author}" の作成に失敗しました！ 「%{exception}」
     destroy:
       deleted: 著者 "%{author}" のエントリが削除されました。
-      has_quotes: 著者 "%{author}" には %{number} の引用があり、削除できません。
     edit:
       edit_author: 著者を編集
     form:
@@ -102,6 +112,7 @@ ja:
     list_content:
       author_delete: 本当に著者 "%{author}" のエントリを削除しますか？
       author_new: 著者を追加
+      needs_login: "%{login_link}でログインして、ここに著者を追加してください。"
     login_missing: 新しい著者エントリを作成するためのログインがありません！
     update:
       updated: 著者 "%{author}" のエントリが更新されました。
@@ -111,12 +122,10 @@ ja:
       failed: カテゴリ "%{category}" の作成に失敗しました！ 「%{exception}」
     destroy:
       deleted: カテゴリ "%{category}" が削除されました。
-      has_quotes: カテゴリ "%{category}" は %{number} の引用に割り当てられており、削除できません。
     edit:
       edit_category: カテゴリを編集
     form:
       category_sample: 名詞化されたもの、単数形、例：成功
-      description_sample: 必要に応じてコメント
     id_does_not_exist: ID "%{id}" のカテゴリは存在しません。
     list_by_letter:
       letter_missing: 文字が欠けています！
@@ -125,9 +134,20 @@ ja:
     list_content:
       category_delete: 本当にカテゴリ "%{category}" を削除しますか？
       category_new: カテゴリを追加
+      needs_login: "%{login_link}でログインして、ここにカテゴリーを追加してください。"
     login_missing: 新しいカテゴリを作成するためのログインがありません！
     update:
       updated: カテゴリ "%{category}" が更新されました。
+  comments:
+    comment:
+      commented_on: コメント：
+      delete: "%{comment}」というコメントを本当に削除するのですか？"
+      updated_at: オンデマンド
+    destroy:
+      deleted: コメント「%{comment}」は削除しました。
+    id_does_not_exist: ID %{id} を持つコメントは存在しない！
+    new:
+      needs_login: "%{login_link}でログインして、ここにコメントを追加してください。"
   errors:
     messages:
       blank: 蛻の殻であってはならない
@@ -151,6 +171,8 @@ ja:
     add: 追加
     arrow_down: 緑の下矢印
     arrow_undo_alt: 戻る矢印
+    author: 著者名
+    author_alt: ロングヘアーに赤いトップスの女性の写真
     authors:
       one: 著者
       other: 著者たち
@@ -163,8 +185,12 @@ ja:
       one: カテゴリ
       other: カテゴリー
     category: カテゴリ
+    category_alt: 組織構造の図、1つの上位の正方形が3つの下位の正方形の上にある。
+    comment: コメント
+    comments: コメント
     create: 作成
     created: 作成されました
+    date: 日付と時刻
     delete: 削除
     description: 説明
     edit: 編集
@@ -180,6 +206,7 @@ ja:
     id: 内部番号
     lightning: 雷
     link: リンク
+    locale: 言語
     name: 名前
     'no': いいえ
     no_admin: 管理者ではありません！
@@ -197,6 +224,8 @@ ja:
     page: ページ
     pencil: 鉛筆
     public: 公開
+    quote: 引用元
+    quote_alt: ロゴと同じ緑色の文字Z
     quotes:
       one: 引用
       other: 引用
@@ -286,6 +315,7 @@ ja:
       quotations: ユーザー 「%{user}」 の引用
     list_content:
       delete: 本当に引用 「%{quote}」 を削除しますか？
+      needs_login: "%{login_link}でログインして、ここに引用を追加してください。"
       new: 引用を作成
     list_no_public:
       non_public_quotes: 非公開の見積もり

@@ -36,7 +36,8 @@ Rails.application.routes.draw do
     resources :authors, :categories, :quotations
     resources :users, except: [:show, :destroy]
     resources :user_sessions, except: [:index, :show, :edit, :update]
-    resources :password_resets, :only => [:new, :create, :edit, :update]
+    resources :password_resets, only: [:new, :create, :edit, :update]
+    resources :comments, only: [:index, :create, :edit, :update, :destroy]
 
     get "login"  => "user_sessions#new"
     get "logout" => "user_sessions#destroy"
