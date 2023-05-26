@@ -23,7 +23,7 @@ class I18nTest < ApplicationSystemTestCase
       # click on quotes menu entry
       click_on I18n.t("g.quotes", locale: locale, count: 0)
       # first find h1 to wait until the page is loaded ...
-      find("h1", text: I18n.t("g.quotes", locale: locale, count: Quoations.count)) # for українська differs it ends in 4 or 5
+      find("h1", text: I18n.t("g.quotes", locale: locale, count: Quotation.count)) # for українська differs it ends in 4 or 5
       sleep 1 if quotations_url(locale: locale) != current_url # hack: japanese we have to wait, however
       # ... and second check url
       assert_equal quotations_url(locale: locale), current_url
