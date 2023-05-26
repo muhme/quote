@@ -187,9 +187,8 @@ de:
     category: Kategorie
     category_alt: Bild einer Organisationsstruktur, ein übergeordnetes Quadrat über drei untergeordneten Quadraten
     comment: Kommentar
-    comments:
-      one: Kommentar
-      other: Kommentare
+    comment_alt: eine Sprechblase mit angedeutet gefülltem Text
+    comments: Kommentare
     create: Anlegen
     created: Erstellt
     date: Datum & Uhrzeit

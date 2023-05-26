@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
     name = t("g.authors", count: 1) if name == "Author"
     name = t("g.quotes", count: 1) if name == "Quotation"
     name = t("g.categories", count: 1) if name == "Category"
-    name = t("g.comments", count: 1) if name == "Comment"
+    name = t("g.comment") if name == "Comment"
 
     msg = t("g.have")   # default
     msg = t("g.read") if action == :read

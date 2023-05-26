@@ -187,6 +187,7 @@ ja:
     category: カテゴリ
     category_alt: 組織構造の図、1つの上位の正方形が3つの下位の正方形の上にある。
     comment: コメント
+    comment_alt: テキストを埋め込んだスピーチバブル
     comments: コメント
     create: 作成
     created: 作成されました
