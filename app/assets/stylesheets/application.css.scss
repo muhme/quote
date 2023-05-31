@@ -488,6 +488,9 @@ span#side div.language-option {
 .padding-left-2em {
     padding-left: 2em;
 }
+.padding-left-10px {
+    padding-left: 10px;
+}
 
 .opacity-25 {
     opacity: 0.25;
@@ -540,4 +543,8 @@ div.padding-cell {
 }
 form#new_comment_form {
     margin-bottom: 1em;
+}
+
+.flex {
+    display: flex;
 }

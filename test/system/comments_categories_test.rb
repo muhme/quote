@@ -39,7 +39,7 @@ class CommentsCategoriesTest < ApplicationSystemTestCase
   test "edit comment and language as own user" do
     do_login :second_user, :second_user_password
     check_page page, category_url(locale: "de", id: categories(:with_one_comment)), "h1", "Kategorie" # Category
-    click_on "Stift" # pencil
+    all('img[alt="Stift"]')[1].click # second pencil is editing comment
     fill_in "edit_comment", with: "überschrieben" # overwritten
     click_on "Ändern" # Change
     check_this_page page, nil, "überschrieben"

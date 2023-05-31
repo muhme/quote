@@ -2,48 +2,45 @@
 
 <h1><%= t("g.category") %></h1>
 
-<table id="details">
-  <tr>
-    <td><%= t("g.id") %>:</td>
-    <td><%= h(@category.id) %></td>
-  </tr><tr>
-    <td><%= t("g.name") %>:</td>
-    <td><b><%= h(@category.category) %></b></td>
-  </tr><tr>
-    <td><%= t("g.created") %>:</td>
-    <td><%= nice_date @category.created_at %></td>
-  </tr><tr>
-    <td><%= t("g.by_the_user") %>:</td>
-    <td><%= hu(@category.user_id) %></td>
-  </tr>
-  <% if @category.created_at != @category.updated_at %>
-    <tr>
-      <td><%= t("g.updated") %>:</td>
-      <td><%= nice_date @category.updated_at %></td>
-    </tr>
-  <% end %>
-  <tr>
-    <td><%= t("g.public") %>:</td>
-    <td><%= @category.public? ? t("g.yes") : t("g.no") %></td>
-  </tr><tr>
-    <td><%= t("g.quotes", count: @category.quotation_ids.size) %></td>
-    <td><%= if @category.quotation_ids.size >= 1
-        link_to(@category.quotation_ids.size.to_s, controller: "quotations", action: "list_by_category", category: @category.id)
-      else
-        "0"
-      end %>
-    </td>
-  </tr>
-</table>
-
-<p class="actions">
-  <% if can_edit?(@category.user_id) %>
-    <%= link_to(image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit"), border: 0), { action: "edit", locale: I18n.locale, id: @category.id }) %>
-    &nbsp;
-  <% end %>
-  <%= link_to(image_tag("sm-plus.gif", alt: t("g.share"), title: t("g.bookmark_or_share"), border: 0), "http://www.addthis.com/bookmark.php") %>
-  &nbsp;
-  <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: 0), controller: "categories", action: "index") %>
-</p>
+<div class="flex">
+  <div>
+    <table id="details">
+      <tr>
+        <td><%= t("g.id") %>:</td>
+        <td><%= h(@category.id) %></td>
+      </tr><tr>
+        <td><%= t("g.name") %>:</td>
+        <td><b><%= h(@category.category) %></b></td>
+      </tr><tr>
+        <td><%= t("g.created") %>:</td>
+        <td><%= nice_date @category.created_at %></td>
+      </tr><tr>
+        <td><%= t("g.by_the_user") %>:</td>
+        <td><%= hu(@category.user_id) %></td>
+      </tr>
+      <% if @category.created_at != @category.updated_at %>
+        <tr>
+          <td><%= t("g.updated") %>:</td>
+          <td><%= nice_date @category.updated_at %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td><%= t("g.public") %>:</td>
+        <td><%= @category.public? ? t("g.yes") : t("g.no") %></td>
+      </tr><tr>
+        <td><%= t("g.quotes", count: @category.quotation_ids.size) %></td>
+        <td><%= if @category.quotation_ids.size >= 1
+            link_to(@category.quotation_ids.size.to_s, controller: "quotations", action: "list_by_category", category: @category.id)
+          else
+            "0"
+          end %>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="padding-left-10px">
+    <%= link_to(image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit")), { action: "edit", id: @category.id }, { class: "no-decoration"} ) %>
+  </div>
+</div>
 
 <%= render partial: "comments/show" %>

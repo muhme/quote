@@ -179,7 +179,6 @@ de:
     back: Zurück
     bad_pagination:
       not_existing: Die Seite %{page_number} gibt es nicht!
-    bookmark_or_share: Lesezeichen / Weitersagen
     by_the_user: durch den Benutzer
     cancel: Abbruch
     categories:
@@ -234,7 +233,6 @@ de:
     read: lesen
     red_cross: Rotes Kreuz
     save: Speichern
-    share: Teilen
     show: Ansehen
     update: Ändern
     updated: Aktualisiert

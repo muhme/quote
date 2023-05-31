@@ -179,7 +179,6 @@ ja:
     back: 戻る
     bad_pagination:
       not_existing: ページ %{page_number} は存在しません！
-    bookmark_or_share: ブックマーク/共有
     by_the_user: ユーザーによる
     cancel: キャンセル
     categories:
@@ -234,7 +233,6 @@ ja:
     read: 読む
     red_cross: 赤い十字
     save: 保存
-    share: 共有
     show: 見る
     update: 変更
     updated: 更新されました

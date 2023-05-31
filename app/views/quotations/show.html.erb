@@ -33,48 +33,45 @@
     end
 %>
 <h1><%=t("g.quotes", count: 1)%></h1>
-<table id="details">
-    <tr>
-      <td valign=top><%= t("g.id") %>:</td>
-      <td><%= h(@quotation.id) %></td>
-    </tr><tr>
-      <td valign=top><%= t("g.quotes", count: 1) %>:</td>
-      <td><b><%= h(@quotation.quotation) %></b></td>
-    </tr><tr>
-      <td valign=top><%= t("g.authors", count: 1) %>:</td>
-      <td><%= author %> <%= author_quotes %></td>
-    </tr><tr>
-      <td valign=top><%= t("quotations.form.source") %>:</td>
-      <td><%= h(@quotation.source) %></td>
-    </tr><tr>
-      <td valign=top><%= t("quotations.form.link") %>:</td>
-      <td><%= lh(@quotation.source_link) %></td>
-    </tr><tr>
-      <td valign=top><%= t("g.categories", count: 2) %>:</td>
-      <td><%= raw categories.join %></td>
-    </tr><tr>
-      <td valign=top><%= t("g.created") %>:</td>
-      <td><%= nice_date(@quotation.created_at) %></td>
-    </tr><tr>
-      <td valign=top><%= t("g.by_the_user") %>:</td>
-      <td><%= user %></td>
-    </tr><tr>
-      <td valign=top><%= t("g.updated") %>:</td>
-      <td><%= nice_date(@quotation.updated_at) %></td>
-    </tr><tr>
-      <td><%= t("g.public") %>:</td>
-      <td><%= @quotation.public? ? t("g.yes") : t("g.no") %></td>
-    </tr>
-</table>
-
-<p class="actions">
-  <% if can_edit?(@quotation.user_id) %>
-    <%= link_to(image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit"), border: 0), {action: "edit", :id => @quotation.id})%>
-    &nbsp;
-  <% end %>
-  <%= link_to(image_tag("sm-plus.gif", alt: t("g.share"), title: t("g.bookmark_or_share"), border: 0), "http://www.addthis.com/bookmark.php") %>
-  &nbsp;
-  <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: 0), action: "index") %>
-</p>
+<div class="flex">
+  <div>
+    <table id="details">
+        <tr>
+          <td valign=top><%= t("g.id") %>:</td>
+          <td><%= h(@quotation.id) %></td>
+        </tr><tr>
+          <td valign=top><%= t("g.quotes", count: 1) %>:</td>
+          <td><b><%= h(@quotation.quotation) %></b></td>
+        </tr><tr>
+          <td valign=top><%= t("g.authors", count: 1) %>:</td>
+          <td><%= author %> <%= author_quotes %></td>
+        </tr><tr>
+          <td valign=top><%= t("quotations.form.source") %>:</td>
+          <td><%= h(@quotation.source) %></td>
+        </tr><tr>
+          <td valign=top><%= t("quotations.form.link") %>:</td>
+          <td><%= lh(@quotation.source_link) %></td>
+        </tr><tr>
+          <td valign=top><%= t("g.categories", count: 2) %>:</td>
+          <td><%= raw categories.join %></td>
+        </tr><tr>
+          <td valign=top><%= t("g.created") %>:</td>
+          <td><%= nice_date(@quotation.created_at) %></td>
+        </tr><tr>
+          <td valign=top><%= t("g.by_the_user") %>:</td>
+          <td><%= user %></td>
+        </tr><tr>
+          <td valign=top><%= t("g.updated") %>:</td>
+          <td><%= nice_date(@quotation.updated_at) %></td>
+        </tr><tr>
+          <td><%= t("g.public") %>:</td>
+          <td><%= @quotation.public? ? t("g.yes") : t("g.no") %></td>
+        </tr>
+    </table>
+  </div>
+  <div class="padding-left-10px">
+    <%= link_to(image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit")), { action: "edit", id: @quotation.id }, { class: "no-decoration"} ) %>
+  </div>
+</div>
 
 <%= render partial: "comments/show" %>

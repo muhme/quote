@@ -1,52 +1,49 @@
 <!-- @formatter:off -->
 <h1><%= t("g.author") %></h1>
 
-<table id="details">
-  <tr>
-    <td><%= t("g.id") %>:</td>
-    <td><%= h(@author.id) %></td>
-  </tr><tr>
-    <td><%= t("g.name") %>:</td>
-    <td><b><%= h(@author.name) %></b></td>
-  </tr><tr>
-    <td><%= t("g.firstname") %>:</td>
-    <td><b><%= h(@author.firstname) %></b></td>
-  </tr><tr>
-    <td><%= t("g.description") %>:</td>
-    <td><%= h(@author.description) %></td>
-  </tr><tr>
-    <td><%= t("g.link") %>:</td>
-    <td><%= lh(@author.link) %></td>
-  </tr><tr>
-    <td><%= t("g.created") %>:</td>
-    <td><%= nice_date(@author.created_at) %></td>
-  </tr><tr>
-    <td><%= t("g.by_the_user") %>:</td>
-    <td><%= hu(@author.user_id) %></td>
-  </tr>
-  <% if @author.created_at != @author.updated_at %>
-    <tr>
-      <td><%= t("g.updated") %>:</td>
-      <td><%= nice_date(@author.updated_at) %></td>
-    </tr>
-  <% end %>
-  <tr>
-    <td><%= t("g.public") %>:</td>
-    <td><%= @author.public? ? t("g.yes") : t("g.no") %></td>
-  </tr><tr>
-    <td><%= t("g.quotes", count: @author.quotation_ids.size) %></td>
-    <td><%= link_to(@author.quotation_ids.size.to_s, controller: "quotations", action: "list_by_author", author: @author.id) %></td>
-  </tr>
-</table>
-
-<p class="actions">
-  <% if can_edit?(@author.user_id) %>
-    <%= link_to(image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit"), border: 0), action: "edit", id: @author.id) %>
-    &nbsp;
-  <% end %>
-  <%= link_to(image_tag("sm-plus.gif", alt: t("g.share"), title: t("g.bookmark_or_share"), border: 0), "http://www.addthis.com/bookmark.php") %>
-  &nbsp;
-  <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: 0), action: "index") %>
-</p>
+<div class="flex">
+  <div>
+    <table id="details">
+      <tr>
+        <td><%= t("g.id") %>:</td>
+        <td><%= h(@author.id) %></td>
+      </tr><tr>
+        <td><%= t("g.name") %>:</td>
+        <td><b><%= h(@author.name) %></b></td>
+      </tr><tr>
+        <td><%= t("g.firstname") %>:</td>
+        <td><b><%= h(@author.firstname) %></b></td>
+      </tr><tr>
+        <td><%= t("g.description") %>:</td>
+        <td><%= h(@author.description) %></td>
+      </tr><tr>
+        <td><%= t("g.link") %>:</td>
+        <td><%= lh(@author.link) %></td>
+      </tr><tr>
+        <td><%= t("g.created") %>:</td>
+        <td><%= nice_date(@author.created_at) %></td>
+      </tr><tr>
+        <td><%= t("g.by_the_user") %>:</td>
+        <td><%= hu(@author.user_id) %></td>
+      </tr>
+      <% if @author.created_at != @author.updated_at %>
+        <tr>
+          <td><%= t("g.updated") %>:</td>
+          <td><%= nice_date(@author.updated_at) %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td><%= t("g.public") %>:</td>
+        <td><%= @author.public? ? t("g.yes") : t("g.no") %></td>
+      </tr><tr>
+        <td><%= t("g.quotes", count: @author.quotation_ids.size) %></td>
+        <td><%= link_to(@author.quotation_ids.size.to_s, controller: "quotations", action: "list_by_author", author: @author.id) %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="padding-left-10px">
+    <%= link_to(image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit")), { action: "edit", id: @author.id }, { class: "no-decoration"} ) %>
+  </div>
+</div>
 
 <%= render partial: "comments/show" %>

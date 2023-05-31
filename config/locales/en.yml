@@ -179,7 +179,6 @@ en:
     back: Back
     bad_pagination:
       not_existing: Page %{page_number} does not exist!
-    bookmark_or_share: Bookmark / Share
     by_the_user: by the user
     cancel: Cancel
     categories:
@@ -234,7 +233,6 @@ en:
     read: read
     red_cross: Red cross
     save: Save
-    share: Share
     show: View
     update: Change
     updated: Updated

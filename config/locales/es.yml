@@ -179,7 +179,6 @@ es:
     back: Volver
     bad_pagination:
       not_existing: La página %{page_number} ¡no existe!
-    bookmark_or_share: Añadir a favoritos / Compartir
     by_the_user: por el usuario
     cancel: Cancelar
     categories:
@@ -234,7 +233,6 @@ es:
     read: leído
     red_cross: Cruz roja
     save: Guardar
-    share: Compartir
     show: Ver
     update: Cambiar
     updated: Actualizado
