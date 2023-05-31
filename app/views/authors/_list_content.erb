@@ -46,8 +46,6 @@
 
 <% if current_user %>
   <p class="ListNavi">
-    <%#= button_to t(".author_new"), { action: "new" }, method: :get %>
-    <%#= button_to t(".author_new"), url_for(controller: 'authors', action: 'new', locale: I18n.locale), method: :get %>
     <%= button_to t(".author_new"), { :action => "new" }, method: :get %>
   </p>
 <% else %>

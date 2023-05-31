@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:edit, :update, :destroy]
+  before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   # GET /comments only for admins
   def index
@@ -15,28 +15,30 @@ class CommentsController < ApplicationController
 
   # POST /comments/new
   def create
-    return unless logged_in? t("categories.login_missing")
+    return unless logged_in? t("comments.login_missing")
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
     @commentable_type = @comment.commentable_type
     @commentable_id = @comment.commentable_id
+    @comments = Comment.where(commentable_type: @commentable_type, commentable_id: @commentable_id)
 
     respond_to do |format|
       if @comment.save
         format.turbo_stream
-        format.html { redirect_to controller: @commentable_type.downcase.pluralize, action: 'show', locale: I18n.locale, id:  @commentable_id }
+        format.html { redirect_to controller: @commentable_type.downcase.pluralize, action: "show", locale: I18n.locale, id: @commentable_id }
       else
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("#{helpers.dom_id(@comment)}_form", partial: "new") }
-        format.html {
-          if @comment.errors.any?
-            error = t("g.error", count: @comment.errors.count)
-            @comment.errors.each do |message|
-              error << ". #{message.full_message}!"
-            end
-            flash[:error] = error
+        if @comment.errors.any?
+          error = t("g.error", count: @comment.errors.count)
+          @comment.errors.each do |message|
+            error << ". #{message.full_message}!"
           end
-          logger.error "comment.save FAILED with #{error}"
-          redirect_to controller: @commentable_type.downcase.pluralize, action: 'show', locale: I18n.locale, id: @commentable_id, status: :unprocessable_entity }
+        end
+        logger.error "comment.save FAILED with #{error}"
+        format.turbo_stream
+        format.html {
+          flash[:error] = error
+          redirect_to controller: @commentable_type.downcase.pluralize, action: "show", locale: I18n.locale, id: @commentable_id, status: :unprocessable_entity
+        }
       end
     end
   end
@@ -50,13 +52,10 @@ class CommentsController < ApplicationController
   def update
     return unless access?(@comment, :update)
 
-    @commentable_type = @comment.commentable_type
-    @commentable_id = @comment.commentable_id
-
     respond_to do |format|
       if @comment.update(comment_params)
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("comment_#{@comment.id}_container", partial: "comments/comment", locals: { comment: @comment }) }
-        format.html { redirect_to controller: @commentable_type.downcase.pluralize, action: 'show', locale: I18n.locale, id:  @commentable_id, notice: "comment was successfully updated." }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("comment", partial: "comments/comments_table") }
+        format.html { redirect_to controller: @commentable_type.downcase.pluralize, action: "show", locale: I18n.locale, id: @commentable_id, notice: "comment was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -66,14 +65,12 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   def destroy
     return unless access?(@comment, :destroy)
-    @commentable_type = @comment.commentable_type
-    @commentable_id = @comment.commentable_id
 
     respond_to do |format|
       if @comment.destroy
-        format.turbo_stream { render turbo_stream: turbo_stream.remove_all(".#{helpers.dom_id(@comment)}_tr") }
-        # format.html { redirect_to categories_url, notice: t(".deleted", comment: truncate(@comment.comment, length: 20)) }
-        format.html { redirect_to controller: @commentable_type.downcase.pluralize, action: 'show', locale: I18n.locale, id:  @commentable_id, notice: t(".deleted", comment: truncate(@comment.comment, length: 20)) }
+        @comments.reload
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("comment", partial: "comments/comments_table") }
+        format.html { redirect_to controller: @commentable_type.downcase.pluralize, action: "show", locale: I18n.locale, id: @commentable_id, notice: t("comments.deleted", comment: truncate(@comment.comment, length: 20)) }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -84,6 +81,10 @@ class CommentsController < ApplicationController
 
   def set_comment
     @comment = Comment.find(params[:id])
+    @commentable_type = @comment.commentable_type
+    @commentable_id = @comment.commentable_id
+    @comments = Comment.where(commentable_type: @comment.commentable_type, commentable_id: @comment.commentable_id)
+    logger.debug { "set_comment: id=#{params[:id]}, @comment=#{@comment.inspect}, @comments.count=#{@comments.count}" }
   rescue
     flash[:error] = t("comments.id_does_not_exist", id: params[:id])
     render "static_pages/not_found", status: :not_found
@@ -92,5 +93,11 @@ class CommentsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def comment_params
     params.require(:comment).permit(:comment, :locale, :commentable_type, :commentable_id)
+  end
+
+  # TODO delete, once i18n-tasks is seeing keys are used in view
+  def never
+    used = t("comments.commented_on")
+    used = t("comments.updated_at")
   end
 end

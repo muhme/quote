@@ -1,6 +1,10 @@
-<%= turbo_stream.before "end_of_comments" do %>
-  <%= render partial: "comments/comment", locals: { comment: @comment } %>
+<%= turbo_stream.replace "comment" do %>
+  <%= render partial: "comments/comments_table" %>
 <% end %>
-<%= turbo_stream.after "end_of_comments" do %>
+<%= turbo_stream.replace "new_comment_form" do %>
+  <%= render partial: "comments/new" %>
+<% end %>
+<%= turbo_stream.before "comment" do %>
+  <%# used to set focus on input field after turbo replace %>
   <%= javascript_tag 'myCleanField("comment_comment")' %>
 <% end %>

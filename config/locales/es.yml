@@ -139,15 +139,15 @@ es:
     update:
       updated: La categoría "%{category}" ha sido actualizada.
   comments:
-    comment:
-      commented_on: comentado en
-      delete: ¿Realmente borrar el comentario "%{comment}"?
-      updated_at: actualizado el
-    destroy:
-      deleted: Se ha eliminado el comentario "%{comment}".
+    commented_on: comentado en
+    delete: ¿Realmente borrar el comentario "%{comment}"?
+    deleted: Se ha eliminado el comentario "%{comment}".
+    guidelines: Directrices
     id_does_not_exist: "¡No hay ningún comentario con el ID %{id}!"
-    new:
-      needs_login: Inicia sesión con %{login_link} para añadir comentarios aquí.
+    login_missing: "¡Falta el login para crear un nuevo comentario!"
+    needs_login: Inicia sesión con %{login_link} para añadir comentarios aquí.
+    rules: Tenga en cuenta nuestro %{link} al comentar.
+    updated_at: actualizado el
   errors:
     messages:
       blank: no debe estar vacío
@@ -181,6 +181,7 @@ es:
       not_existing: La página %{page_number} ¡no existe!
     bookmark_or_share: Añadir a favoritos / Compartir
     by_the_user: por el usuario
+    cancel: Cancelar
     categories:
       one: Categoría
       other: Categorías

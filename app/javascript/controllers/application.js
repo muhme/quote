@@ -33,21 +33,17 @@ window.myCleanField = function (id) {
     // console.debug (`${id} emptied`);
   }
 }
+
 // jump to the end in an input field with value
 window.myMoveCursorToEnd = function (id) {
-  // console.debug (`myMoveCursorToEnd(${id}`);
+  // console.debug (`myMoveCursorToEnd(id=${id})`);
   var c = document.getElementById(id);
   if (c != null) {
-    if (typeof c.selectionStart == "number") {
-        c.selectionStart = c.selectionEnd = c.value.length;
-    } else if (typeof c.createTextRange != "undefined") {
-        c.focus();
-        var range = c.createTextRange();
-        range.collapse(false);
-        range.select();
-    }
+    c.focus();
+    c.selectionStart = c.selectionEnd = c.value.length;
   }
 }
+
 // set focus and select all e.g. in "quotation_source" field after author is selected
 // window.mySetFocus = function(id) {
 //     var c = document.getElementById(id);

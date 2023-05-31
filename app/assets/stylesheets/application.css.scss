@@ -504,20 +504,20 @@ div#comments.table {
     background-color: #ddffdd;
     border-spacing: 0 0.5ex;
     border: 1px solid black;
-    padding: 0.5em;
     margin-top: 1em;
     display: table;
     border-collapse: collapse;
 }
 div.tdata {
     padding: 1px;
+    margin: 4px;
 }
 div.tdata:blank {
   background-color: red;
 }
 div.td {
     display: table-cell;
-    padding: 0px;
+    padding: 1px;
 }
 div.tr {
     display: table-row;
@@ -538,9 +538,6 @@ div.padding-cell {
 .clear-both-after::after {
     clear: both;
 }
-.padding-bottom-4px {
-    padding: 0 0 4px 0;
-}
-.padding-top-4px {
-    padding: 4px 0 0 0;
+form#new_comment_form {
+    margin-bottom: 1em;
 }

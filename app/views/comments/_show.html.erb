@@ -1,14 +1,5 @@
 <h2><%= t("g.comments") %></h2>
 
-<%= turbo_frame_tag :comment do %>
-  <div class="table" id="comments">
-    <div class="tdata">
-      <% comments.each_with_index do |comment, index| %>
-          <%= render partial: "comments/comment", locals: { comment: comment, not_last: (index < comments.length) } %>
-      <% end %>
-      <div id="end_of_comments"></div>
-    </div>
-  </div>
-<% end %>
+<%= render partial: "comments/comments_table" %>
 
 <%= render partial: "comments/new" %>

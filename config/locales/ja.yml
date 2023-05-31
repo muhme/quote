@@ -139,15 +139,15 @@ ja:
     update:
       updated: カテゴリ "%{category}" が更新されました。
   comments:
-    comment:
-      commented_on: コメント：
-      delete: "%{comment}」というコメントを本当に削除するのですか？"
-      updated_at: オンデマンド
-    destroy:
-      deleted: コメント「%{comment}」は削除しました。
+    commented_on: コメント：
+    delete: "%{comment}」というコメントを本当に削除するのですか？"
+    deleted: コメント「%{comment}」は削除しました。
+    guidelines: ガイドライン
     id_does_not_exist: ID %{id} を持つコメントは存在しない！
-    new:
-      needs_login: "%{login_link}でログインして、ここにコメントを追加してください。"
+    login_missing: 新しいコメントを作成するには、ログインが必要です！
+    needs_login: "%{login_link}でログインして、ここにコメントを追加してください。"
+    rules: コメントする際は、私たちの%{link}にご注意ください。
+    updated_at: オンデマンド
   errors:
     messages:
       blank: 蛻の殻であってはならない
@@ -181,6 +181,7 @@ ja:
       not_existing: ページ %{page_number} は存在しません！
     bookmark_or_share: ブックマーク/共有
     by_the_user: ユーザーによる
+    cancel: キャンセル
     categories:
       one: カテゴリ
       other: カテゴリー

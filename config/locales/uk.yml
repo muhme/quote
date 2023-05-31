@@ -139,15 +139,15 @@ uk:
     update:
       updated: Категорія "%{category}" оновлена.
   comments:
-    comment:
-      commented_on: прокоментували
-      delete: Дійсно видалити коментар "%{comment}"?
-      updated_at: оновлено на
-    destroy:
-      deleted: Коментар "%{comment}" було вилучено.
+    commented_on: прокоментували
+    delete: Дійсно видалити коментар "%{comment}"?
+    deleted: Коментар "%{comment}" було вилучено.
+    guidelines: Вказівки
     id_does_not_exist: Не існує коментарів з ідентифікатором %{id}!
-    new:
-      needs_login: Увійдіть за допомогою %{login_link}, щоб додавати коментарі тут.
+    login_missing: Відсутній логін для створення нового коментаря!
+    needs_login: Увійдіть за допомогою %{login_link}, щоб додавати коментарі тут.
+    rules: Будь ласка, враховуйте наше %{link} при коментуванні.
+    updated_at: оновлено на
   errors:
     messages:
       blank: не повинно бути порожнім
@@ -184,6 +184,7 @@ uk:
       not_existing: Сторінка %{page_number} не існує!
     bookmark_or_share: Закладки / Поділитися
     by_the_user: користувачем
+    cancel: Скасувати
     categories:
       few: категорії
       many: категорій

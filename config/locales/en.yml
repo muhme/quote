@@ -139,15 +139,15 @@ en:
     update:
       updated: The category "%{category}" has been updated.
   comments:
-    comment:
-      commented_on: commented on
-      delete: Really delete the comment "%{comment}"?
-      updated_at: updated on
-    destroy:
-      deleted: The comment "%{comment}" has been deleted.
+    commented_on: commented on
+    delete: Really delete the comment "%{comment}"?
+    deleted: The comment "%{comment}" has been deleted.
+    guidelines: Guidelines
     id_does_not_exist: There is no comment with the ID %{id}!
-    new:
-      needs_login: Log in with %{login_link} to add comments here.
+    login_missing: Login is missing to create a new comment!
+    needs_login: Log in with %{login_link} to add comments here.
+    rules: Please note our %{link} when commenting.
+    updated_at: updated on
   errors:
     messages:
       blank: must not be empty
@@ -181,6 +181,7 @@ en:
       not_existing: Page %{page_number} does not exist!
     bookmark_or_share: Bookmark / Share
     by_the_user: by the user
+    cancel: Cancel
     categories:
       one: Category
       other: Categories

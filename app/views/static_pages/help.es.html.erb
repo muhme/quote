@@ -4,8 +4,8 @@
 
 <h2>Bienvenida</h2>
 <p>Para volver a la página principal de la aplicación web, simplemente haz clic en el logo <%= image_tag("quote_service_16.png", :alt => "Logo", :title => "www.zitat-service.de") %> en la esquina superior izquierda. Ahí tienes, por ejemplo, una búsqueda de texto de todas las citas.</p>
-
 <div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Se muestra cómo crear una cita.", :title => "Ver", :border => 1, size: '466x315') %><br />Ejemplo: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/es/quotations/898' %></div>
+
 <h2>Selección de idioma</h2>
 <p>Al hacer clic en la bandera, puedes seleccionar el idioma deseado.<br />El acceso directo también es posible, por ejemplo, para inglés con:<br /><a href="https://www.zitat-service.de/en/">https://www.zitat-service.de/en/</a>.
 
@@ -15,18 +15,37 @@
 <p>Por favor, proporciona la fuente original de tu cita, como el título del libro. Si conoces un documento en Internet donde se pueda encontrar la cita en el texto original, proporciona el enlace. No enlaces a páginas donde se pueda comprar el libro u otra información.</p>
 <p>Puedes asignar tantas categorías a tu cita como desees. Las categorías que ya se han encontrado como palabras en la cita se pueden agregar con un clic en el icono de rayo <%= image_tag("lightning.png", :alt => "Rayo", :title => "Marcar para sugerencias") %> .</p>
 <p>Si encuentras que falta un autor o una categoría, puedes agregarlos tú mismo. Haz clic en <%= link_to 'Crear Autor','/es/authors/new' %> o <%= link_to 'Crear Categoría', '/es/categories/new' %>. Después, puedes agregar el autor o la categoría editando tu cita.</p>
+
 <h2 id="copyright">Derechos de autor</h2>
 <p>Ten en cuenta que las citas también están sujetas a la ley alemana de derechos de autor. Esto significa que las obras protegidas por derechos de autor no pueden utilizarse sin el permiso del autor. Se permiten citas individuales, pero no deben haber más de cinco a diez citas por autor. En cuanto a las traducciones, ten en cuenta que el traductor goza de protección de derechos de autor al igual que un autor.</p>
 <p>Para utilizar una cita de acuerdo con la ley de derechos de autor, debes proporcionar una cita de la fuente. Esto generalmente consiste en el título del libro, año de publicación y número de página.</p>
 <p>Ya que ha habido informes de órdenes de cesar y desistir, no aceptamos citas de Karl Valentin, Erich Kästner o Heinz Erhardt (ver, por ejemplo, <a href="http://www1.wdr.de/themen/archiv/sp_urheberrecht/valentin100.html">Karl Valentin und die Anwälte</a>, WDR 2012).</p>
 </p>
 <p>Las citas de autores que han fallecido hace más de 70 años están en el dominio público y pueden usarse libremente.</p>
+
 <h2>Categorías</h2>
-<p>En nuestra colección, todas las citas se asignan a temas específicos, como <%= link_to "Glück", '/es/quotations/list_by_category/7' %> (Felicidad), <%= link_to "Mensch", '/es/quotations/list_by_category/32' %> (Humano) o <%= link_to "Lächeln", '/es/quotations/list_by_category/139' %> (Sonrisa). Una cita puede asignarse a varias categorías. Puedes ver todas las <%= link_to 'categorías', '/es/categories' %> creadas. Al hacer clic en el ojo <%= image_tag("eye.png", :alt => "Ojo", :title => "Ver") %>, puedes ver más detalles sobre una categoría. Si has creado una categoría tú mismo, también puedes modificarla haciendo clic en el lápiz <%= image_tag("pencil.png", :alt => "Lápiz", :title => "Editar") %> o eliminarla haciendo clic en la cruz roja <%= image_tag("cancel.png", :alt => "Cruz roja", :title => "Eliminar") %>. Una categoría solo se puede eliminar si no hay citas asignadas a ella.</p>
+<p>En nuestra colección, todas las citas se asignan a temas específicos, como <%= link_to "Glück", '/es/quotations/list_by_category/7' %> (Felicidad), <%= link_to "Mensch", '/es/quotations/list_by_category/32' %> (Humano) o <%= link_to "Lächeln", '/es/quotations/list_by_category/139' %> (Sonrisa). Una cita puede asignarse a varias categorías. Puedes ver todas las <%= link_to 'categorías', '/es/categories' %> creadas. Al hacer clic en el ojo <%= image_tag("eye.png", :alt => "Ojo", :title => "Ver") %>, puedes ver más detalles sobre una categoría. Si has creado una categoría tú mismo, también puedes modificarla haciendo clic en el lápiz <%= image_tag("pencil.png", :alt => "Pencil", :title => "Edit") %>.</p>
+<p>Puedes eliminar una categoría que hayas creado haciendo clic en la cruz roja <%= image_tag("cancel.png", :alt => "cruz roja", :title => "Eliminar") %> siempre y cuando la categoría no contenga ninguna cita o comentario.</p>
+
 <h2>Autores</h2>
 <p>Al ver la lista de <%= link_to 'autores', '/es/authors' %>, puedes hacer clic en el ojo <%= image_tag("eye.png", :alt => "Ojo", :title => "Ver") %> para ver más detalles sobre un autor. Si has creado un autor tú mismo, puedes editarlo usando el lápiz <%= image_tag("pencil.png", :alt => "Lápiz", :title => "Editar") %>. También puedes ver cuántas citas están asignadas a un autor y mostrar todas las citas de ese autor.</p>
-<p>Solo puedes eliminar un autor que tú creaste con la cruz roja <%= image_tag("cancel.png", :alt => "Cruz roja", :title =>"Eliminar") %> si no hay citas asignadas a ellos.</p>
+<p>Puedes eliminar una entrada de autor que hayas creado haciendo clic en la cruz roja <%= image_tag("cancel.png", :alt => "cruz roja", :title => "Eliminar") %> siempre que no contenga ninguna cita o comentario.</p>
+
+<h2 id="comments">Comentarios</h2>
+<p>Se pueden comentar las citas, autores y categorías. Para agregar comentarios tú mismo, debes estar registrado. Los comentarios se marcan en el idioma que se está utilizando actualmente. También puedes cambiar o eliminar tus propios comentarios. Se aplican las siguientes directrices:</p>
+<ol>
+  <li><strong>Respeta a los demás</strong>: Evita el lenguaje ofensivo, agresivo o despectivo. Todos tienen derecho a su propia opinión y es importante respetar estas diferencias.</li>
+  <li><strong>Mantente en el tema</strong>: Los comentarios deben relacionarse con las citas, autores, categorías o la respectiva discusión.</li>
+  <li><strong>No spam o publicidad</strong>: Se eliminarán los comentarios que promocionen productos, servicios u otros sitios web.</li>
+  <li><strong>Protege tu privacidad</strong>: No divulges información personal como número de teléfono o dirección de correo electrónico en los comentarios.</li>
+  <li><strong>No al discurso de odio</strong>: Se eliminarán los comentarios que promuevan el odio o la discriminación basada en raza, género, religión, nacionalidad, discapacidad, orientación sexual o edad.</li>
+  <li><strong>Usa un lenguaje apropiado</strong>: Evita las expresiones vulgares u obscenas.</li>
+  <li><strong>No a contenidos ilegales</strong>: No está permitido compartir o promocionar contenidos ilegales.</li>
+</ol>
+<p>Los administradores se reservan el derecho de modificar o eliminar los comentarios que violen estas directrices.</p>
+
 <h2>Visibilidad</h2>
 <p>Cuando agregas nuevas citas, categorías o autores, inicialmente solo son visibles para ti. Un administrador debe aprobarlos antes de que sean visibles para todos. Si realizas más cambios después, nuevamente serán visibles solo para ti hasta que un administrador los apruebe nuevamente. Esta restricción tiene la intención de evitar que las citas sean mal utilizadas en sitios web.</p>
+
 <h2>Errores o Extensiones</h2>
 <p>Si descubres un error o deseas solicitar una extensión, por favor crea un <a target="_blank" href="https://github.com/muhme/quote/issues">ticket</a> para nosotros. Abordaremos tu inquietud lo más pronto posible.</p>
