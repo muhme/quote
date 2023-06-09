@@ -176,10 +176,10 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
 
   test "list_no_public method" do
     get authors_list_no_public_url
-    assert_redirected_to authors_url
+    assert_forbidden
     login :first_user
     get authors_list_no_public_url
-    assert_redirected_to authors_url
+    assert_forbidden
     get '/logout'
     login :admin_user
     get authors_list_no_public_url

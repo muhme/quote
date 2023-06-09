@@ -16,7 +16,7 @@ module ApplicationHelper
 
     if controller.controller_name == "categories"
       if controller.action_name == "list_by_letter"
-        d += " –  #{t('g.categories', count: 2)}, #{t('layouts.application.starting_with_letter', letter: params[:letter].first)}"
+        d += " – #{t('g.categories', count: 2)}, #{t('layouts.application.starting_with_letter', letter: params[:letter].first)}"
       elsif controller.action_name == "show" and @category.present?
         d += " – #{t('g.categories', count: 1)} #{@category.category}"
       else
@@ -92,23 +92,44 @@ module ApplicationHelper
     ret <<= "</tr></table>"
   end
 
-  # gives links to the categories by 1st letter as four-rows-table
-  # A B C D E F G
-  # H I J K L M N
-  # O P Q R S T U
-  # V W X Y Z *
-  def category_links locale
+  # gives links to the categories by 1st letter as table
+  def category_links
     init_chars = Category.init_chars
+    if I18n.locale == :uk
+      # А	Б	В	Г	Д	Е	Ж
+      # З	И	Й	К	Л	М	Н
+      # О	П	Р	С	Т	У	Ф
+      # Х	Ц	Ч	Ш	Щ	Ъ	Ы
+      # Ь	Э	Ю	Я	*
+      all = ("А".."Я").to_a
+    elsif I18n.locale == :ja
+      # あ	い	う	え	お	か	き
+      # く	け	こ	さ	し	す	せ
+      # そ	た	ち	つ	て	と	な
+      # に	ぬ	ね	の	は	ひ	ふ
+      # へ	ほ	ま	み	む	め	も
+      # や	ゆ	よ	*
+      all = HIRAGANA.dup
+    else # :es, :en or :de
+      # A B C D E F G
+      # H I J K L M N
+      # O P Q R S T U
+      # V W X Y Z *
+      all = ("A".."Z").to_a
+    end
+    if I18n.locale == :ja
+      all[-3] = "*" # use a not used letter place, to save one more line
+    else
+      all << "*"
+    end
     ret = "<table id=\"letter\"><tr>"
-    all = ("A".."Z").to_a
-    all << "*"
     for i in 0..(all.length - 1)
       if init_chars.include?(all[i])
-        ret <<= "<td>" + link_to(all[i], locale: locale, controller: :categories, action: :list_by_letter, letter: all[i]) + "</td>"
+        ret <<= "<td>" + link_to(all[i], controller: :categories, action: :list_by_letter, letter: all[i]) + "</td>"
       else
         ret <<= "<td id=\"unused\">#{all[i]}</td>"
       end
-      ret <<= "</tr><tr>" if ((i + 1) % 7) == 0
+      ret <<= "</tr><tr>" if ((i + 1) % (I18n.locale == :ja ? 5 : 9)) == 0
     end
     ret <<= "</tr></table>"
   end
@@ -205,11 +226,11 @@ module ApplicationHelper
   def string_for_locale(locale = "de", shorten = false)
     # logger.debug { "string_for_locale(#{locale.class} #{locale}, #{shorten})" }
     locales = {
-      :de => '<span class="flags">&#x1F1E9;&#x1F1EA; DE</span> – Deutsch',
-      :en => '<span class="flags">&#x1F1FA;&#x1F1F8; EN</span> – English',
-      :es => '<span class="flags">&#x1F1EA;&#x1F1F8; ES</span> – Español',
-      :ja => '<span class="flags">&#x1F1EF;&#x1F1F5; JA</span> – 日本語',
-      :uk => '<span class="flags">&#x1F1FA;&#x1F1E6; UK</span> – Українська'
+      :de => '<span class="flags">&#x1F1E9;&#x1F1EA;&nbsp;DE</span> – Deutsch',
+      :en => '<span class="flags">&#x1F1FA;&#x1F1F8;&nbsp;EN</span> – English',
+      :es => '<span class="flags">&#x1F1EA;&#x1F1F8;&nbsp;ES</span> – Español',
+      :ja => '<span class="flags">&#x1F1EF;&#x1F1F5;&nbsp;JA</span> – 日本語',
+      :uk => '<span class="flags">&#x1F1FA;&#x1F1E6;&nbsp;UK</span> – Українська'
     }
 
     l = locale&.to_sym&.downcase
@@ -220,4 +241,20 @@ module ApplicationHelper
     ret
   end
 
+  # returns next locale from [:de, :en, :es, :ja, :uk] as string
+  def next_locale(current_locale = nil)
+    locales = I18n.available_locales
+    return 'de' if current_locale.nil?
+    # find the index of the current locale in the array, increment it by one to get the index of the next locale, and then use the
+    # modulo operator (%) to ensure that the result is wrapped around to the beginning of the array if it exceeds the array's length. 
+    index = locales.index(current_locale.to_sym)
+    locales[(index + 1) % locales.length].to_s
+  end
+
+  # give I18n.available_locales with first actual or given locale
+  def ordered_locales(locale = I18n.locale)
+    locales = I18n.available_locales
+    locales.delete(locale)
+    locales.unshift(locale)
+  end
 end

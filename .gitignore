@@ -32,3 +32,5 @@ coverage
 .DS_Store
 
 /config/master.key
+# ignore environment vars file, e.g. DEEPL_API_KEY
+.env

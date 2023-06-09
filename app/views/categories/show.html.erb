@@ -8,13 +8,34 @@
       <tr>
         <td><%= t("g.id") %>:</td>
         <td><%= h(@category.id) %></td>
-      </tr><tr>
-        <td><%= t("g.name") %>:</td>
-        <td><b><%= h(@category.category) %></b></td>
-      </tr><tr>
+      </tr>
+      <% ordered_locales.each do |locale| %>
+        <tr>
+          <td><%= "#{t("g.name")}:" if locale == I18n.locale %></td>
+          <td>
+            <% if locale == I18n.locale %>
+              <b><%= h(@category.category(locale: locale)) %></b>
+            <% else %>
+              <span class="opacity-50"><%= h(@category.category(locale: locale)) %></span>
+            <% end %>
+
+            <% if @duplicate&.key?(locale.to_s) %>
+              <%= link_to(image_tag("error.png", alt: t("g.error_alt"), title: t("g.duplicate", count: 1)),
+                          { action: "show", id: @duplicate[locale.to_s] },
+                          { class: "no-decoration"} ) %>
+            <% end %>
+
+            <span class="float-right <%= "opacity-50" if locale != I18n.locale %>">
+              <%= raw string_for_locale(locale, true) %>
+            </span>
+          </td>
+        </tr>
+      <% end %>
+      <tr>
         <td><%= t("g.created") %>:</td>
         <td><%= nice_date @category.created_at %></td>
-      </tr><tr>
+      </tr>
+      <tr>
         <td><%= t("g.by_the_user") %>:</td>
         <td><%= hu(@category.user_id) %></td>
       </tr>
@@ -27,7 +48,8 @@
       <tr>
         <td><%= t("g.public") %>:</td>
         <td><%= @category.public? ? t("g.yes") : t("g.no") %></td>
-      </tr><tr>
+      </tr>
+      <tr>
         <td><%= t("g.quotes", count: @category.quotation_ids.size) %></td>
         <td><%= if @category.quotation_ids.size >= 1
             link_to(@category.quotation_ids.size.to_s, controller: "quotations", action: "list_by_category", category: @category.id)

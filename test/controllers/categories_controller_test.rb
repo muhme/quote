@@ -30,6 +30,14 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     get "/categories/list_by_letter/*"
     assert_response :success
+    get "/en/categories/list_by_letter/X"
+    assert_response :success
+    get "/es/categories/list_by_letter/X"
+    assert_response :success
+    get "/ja/categories/list_by_letter/%E3%81%82" # あ
+    assert_response :success
+    get "/ja/categories/list_by_letter/%D0%99" # Й
+    assert_response :success
     get '/categories/list_by_letter/'
     assert_response :redirect
     get '/categories/list_by_letter/%20'
@@ -83,10 +91,10 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_forbidden
     assert_difference('Category.count') do
       login :first_user
-      post categories_url, params: { category: { category: "Game" } }
+      post categories_url, params: { locale: "de", category: { category_de: "Spiel" } }
     end
-    assert_redirected_to category_url(Category.last, locale: I18n.default_locale)
-    category = Category.find_by_category 'Game'
+    assert_redirected_to category_url(id: Category.last.id, locale: 'de')
+    category = Category.i18n.find_by(category: 'Spiel', locale: :de)
     assert_not category.public
   end
 
@@ -108,23 +116,23 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "update category" do
     login :first_user
-    patch category_url(@category_one), params: { category: { category: "hu" } }
-    assert_redirected_to category_url @category_one
-    assert_equal Category.find(@category_one.id).category, "hu"
+    patch category_url(id: @category_one.id, locale: :en), params: { category: { category_en: "nice" } }
+    assert_redirected_to category_url(id: @category_one.id, locale: :en)
+    assert_equal Category.find(@category_one.id).category(locale: :en), "nice"
     get '/logout'
     login :admin_user
-    patch category_url(@category_one), params: { category: { category: "hu hu" } }
-    assert_redirected_to category_url @category_one
-    assert_equal Category.find(@category_one.id).category, "hu hu"
+    patch category_url(id: @category_one.id, locale: :en), params: { category: { category_en: "nicer" } }
+    assert_redirected_to category_url(id: @category_one.id, locale: :en)
+    assert_equal Category.find(@category_one.id).category(locale: :en), "nicer"
     get '/logout' 
-    patch category_url(@category_one), params: { category: { category: "hu hu hu" } }
+    patch category_url(id: @category_one.id, locale: :en), params: { category: { category_en: "nicest" } }
     assert_forbidden
-    assert_equal Category.find(@category_one.id).category, "hu hu"
+    assert_equal Category.find(@category_one.id).category(locale: :en), "nicer"
   end
   
   test "return to edit if validation fails" do
     login :first_user
-    patch category_url(@category_one), params: { category: { category: '' } }
+    patch category_url(id: @category_one.id, locale: :en), params: { category: { category_en: '' } }
     assert_response :unprocessable_entity # 422
     assert_match /1 fehler|1 error/i, @response.body
   end
@@ -170,18 +178,6 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     end
     assert_response :unprocessable_entity # 422
   end
-  
-  test "list_no_public method" do
-    get categories_list_no_public_url
-    assert_redirected_to categories_url
-    login :first_user
-    get categories_list_no_public_url
-    assert_redirected_to categories_url
-    get '/logout'
-    login :admin_user
-    get categories_list_no_public_url
-    assert_response :success
-  end
 
   test "pagination" do
     # not a number
@@ -226,6 +222,29 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
     get '/categories/list_no_public?page=42000000'
     assert_response :bad_request
+  end
+
+  test "list_no_public method" do
+    get categories_list_no_public_url
+    assert_forbidden
+    login :first_user
+    get categories_list_no_public_url
+    assert_forbidden
+    get '/logout'
+    login :admin_user
+    get categories_list_no_public_url
+    assert_response :success
+  end
+
+  test "list duplicates" do
+    get categories_list_duplicates_url(locale: :en)
+    assert_forbidden
+    login :first_user
+    get categories_list_duplicates_url(locale: :en)
+    assert_forbidden
+    login :admin_user
+    get categories_list_duplicates_url(locale: :en)
+    assert_response :success
   end
 
 end

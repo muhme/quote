@@ -24,8 +24,23 @@
 <p>Zitate, die von Urhebern stammen, die seit mehr als 70 Jahren verstorben sind, sind gemeinfrei und dürfen beliebig genutzt werden.</p>
 
 <h2>Kategorien</h2>
-<p>In unserer Sammlung sind alle Zitate bestimmten Themen zugeordnet, wie zum Beispiel <%= link_to "Glück", '/de/quotations/list_by_category/7' %>, <%= link_to "Mensch", '/de/quotations/list_by_category/32' %> oder <%= link_to "Lächeln", '/de/quotations/list_by_category/139' %>. Ein Zitat kann mehreren Kategorien zugeordnet sein. Du kannst Dir alle bisher erstellten <%= link_to 'Kategorien', '/de/categories' %> anzeigen lassen. Wenn Du auf das Auge <%= image_tag("eye.png", :alt => "Auge", :title => "Ansehen") %> klickst, erhältst Du weitere Details zu dieser Kategorie. Falls Du selbst den Eintrag für die Kategorie angelegt hast, kannst Du ihn mit einem Klick auf den Stift <%= image_tag("pencil.png", :alt => "Stift", :title => "Ändern") %> bearbeiten. Außerdem kannst Du sehen, wie viele Zitate einer Kategorie zugeordnet sind und alle Zitate dieser Kategorie anzeigen lassen.</p>
-<p>Du kannst einen von Dir erstellte Kategorie durch Klicken auf das rote Kreuz <%= image_tag("cancel.png", :alt => "rotes Kreuz", :title => "Löschen") %> löschen, sofern diese keine Zitate oder Kommentare mehr hat.</p>
+<p>In unserer Sammlung sind alle Zitate bestimmten Themen zugeordnet, wie zum Beispiel
+   <%= link_to "Glück", controller: :categories, action: :show, id: 7 %>,
+   <%= link_to "Mensch", controller: :categories, action: :show, id: 32 %> oder
+   <%= link_to "Lächeln", controller: :categories, action: :show, id: 139 %>.
+   Ein Zitat kann mehreren Kategorien zugeordnet sein. Du kannst dir alle bisher erstellten
+   <%= link_to 'Kategorien', controller: :categories %> anzeigen lassen.
+   Wenn du auf das Auge <%= image_tag("eye.png", alt: "Auge", title: "Ansehen") %> klickst,
+   erhältst du weitere Details zu dieser Kategorie. Falls du selbst den Eintrag für die Kategorie angelegt hast,
+   kannst du ihn mit einem Klick auf den Stift <%= image_tag("pencil.png", alt: "Stift", title: "Ändern") %> bearbeiten.
+   Außerdem kannst du sehen, wie viele Zitate einer Kategorie zugeordnet sind und dir alle Zitate dieser Kategorie anzeigen lassen.</p>
+<p>Kategorien werden maschinell in die anderen Sprachen übersetzt. Du kannst die Übersetzung der von dir angelegten Kategorien bearbeiten oder erneut übersetzen.
+   Kategorien sind in der aktuellen Sprache eindeutig, eine bereits existierende Kategorie lässt sich kein zweites Mal anlegen. Durch die maschinelle Übersetzung kann es jedoch zu Duplikaten in anderen Sprachen kommen.
+   Wenn der Name der Kategorie doppelt vorkommt, wird ein Warnsymbol <%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.duplicate", count: 1)) %> angezeigt, das auf das Duplikat der Kategorie verlinkt.
+   Kannst du eine andere Bezeichnung für die Kategorie verwenden? Oder lässt sich die Übersetzung anpassen?
+   Die Bedeutungen können in den verschiedenen Sprachen variieren. Daher bemühen wir uns, eine zu finden, die möglichst ähnlich in allen Sprachen ist.
+   Falls du Unterstützung benötigst, zögere bitte nicht, uns einen Kommentar zu hinterlassen. Ein Administrator wird sich dann gerne darum kümmern.</p>
+<p>Wenn eine von Dir erstellte Kategorie keine Zitate und Kommentare enthält, kannst Du diese Kategorie löschen, indem Du auf das rote Kreuz <%= image_tag("cancel.png", alt: "rotes Kreuz", title: "Löschen") %> klickst.</p>
 
 <h2>Autoren</h2>
 <p>Wenn Du die Liste der <%= link_to 'Autoren', '/authors' %> aufrufst, kannst Du auf das Auge <%= image_tag("eye.png", :alt => "Auge", :title => "Ansehen") %> klicken, um weitere Details zu einem Autor zu sehen. Falls Du selbst einen Autor angelegt hast, kannst Du ihn mit dem Stift <%= image_tag("pencil.png", :alt => "Stift", :title => "Ändern") %> bearbeiten. Außerdem kannst Du sehen, wie viele Zitate einem Autor zugeordnet sind und alle Zitate dieses Autors anzeigen lassen.</p>

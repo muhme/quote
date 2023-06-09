@@ -24,8 +24,24 @@
 <p>Las citas de autores que han fallecido hace más de 70 años están en el dominio público y pueden usarse libremente.</p>
 
 <h2>Categorías</h2>
-<p>En nuestra colección, todas las citas se asignan a temas específicos, como <%= link_to "Glück", '/es/quotations/list_by_category/7' %> (Felicidad), <%= link_to "Mensch", '/es/quotations/list_by_category/32' %> (Humano) o <%= link_to "Lächeln", '/es/quotations/list_by_category/139' %> (Sonrisa). Una cita puede asignarse a varias categorías. Puedes ver todas las <%= link_to 'categorías', '/es/categories' %> creadas. Al hacer clic en el ojo <%= image_tag("eye.png", :alt => "Ojo", :title => "Ver") %>, puedes ver más detalles sobre una categoría. Si has creado una categoría tú mismo, también puedes modificarla haciendo clic en el lápiz <%= image_tag("pencil.png", :alt => "Pencil", :title => "Edit") %>.</p>
-<p>Puedes eliminar una categoría que hayas creado haciendo clic en la cruz roja <%= image_tag("cancel.png", :alt => "cruz roja", :title => "Eliminar") %> siempre y cuando la categoría no contenga ninguna cita o comentario.</p>
+<p>En nuestra colección, todas las citas están asignadas a temas específicos, como
+   <%= link_to "Fortuna", controller: :categories, action: :show, id: 7 %>,
+   <%= link_to "Humano", controller: :categories, action: :show, id: 32 %> o
+   <%= link_to "Sonrisa", controller: :categories, action: :show, id: 139 %>.
+   Una cita puede ser asignada a múltiples categorías. Puedes ver todas las <%= link_to 'categorías', controller: :categories %> que se han creado hasta ahora.
+   Cuando haces clic en el ojo <%= image_tag("eye.png", alt: "Ojo", title: "Ver") %>,
+   obtendrás más detalles sobre esa categoría. Si has creado la entrada para la categoría tú mismo,
+   puedes editarla haciendo clic en el lápiz <%= image_tag("pencil.png", alt: "Lápiz", title: "Editar") %>.
+   También puedes ver cuántas citas están asignadas a una categoría y ver todas las citas en esa categoría.</p>
+<p>Las categorías se traducen automáticamente a otros idiomas. Puedes editar o volver a traducir las traducciones de las categorías que has creado.
+   Las categorías son únicas en un idioma y no puedes crear la misma categoría dos veces. Sin embargo, la traducción automática puede resultar en duplicados en otros idiomas.
+   Si el nombre de la categoría aparece dos veces, se mostrará un símbolo de advertencia <%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.duplicate", count: 1)) %>, enlazando al duplicado de la categoría.
+   ¿Puedes usar un nombre diferente para la categoría? ¿O se puede ajustar la traducción?
+   Los significados pueden variar en las diferentes lenguas.
+   Por lo tanto, nos esforzamos por encontrar uno que sea lo más similar posible en todos los idiomas.
+   Si necesitas asistencia, por favor no dudes en dejarnos un comentario.
+   Un administrador se encargará de ello con gusto.</p>
+<p>Si una categoría que has creado no contiene citas ni comentarios, puedes eliminarla haciendo clic en la cruz roja <%= image_tag("cancel.png", :alt => "cruz roja", :title => "Eliminar") %>.</p>
 
 <h2>Autores</h2>
 <p>Al ver la lista de <%= link_to 'autores', '/es/authors' %>, puedes hacer clic en el ojo <%= image_tag("eye.png", :alt => "Ojo", :title => "Ver") %> para ver más detalles sobre un autor. Si has creado un autor tú mismo, puedes editarlo usando el lápiz <%= image_tag("pencil.png", :alt => "Lápiz", :title => "Editar") %>. También puedes ver cuántas citas están asignadas a un autor y mostrar todas las citas de ese autor.</p>

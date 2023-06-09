@@ -41,6 +41,7 @@ de:
               has_quotes: Kategorie mit Zitaten kann nicht gelöscht werden
             category:
               blank: kann nicht leer sein
+              no_spaces: darf keine Leerzeichen enthalten
               taken: "„%{value}” gibt es bereits"
           one: Kategorie
           other: Kategories
@@ -117,6 +118,7 @@ de:
     update:
       updated: Der Eintrag für den Autor „%{author}” wurde aktualisiert.
   categories:
+    category_sample: ein Wort als Substantiv in der Einzahl, z.B. Erfolg
     create:
       created: Die Kategorie „%{category}” wurde angelegt.
       failed: Das Anlegen der Kategorie „%{category}” ist gescheitert! (%{exception})
@@ -124,8 +126,6 @@ de:
       deleted: Die Kategorie „%{category}” wurde gelöscht.
     edit:
       edit_category: Kategorie bearbeiten
-    form:
-      category_sample: Substantiviert, im Singular, z.B. Erfolg
     id_does_not_exist: Es gibt keine Kategorie mit der ID %{id}!
     list_by_letter:
       letter_missing: Buchstabe fehlt!
@@ -133,9 +133,9 @@ de:
       with_initial_letter: "– mit dem Anfangsbuchstaben „%{letter}”"
     list_content:
       category_delete: Wirklich die Kategorie „%{category}” löschen?
-      category_new: Kategorie anlegen
       needs_login: Mit %{login_link} anmelden, um hier Kategorien hinzuzufügen.
     login_missing: Anmeldung fehlt, um eine neue Kategorie anzulegen!
+    new: Kategorie anlegen
     update:
       updated: Die Kategorie „%{category}” wurde aktualisiert.
   comments:
@@ -194,10 +194,14 @@ de:
     date: Datum & Uhrzeit
     delete: Löschen
     description: Beschreibung
+    duplicate:
+      one: Duplikat
+      other: Duplikate
     edit: Bearbeiten
     error:
       one: "%{count} Fehler"
       other: "%{count} Fehler"
+    error_alt: gelbes Warnschild mit Ausrufezeichen
     eye: Auge
     firstname: Vornamen
     for: zu
@@ -208,10 +212,11 @@ de:
     lightning: Blitz
     link: Link
     locale: Sprache
+    machine_translation_failed: die maschinelle Übersetzung scheiterte
     name: Name
     'no': Nein
     no_admin: Kein Administrator!
-    no_right: Kein Recht %{name} %{id} zu %{msg}!
+    no_right: Kein Recht %{name} ID=%{id} zu %{msg}!
     not_logged_in: Nicht angemeldet
     not_own_entry: Nicht der eigene Eintrag
     not_publics:
@@ -234,6 +239,7 @@ de:
     red_cross: Rotes Kreuz
     save: Speichern
     show: Ansehen
+    translate: Übersetzen
     update: Ändern
     updated: Aktualisiert
     user: Benutzer

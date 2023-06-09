@@ -41,6 +41,7 @@ en:
               has_quotes: Category with quotes can not be deleted
             category:
               blank: can't be blank
+              no_spaces: must not contain spaces
               taken: '"%{value}" already exists'
           one: Category
           other: Categories
@@ -117,6 +118,7 @@ en:
     update:
       updated: The entry for the author "%{author}" has been updated.
   categories:
+    category_sample: a word as a noun in the singular, e.g. Success
     create:
       created: The category "%{category}" has been created.
       failed: The creation of the category "%{category}" has failed! (%{exception})
@@ -124,8 +126,6 @@ en:
       deleted: The category "%{category}" has been deleted.
     edit:
       edit_category: Edit Category
-    form:
-      category_sample: Noun, singular, e.g., Success
     id_does_not_exist: There is no category with the ID "%{id}".
     list_by_letter:
       letter_missing: Letter missing!
@@ -133,9 +133,9 @@ en:
       with_initial_letter: – with initial letter "%{letter}"
     list_content:
       category_delete: Really delete the category "%{category}"?
-      category_new: Create Category
       needs_login: Log in with %{login_link} to add categories here.
     login_missing: Login missing to create a new category!
+    new: Create Category
     update:
       updated: The category "%{category}" has been updated.
   comments:
@@ -194,10 +194,14 @@ en:
     date: Date & Time
     delete: Delete
     description: Description
+    duplicate:
+      one: Duplicate
+      other: Duplicates
     edit: Edit
     error:
       one: "%{count} Error"
       other: "%{count} Errors"
+    error_alt: yellow warning sign with exclamation mark
     eye: Eye
     firstname: First name
     for: to
@@ -208,6 +212,7 @@ en:
     lightning: Lightning
     link: Link
     locale: Language
+    machine_translation_failed: the machine translation failed
     name: Name
     'no': false
     no_admin: Not an Administrator!
@@ -234,6 +239,7 @@ en:
     red_cross: Red cross
     save: Save
     show: View
+    translate: Translate
     update: Change
     updated: Updated
     user: User

@@ -1,0 +1,30 @@
+<h1><%= "#{@total_count} #{t('g.duplicate', count: @total_count).capitalize}" %></h1>
+
+<%= will_paginate @result %>
+<table class="border">
+
+  <tr>
+    <th class="center"><%= t("g.locale") %></th>
+    <th><%= t("g.duplicate", count: 1) %></th>
+    <th><%= t("g.category") %></th>
+    <th><%= t("g.category") %></th>
+  </tr>
+
+    <% @result.each do |entry| %>
+      <tr>
+        <td class="center"><%= raw string_for_locale(entry[0], true) %></td>
+        <td><%= entry[1] %></td>
+        <td class="actions"><%= raw "#{entry[2]} &nbsp;
+                <span class=\"float-right\">
+                    #{link_to image_tag("eye.png", alt: "g.eye", title: "g.show"), action: "show", id: entry[3]}
+                    #{link_to image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit")), action: "edit", id: entry[3]}
+                </span>" %></td>
+        <td class="actions"><%= raw "#{entry[4]} &nbsp;
+                <span class=\"float-right\">
+                    #{link_to image_tag("eye.png", alt: "g.eye", title: "g.show"), action: "show", id: entry[5]}
+                    #{link_to image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit")), action: "edit", id: entry[5]}
+                </span>" %></td>
+      </tr>
+    <% end %>
+
+</table>

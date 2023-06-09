@@ -34,5 +34,8 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 #
 # preload_app!
 
+# maximum time that a worker process can spend processing, otherwise the worker process is killed
+worker_timeout 100 # second
+
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart

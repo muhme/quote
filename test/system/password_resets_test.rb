@@ -4,18 +4,14 @@ class PasswordResetsTest < ApplicationSystemTestCase
 
   test "password reset page" do
     visit new_password_reset_url
-    # TODO check_this_page page, "h1", "Passwort zurücksetzen"
-    check_this_page page, nil, "Passwort zurücksetzen"
+    check_this_page page, "h1", "Passwort zurücksetzen"
   end
 
-  test "password reset page with login" do
+  test "password reset page after login" do
     do_login
     check_this_page page, "a", "Logout"
     visit new_password_reset_url
-    # this have to force logout
-    check_this_page page, "a", "Login"
-    # TODO check_this_page page, "h1", "Passwort zurücksetzen"
-    check_this_page page, nil, "Passwort zurücksetzen"
+    check_this_page page, "h1", "Passwort zurücksetzen"
   end
 
   test "password reset link given" do

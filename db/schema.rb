@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_10_160246) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_07_151456) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,11 +39,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_10_160246) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "authors", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "name", limit: 64
-    t.string "firstname", limit: 64
-    t.string "description"
-    t.string "link"
+  create_table "authors", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.text "name", size: :tiny
+    t.text "firstname", size: :tiny
+    t.text "description"
+    t.text "link"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "public", default: false
@@ -52,7 +52,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_10_160246) do
   end
 
   create_table "categories", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "category", limit: 64, null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "public", default: false
@@ -69,21 +68,46 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_10_160246) do
   end
 
   create_table "comments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.string "comment", limit: 512
-    t.string "locale", limit: 8
-    t.string "commentable_type"
+    t.text "comment"
+    t.text "locale", size: :tiny
+    t.text "commentable_type", size: :tiny
     t.bigint "commentable_id"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable", length: { commentable_type: 255 }
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "quotations", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "quotation", limit: 512, null: false
-    t.string "source"
-    t.string "source_link"
+  create_table "mobility_string_translations", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "locale", limit: 8, null: false
+    t.string "key", limit: 16, null: false
+    t.string "value"
+    t.string "translatable_type"
+    t.bigint "translatable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["translatable_id", "translatable_type", "key"], name: "index_mobility_string_translations_on_translatable_attribute"
+    t.index ["translatable_id", "translatable_type", "locale", "key"], name: "index_mobility_string_translations_on_keys", unique: true
+    t.index ["translatable_type", "key", "value", "locale"], name: "index_mobility_string_translations_on_query_keys"
+  end
+
+  create_table "mobility_text_translations", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "locale", null: false
+    t.string "key", null: false
+    t.text "value"
+    t.string "translatable_type"
+    t.bigint "translatable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["translatable_id", "translatable_type", "key"], name: "index_mobility_text_translations_on_translatable_attribute"
+    t.index ["translatable_id", "translatable_type", "locale", "key"], name: "index_mobility_text_translations_on_keys", unique: true
+  end
+
+  create_table "quotations", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.text "quotation", null: false
+    t.text "source"
+    t.text "source_link"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "public", default: false
@@ -94,11 +118,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_10_160246) do
     t.index ["user_id"], name: "index_quotations_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "email", limit: 64
-    t.string "crypted_password"
-    t.string "password_salt"
-    t.string "persistence_token"
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.text "email", size: :tiny
+    t.text "crypted_password"
+    t.text "password_salt"
+    t.text "persistence_token"
     t.boolean "active", default: false
     t.boolean "approved", default: false
     t.boolean "confirmed", default: false
@@ -108,6 +132,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_10_160246) do
     t.string "login", limit: 32, null: false
     t.boolean "admin", default: false
     t.string "perishable_token", default: "", null: false
+    t.boolean "super_admin", default: false
     t.index ["perishable_token"], name: "index_users_on_perishable_token"
   end
 

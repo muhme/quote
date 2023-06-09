@@ -1,3 +1,53 @@
 <h1><%= t(".edit_category") %></h1>
 
-<%= render "form", category: @category %>
+<%= form_with(model: @category, local: true) do |form| %>
+  <% if @category and @category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t("g.error", count: @category.errors.count) %></h2>
+      <ul>
+        <% @category.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.label :category, label_and_description(t("g.category"), t("categories.category_sample")) %><br/>
+
+    <div class="flex">
+      <div class="field">
+        <%= form.text_field "category_#{I18n.locale}", id: "category_name_#{I18n.locale}", autofocus: true, value: @category.category(locale: I18n.locale) %>
+      </div>
+      <div>
+        <%= raw "&nbsp;#{string_for_locale(I18n.locale, true)}" %>
+      </div>
+    </div>
+
+    <% I18n.available_locales.each do |locale| %>
+        <% next if locale == I18n.locale %>
+        <div class="flex opacity-50">
+        <div class="field">
+            <%= form.text_field "category_#{locale}", id: "category_name_#{locale}", value: @category.category(locale: locale) %>
+        </div>
+        <div>
+            <%= raw "&nbsp;#{string_for_locale(locale, true)}" %>
+        </div>
+        </div>
+      <% end %>
+
+  <% if current_user and self.current_user.admin %>
+    <div class="field">
+      <%= form.label :public, label_and_description(t("g.public")) %><br/>
+      <%= form.check_box :public %>
+    </div>
+  <% end %>
+
+ <div class="actions">
+    <%= form.submit t("g.save"), name: :save %>
+    &nbsp;
+    <%= form.submit t("g.translate"), name: :translate %>
+    &nbsp;
+    <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: "0"), action: :show, id: @category.id) %>
+  </div>
+
+<% end %>

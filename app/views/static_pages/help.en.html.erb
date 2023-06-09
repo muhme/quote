@@ -25,8 +25,24 @@ allowed, but there should be no more than five to ten quotes per author. When it
 <p>Quotes from authors who have been deceased for more than 70 years are in the public domain and can be used freely.</p>
 
 <h2>Categories</h2>
-<p>In our collection, all quotes are assigned to specific topics, such as <%= link_to "Glück", '/en/quotations/list_by_category/7' %> (Happiness), <%= link_to "Mensch", '/en/quotations/list_by_category/32' %> (Human) or <%= link_to "Lächeln", '/en/quotations/list_by_category/139' %> (Smile). A quote can be assigned to multiple categories. You can view all the created <%= link_to 'categories', '/en/categories' %>. When you click on the eye <%= image_tag("eye.png", :alt => "Eye", :title => "View") %>, you can see further details about a category. If you have created a category yourself, you can also modify it by clicking on the pencil <%= image_tag("pencil.png", :alt => "Pencil", :title => "Edit") %>.</p>
-<p>You can delete a category you've created by clicking on the red cross <%= image_tag("cancel.png", :alt => "red cross", :title => "Delete") %> as long as the category doesn't contain any quotes or comments.</p>
+<p>In our collection, all quotes are assigned to specific themes, such as
+   <%= link_to "Happiness", controller: :categories, action: :show, id: 7 %>,
+   <%= link_to "Human", controller: :categories, action: :show, id: 32 %> or
+   <%= link_to "Smile", controller: :categories, action: :show, id: 139 %>.
+   A quote can be assigned to multiple categories. You can view all the <%= link_to 'Categories', controller: :categories %> that have been created so far.
+   When you click on the eye <%= image_tag("eye.png", alt: "Eye", title: "View") %>,
+   you will get more details about that category. If you have created the entry for the category yourself,
+   you can edit it by clicking on the pencil <%= image_tag("pencil.png", alt: "Pencil", title: "Edit") %>.
+   You can also see how many quotes are assigned to a category and view all the quotes in that category.</p>
+<p>Categories are automatically translated into other languages. You can edit or re-translate the translations of the categories you have created.
+   Categories are unique in a language, and you cannot create the same category twice. However, machine translation may result in duplicates in other languages.
+   If the name of the category appears twice, a warning symbol <%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.duplicate", count: 1)) %> will be displayed, linking to the duplicate category.
+   Can you use a different name for the category? Or can the translation be adjusted?
+   Meanings can vary across different languages.
+   Therefore, we strive to find one that is as similar as possible in all languages.
+   If you need assistance, please do not hesitate to leave us a comment.
+   An administrator will gladly take care of it.</p>
+<p>If a category you created does not contain quotes and comments, you can delete this category by clicking on the red cross.</p>
 
 <h2>Authors</h2>
 <p>When you view the list of <%= link_to 'authors', '/en/authors' %>, you can click on the eye <%= image_tag("eye.png", :alt => "Eye", :title => "View") %> to see more details about an author. If you have created an author yourself, you can edit them using the pencil <%= image_tag("pencil.png", :alt => "Pencil", :title => "Edit") %>. You can also see how many quotes are assigned to an author and display all quotes from that author.</p>

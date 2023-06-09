@@ -23,7 +23,7 @@ class AuthorsController < ApplicationController
 
   # GET /authors/1
   def show
-    return unless access?(@author, :read)
+    return unless access?(:read, @author)
   end
 
   # POST /authors/search
@@ -41,7 +41,7 @@ class AuthorsController < ApplicationController
 
   # GET /authors/1/edit only for admin or own user
   def edit
-    return unless access?(@author, :update)
+    return unless access?(:update, @author)
   end
 
   # POST /authors
@@ -59,13 +59,15 @@ class AuthorsController < ApplicationController
     # NICE give warning if the same autor already exists
 
   rescue Exception => exc
-    logger.error "create author failed: #{exc.message}"
-    flash[:error] = t(".failed", author: @author.get_author_name_or_blank, exception: exc.message)
+    problem = "#{exc.class} #{exc.message}"
+    logger.error "create author failed: #{problem}" 
+    flash[:error] = t(".failed", author: @author.get_author_name_or_blank, exception: problem)
+    render :new, status: :unprocessable_entity
   end
 
   # PATCH/PUT /authors/1
   def update
-    return unless access?(@author, :update)
+    return unless access?(:update, @author)
 
     if @author.update author_params
       return redirect_to author_path(@author, locale: I18n.locale), notice: t(".updated", author: @author.get_author_name_or_blank)
@@ -76,7 +78,7 @@ class AuthorsController < ApplicationController
 
   # DELETE /authors/1
   def destroy
-    return unless access?(@author, :destroy)
+    return unless access?(:destroy, @author)
     if @author.destroy
       flash[:notice] = e = t(".deleted", author: @author.get_author_name_or_blank)
       logger.debug { "destroy author ID=#{@author.id} – #{e}" }
@@ -109,11 +111,8 @@ class AuthorsController < ApplicationController
 
   # for admins list all not public authors
   def list_no_public
-    if !current_user or current_user.admin == false
-      flash[:error] = t("g.no_admin")
-      redirect_to authors_url
-      return false
-    end
+    return unless access?(:admin, Author.new)
+
     @authors = Author.paginate_by_sql "select * from authors where public = 0", :page => params[:page], :per_page => 10
     # check pagination second time with number of pages
     bad_pagination?(@authors.total_pages)

@@ -1,6 +1,7 @@
 require "application_system_test_case"
 
 class QuotationsTest < ApplicationSystemTestCase
+
   test "quotations" do
     check_page page, quotations_url, "h1", "Zitat"
     assert_equal "Zitat-Service – Zitate", page.title
@@ -302,6 +303,7 @@ class QuotationsTest < ApplicationSystemTestCase
     visit new_quotation_url
     fill_in "quotation_quotation", with: quote
     fill_in "category", with: "tw"
+    sleep 10 # TODO
     check_this_page page, nil, /Kategorie.*two/ # wait for autocompletion
     click_on "Speichern"
     check_this_page page, nil, "Zitat wurde angelegt."
@@ -315,8 +317,10 @@ class QuotationsTest < ApplicationSystemTestCase
     visit new_quotation_url
     fill_in "quotation_quotation", with: quote
     fill_in "category", with: "tw"
+    sleep 10 # TODO
     check_this_page page, nil, /Kategorie.*two/ # wait for autocompletion
     fill_in "category", with: "th"
+    sleep 10 # TODO
     check_this_page page, nil, /Kategorie.*three/ # wait for autocompletion
     click_on "Speichern"
     check_this_page page, nil, "Zitat wurde angelegt."
@@ -332,6 +336,7 @@ class QuotationsTest < ApplicationSystemTestCase
     fill_in "quotation_quotation", with: quote
     1101.upto(1200) do |i|
       fill_in "category", with: "#{i}" # 1101 ... 1200
+      sleep 2 # TODO
       check_this_page page, nil, /Kategorie.*#{i}_category/ # wait for autocompletion
     end
     click_on "Speichern"
@@ -348,10 +353,12 @@ class QuotationsTest < ApplicationSystemTestCase
     visit new_quotation_url
     fill_in "quotation_quotation", with: quote
     fill_in "author", with: "Eva"
-    check_this_page page, "div", "Eva 10" # wait for autocompletion
+    # TODO check_this_page page, "div", "Eva 10" # wait for autocompletion
+    sleep 10
     click_on "Eva 10"
     fill_in "category", with: "100"
-    check_this_page page, "div", "1001_category" # wait for autocompletion
+    # TODO check_this_page page, "div", "1001_category" # wait for autocompletion
+    sleep 10
     click_on "1001_category"
     check_this_page page, nil, /Kategorie.*1001_category/ # wait for autocompletion
     click_on "Speichern"

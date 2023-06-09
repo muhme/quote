@@ -45,7 +45,7 @@ textarea {
 
 #content {
     position: absolute;
-    top: 2rem;
+    top: 0.5em;
     left: 9em;
     margin-right: 1em;
     hyphens: auto;
@@ -130,13 +130,15 @@ h2 {
     margin-bottom: 0.5ex;
 }
 
-.locale_ja h1, .locale_uk h1 {
+.locale_ja h1,
+.locale_uk h1 {
     font-family: serif;
     font-weight: bold;
     font-style: italic;
 }
 
-.locale_ja h2, .locale_uk h2 {
+.locale_ja h2,
+.locale_uk h2 {
     font-family: serif;
     font-weight: bold;
     font-style: italic;
@@ -172,7 +174,7 @@ tr.ListLine0 td {
 .text-right {
     text-align: right;
 }
-  
+
 .random_quote {
     color: black;
     border: 2px solid #208020;
@@ -191,14 +193,6 @@ tr.ListLine0 td {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-#notice,
-#error {
-    position: absolute;
-    left: 9em;
-    top: 1em;
-    overflow: hidden;
 }
 
 #notice {
@@ -326,7 +320,8 @@ table#letter td {
     /* hack? to disable transparency for tr */
 }
 
-.gray-text, table#letter td#unused {
+.gray-text,
+table#letter td#unused {
     color: gray;
 }
 
@@ -400,6 +395,7 @@ table#details {
     padding: 0.5em;
     margin-bottom: 0.5em
 }
+
 .border-bottom,
 table#details tr:not(:last-child) td {
     border-bottom: 1px solid #DDD;
@@ -465,16 +461,20 @@ div.large_right {
     padding: 6px;
     cursor: pointer;
 }
+
 span#side div.language-option {
     text-align: left;
 }
+
 .language-option:hover {
     background-color: #bb88bb;
 }
+
 .language-selector:hover {
     color: white;
     background-color: black;
 }
+
 .flags {
     display: inline-block;
     width: 5ch;
@@ -488,6 +488,7 @@ span#side div.language-option {
 .padding-left-2em {
     padding-left: 2em;
 }
+
 .padding-left-10px {
     padding-left: 10px;
 }
@@ -495,6 +496,7 @@ span#side div.language-option {
 .opacity-25 {
     opacity: 0.25;
 }
+
 .opacity-50 {
     opacity: 0.5;
 }
@@ -511,23 +513,29 @@ div#comments.table {
     display: table;
     border-collapse: collapse;
 }
+
 div.tdata {
     padding: 1px;
     margin: 4px;
 }
+
 div.tdata:blank {
-  background-color: red;
+    background-color: red;
 }
+
 div.td {
     display: table-cell;
     padding: 1px;
 }
+
 div.tr {
     display: table-row;
 }
+
 div.table-row-group {
     display: table-row-group;
 }
+
 div.padding-cell {
     padding: 2px 4px 2px 4px;
 }
@@ -535,16 +543,28 @@ div.padding-cell {
 .float-right {
     float: right;
 }
+
 .float-left {
     float: left;
 }
+
 .clear-both-after::after {
     clear: both;
 }
+
 form#new_comment_form {
     margin-bottom: 1em;
 }
 
 .flex {
     display: flex;
+}
+
+.write-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    white-space: nowrap;
+}
+.margin-bottom-4 {
+    margin-bottom: 4px;
 }

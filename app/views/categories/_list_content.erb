@@ -43,7 +43,7 @@
 
 <% if current_user %>
   <p class="ListNavi">
-    <%= button_to t(".category_new"), { action: :new }, method: :get %>
+    <%= button_to t("categories.new"), { action: :new }, method: :get %>
   </p>
 <% else %>
   <p class="opacity-50 font-size-smaller "><%= raw t(".needs_login", login_link: link_to(t('layouts.application.login'), login_path(locale: I18n.locale))) %></p>

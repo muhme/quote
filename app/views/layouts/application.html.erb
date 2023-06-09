@@ -27,38 +27,54 @@
         <p>
           <%= link_to(raw("#{image_tag("user_orange.png", alt: t("g.user"), title: t(".logged_in"))} ") +
                       truncate(h(current_user.login), length: 7), edit_user_path(locale: I18n.locale, id: current_user.id)) %>
-          <%= raw("#{image_tag("award_star_bronze_1.png", alt: t(".award_alt"), title: t(".admin"))}") if current_user.admin %>
+          <% if current_user && current_user.super_admin? %>
+            <%= raw("#{image_tag("award_star_silk_add.png", alt: t(".award_alt"), title: t(".admin"))}") %>
+          <% elsif current_user && current_user.admin? %>
+            <%= raw("#{image_tag("award_star_bronze_1.png", alt: t(".award_alt"), title: t(".admin"))}") %>
+          <% end %>
         </p>
       <% end %>
       <div id="user_nav">
         <p><%= current_user ? link_to(t(".logout"), logout_path(locale: I18n.locale)) : link_to(t('.login'), login_path(locale: I18n.locale)) %></p>
       </div>
-      <p><%= link_to t("g.quotes", count: 0), locale: I18n.locale, controller: "quotations" %> <%= link_to("+", controller: "quotations", action: "list_no_public") if has_non_public(Quotation) %></p>
-      <p id="letter">
-        <%= link_to t("g.categories", count: 0), locale: I18n.locale, controller: "categories" %> <%= link_to("+", controller: "categories", action: "list_no_public") if has_non_public(Category) %>
-        <div class="flex-center"><%= raw category_links I18n.locale %></div>
+      <p class="<%= I18n.locale == :ja ? "margin-bottom-4" : "" %>"><%= link_to t("g.quotes", count: 0), locale: I18n.locale, controller: "quotations" %> <%= link_to("+", controller: "quotations", action: "list_no_public") if has_non_public(Quotation) %></p>
+      <p class="<%= I18n.locale == :ja ? "write-vertical float-left" : "" %>" id="letter">
+        <%= link_to t("g.categories", count: 0), controller: "categories" %>
+        <% if current_user and current_user.admin %>
+          <%= link_to("+", controller: "categories", action: "list_no_public") if has_non_public(Category) %>
+      <% end %>
       </p>
+      <div class="flex-center"><%= raw category_links %></div>
       <p id="letter">
         <%= link_to t("g.authors", count: 0), controller: "authors" %> <%= link_to("+", controller: "authors", action: "list_no_public") if has_non_public(Author) %>
         <div class="flex-center"><%= raw author_links I18n.locale %></div>
       </p>
-      <% if current_user and current_user.admin %>
-        <p>
-          <%= link_to t("activerecord.models.user"), locale: I18n.locale, controller: :users, action: :index %><br/>
-          <%= link_to t("g.comments"), locale: I18n.locale, controller: :comments, action: :index %>
-        </p>
-      <% end %>
       <p><%= link_to t("g.help"),   locale: I18n.locale, controller: :static_pages, action: :help    %></p>
       <p><%= link_to t(".to_use"),  locale: I18n.locale, controller: :static_pages, action: :use     %></p>
       <p><%= link_to t(".project"), locale: I18n.locale, controller: :static_pages, action: :project %></p>
       <p><%= link_to t(".contact"), locale: I18n.locale, controller: :static_pages, action: :contact %></p>
+      <% if current_user and current_user.admin %>
+        <p>
+          <%= link_to(
+            image_tag("user_go.png", alt: t("g.user"), title: t("g.user")),
+            { controller: :users, action: :index }) %>
+          <%= link_to(
+            image_tag("error.png", alt: t("g.error_alt"), title: t("g.duplicate", count: 1)),
+            { controller: :categories, action: :list_duplicates }) %>
+          <%= link_to(
+            image_tag("comment.png", alt: t("g.comment"), title: t("g.comment")),
+            { controller: :comments, action: :index }) %>
+        </p>
+      <% end %>
     </span>
-    <% if flash[:error] -%>
-      <div id="error"><%= image_tag("exclamation.png", alt: t(".exclamation_alt"), title: t(".exclamation")) %> <%= flash[:error] %></div>
-    <% elsif flash[:notice] -%>
-      <div id="notice"><%= image_tag("flag_green.png", alt: t(".green_flag_alt"), title: t(".green_flag")) %> <%= flash[:notice] %></div>
-    <% end -%>
+
     <div id="content">
+      <% if flash[:error] %>
+        <div id="error"><%= image_tag("exclamation.png", alt: t(".exclamation_alt"), title: t(".exclamation")) %> <%= flash[:error] %></div>
+      <% end %>
+      <% if flash[:notice] -%>
+        <div id="notice"><%= image_tag("flag_green.png", alt: t(".green_flag_alt"), title: t(".green_flag")) %> <%= flash[:notice] %></div>
+      <% end %>
       <%= yield %>
     </div>
   </body>

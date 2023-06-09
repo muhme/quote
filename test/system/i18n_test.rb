@@ -19,7 +19,7 @@ class I18nTest < ApplicationSystemTestCase
       visit root_url
       find("#current-language").click
       # look and click for unique e.g. " UK – " in "🇺🇦 UK – українська" (because ? it founds 3 elements, simple click the last one is working)
-      all(:xpath, ".//div[contains(., ' #{upcase_locale} – ')]", visible: true).last.click
+      all(:xpath, ".//div[contains(., '#{upcase_locale} – ')]", visible: true).last.click
       # click on quotes menu entry
       click_on I18n.t("g.quotes", locale: locale, count: 0)
       # first find h1 to wait until the page is loaded ...

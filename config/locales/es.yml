@@ -41,6 +41,7 @@ es:
               has_quotes: La categoría con citas no se puede eliminar
             category:
               blank: No puede estar en blanco
+              no_spaces: no debe contener espacios
               taken: '"%{value}" ya existe'
           one: Categoría
           other: Categorías
@@ -117,6 +118,7 @@ es:
     update:
       updated: Se ha actualizado la entrada del autor "%{author}".
   categories:
+    category_sample: una palabra como sustantivo en singular, por ejemplo, Éxito
     create:
       created: La categoría "%{category}" ha sido creada.
       failed: ¡La creación de la categoría "%{category}" ha fallado! (%{exception})
@@ -124,8 +126,6 @@ es:
       deleted: La categoría "%{category}" ha sido eliminada.
     edit:
       edit_category: Editar categoría
-    form:
-      category_sample: Sustantivo, singular, por ejemplo, éxito
     id_does_not_exist: No existe una categoría con el ID "%{id}".
     list_by_letter:
       letter_missing: ¡Falta una letra!"
@@ -133,9 +133,9 @@ es:
       with_initial_letter: – con la letra inicial "%{letter}"
     list_content:
       category_delete: ¿Realmente borrar la categoría "%{category}"?
-      category_new: Crear una categoría
       needs_login: Inicia sesión con %{login_link} para añadir categorías aquí.
     login_missing: "¡Falta el login para crear una nueva categoría!"
+    new: Crear una categoría
     update:
       updated: La categoría "%{category}" ha sido actualizada.
   comments:
@@ -194,10 +194,14 @@ es:
     date: Fecha y hora
     delete: Borrar
     description: Descripción
+    duplicate:
+      one: Duplicar
+      other: Duplicados
     edit: Editar
     error:
       one: "%{count} error"
       other: "%{count} errores"
+    error_alt: señal de advertencia amarilla con un signo de exclamación
     eye: Ojo
     firstname: Nombres
     for: de
@@ -208,6 +212,7 @@ es:
     lightning: haz de luz
     link: Enlace
     locale: Idioma
+    machine_translation_failed: la traducción automática ha fallado
     name: Nombre
     'no': false
     no_admin: "¡No hay administrador!"
@@ -234,6 +239,7 @@ es:
     red_cross: Cruz roja
     save: Guardar
     show: Ver
+    translate: Traducir
     update: Cambiar
     updated: Actualizado
     user: usuarios

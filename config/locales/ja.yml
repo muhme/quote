@@ -8,7 +8,7 @@ ja:
         link: リンク
         name: ラストネーム
       category:
-        category: カテゴリー
+        category: カテゴリ
         description: 商品説明
       comment:
         comment: コメント
@@ -37,13 +37,14 @@ ja:
         category:
           attributes:
             base:
-              has_comments: コメント付きカテゴリーは削除できません
+              has_comments: コメント付きカテゴリは削除できません
               has_quotes: 引用文のあるカテゴリは削除できません
             category:
               blank: 空白にできません
+              no_spaces: 空白を含んではならない
               taken: '"%{value}" は既に存在する。'
-          one: カテゴリー
-          other: カテゴリー
+          one: カテゴリ
+          other: カテゴリ
         quotation:
           attributes:
             base:
@@ -60,7 +61,7 @@ ja:
               confirmation: パスワードが一致しません
     models:
       author: 著者名
-      category: カテゴリー
+      category: カテゴリ
       quotation: 引用元
       user: ユーザー
   authlogic:
@@ -117,6 +118,7 @@ ja:
     update:
       updated: 著者 "%{author}" のエントリが更新されました。
   categories:
+    category_sample: たんすのこやし
     create:
       created: カテゴリ "%{category}" が作成されました。
       failed: カテゴリ "%{category}" の作成に失敗しました！ 「%{exception}」
@@ -124,8 +126,6 @@ ja:
       deleted: カテゴリ "%{category}" が削除されました。
     edit:
       edit_category: カテゴリを編集
-    form:
-      category_sample: 名詞化されたもの、単数形、例：成功
     id_does_not_exist: ID "%{id}" のカテゴリは存在しません。
     list_by_letter:
       letter_missing: 文字が欠けています！
@@ -133,9 +133,9 @@ ja:
       with_initial_letter: の頭文字をとって「%{letter}」
     list_content:
       category_delete: 本当にカテゴリ "%{category}" を削除しますか？
-      category_new: カテゴリを追加
-      needs_login: "%{login_link}でログインして、ここにカテゴリーを追加してください。"
+      needs_login: "%{login_link}でログインして、ここにカテゴリを追加してください。"
     login_missing: 新しいカテゴリを作成するためのログインがありません！
+    new: カテゴリを追加
     update:
       updated: カテゴリ "%{category}" が更新されました。
   comments:
@@ -183,7 +183,7 @@ ja:
     cancel: キャンセル
     categories:
       one: カテゴリ
-      other: カテゴリー
+      other: カテゴリ
     category: カテゴリ
     category_alt: 組織構造の図、1つの上位の正方形が3つの下位の正方形の上にある。
     comment: コメント
@@ -194,10 +194,14 @@ ja:
     date: 日付と時刻
     delete: 削除
     description: 説明
+    duplicate:
+      one: デュプリケート
+      other: デュプリケート
     edit: 編集
     error:
       one: "%{count} エラー"
       other: "%{count} エラー"
+    error_alt: 感嘆符付きの黄色い警告サイン
     eye: 目
     firstname: 名
     for: に
@@ -208,6 +212,7 @@ ja:
     lightning: 雷
     link: リンク
     locale: 言語
+    machine_translation_failed: 機械翻訳の失敗
     name: 名前
     'no': いいえ
     no_admin: 管理者ではありません！
@@ -220,7 +225,7 @@ ja:
     number_of_categories:
       one: 1 カテゴリ
       other: "%{count} カテゴリ"
-      zero: カテゴリー
+      zero: カテゴリ
     ordered: 並び替え済み
     page: ページ
     pencil: 鉛筆
@@ -234,6 +239,7 @@ ja:
     red_cross: 赤い十字
     save: 保存
     show: 見る
+    translate: 翻訳する
     update: 変更
     updated: 更新されました
     user: ユーザー
@@ -329,7 +335,7 @@ ja:
     show:
       author_link: 著者へのリンク "%{author}"
       author_quotes: "「%{count}の引用」"
-      of_category: カテゴリー"%{category}"の。
+      of_category: カテゴリ "%{category}"の。
       of_user: ユーザー"%{user}"の。
       quotes_link: '%{count}著者"%{author}"からの引用です。'
     update:

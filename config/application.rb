@@ -56,6 +56,6 @@ module Quote
     config.i18n.available_locales = [:de, :en, :es, :ja, :uk]
     config.i18n.load_path += Dir[Gem::Specification.find_by_name("rails-i18n").gem_dir + "/rails/*/{#{config.i18n.available_locales.join(',')}}.{rb,yml}"]
     config.i18n.default_locale = :de
-    config.i18n.fallbacks = true
+    config.i18n.fallbacks = { en: :de, es: :de, ja: :de, uk: :de, de: :en }
   end
 end

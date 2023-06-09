@@ -105,4 +105,16 @@ class ApplicationHelperTest < ActionView::TestCase
     refute_match /Українська/, string_for_locale("uk", true)
   end
 
+  # [:de, :en, :es, :ja, :uk]
+  test "next locale" do
+    assert_match "de", next_locale
+    assert_match "de", next_locale(nil)
+    assert_match "de", next_locale(:uk)
+    assert_match "de", next_locale("uk")
+    assert_match "en", next_locale(:de)
+    assert_match "en", next_locale("de")
+    assert_match "uk", next_locale(:ja)
+    assert_match "uk", next_locale("ja")
+  end
+
 end

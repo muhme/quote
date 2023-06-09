@@ -1,0 +1,65 @@
+category_one_de:
+  translatable_type: 'Category'
+  key: 'category'
+  translatable_id: 1
+  value: public_category
+  locale: de
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+category_public_false_de:
+  translatable_type: 'Category'
+  key: 'category'
+  translatable_id: 2
+  value: two
+  locale: de
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+  
+category_without_quotes_de:
+  translatable_type: 'Category'
+  key: 'category'
+  translatable_id: 3
+  value: three
+  locale: de
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+category_without_comments_de:
+  translatable_type: 'Category'
+  key: 'category'
+  translatable_id: 4
+  value: without comments
+  locale: de
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+category_with_1000_comments_de:
+  translatable_type: 'Category'
+  key: 'category'
+  translatable_id: 5
+  value: with_1000_comments
+  locale: de
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+category_with_one_comment_de:
+  translatable_type: 'Category'
+  key: 'category'
+  translatable_id: 6
+  value: with one comment
+  locale: de
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+# create five thousand categories (April 2018 we have 533 categories)
+<% 100.upto(5100) do |i| %>
+category_fix_<%= i %>:
+  translatable_type: 'Category'
+  key: 'category'
+  translatable_id: <%= i %>
+  value: <%= i %>_category
+  locale: de
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+<% end %>

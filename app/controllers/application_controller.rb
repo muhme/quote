@@ -1,3 +1,5 @@
+require "deepl"
+
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user_session, :current_user, :access?, :has_non_public, :can_edit?, :sql_quotations_for_category, :sql_quotations_for_author
@@ -5,6 +7,9 @@ class ApplicationController < ActionController::Base
     bad_request? # check params[bad_request] which means BadRequest exception from Rack middleware
     bad_pagination? # check params[page] if existing
     set_locale # needed to set locale for each request
+    if current_user && current_user.admin? && current_user.super_admin?
+      Rack::MiniProfiler.authorize_request
+    end
   end
 
   rescue_from ActionController::UnknownFormat do |exception|
@@ -16,6 +21,27 @@ class ApplicationController < ActionController::Base
   # include locale param in every URL and set locale
   def default_url_options
     { locale: I18n.locale }
+  end
+
+  # returns translated string and can throw DeepL::Exception
+  def deepl_translate(text, source_lang, target_lang)
+    if ENV["DEEPL_API_KEY"].present?
+      begin
+        source = source_lang.to_s.upcase
+        target = target_lang.to_s.upcase
+        ret = DeepL.translate(text, source, target).to_s
+        ret.chomp!(".") # Українська translation has often a dot in the end
+        ret.sub!(/"/, "") # Українська translation has sometimes double quote in the beginning
+        ret.sub!(/。/, "") # one time seen, 日本語 translation added japanese dot in the end
+        logger.debug { "translate #{source} \”#{text}\" -> #{target} \"#{ret}\"" }
+        return ret
+      rescue DeepL::Exceptions::Error => exc
+        logger.error "DeepL translation failed #{exc.class} #{exc.message}"
+      end
+    else
+      logger.warn("DEEPL_API_KEY environment is missing, no DeepL translation")
+    end
+    return nil
   end
 
   private
@@ -65,23 +91,32 @@ class ApplicationController < ActionController::Base
   # return true is the user is logged in and is an admin, or the owner
   # else returns false and redirect to forbidden
   #
-  # action is :read, :update or :destroy
-  def access?(obj, action)
+  # action is :admin, :read, :update or :destroy
+  def access?(action, obj)
     name = obj&.class&.name # default
     name = t("g.authors", count: 1) if name == "Author"
     name = t("g.quotes", count: 1) if name == "Quotation"
     name = t("g.categories", count: 1) if name == "Category"
     name = t("g.comment") if name == "Comment"
 
-    msg = t("g.have")   # default
-    msg = t("g.read") if action == :read
-    msg = t("g.update") if action == :update
-    msg = t("g.delete") if action == :destroy
-    msg = t("g.no_right", name: name, id: obj&.id, msg: msg)
+    verb = t("g.have")   # default
+    verb = t("g.no_admin") if action == :admin
+    verb = t("g.read") if action == :read
+    verb = t("g.update") if action == :update
+    verb = t("g.delete") if action == :destroy
+
+    msg = t("g.no_right", name: name, id: obj&.id, msg: verb)
 
     if current_user and (current_user.admin or current_user.id == obj&.user_id)
       # own object or admin has read/write access
       return true
+    end
+
+    if action == :admin
+      if current_user and current_user.admin
+        return true
+      end
+      msg = t("g.no_admin")
     else
       if action == :read
         if obj&.public == true

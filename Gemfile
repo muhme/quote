@@ -57,9 +57,15 @@ gem "scrypt", "~> 3.0"
 gem 'rack-rewrite'
 
 gem 'rails-i18n', '~> 7.0.0'
+gem "mobility", "~> 1.2"
 
 # Terser minifies JavaScript files by wrapping TerserJS to be accessible in Ruby
 gem "terser", "~> 1.1"
+gem 'deepl-rb', require: 'deepl'
+
+gem 'rack-mini-profiler'
+# For call-stack profiling flamegraphs
+gem 'stackprof'
 
 group :development, :test do
 
@@ -72,7 +78,6 @@ group :development, :test do
   gem 'simplecov', require: false
   # find and manage missing and unused translations
   gem 'i18n-tasks', '~> 1.0', require: false
-  gem 'deepl-rb'
   gem 'rubocop', require: false
   gem 'rubocop-i18n', require: false
   gem 'erb-formatter', require: false
@@ -88,4 +93,3 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen'
 end
-

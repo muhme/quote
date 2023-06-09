@@ -19,24 +19,34 @@ mariadb                      3306/tcp                                           
 selenium/standalone-chrome   4444/tcp, 0.0.0.0:8104->5900/tcp, 0.0.0.0:8105->7900/tcp   quote_chrome
 maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                           quote_maildev
 ```
-* quote_mariadb - MariaDB database server
+* quote_mariadb – MariaDB database server
   * database admin is root/root
   * database quote_development with user quote_development/quote_development created and June 2018 database export loaded
   * database quote_test with user quote_test/quote_test created
-* quote_mysqladmin - phpMyAdmin (user root/root)
+* quote_mysqladmin – phpMyAdmin (user root/root)
   * http://localhost:8101
-* quote_rails - Rails web application zitat-service
+* quote_rails – Rails web application zitat-service
   * http://localhost:8102
   * getting Shell with: "docker exec -it quote_rails bash"
   * running function tests with "docker exec -it quote_rails rails t"
   * running system tests using Chrome browser on Selenium container with "docker exec -ti quote_rails rails test:system"
   * local directory /quote with cloned GitHub repository is mounted into container
-* quote_chrome - Selenium Standalone with Chrome and VNC server
+* quote_chrome – Selenium Standalone with Chrome and VNC server
   * two ports are available to see browser working in test:system (using the password: secret):
     * using a VNC viewer [vnc://localhost:8104](vnc://localhost:8104) or
     * using your browser (no VNC client is needed) http://localhost:8105/?autoconnect=1&resize=scale&password=secret
-* quote_maildev - SMTP Server and Web Interface for viewing and testing emails during development
+* quote_maildev – SMTP Server and Web Interface for viewing and testing emails during development
   * http://localhost:8106
+
+## Machine Translation
+<details>
+  <summary>The application uses DeepL API Free for translation.</summary>
+  
+  You can register there and then store your own API key in the .env file.
+```
+DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx"
+```
+You can also set this DEEPL_API_KEY in the environment for translations with i18n-tasks.
 
 ## Testing
 
@@ -56,6 +66,10 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
   After running the tests you can find simplecov report in the directory coverage, e.g.:
   ![simplecov.png](/app/assets/images/simplecov.png)
 
+  While the system tests are running, you can access the test environment in parallel via http://localhost:8112. Or you can start the Rails server for the test environment manually insid the docker container:
+  ```
+  quote_rails $ export PORT=3100 && rails server --environment test -P /tmp/test.pid
+  ```
 </details>
 
 

@@ -41,6 +41,7 @@ uk:
               has_quotes: Категорію з пропозиціями не можна видалити
             category:
               blank: не може бути порожнім
+              no_spaces: не повинно містити пробілів
               taken: '"%{value}" вже існує'
           one: Категорія
           other: Категорії
@@ -117,15 +118,14 @@ uk:
     update:
       updated: Запис для автора "%{author}" було оновлено.
   categories:
+    category_sample: слово як іменник в однині, наприклад Успіх
     create:
       created: Категорія "%{category}" створена.
       failed: Створення категорії "%{category}" не вдалося! (%{exception})
     destroy:
       deleted: Категорія "%{category}" видалена.
     edit:
-      edit_category: Редагувати категорію
-    form:
-      category_sample: У відмінковому відмінку, в однині, напр. Успіх
+      edit_category: Редагувати категоріюх
     id_does_not_exist: Категорії з ID "%{id}" не існує!
     list_by_letter:
       letter_missing: Не вистачає літери!
@@ -133,9 +133,9 @@ uk:
       with_initial_letter: – з початковою літерою "%{letter}"
     list_content:
       category_delete: Ви дійсно хочете видалити категорію "%{category}"?
-      category_new: Створити категорію
       needs_login: Увійдіть за допомогою %{login_link}, щоб додати сюди категорії.
     login_missing: Відсутність входу для створення нової категорії!
+    new: Створити категорію
     update:
       updated: Категорія "%{category}" оновлена.
   comments:
@@ -200,12 +200,18 @@ uk:
     date: Дата та час
     delete: Видалити
     description: Опис
+    duplicate:
+      few: Дублікати
+      many: Дублікатів
+      one: Дублікат
+      other: Дублікати
     edit: Редагувати
     error:
       few: "%{count} помилки"
       many: "%{count} помилок"
       one: "%{count} помилка"
       other: "%{count} помилок"
+    error_alt: жовтий попереджувальний знак зі знаком оклику
     eye: Око
     firstname: Ім'я
     for: до
@@ -216,6 +222,7 @@ uk:
     lightning: Блискавка
     link: Посилання
     locale: Мова
+    machine_translation_failed: не вдалося виконати машинний переклад
     name: Прізвище
     'no': Ні
     no_admin: Немає прав адміністратора!
@@ -249,6 +256,7 @@ uk:
     red_cross: Червоний хрест
     save: Зберегти
     show: Переглянути
+    translate: Перекласти
     update: Змінити
     updated: Оновлено
     user: Користувач

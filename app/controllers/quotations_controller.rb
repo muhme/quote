@@ -30,7 +30,7 @@ class QuotationsController < ApplicationController
 
   # GET /quotations/1
   def show
-    return unless access?(@quotation, :read)
+    return unless access?(:read, @quotation)
   end
 
   # GET /quotations/new
@@ -41,7 +41,7 @@ class QuotationsController < ApplicationController
 
   # GET /quotations/1/edit
   def edit
-    return unless access?(@quotation, :update)
+    return unless access?(:update, @quotation)
   end
 
   # GET quotations/author_selected/author_id
@@ -105,15 +105,15 @@ class QuotationsController < ApplicationController
       render turbo_stream: turbo_stream_do_actions
     end
   rescue Exception => exc
-    logger.error "create quotation failed: #{exc.message}, backtrace:"
-    exc.backtrace.each { |n| logger.error "   #{n}" }
-    flash[:error] = t(".failed", exception: exc.message)
+    problem = "#{exc.class} #{exc.message}"
+    logger.error "create quotation failed: #{problem}" 
+    flash[:error] = t(".failed", exception: problem)
     render :new, status: :unprocessable_entity
   end
 
   # PATCH/PUT /quotations/1
   def update
-    return unless access?(@quotation, :update)
+    return unless access?(:update, @quotation)
     # set @authors and @categories from autocompletion fields and return hidden fields authors ID and category IDs
     author_id, category_ids = scan_params_for_create_or_update
 
@@ -148,7 +148,7 @@ class QuotationsController < ApplicationController
 
   # DELETE /quotations/1
   def destroy
-    return unless access?(@quotation, :destroy)
+    return unless access?(:destroy, @quotation)
     if @quotation.destroy
       flash[:notice] = e = t(".deleted", quote: truncate(@quotation.quotation, length: 20))
       logger.debug { "destroyed quotation ID=#{@quotation.id} – #{e}" }
@@ -198,10 +198,8 @@ class QuotationsController < ApplicationController
 
   # for admins list all not public categories
   def list_no_public
-    if !current_user or current_user.admin == false
-      flash[:error] = t("g.no_admin")
-      return redirect_to forbidden_url
-    end
+    return unless access?(:admin, Quotation.new)
+    
     @quotations = Quotation.paginate_by_sql "select * from quotations where public = 0", :page => params[:page], :per_page => 5
     # check pagination second time with number of pages
     bad_pagination?(@quotations.total_pages)

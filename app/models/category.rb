@@ -1,19 +1,34 @@
 class Category < ApplicationRecord
-  
+  extend Mobility
+  translates :category, type: :string
   belongs_to :user
   has_and_belongs_to_many :quotations
   has_many :comments, as: :commentable
   before_destroy :check_quotes_and_comments
-  validates :category, presence: true, length: { maximum: 64 }, uniqueness: { case_sensitive: false }
+  validate :validate_category
+
+  # doing Mobility case-insensitive search on category
+  # returns a Category::ActiveRecord_Relation or nil
+  scope :search_case_insensitive, ->(category_looking_for) do
+          i18n do
+            category.lower.matches("#{category_looking_for.downcase}")
+          end
+        end
 
   # count all non-public categories
   def Category.count_non_public
     return count_by_sql("select count(*) from categories where public = 0")
   end
 
-  # gives an array with all categories names initial chars, e.g. ["a", "b", "d" ...]
+  # gives an array with all existing categories names initial chars, e.g. ["a", "b", "d" ...]
   def Category.init_chars
-    a = Category.find_by_sql "select distinct substring(upper(trim(category)) from 1 for 1) as init from categories order by init"
+    sql = <<-SQL
+      SELECT DISTINCT SUBSTRING(UPPER(TRIM(value)), 1, 1) AS init
+      FROM mobility_string_translations
+      WHERE `key` = 'category' AND translatable_type = 'Category' AND locale = '#{I18n.locale}'
+      ORDER BY init
+      SQL
+    a = Category.find_by_sql(sql)
     ret = []
     for i in 0..(a.length - 1)
       ret[i] = a[i].nil? ? "*" : a[i].attributes["init"]
@@ -22,30 +37,56 @@ class Category < ApplicationRecord
       ret[i] = ret[i].gsub("Ö", "O")
       ret[i] = ret[i].gsub("Ü", "U")
       ret[i] = ret[i].gsub("ß", "s")
-      ret[i] = "*" unless ("A".."Z").include?(ret[i])
+      if I18n.locale == :uk
+        ret[i] = "*" unless ("А".."Я").include?(ret[i])
+      elsif I18n.locale == :ja
+        if HIRAGANA.include?(ret[i])
+          # ok
+        elsif KATAKANA.include?(ret[i])
+          ret[i] = HIRAGANA[KATAKANA.index(ret[i])]
+        elsif HIRAGANA_DAKUTEN.include?(ret[i])
+          ret[i] = HIRAGANA[HIRAGANA_DAKUTEN.index(ret[i])]
+        elsif HIRAGANA_HANDAKUTEN.include?(ret[i])
+          ret[i] = HIRAGANA[HIRAGANA_HANDAKUTEN.index(ret[i])]
+        elsif KATAKANA_DAKUTEN.include?(ret[i])
+          ret[i] = HIRAGANA[KATAKANA_DAKUTEN.index(ret[i])]
+        elsif KATAKANA_HANDAKUTEN.include?(ret[i])
+          ret[i] = HIRAGANA[KATAKANA_HANDAKUTEN.index(ret[i])]
+        else
+          ret[i] = "*"
+        end
+      else
+        ret[i] = "*" unless ("A".."Z").include?(ret[i])
+      end
     end
-    ret
+    ret.uniq
   end
 
   # search for category with starting letters without category_ids
   # and without category_ids entries (categories already selected)
   # returns always an Category array with 0...10 entries
-  def Category.filter_by_category(search, category_ids)
+  def self.filter_by_category(search, category_ids)
     return [] if search.blank?
-    sql = "SELECT * from categories where category LIKE '#{search}%'"
-    sql << " AND id NOT IN (#{category_ids.join(",")})" if category_ids.present?
-    sql << " ORDER BY category LIMIT 10;"
+    sql = "SELECT DISTINCT c.* from categories c "
+    sql <<   "INNER JOIN mobility_string_translations mst " 
+    sql <<   "ON c.id = mst.translatable_id "
+    sql <<   "AND mst.translatable_type = 'Category' "
+    sql <<   "AND mst.key = 'category' "
+    sql <<   "AND mst.locale = '#{I18n.locale.to_s}' "
+    sql <<   "AND mst.value LIKE '#{search}%' "
+    sql <<   "AND mst.translatable_id NOT IN (#{category_ids.join(",")}) " if category_ids.present?
+    sql <<   "ORDER BY mst.value LIMIT 10;"
     return Category.find_by_sql sql
   end
 
-  # return category if id is exists, otherwise an empty string any other case (e.g. id is 0 as flag for category isn't set)
+  # returns the category if the id is present, otherwise an empty string (e.g. id is 0 as marker for category isn't set)
   def Category.category_or_empty(id = nil)
     return Category.find(id).category
   rescue
     return ""
   end
 
-  # Build list of recommenced categries from quotation.
+  # Build list of recommenced categories from quotation.
   #
   # words, exluded from word matching without last or two last letters
   #
@@ -61,7 +102,7 @@ class Category < ApplicationRecord
     ret = []
     quotation = quotation.quotation if quotation.is_a?(Quotation)
     if quotation.present?
-      categories = Category.select(:id, :category).distinct
+      categories = Category.i18n.select(:id, :category).distinct
       categories.each do |category|
         category.category.downcase!
         category.category.tr!("äöü", "aou")
@@ -83,6 +124,33 @@ class Category < ApplicationRecord
 
   private
 
+  # doing validation by own with Mobility
+  # validates :category, presence: true, length: { maximum: 64 }, uniqueness: { case_sensitive: false }
+  def validate_category
+    current_locale = Mobility.locale.to_s
+    category_in_locale = category(locale: current_locale)
+
+    # presence validation
+    if category_in_locale.blank?
+      errors.add(:category, :blank)
+    end
+
+    if category_in_locale.present?
+      # length validation
+      if category_in_locale.length > 64
+        errors.add(:category, :too_long, count: 64)
+      end
+
+      # case-insensitive uniqueness validation
+      if new_record? or attribute_changed?(:category)
+        already_existing = Category.search_case_insensitive(category_in_locale)
+        if already_existing.present?
+          errors.add(:category, :taken, value: already_existing.first.category(locale: current_locale))
+        end
+      end
+    end
+  end
+
   # don't delete categories with quotes or comments
   def check_quotes_and_comments
     if quotations.any?
@@ -94,5 +162,4 @@ class Category < ApplicationRecord
       throw :abort
     end
   end
-
 end

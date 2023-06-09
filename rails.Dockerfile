@@ -5,5 +5,5 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y net-tools vim
 RUN mkdir /quote
 ADD . /quote
 WORKDIR /quote
-RUN bundle install
+RUN gem install bundler:2.4.6 && bundle install
 CMD /bin/bash -c 'rm -f tmp/pids/server.pid && rails s -p 3000 -b "0.0.0.0"'

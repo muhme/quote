@@ -8,11 +8,11 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
 
   # POST /comments
   test "create comment" do
-    post comments_url, params: { comment: { comment: "needs login" } }
+      post comments_url, params: { comment: { comment: "needs login first", commentable_type: "Category", commentable_id: 1, locale: :en } }
     assert_forbidden
-    assert_difference('Category.count', 1) do
-      login :first_user
-      post categories_url, params: { category: { category: "works w/ login" } }
+    login :first_user
+    assert_difference('Comment.count', 1) do
+      post comments_url, params: { comment: { comment: "works w/ login", commentable_type: "Category", commentable_id: 1, locale: :en } }
     end
   end
 

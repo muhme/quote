@@ -1,3 +1,33 @@
-<h1><%= "#{t('g.categories', count: 1)} #{t('g.create').downcase}" %></h1>
+<h1><%= t('categories.new') %></h1>
 
-<%= render 'form', category: @category %>
+<%= form_with(model: @category, local: true) do |form| %>
+  <% if @category and @category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t("g.error", count: @category.errors.count) %></h2>
+      <ul>
+        <% @category.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :category, label_and_description(t("g.category"), t("categories.category_sample")) %><br/>
+    <%= form.text_field "category_#{I18n.locale}", id: "category_name_#{I18n.locale}", autofocus: true %>
+  </div>
+
+  <% if current_user and self.current_user.admin %>
+    <div class="field">
+      <%= form.label :public, label_and_description(t("g.public")) %><br/>
+      <%= form.check_box :public %>
+    </div>
+  <% end %>
+
+ <div class="actions">
+    <%= form.submit t("g.save") %>
+    &nbsp;
+    <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: "0"), action: :index) %>
+  </div>
+
+<% end %>

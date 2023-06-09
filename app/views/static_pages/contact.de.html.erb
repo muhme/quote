@@ -27,7 +27,7 @@ dann informieren Sie den Betreiber bitte per E-Mail. Die Zitate, die unter Ihr U
   <tr><td><a href="https://rubyonrails.org/">Rails</a></td><td><%= Rails.version %></td></tr>
   <tr><td><%= image_tag("ruby.png", :alt => "Rubin", :title => "Rubin für die Programmiersprache Ruby")%><a href="https://www.ruby-lang.org/">Ruby</a></td><td><%= RUBY_VERSION %></td></tr>
   <tr><td><a href="https://github.com/muhme/quote">Software</a></td><td><%= getGitVersion() %></td></tr>
-  <tr><td>Umgebung</td><td><%= ENV['RAILS_ENV'] %></td></tr>
+  <tr><td>Umgebung</td><td><%= Rails.env %></td></tr>
 </table>
 
 <p>Die Webanwendung <a href="https://www.zitat-service.de">www.zitat-service.de</a> wurde erstellt durch:</p><p><a style="border: 0px;" href="https://www.consulting.heikol.de">

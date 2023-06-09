@@ -45,12 +45,12 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit only for admin or own user
   def edit
-    return unless access?(@comment, :update)
+    return unless access?(:update, @comment)
   end
 
   # PATCH /comments/1
   def update
-    return unless access?(@comment, :update)
+    return unless access?(:update, @comment)
 
     respond_to do |format|
       if @comment.update(comment_params)
@@ -64,7 +64,7 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
-    return unless access?(@comment, :destroy)
+    return unless access?:destroy, @comment
 
     respond_to do |format|
       if @comment.destroy
