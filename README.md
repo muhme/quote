@@ -67,7 +67,7 @@ You can also set this DEEPL_API_KEY in the environment for translations with i18
   After running the tests you can find simplecov report in the directory coverage, e.g.:
   ![simplecov.png](/app/assets/images/simplecov.png)
 
-  While the system tests are running, you can access the test environment in parallel via http://localhost:8112. Or you can start the Rails server for the test environment manually insid the docker container:
+  While the system tests are running, you can access the test environment in parallel via http://localhost:8112. Or you can start the Rails server for the test environment manually inside the docker container:
   ```
   quote_rails $ export PORT=3100 && rails server --environment test -P /tmp/test.pid
   ```
