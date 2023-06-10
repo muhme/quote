@@ -18,8 +18,8 @@
     <%= hidden_field_tag 'comment[commentable_id]', @commentable_id %>
     <%= hidden_field_tag 'comment[locale]', I18n.locale %>
     <%= submit_tag t("g.add") %>
+    <p class="opacity-50 font-size-smaller "><%= raw t("comments.rules", link: link_to(t("comments.guidelines"), start_help_path(locale: I18n.locale, anchor: "comments"))) %></p>
   <% end %>
-  <p class="opacity-50 font-size-smaller "><%= raw t("comments.rules", link: link_to(t("comments.guidelines"), start_help_path(locale: I18n.locale, anchor: "comments"))) %></p>
 <% else %>
   <p class="opacity-50 font-size-smaller "><%= raw t("comments.needs_login", login_link: link_to(t('layouts.application.login'), login_path(locale: I18n.locale))) %></p>
 <% end %>
