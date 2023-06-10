@@ -47,6 +47,7 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
 DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx"
 ```
 You can also set this DEEPL_API_KEY in the environment for translations with i18n-tasks.
+</details>
 
 ## Testing
 
