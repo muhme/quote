@@ -7,10 +7,18 @@
 <div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Das Anlegen eines Zites wird gezeigt.", :title => "Ansehen", :border => 1, size: '466x315') %><br />Beispiel: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/de/quotations/898' %></div>
 
 <h2>Sprachauswahl</h2>
-<p>Mit einem Klick auf die Flagge kannst Du die gewünschte Sprache auswählen.<br />Möglich ist auch der direkte Aufruf, z.B. für Englisch mit:<br /><a href="https://www.zitat-service.de/en/">https://www.zitat-service.de/en/</a>.
+<p>
+  Mit einem Klick auf die Flagge kannst Du die gewünschte Sprache auswählen.
+  Möglich ist auch der direkte Aufruf,
+  z.B. für Englisch mit: <a href="https://www.zitat-service.de/en/">https://www.zitat-service.de/en/</a>.
+</p><p>
+  Zitate, Kategorien und Kommentare werden in der gerade ausgewählten Sprache erstellt.
+  Anschließend werden die Kategorien automatisch in die anderen Sprachen übersetzt.
+  Bitte beachte, dass wir für Englisch die amerikanische Schreibweise verwenden.
+</p>
 
 <h2>Zitate</h2>
-<p>In der Liste der <%= link_to 'Zitate', '/quotations' %> kannst Du mit dem Auge <%= image_tag("eye.png", :alt => "Auge", :title => "Ansehen") %> alle Einzelheiten zu einem Zitat sehen. Wenn Du angemeldest bist, dann kannst Du neue Zitate eingeben. Nur Deine eigenen Zitate kannst Du mit dem Stift <%= image_tag("pencil.png", :alt => "Stift", :title => "Ändern") %> ändern oder mit dem roten Kreuz <%= image_tag("cancel.png", :alt => "rotes Kreuz", :title => "Löschen") %> löschen.</p>
+<p>In der Liste der <%= link_to 'Zitate', '/quotations' %> kannst Du mit dem Auge <%= image_tag("eye.png", :alt => "Auge", :title => "Ansehen") %> alle Einzelheiten zu einem Zitat sehen. Wenn Du angemeldest bist, dann kannst Du neue Zitate eingeben. Du kannst deine eigenen Zitate bearbeiten, indem du auf den Stift <%= image_tag("pencil.png", :alt => "Stift", :title => "Ändern") %> klickst, oder löschen, indem du auf das rote Kreuz <%= image_tag("cancel.png", :alt => "rotes Kreuz", :title => "Löschen") %>  klickst. Bitte beachte, dass das Löschen nur möglich ist, wenn das Zitat keine Kommentare hat.</p>
 <p>Wenn Du ein neues Zitat hinzufügst, kannst Du den Autor auswählen, indem Du die ersten Buchstaben seines Nachnamens eingibst. Wenn Du den Autor nicht kennst, lasse das Feld einfach frei.</p>
 <p>Bitte gib die Original-Quelle für Dein Zitat an, zum Beispiel den Buchtitel. Wenn Du ein Dokument im Internet kennst, wo das Zitat im Originaltext zu finden ist, gib bitte den Link dazu an. Bitte verlinke nicht auf Seiten, wo man das Buch oder andere Informationen kaufen kann.</p>
 <p>Du kannst Deinem Zitat beliebig viele Kategorien zuweisen. Kategorien, die bereits als Wörter im Zitat gefunden wurden, kannst Du mit einem Klick auf den Blitz <%= image_tag("lightning.png", :alt => "Blitz", :title => "Markierung für Vorschläge") %> übernehmen.</p>

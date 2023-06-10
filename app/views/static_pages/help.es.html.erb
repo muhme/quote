@@ -7,10 +7,19 @@
 <div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Se muestra cómo crear una cita.", :title => "Ver", :border => 1, size: '466x315') %><br />Ejemplo: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/es/quotations/898' %></div>
 
 <h2>Selección de idioma</h2>
-<p>Al hacer clic en la bandera, puedes seleccionar el idioma deseado.<br />El acceso directo también es posible, por ejemplo, para inglés con:<br /><a href="https://www.zitat-service.de/en/">https://www.zitat-service.de/en/</a>.
+<p>
+  Al hacer clic en la bandera, puedes seleccionar el idioma deseado.
+  El acceso directo también es posible, por ejemplo, para inglés con:
+  <a href="https://www.zitat-service.de/en/">https://www.zitat-service.de/en/</a>.
+</p><p>
+  Las citas, categorías y comentarios se crean en el idioma seleccionado actualmente.
+  Posteriormente, las categorías se traducen automáticamente a otros idiomas.
+  Por favor, ten en cuenta que utilizamos la ortografía americana para el inglés.
+</p>
 
 <h2>Citas</h2>
-<p>En la lista de <%= link_to 'citas', '/es/quotations' %>, puedes ver todos los detalles de una cita haciendo clic en el ojo <%= image_tag("eye.png", :alt => "Ojo", :title => "Ver") %>. Si has iniciado sesión, puedes ingresar nuevas citas. Solo puedes modificar tus propias citas con el lápiz <%= image_tag("pencil.png", :alt => "Lápiz", :title => "Editar") %> o eliminarlas con la cruz roja <%= image_tag("cancel.png", :alt => "Cruz roja", :title => "Eliminar") %>.</p>
+<p>En la lista de <%= link_to 'citas', '/es/quotations' %>, puedes ver todos los detalles de una cita haciendo clic en el ojo <%= image_tag("eye.png", :alt => "Ojo", :title => "Ver") %>. Si has iniciado sesión, puedes ingresar nuevas citas.
+Puedes editar tus propias citas haciendo clic en el lápiz <%= image_tag("pencil.png", :alt => "Lápiz", :title => "Editar") %>, o eliminarlas haciendo clic en la cruz roja <%= image_tag("cancel.png", :alt => "Cruz roja", :title => "Eliminar") %>. Por favor, ten en cuenta que la eliminación sólo es posible si la cita no tiene comentarios.</p>
 <p>Al agregar una nueva cita, puedes seleccionar al autor escribiendo las primeras letras de su apellido. Si no conoces al autor, simplemente deja el campo en blanco.</p>
 <p>Por favor, proporciona la fuente original de tu cita, como el título del libro. Si conoces un documento en Internet donde se pueda encontrar la cita en el texto original, proporciona el enlace. No enlaces a páginas donde se pueda comprar el libro u otra información.</p>
 <p>Puedes asignar tantas categorías a tu cita como desees. Las categorías que ya se han encontrado como palabras en la cita se pueden agregar con un clic en el icono de rayo <%= image_tag("lightning.png", :alt => "Rayo", :title => "Marcar para sugerencias") %> .</p>
