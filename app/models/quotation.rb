@@ -17,18 +17,6 @@ class Quotation < ApplicationRecord
   def Quotation.count_users_quotations(user_id)
     Quotation.count_by_sql("select count(*) from quotations where user_id = #{user_id}")
   end
-  
-  # returns - with links if exist - authors name and quotations source name or blank
-  # returns "", "authors name", "source" or "authors name, source"
-  #
-  def get_linked_author_and_source
-    my_source = self.source
-    my_source = "<a href=\"#{self.source_link}\" target=\"quote_extern\">#{self.source}</a>" unless self.source.blank? or self.source_link.blank?
-    ret = self.author ? self.author.get_linked_author_name_or_blank : ""
-    ret += ", " unless ret.blank? or my_source.blank?
-    ret += my_source unless my_source.blank?
-    ret
-  end
 
   def get_author_name_or_blank
     self.author ? self.author.get_author_name_or_blank : ""

@@ -76,30 +76,6 @@ class QuotationTest < ActiveSupport::TestCase
     assert @quotation.public == false
   end
   
-  test "get_linked_author_and_source method" do
-    # author w/o link and w/o quotations source as from initial setup
-    assert_equal @quotation.get_linked_author_and_source, "Gandi"
-    
-    # w/ source
-    @quotation.source = "source"
-    assert_equal @quotation.get_linked_author_and_source, "Gandi, source"
-    
-    # w/ linked author
-    @author.link = "https://de.wikipedia.org/wiki/Mohandas_Karamchand_Gandhi"
-    @author.save!
-    @quotation.source = ""
-    @quotation.reload
-    assert_equal @quotation.get_linked_author_and_source, '<a href="https://de.wikipedia.org/wiki/Mohandas_Karamchand_Gandhi" target="quote_extern">Gandi</a>'
-
-    # w/ source and linked author
-    @quotation.source = "source"
-    assert_equal @quotation.get_linked_author_and_source, '<a href="https://de.wikipedia.org/wiki/Mohandas_Karamchand_Gandhi" target="quote_extern">Gandi</a>, source'
-    
-    # w/ linked source and linked author
-    @quotation.source_link = "https://somewhere.org"
-    assert_equal @quotation.get_linked_author_and_source, '<a href="https://de.wikipedia.org/wiki/Mohandas_Karamchand_Gandhi" target="quote_extern">Gandi</a>, <a href="https://somewhere.org" target="quote_extern">source</a>'
-  end
-  
   test "get_author_and_source_name method" do
     @quotation.source = "source"
     assert_equal @quotation.get_author_and_source_name, "Gandi, source"

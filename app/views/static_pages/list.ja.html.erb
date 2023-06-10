@@ -11,13 +11,13 @@
 </p>
 <% unless @quotation.nil? %>
   <p>
-    <div class="randomquote_title">ランダム引用</div>
+    <div class="randomquote_title">Zufallszitat</div>
       <div class="randomquote">
-      <span class="ListQuote"><%= raw h(@quotation.quotation) %></span><br>
-      <% me = @quotation.get_linked_author_and_source -%>
-      <% unless me.blank? -%>
-        <span class="ListSource"><%= raw me %></span>
-      <% end -%>
+        <span class="ListQuote"><%= raw get_linked_quotation(@quotation) %></span><br>
+        <% me = get_linked_author_and_source(@quotation) %>
+        <% unless me.blank? %>
+          <span class="ListSource"><%= raw me %></span>
+        <% end %>
     </div>
   </p>
 <% end %>
