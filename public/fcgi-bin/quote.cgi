@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 #
 # quote.pl
-# hlu, Sep/17/2006 - May/17/2018
+# hlu, Sep/17/2006 - June/10/2023
 
 use strict;
 use CGI::Fast;
@@ -114,7 +114,7 @@ sub authorAndSource($$$$$$) {
         $dbh->do("SET character_set_results=\"$charset\"");
 
         $sql = "SELECT q.id, q.quotation, q.source, q.source_link, a.firstname, a.name, a.link FROM quotations q, authors a ";
-        $sql .= ", categories_quotations cq, categories c" if $category;
+        $sql .= ", categories_quotations cq, categories c, mobility_string_translations mst" if $category;
         $sql .= ", users u" if $user;
         $sql .= " WHERE q.author_id = a.id";
         if ($user) {
@@ -126,7 +126,10 @@ sub authorAndSource($$$$$$) {
         if ($category) {
             $sql .= " AND cq.quotation_id = q.id
             AND cq.category_id = c.id
-            AND c.category = ?";
+            AND cq.category_id = mst.translatable_id
+            AND mst.locale = 'de'
+            AND mst.translatable_type = 'Category'
+            AND mst.value = ?";
         }
         $sql .= " and a.name = ?" if $author;
         $sql .= " ORDER BY rand() LIMIT 1";
