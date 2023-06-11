@@ -21,7 +21,7 @@ Dazu kannst Du als Vorlage <a href="https://www.zitat-service.de/quote.css">quot
 Das DIV-Element der Klasse <i>quote</i> umschließt das gesamte Zitat, hier kannst Du z.B. einen Rahmen setzen. Enthalten sind zwei DIV-Elemente der Klassen <i>quotation</i> für das Zitat und <i>source</i> für den Autor und die Quelle.
 <h2>Parameter</h2>
 <p>Für die Zitat-Abfrage kannst Du - neben dem Parameter <i>style</i> für das Stylesheet - die Parameter
-<i>category</i> für die Kategorie, <i>user</i> für den Benutzernamen des Zitat-Erstellers und <i>author</i> für den Namen des Zitat-Autors angeben.
+<i>category</i><%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %> für die Kategorie, <i>user</i> für den Benutzernamen des Zitat-Erstellers und <i>author</i> für den Namen des Zitat-Autors angeben.
 Du erhältst dann nur Zitate aus dieser Kategorie, von diesem Benutzer oder dem Autoren mit diesem Nachnamen.
 Die Zitate von Einstein erhältst Du z.B. mit:
 <div class="code">https://www.zitat-service.de/quote?author=Einstein</code></div>
@@ -30,9 +30,16 @@ Die Zitate von Einstein erhältst Du z.B. mit:
 <p>
 Ein weiterer Parameter ist <i>window</i>. Ohne diesen Parameter werden Links im aktuellen Fenster (_parent) geöffnet. Mit z.B. <i>window=quote</i> werden die Links dann in einem neuen Fenster geöffnet.</p>
 </p>
-<p>Die Parameter können auch kombiniert werden. Die Abfrage aller Zitate des Benutzers "heiko" aus der Kategorie "WasBedeutetLiebe" und mit der Angabe eines Stylesheets erfolgt zum Beispiel mit:
-<div class="code">https://www.zitat-service.de/quote?user=heiko&category=WasBedeutetLiebe&style=https://www.zitat-service.de/quote.css</code></div>
-<h2 style="clear: both; margin-top: 3em;">Praxis-Beispiele</h2>
+<p>Die Parameter können auch kombiniert werden. Die Abfrage aller Zitate des Benutzers "heiko" aus der Kategorie "Programmieren" und mit der Angabe eines Stylesheets erfolgt zum Beispiel mit:
+<div class="code">https://www.zitat-service.de/quote?user=heiko&category=Programmieren&style=https://www.zitat-service.de/quote.css</code></div>
+</p>
+<hr style="clear: both;" />
+<p>
+  <%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %>
+  Das Skript <i>quote</i> verwendet die mit <i>category</i> übergebenen Kategorienamen aus der deutschen Sprache (DE).
+  Wenn die Übersetzung abgeschlossen ist, dann wird es ein neues Skript, mit zusätzlicher Auswahl der Sprache, geben.
+</p>
+<h2>Praxis-Beispiele</h2>
 <p>Als Anregung einige Websites, die den Zitat-Service eingebunden haben (Stand 1. Mai 2023):</p>
 <ul>
   <li><a target="_blank" href="http://szloszjar.com">Georg Szloszjar</a> (Joomla)</li>

@@ -21,7 +21,7 @@ Para ello, puedes utilizar como plantilla <a href="https://www.zitat-service.de/
 El elemento DIV de la clase <i>quote</i> rodea la cita completa, aquí puedes, por ejemplo, establecer un borde. Contiene dos elementos DIV de las clases <i>quotation</i> para la cita y <i>source</i> para el autor y la fuente.
 <h2>Parámetros</h2>
 <p>Para la consulta de citas, además del parámetro <i>style</i> para la hoja de estilo, puedes especificar los parámetros
-<i>category</i> para la categoría, <i>user</i> para el nombre de usuario del creador de la cita y <i>author</i> para el nombre del autor de la cita.
+<i>category</i><%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %> para la categoría, <i>user</i> para el nombre de usuario del creador de la cita y <i>author</i> para el nombre del autor de la cita.
 Entonces, solo recibirás citas de esa categoría, de ese usuario o del autor con ese apellido.
 Las citas de Einstein, por ejemplo, las obtienes con:
 <div class="code">https://www.zitat-service.de/quote?author=Einstein</code></div>
@@ -30,9 +30,16 @@ Las citas de Einstein, por ejemplo, las obtienes con:
 <p>
 Otro parámetro es <i>window</i>. Sin este parámetro, los enlaces se abrirán en la ventana actual (_parent). Con, por ejemplo, <i>window=quote</i>, los enlaces se abrirán en una ventana nueva.</p>
 </p>
-<p>Los parámetros también se pueden combinar. La consulta de todas las citas del usuario "heiko" en la categoría "WasBedeutetLiebe" e incluyendo una hoja de estilo se realiza, por ejemplo, con:
-<div class="code">https://www.zitat-service.de/quote?user=heiko&category=WasBedeutetLiebe&style=https://www.zitat-service.de/quote.css</code></div>
-<h2 style="clear: both; margin-top: 3em;">Ejemplos prácticos</h2>
+<p>Los parámetros también se pueden combinar. La consulta de todas las citas del usuario "heiko" en la categoría "programming" e incluyendo una hoja de estilo se realiza, por ejemplo, con:
+<div class="code">https://www.zitat-service.de/quote?user=heiko&category=programming&style=https://www.zitat-service.de/quote.css</code></div>
+</p>
+<hr style="clear: both;" />
+<p>
+  <%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %>
+  El script <i>quote</i> utiliza los nombres de categoría pasados con <i>categoría</i> del idioma alemán (DE).
+  Una vez completada la traducción, habrá un nuevo script con una selección adicional de idioma.
+</p>
+<h2>Ejemplos prácticos</h2>
 <p>Como inspiración, algunas páginas web que han integrado el servicio de citas (a partir del 1 de mayo de 2023):</p>
 <ul>
   <li><a target="_blank" href="http://szloszjar.com">Georg Szloszjar</a> (Joomla)</li>

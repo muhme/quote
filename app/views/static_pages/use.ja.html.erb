@@ -20,7 +20,7 @@
 それには、<a href="https://www.zitat-service.de/quote.css">quote.css</a>をテンプレートとして使用し、自分に合わせてカスタマイズします。独自のCSSは、<code>style</code>パラメータで組み込むことができます。</p>
 <p>クラス<i>quote</i>のDIV要素は、引用全体を囲んでいて、たとえば枠線を設定できます。それには、クラス<i>quotation</i>の引用とクラス<i>source</i>の著者と情報源を含む2つのDIV要素が含まれています。</p>
 <h2>パラメータ</h2>
-<p>引用の問い合わせには、スタイルシート用の<i>style</i>パラメータのほか、カテゴリ用の<i>category</i>パラメータ、引用の作成者のユーザー名用の<i>user</i>パラメータ、引用の著者名用の<i>author</i>パラメータを指定できます。
+<p>引用の問い合わせには、スタイルシート用の<i>style</i>パラメータのほか、カテゴリ用の<i>category</i><%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %>パラメータ、引用の作成者のユーザー名用の<i>user</i>パラメータ、引用の著者名用の<i>author</i>パラメータを指定できます。
 このようにして、特定のカテゴリ、ユーザー、または指定された姓の著者からの引用のみを取得できます。
 例えば、アインシュタインの引用は以下のようになります：
 <div class="code">https://www.zitat-service.de/quote?author=Einstein</code></div>
@@ -30,8 +30,15 @@
 別のパラメータは<i>window</i>です。このパラメータがない場合、リンクは現在のウィンドウ（_parent）で開きます。たとえば、<i>window=quote</i>を指定すると、リンクは新しいウィンドウで開きます。</p>
 </p>
 <p>パラメータは組み合わせて使用することもできます。たとえば、ユーザー「heiko」がカテゴリ「WasBedeutetLiebe」で作成したすべての引用と、スタイルシートの指定を含むクエリは次のようになります：
-<div class="code">https://www.zitat-service.de/quote?user=heiko&category=WasBedeutetLiebe&style=https://www.zitat-service.de/quote.css</code></div>
-<h2 style="clear: both; margin-top: 3em;">実践例</h2>
+<div class="code">https://www.zitat-service.de/quote?user=heiko&category=programming&style=https://www.zitat-service.de/quote.css</code></div>
+</p>
+<hr style="clear: both;" />
+<p>
+  <%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %>
+  スクリプト <i>quote</i>は、ドイツ語（DE）で<i>category</i>と共に渡されたカテゴリ名を使用します。
+  翻訳が完了すると、言語の追加選択を持つ新しいスクリプトが提供されます。
+</p>
+<h2>実践例</h2>
 <p>引用サービスを組み込んでいるいくつかのウェブサイトを参考にしてください（2023年5月1日現在）：</p>
 <ul>
   <li><a target="_blank" href="http://szloszjar.com">Georg Szloszjar</a> (Joomla)</li>

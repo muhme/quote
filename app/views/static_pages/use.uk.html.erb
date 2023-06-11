@@ -21,7 +21,7 @@
 Елемент DIV класу <i>quote</i> охоплює всю цитату, тут ви можете встановити рамку, наприклад. Він містить два елементи DIV класів <i>quotation</i> для цитати та <i>source</i> для автора та джерела.
 <h2>Параметри</h2>
 <p>Для запиту цитат, крім параметра <i>style</i> для стилів, ви можете вказати параметри
-<i>category</i> для категорії, <i>user</i> для імені користувача, який створив цитату, та <i>author</i> для імені автора цитати.
+<i>category</i><%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %> для категорії, <i>user</i> для імені користувача, який створив цитату, та <i>author</i> для імені автора цитати.
 Ви отримаєте лише цитати з цієї категорії, від цього користувача або автора з таким прізвищем.
 Цитати Ейнштейна, наприклад, можна отримати за допомогою:
 <div class="code">https://www.zitat-service.de/quote?author=Einstein</code></div>
@@ -30,9 +30,16 @@
 <p>
 Ще одним параметром є <i>window</i>. Без цього параметра посилання відкриваються у поточному вікні (_parent). З параметром <i>window=quote</i>, посилання відкриваються у новому вікні.</p>
 </p>
-<p>Параметри можуть бути комбіновані. Запит на всі цитати користувача "heiko" з категорії "WasBedeutetLiebe" та з вказівкою таблиці стилів виконується, наприклад, за допомогою:
-<div class="code">https://www.zitat-service.de/quote?user=heiko&category=WasBedeutetLiebe&style=https://www.zitat-service.de/quote.css</code></div>
-<h2 style="clear: both; margin-top: 3em;">Приклади використання</h2>
+<p>Параметри можуть бути комбіновані. Запит на всі цитати користувача "heiko" з категорії "programming" та з вказівкою таблиці стилів виконується, наприклад, за допомогою:
+<div class="code">https://www.zitat-service.de/quote?user=heiko&category=programming&style=https://www.zitat-service.de/quote.css</code></div>
+</p>
+<hr style="clear: both;" />
+<p>
+  <%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %>
+  Скрипт <i>quote</i> використовує назви категорій, передані з <i>category</i> німецької мови (DE).
+  Після завершення перекладу, буде новий скрипт з додатковим вибором мови.
+</p>
+<h2>Приклади використання</h2>
 <p>Для натхнення ось деякі веб-сайти, які інтегрували сервіс цитат (станом на 1 травня 2023 року):</p>
 <ul>
   <li><a target="_blank" href="http://szloszjar.com">Georg Szloszjar</a> (Joomla)</li>
