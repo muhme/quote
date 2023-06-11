@@ -247,4 +247,9 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "list categories by order" do
+    get categories_url + "?order=categories"
+    assert_response :success
+  end
+
 end

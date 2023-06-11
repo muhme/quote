@@ -16,7 +16,7 @@ class CategoriesController < ApplicationController
     sql += " or c.user_id = #{current_user.id}" if current_user and current_user.admin != true
     sql += params[:order] == "categories" ?
     # by category name alphabeticaly
-      " order by c.category" :
+      " order by mst.value" :
     # by the number of quotations that the categories have
       " order by (select count(*) from categories_quotations cq, quotations q where cq.quotation_id = q.id and cq.category_id = c.id) desc"
 
