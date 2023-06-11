@@ -37,6 +37,10 @@ class CategoriesController < ApplicationController
           AND t1.locale = t2.locale
           AND t1.locale IN ('en', 'de', 'es', 'ja', 'uk')
           AND t1.translatable_id <> t2.translatable_id
+          AND t1.translatable_type = 'Category'
+          AND t2.translatable_type = 'Category'
+          AND t1.key = 'category'
+          AND t2.key = 'category'
         WHERE t1.translatable_id = #{@category.id};
     SQL
     result = ActiveRecord::Base.connection.execute(sql)
@@ -228,12 +232,20 @@ class CategoriesController < ApplicationController
           AND t1.locale = t2.locale
           AND t1.locale IN ('en', 'de', 'es', 'ja', 'uk')
           AND t1.translatable_id <> t2.translatable_id
+          AND t1.translatable_type = 'Category'
+          AND t2.translatable_type = 'Category'
+          AND t1.key = 'category'
+          AND t2.key = 'category'
         JOIN mobility_string_translations t3
           ON t1.translatable_id = t3.translatable_id
           AND t3.locale = 'de'
+          AND t3.translatable_type = 'Category'
+          AND t3.key = 'category'
         JOIN mobility_string_translations t4
           ON t2.translatable_id = t4.translatable_id
           AND t4.locale = 'de'
+          AND t4.translatable_type = 'Category'
+          AND t4.key = 'category'
         WHERE t1.translatable_id < t2.translatable_id
         ORDER BY t1.translatable_id, t2.translatable_id
     SQL
