@@ -1,9 +1,9 @@
 <%
-    # create a list of categories with links and link titles with number of quotations
+    # create a list of ordered categories with links and link titles with number of quotations
     categories = []
-    for r in @quotation.categories
+    @quotation.categories.i18n.order(:category).each do |r|
         categories[categories.length - 1] += ", " if categories.length > 0
-        i = Category.find_by_id(r.id).quotation_ids.size
+        i = r.quotation_ids.size
         category = h(r.category)
         categories << link_to(category, {action: :list_by_category, category: r.id},
                         title: "#{i} #{t("g.quotes", count: i)} #{t(".of_category", category: category)}")
