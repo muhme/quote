@@ -20,9 +20,9 @@ selenium/standalone-chrome   4444/tcp, 0.0.0.0:8104->5900/tcp, 0.0.0.0:8105->790
 maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                           quote_maildev
 ```
 * quote_mariadb – MariaDB database server
-  * database admin is root/root
-  * database quote_development with user quote_development/quote_development created and June 2018 database export loaded
-  * database quote_test with user quote_test/quote_test created
+  * database admin user is root/root
+  * Database quote_development with database user quote_development/quote_development and LIVE database import from June 2023 and three additional users created with the three different user roles 
+  * database quote_test with database user quote_test/quote_test created
 * quote_mysqladmin – phpMyAdmin (user root/root)
   * http://localhost:8101
 * quote_rails – Rails web application zitat-service
@@ -31,6 +31,10 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
   * running function tests with "docker exec -it quote_rails rails t"
   * running system tests using Chrome browser on Selenium container with "docker exec -ti quote_rails rails test:system"
   * local directory /quote with cloned GitHub repository is mounted into container
+  * users available are:
+    * user/user_password
+    * admin/admin_password
+    * super_admin/super_admin
 * quote_chrome – Selenium Standalone with Chrome and VNC server
   * two ports are available to see browser working in test:system (using the password: secret):
     * using a VNC viewer [vnc://localhost:8104](vnc://localhost:8104) or
