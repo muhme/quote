@@ -6,46 +6,46 @@ module ApplicationHelper
 
     if controller.controller_name == "authors"
       if controller.action_name == "list_by_letter"
-        d += " –  #{t('g.authors', count: 2)}, #{t('layouts.application.starting_with_letter', letter: params[:letter].first)}"
+        d += " –  #{t("g.authors", count: 2)}, #{t("layouts.application.starting_with_letter", letter: params[:letter].first)}"
       elsif controller.action_name == "show" and @author.present?
-        d += " – #{t('g.authors', count: 1)} #{@author.get_author_name_or_blank}"
+        d += " – #{t("g.authors", count: 1)} #{@author.get_author_name_or_blank}"
       else
-        d += " – #{t('g.authors', count: 2)}"
+        d += " – #{t("g.authors", count: 2)}"
       end
     end
 
     if controller.controller_name == "categories"
       if controller.action_name == "list_by_letter"
-        d += " – #{t('g.categories', count: 2)}, #{t('layouts.application.starting_with_letter', letter: params[:letter].first)}"
+        d += " – #{t("g.categories", count: 2)}, #{t("layouts.application.starting_with_letter", letter: params[:letter].first)}"
       elsif controller.action_name == "show" and @category.present?
-        d += " – #{t('g.categories', count: 1)} #{@category.category}"
+        d += " – #{t("g.categories", count: 1)} #{@category.category}"
       else
-        d += " – #{t('g.categories', count: 2)}"
+        d += " – #{t("g.categories", count: 2)}"
       end
     end
 
     if controller.controller_name == "quotations"
       if controller.action_name == "show" and @quotation.present?
-        d += " – #{t('layouts.application.quote_from')} #{@quotation.get_author_name_or_blank}"
+        d += " – #{t("layouts.application.quote_from")} #{@quotation.get_author_name_or_blank}"
       else
-        d += " – #{t('g.quotes', count: 2)}"
-        d += " #{t('g.from')} #{@author.get_author_name_or_blank}" if controller.action_name == "list_by_author" and @author.present?
-        d += " #{t('g.for')} #{@category.category}" if controller.action_name == "list_by_category" and @category.present?
-        d += " #{t('layouts.application.of_the_user')} #{h(params[:user])}" if controller.action_name == "list_by_user"
+        d += " – #{t("g.quotes", count: 2)}"
+        d += " #{t("g.from")} #{@author.get_author_name_or_blank}" if controller.action_name == "list_by_author" and @author.present?
+        d += " #{t("g.for")} #{@category.category}" if controller.action_name == "list_by_category" and @category.present?
+        d += " #{t("layouts.application.of_the_user")} #{h(params[:user])}" if controller.action_name == "list_by_user"
       end
     end
 
-    d += " – #{t('layouts.application.not_found')}" if controller.action_name == "not_found"
-    d += " – #{t('layouts.application.contact')}" if controller.action_name == "contact"
-    d += " – #{t('layouts.application.project')}" if controller.action_name == "project"
-    d += " – #{t('layouts.application.register')}" if controller.controller_name == "users" and controller.action_name == "new"
-    d += " – #{t('layouts.application.login')}" if controller.controller_name == "user_sessions" and controller.action_name == "new"
-    d += " – #{t('layouts.application.help')}" if controller.action_name == "help"
-    d += " – #{t('layouts.application.use')}" if controller.action_name == "use"
-    d += " – #{t('layouts.application.joomla')}" if controller.action_name == "joomla"
-    d += " – #{t('layouts.application.joomla_english')}" if controller.action_name == "joomla_english"
+    d += " – #{t("layouts.application.not_found")}" if controller.action_name == "not_found"
+    d += " – #{t("layouts.application.contact")}" if controller.action_name == "contact"
+    d += " – #{t("layouts.application.project")}" if controller.action_name == "project"
+    d += " – #{t("layouts.application.register")}" if controller.controller_name == "users" and controller.action_name == "new"
+    d += " – #{t("layouts.application.login")}" if controller.controller_name == "user_sessions" and controller.action_name == "new"
+    d += " – #{t("layouts.application.help")}" if controller.action_name == "help"
+    d += " – #{t("layouts.application.use")}" if controller.action_name == "use"
+    d += " – #{t("layouts.application.joomla")}" if controller.action_name == "joomla"
+    d += " – #{t("layouts.application.joomla_english")}" if controller.action_name == "joomla_english"
 
-    d += ", #{t('g.page')} #{params[:page]}" if params[:page]
+    d += ", #{t("g.page")} #{params[:page]}" if params[:page]
 
     d
   end
@@ -76,7 +76,7 @@ module ApplicationHelper
   # H I J K L M N
   # O P Q R S T U
   # V W X Y Z *
-  def author_links locale
+  def author_links(locale)
     init_chars = Author.init_chars
     ret = "<table id=\"letter\"><tr>"
     all = ("A".."Z").to_a
@@ -162,7 +162,7 @@ module ApplicationHelper
   #   - returns table header 'name' entry and arrow-down-image or
   #   - returns table header 'name' entry linked with 'link'
   def sorted_img_if(name, link, bool)
-    bool ? name + image_tag("arrow_down.png", :alt => t('g.arrow_down'), :title => t('g.ordered'), :border => 0) + "</th>" : link
+    bool ? name + image_tag("arrow_down.png", :alt => t("g.arrow_down"), :title => t("g.ordered"), :border => 0) + "</th>" : link
   end
 
   # do an html_escape() and a truncate overall on 40 chars
@@ -210,7 +210,7 @@ module ApplicationHelper
     if sample.present?
       ret << ' <span class="example">('
       ret << sample
-      ret << ')</span>'
+      ret << ")</span>"
     end
     raw(ret)
   end
@@ -221,7 +221,7 @@ module ApplicationHelper
   end
 
   # returns e.g. "🇺🇦 UK – українська" or "🇺🇦 UK" if shorten is true for symbol :uk
-  # falls back to :de for unknown locale or nil 
+  # falls back to :de for unknown locale or nil
   #
   def string_for_locale(locale = "de", shorten = false)
     # logger.debug { "string_for_locale(#{locale.class} #{locale}, #{shorten})" }
@@ -244,9 +244,9 @@ module ApplicationHelper
   # returns next locale from [:de, :en, :es, :ja, :uk] as string
   def next_locale(current_locale = nil)
     locales = I18n.available_locales
-    return 'de' if current_locale.nil?
+    return "de" if current_locale.nil?
     # find the index of the current locale in the array, increment it by one to get the index of the next locale, and then use the
-    # modulo operator (%) to ensure that the result is wrapped around to the beginning of the array if it exceeds the array's length. 
+    # modulo operator (%) to ensure that the result is wrapped around to the beginning of the array if it exceeds the array's length.
     index = locales.index(current_locale.to_sym)
     locales[(index + 1) % locales.length].to_s
   end
@@ -256,5 +256,30 @@ module ApplicationHelper
     locales = I18n.available_locales
     locales.delete(locale)
     locales.unshift(locale)
+  end
+
+  # transform "Einstein:https://www.zitat-service.de/authors/20" in relative HTML link and
+  # disabling turbo to force full page load as '<a href="/authors/20" data-turbo="false">Einstein</a>'#
+  # and do html_escape to have a save string directly to display
+  #
+  def transformLink(str)
+    base_url = "https://www.zitat-service.de"
+
+    # Step 1: Split string into array on white spaces
+    parts = str.split("\s")
+
+    # Step 2: Handle every non-white-space part and check for link transformation
+    parts.map! do |part|
+      if part =~ /([^:]+):(#{Regexp.quote(base_url)}([\w\/]+))/
+        # If part matches link pattern, transform it into a relative link and with disabling Turbo to have full page load
+        "<a href=\"#{$3}\" data-turbo=\"false\">#{$1}</a>"
+      else
+        # Step 3: Transform for all HTML chars like < > & " to &lt; ...
+        ERB::Util.html_escape(part)
+      end
+    end
+
+    # Step 4: Concatenate all to one string and mark it as html_safe
+    parts.join(" ").html_safe
   end
 end

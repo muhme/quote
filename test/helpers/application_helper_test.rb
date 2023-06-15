@@ -117,4 +117,32 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_match "uk", next_locale("ja")
   end
 
+  test "transformLink" do
+    # real world, from categories/356 and at the end and DE
+    assert_match 'im Sinne einer nicht ernst gemeinten Äußerung oder Handlung, die zur Belustigung dienen soll; siehe auch <a href="/de/categories/355" data-turbo="false">Witz</a>',
+      transformLink('im Sinne einer nicht ernst gemeinten Äußerung oder Handlung, die zur Belustigung dienen soll; siehe auch Witz:https://www.zitat-service.de/de/categories/355')
+    # in the beginning and EN
+    assert_match '<a href="/en/quotations/1902" data-turbo="false">#1902</a> is identical',
+      transformLink('#1902:https://www.zitat-service.de/en/quotations/1902 is identical')
+    # only the link and w/o locale
+    assert_match '<a href="/authors/20" data-turbo="false">Einstein</a>',
+      transformLink('Einstein:https://www.zitat-service.de/authors/20')
+    # two links and in the middle and ES
+    assert_match 'ver categorías <a href="/es/categories/305" data-turbo="false">Hormiga</a> y <a href="/es/categories/25" data-turbo="false">Perro</a> ambas recogen animales',
+      transformLink('ver categorías Hormiga:https://www.zitat-service.de/es/categories/305 y Perro:https://www.zitat-service.de/es/categories/25 ambas recogen animales')
+    # external links are not transformed
+    assert_match 'bla https://www.googe.com bli',
+      transformLink('bla https://www.googe.com bli')
+    # own links are not transformed
+    # (HTML sanitize will later change to "&lt;a href=&quot;https://www.google.de&quot;&gt;bla&lt;/a&gt;")
+    assert_match '&lt;a href=&quot;https://www.google.de&quot;&gt;bla&lt;/a&gt;',
+      transformLink('<a href="https://www.google.de">bla</a>')
+    # test tab and JA
+    assert_match '名前 <a href="/ja/categories/210" data-turbo="false">はじめに</a>',
+      transformLink("名前\tはじめに:https://www.zitat-service.de/ja/categories/210")
+    # test new line and UK
+    # assert_match 'До Основ\'яненка <a href="/uk/c/quotations/1899" data-turbo="false">Слава Україні!</a>',
+      transformLink("До Основ\'яненка\nСлава Україні!:https://www.zitat-service.de/ja/categories/210")
+  end
+
 end

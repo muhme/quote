@@ -23,7 +23,7 @@
           controller: comment.commentable_type.pluralize.downcase, action: "show", id: comment.commentable_id %></td>
         <td><%= raw dates %></td>
         <td><%= hu(comment.user_id) %></td>
-        <td><%= raw th(comment.comment, 40)%></td>
+        <td><%= raw transformLink(comment.comment) %></td>
         <td><%= raw string_for_locale(comment.locale, true) %></td>
       </tr>
     <% end %>
