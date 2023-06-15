@@ -10,8 +10,9 @@
     </div>
   <% end %>
   <%= form_tag(url_for(controller: :comments, action: :update, locale: I18n.locale), method: :patch) do |form| %>
-    <%= text_field_tag 'comment[comment]', @comment.comment, id: 'edit_comment', size: 80, maxlength: 512, autofocus: true %>
+    <%= text_field_tag 'comment[comment]', @comment.comment, id: 'edit_comment', size: 80, maxlength: 512, onfocus: 'myUpdateCommentCountdown("edit_comment", 512)', oninput: 'myUpdateCommentCountdown("edit_comment", 512)', autofocus: true %>
     <%= hidden_field_tag 'comment[locale]', I18n.locale %>
+    <span id="edit_comment_countdown" class="countdown opacity-50 font-size-smaller"> </span>
     <%=
         link_to image_tag("arrow_undo.png",
           alt: t("g.arrow_undo_alt"), title: t("g.cancel")),

@@ -44,6 +44,19 @@ window.myMoveCursorToEnd = function (id) {
   }
 }
 
+// update comment field countdown when there are less than 100 characters left
+window.myUpdateCommentCountdown = function (input_field_id, max) {
+  var countdown_id = input_field_id + "_countdown";
+  var inputField = document.getElementById(input_field_id);
+  var rest = max - inputField.value.length;
+  // console.debug (`myUpdateCommentCountdown(rest=${rest}, input_field_id=${input_field_id})`);
+  if (rest < 100) {
+    document.getElementById(countdown_id).textContent = rest;
+  } else {
+    document.getElementById(countdown_id).textContent = ' ';
+  }
+}
+
 // set focus and select all e.g. in "quotation_source" field after author is selected
 // window.mySetFocus = function(id) {
 //     var c = document.getElementById(id);
