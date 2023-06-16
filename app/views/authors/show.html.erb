@@ -34,7 +34,7 @@
       <% end %>
       <tr>
         <td><%= t("g.public") %>:</td>
-        <td><%= @author.public? ? t("g.yes") : t("g.no") %></td>
+        <td><%= t("g.public_value.#{@author.public}") %></td>
       </tr><tr>
         <td><%= t("g.quotes", count: @author.quotation_ids.size) %></td>
         <td><%= link_to(@author.quotation_ids.size.to_s, controller: "quotations", action: "list_by_author", author: @author.id) %></td>

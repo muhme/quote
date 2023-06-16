@@ -47,7 +47,7 @@
       <% end %>
       <tr>
         <td><%= t("g.public") %>:</td>
-        <td><%= @category.public? ? t("g.yes") : t("g.no") %></td>
+        <td><%= t("g.public_value.#{@category.public}") %></td>
       </tr>
       <tr>
         <td><%= t("g.quotes", count: @category.quotation_ids.size) %></td>

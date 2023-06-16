@@ -215,7 +215,6 @@ ja:
     locale: 言語
     machine_translation_failed: 機械翻訳の失敗
     name: 名前
-    'no': いいえ
     no_admin: 管理者ではありません！
     no_right: "%{name} %{id} を %{msg} する権利がありません！"
     not_logged_in: ログインしていません
@@ -231,6 +230,9 @@ ja:
     page: ページ
     pencil: 鉛筆
     public: 公開
+    public_value:
+      'false': いいえ
+      'true': はい
     quote: 引用元
     quote_alt: ロゴと同じ緑色の文字Z
     quotes:
@@ -244,7 +246,6 @@ ja:
     update: 変更
     updated: 更新されました
     user: ユーザー
-    'yes': はい
   layouts:
     application:
       admin: 管理者

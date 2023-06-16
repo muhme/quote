@@ -215,7 +215,6 @@ es:
     locale: Idioma
     machine_translation_failed: la traducción automática ha fallado
     name: Nombre
-    'no': false
     no_admin: "¡No hay administrador!"
     no_right: "¡No hay derecho %{name} %{id} a %{msg}!"
     not_logged_in: No registrado
@@ -231,6 +230,9 @@ es:
     page: Página
     pencil: la pluma
     public: Público
+    public_value:
+      'false': 'No'
+      'true': Sí
     quote: Cita
     quote_alt: Letra Z en verde, como en el logotipo
     quotes:
@@ -244,7 +246,6 @@ es:
     update: Cambiar
     updated: Actualizado
     user: usuarios
-    'yes': Sí
   layouts:
     application:
       admin: Administrador

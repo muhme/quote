@@ -215,7 +215,6 @@ de:
     locale: Sprache
     machine_translation_failed: die maschinelle Übersetzung scheiterte
     name: Name
-    'no': Nein
     no_admin: Kein Administrator!
     no_right: Kein Recht %{name} ID=%{id} zu %{msg}!
     not_logged_in: Nicht angemeldet
@@ -231,6 +230,9 @@ de:
     page: Seite
     pencil: Stift
     public: Öffentlich
+    public_value:
+      'false': Nein
+      'true': Ja
     quote: Zitat
     quote_alt: Buchstabe Z in grün, wie im Logo
     quotes:
@@ -244,7 +246,6 @@ de:
     update: Ändern
     updated: Aktualisiert
     user: Benutzer
-    'yes': Ja
   layouts:
     application:
       admin: Administrator

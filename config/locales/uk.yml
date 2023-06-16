@@ -225,7 +225,6 @@ uk:
     locale: Мова
     machine_translation_failed: не вдалося виконати машинний переклад
     name: Прізвище
-    'no': Ні
     no_admin: Немає прав адміністратора!
     no_right: Немає прав %{name} %{id} на %{msg}!
     not_logged_in: Не ввійшли до системи
@@ -245,6 +244,9 @@ uk:
     page: Сторінка
     pencil: Олівець
     public: Публічний
+    public_value:
+      'false': Ні
+      'true': Так
     quote: Цитата
     quote_alt: Літера Z зеленого кольору, як на логотипі
     quotes:
@@ -261,7 +263,6 @@ uk:
     update: Змінити
     updated: Оновлено
     user: Користувач
-    'yes': Так
   layouts:
     application:
       admin: Адміністратор

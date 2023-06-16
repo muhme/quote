@@ -215,7 +215,6 @@ en:
     locale: Language
     machine_translation_failed: the machine translation failed
     name: Name
-    'no': false
     no_admin: Not an Administrator!
     no_right: No right to %{name} %{id} %{msg}!
     not_logged_in: Not logged in
@@ -231,6 +230,9 @@ en:
     page: Page
     pencil: Pencil
     public: Public
+    public_value:
+      'false': 'No'
+      'true': 'Yes'
     quote: Quote
     quote_alt: Letter Z in green, as in logo
     quotes:
@@ -244,7 +246,6 @@ en:
     update: Change
     updated: Updated
     user: User
-    'yes': true
   layouts:
     application:
       admin: Administrator

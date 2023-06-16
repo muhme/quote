@@ -65,7 +65,7 @@
           <td><%= nice_date(@quotation.updated_at) %></td>
         </tr><tr>
           <td><%= t("g.public") %>:</td>
-          <td><%= @quotation.public? ? t("g.yes") : t("g.no") %></td>
+        <td><%= t("g.public_value.#{@quotation.public}") %></td>
         </tr>
     </table>
   </div>
