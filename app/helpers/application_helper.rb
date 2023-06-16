@@ -254,7 +254,13 @@ module ApplicationHelper
   # give I18n.available_locales with first actual or given locale
   def ordered_locales(locale = I18n.locale)
     locales = I18n.available_locales
-    locales.delete(locale)
+    index = locales.index(locale)
+
+    # Return the original locales if the locale is not in the list
+    return locales unless locales.include?(locale)
+
+    # Remove the given locale from the array, then prepend it
+    locales -= [locale]
     locales.unshift(locale)
   end
 
@@ -263,6 +269,7 @@ module ApplicationHelper
   # and do html_escape to have a save string directly to display
   #
   def transformLink(str)
+    logger.debug { "transformLink <- \”#{str}\”" }
     base_url = "https://www.zitat-service.de"
 
     # Step 1: Split string into array on white spaces
@@ -280,6 +287,8 @@ module ApplicationHelper
     end
 
     # Step 4: Concatenate all to one string and mark it as html_safe
-    parts.join(" ").html_safe
+    ret = parts.join(" ").html_safe
+    logger.debug { "transformLink -> \”#{ret}\”" }
+    ret
   end
 end

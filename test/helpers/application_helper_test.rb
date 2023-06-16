@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 include ERB::Util # for e.g. html_escape
 
 class ApplicationHelperTest < ActionView::TestCase
@@ -7,7 +7,7 @@ class ApplicationHelperTest < ActionView::TestCase
   test "page_title method" do
     assert_equal "Zitat-Service", page_title
   end
-  
+
   test "nice_number method" do
     assert_equal "1.234", nice_number(1234)
     assert_equal "0", nice_number(0)
@@ -27,13 +27,13 @@ class ApplicationHelperTest < ActionView::TestCase
   test "author_name method with only firstname" do
     assert_equal "James", author_name("James", "")
     assert_equal "James", author_name("James", nil)
-  end 
+  end
 
   test "author_name method with no name at all" do
     assert_equal "", author_name("", "")
     assert_equal "", author_name(nil, nil)
   end
-  
+
   test "author_name method with long firstname" do
     assert_equal "XXXXXXXXXXXXXXXXXXXXXX... <b>B</b>rown", author_name("X" * 64, "Brown")
     assert_equal "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ...", author_name("Z" * 64, nil)
@@ -42,12 +42,12 @@ class ApplicationHelperTest < ActionView::TestCase
   test "author_name method with long last name" do
     assert_equal "James <b>Y</b>YYYYYYYYYYYYYYYYYYYYYYY...", author_name("James", "Y" * 64)
     assert_equal "<b>W</b>WWWWWWWWWWWWWWWWWWWWWWWWWWWWW...", author_name(nil, "W" * 64)
-  end  
-  
+  end
+
   test "author_name method with long first and last name" do
     assert_equal "AAAAAAAAAAAAAAAAAAAAAA... <b>B</b>BBB...", author_name("A" * 64, "B" * 64)
   end
-  
+
   test "author_name method with German Umlaut" do
     assert_equal "<b>Ä</b>sop", author_name(nil, "Äsop")
   end
@@ -120,29 +120,43 @@ class ApplicationHelperTest < ActionView::TestCase
   test "transformLink" do
     # real world, from categories/356 and at the end and DE
     assert_match 'im Sinne einer nicht ernst gemeinten Äußerung oder Handlung, die zur Belustigung dienen soll; siehe auch <a href="/de/categories/355" data-turbo="false">Witz</a>',
-      transformLink('im Sinne einer nicht ernst gemeinten Äußerung oder Handlung, die zur Belustigung dienen soll; siehe auch Witz:https://www.zitat-service.de/de/categories/355')
+      transformLink("im Sinne einer nicht ernst gemeinten Äußerung oder Handlung, die zur Belustigung dienen soll; siehe auch Witz:https://www.zitat-service.de/de/categories/355")
     # in the beginning and EN
     assert_match '<a href="/en/quotations/1902" data-turbo="false">#1902</a> is identical',
-      transformLink('#1902:https://www.zitat-service.de/en/quotations/1902 is identical')
+      transformLink("#1902:https://www.zitat-service.de/en/quotations/1902 is identical")
     # only the link and w/o locale
     assert_match '<a href="/authors/20" data-turbo="false">Einstein</a>',
-      transformLink('Einstein:https://www.zitat-service.de/authors/20')
+      transformLink("Einstein:https://www.zitat-service.de/authors/20")
     # two links and in the middle and ES
     assert_match 'ver categorías <a href="/es/categories/305" data-turbo="false">Hormiga</a> y <a href="/es/categories/25" data-turbo="false">Perro</a> ambas recogen animales',
-      transformLink('ver categorías Hormiga:https://www.zitat-service.de/es/categories/305 y Perro:https://www.zitat-service.de/es/categories/25 ambas recogen animales')
+      transformLink("ver categorías Hormiga:https://www.zitat-service.de/es/categories/305 y Perro:https://www.zitat-service.de/es/categories/25 ambas recogen animales")
     # external links are not transformed
-    assert_match 'bla https://www.googe.com bli',
-      transformLink('bla https://www.googe.com bli')
-    # own links are not transformed
-    # (HTML sanitize will later change to "&lt;a href=&quot;https://www.google.de&quot;&gt;bla&lt;/a&gt;")
-    assert_match '&lt;a href=&quot;https://www.google.de&quot;&gt;bla&lt;/a&gt;',
+    assert_match "bla https://www.googe.com bli",
+      transformLink("bla https://www.googe.com bli")
+    # own links are not transformed and HTML sanitize
+    assert_match "&lt;a href=&quot;https://www.google.de&quot;&gt;bla&lt;/a&gt;",
       transformLink('<a href="https://www.google.de">bla</a>')
     # test tab and JA
     assert_match '名前 <a href="/ja/categories/210" data-turbo="false">はじめに</a>',
       transformLink("名前\tはじめに:https://www.zitat-service.de/ja/categories/210")
-    # test new line and UK
-    # assert_match 'До Основ\'яненка <a href="/uk/c/quotations/1899" data-turbo="false">Слава Україні!</a>',
-      transformLink("До Основ\'яненка\nСлава Україні!:https://www.zitat-service.de/ja/categories/210")
+    # test new line and UK and apostroph ' is mapped to &#39; too
+    assert_match 'До Основ&#39;яненка Слава <a href="/uk/quotations/1899" data-turbo="false">Україні!</a>',
+      transformLink("До Основ\'яненка\nСлава Україні!:https://www.zitat-service.de/uk/quotations/1899")
   end
 
+  test "ordered locales" do
+    default_locales = [:de, :en, :es, :ja, :uk]
+
+    assert_equal [:en, :de, :es, :ja, :uk], ordered_locales(:en)
+    assert_equal [:es, :de, :en, :ja, :uk], ordered_locales(:es)
+    assert_equal [:ja, :de, :en, :es, :uk], ordered_locales(:ja)
+    assert_equal [:uk, :de, :en, :es, :ja], ordered_locales(:uk)
+    assert_equal default_locales, ordered_locales(:de)
+
+    # Noting that "fr" is not in the available locales, it should return the original locales
+    assert_equal default_locales, ordered_locales(:fr)
+
+    # Testing default locale which is :de
+    assert_equal default_locales, ordered_locales()
+  end
 end
