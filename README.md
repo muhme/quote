@@ -77,6 +77,25 @@ You can also set this DEEPL_API_KEY in the environment for translations with i18
   ```
 </details>
 
+## Roadmap
+
+* Complete #65 I18N
+  * Authors with locales
+    * Shift description field to comments
+    * Implement machine translation for authors, using first and last name
+    * Attempt to locate Wikipedia links in other languages and automate translation, if possible
+  * Incorporate locale into quotes
+    * w/o translating the quotes; only add a locale field
+    * Include at least three quotes in each locale
+    * Display a random quote from the current locale on the landing page
+    * Enable the option to list and search quotes exclusively in the current locale or in all locales
+* Develop a new JSON API for fetching quotes
+  * As a future alternative to the Perl script
+  * Including the option to select the locale
+  * Relying on IDs (unlike the current approach of using category names, author names, user names)
+  * Capable of handling at least 1 million requests per day, which equates to 11 requests per second
+* Upgrade Joomla plugin with the new API
+* Develop a Wordpress plugin
 
 ## History
 
