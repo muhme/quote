@@ -1,6 +1,6 @@
 category_one_de:
-  translatable_type: 'Category'
-  key: 'category'
+  translatable_type: Category
+  key: category
   translatable_id: 1
   value: public_category
   locale: de
@@ -8,8 +8,8 @@ category_one_de:
   updated_at: <%= Time.current %>
 
 category_public_false_de:
-  translatable_type: 'Category'
-  key: 'category'
+  translatable_type: Category
+  key: category
   translatable_id: 2
   value: two
   locale: de
@@ -17,8 +17,8 @@ category_public_false_de:
   updated_at: <%= Time.current %>
   
 category_without_quotes_de:
-  translatable_type: 'Category'
-  key: 'category'
+  translatable_type: Category
+  key: category
   translatable_id: 3
   value: three
   locale: de
@@ -26,8 +26,8 @@ category_without_quotes_de:
   updated_at: <%= Time.current %>
 
 category_without_comments_de:
-  translatable_type: 'Category'
-  key: 'category'
+  translatable_type: Category
+  key: category
   translatable_id: 4
   value: without comments
   locale: de
@@ -35,8 +35,8 @@ category_without_comments_de:
   updated_at: <%= Time.current %>
 
 category_with_1000_comments_de:
-  translatable_type: 'Category'
-  key: 'category'
+  translatable_type: Category
+  key: category
   translatable_id: 5
   value: with_1000_comments
   locale: de
@@ -44,19 +44,141 @@ category_with_1000_comments_de:
   updated_at: <%= Time.current %>
 
 category_with_one_comment_de:
-  translatable_type: 'Category'
-  key: 'category'
+  translatable_type: Category
+  key: category
   translatable_id: 6
   value: with one comment
   locale: de
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
+# 3 categories with all 5 locales
+sun_en:
+  translatable_type: Category
+  key: category
+  translatable_id: 10
+  value: cloud
+  locale: en
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+sun_de:
+  translatable_type: Category
+  key: category
+  translatable_id: 10
+  value: Wolke
+  locale: de
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+sun_es:
+  translatable_type: Category
+  key: category
+  translatable_id: 10
+  value: Nube
+  locale: es
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+sun_ja:
+  translatable_type: Category
+  key: category
+  translatable_id: 10
+  value: 太陽
+  locale: ja
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+sun_uk:
+  translatable_type: Category
+  key: category
+  translatable_id: 10
+  value: хмара
+  locale: uk
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+mountain_en:
+  translatable_type: Category
+  key: category
+  translatable_id: 11
+  value: Mountain
+  locale: en
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+mountain_de:
+  translatable_type: Category
+  key: category
+  translatable_id: 11
+  value: Berg
+  locale: de
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+mountain_es:
+  translatable_type: Category
+  key: category
+  translatable_id: 11
+  value: Montaña
+  locale: es
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+mountain_ja:
+  translatable_type: Category
+  key: category
+  translatable_id: 11
+  value: 山
+  locale: ja
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+mountain_uk:
+  translatable_type: Category
+  key: category
+  translatable_id: 11
+  value: Гора
+  locale: uk
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+cloud_en:
+  translatable_type: Category
+  key: category
+  translatable_id: 12
+  value: Cloud
+  locale: en
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+cloud_de:
+  translatable_type: Category
+  key: category
+  translatable_id: 12
+  value: Wolke
+  locale: de
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+cloud_es:
+  translatable_type: Category
+  key: category
+  translatable_id: 12
+  value: Nube
+  locale: es
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+cloud_ja:
+  translatable_type: Category
+  key: category
+  translatable_id: 12
+  value: 雲
+  locale: ja
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+cloud_uk:
+  translatable_type: Category
+  key: category
+  translatable_id: 12
+  value: хмара
+  locale: uk
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
 # create five thousand categories (April 2018 we have 533 categories)
 <% 100.upto(5100) do |i| %>
 category_fix_<%= i %>:
-  translatable_type: 'Category'
-  key: 'category'
+  translatable_type: Category
+  key: category
   translatable_id: <%= i %>
   value: <%= i %>_category
   locale: de

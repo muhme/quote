@@ -3,6 +3,7 @@ one:
   public: true
   user_id: 1
 
+# and will have 100 quotes
 public_false:
   id: 2
   public: false
@@ -27,6 +28,17 @@ with_one_comment:
   id: 6
   user_id: 1
   public: true
+
+# 3 categories with all 5 locales
+sun:
+  id: 10
+  user_id: 1
+mountain:
+  id: 11
+  user_id: 1
+cloud:
+  id: 12
+  user_id: 1
 
 # create five thousand categories (April 2018 we have 533 categories)
 <% 100.upto(5100) do |i| %>

@@ -29,6 +29,22 @@ class CategoriesTest < ApplicationSystemTestCase
     assert_equal "Zitat-Service – Kategorie public_category", page.title
   end
 
+  test "list and show non-public" do
+    check_page page, categories_path, nil, "two"
+    check_page page, "/de/categories/list_by_letter/T", nil, "two"
+    check_page page, category_url(id: Category.i18n.find_by(category: "two")), "h1", "Kategorie"
+    
+    do_login
+    check_page page, categories_path, nil, "two"
+    check_page page, "/de/categories/list_by_letter/T", nil, "two"
+    check_page page, category_url(id: Category.i18n.find_by(category: "two")), "h1", "Kategorie"
+    
+    do_login :admin_user, :admin_user_password
+    check_page page, categories_path, nil, "two"
+    check_page page, "/de/categories/list_by_letter/T", nil, "two"
+    check_page page, category_url(id: Category.i18n.find_by(category: "two")), "h1", "Kategorie"
+  end
+
   # /categories/new
   test "create and delete category" do
     new_category_name = "Smile"
@@ -73,16 +89,16 @@ class CategoriesTest < ApplicationSystemTestCase
     do_login
     # Create category 'mountain'
     check_page page, new_category_url(locale: :en), "h1", "Create Category"
-    fill_in "category_name_en", with: "Mountain"
+    fill_in "category_name_en", with: "Japan"
     click_on "Save"
     check_this_page page, "h2", "Comments" # let Capybara wait until the new category exists
-    cu = category_url(id: Category.i18n.find_by(category: "Mountain", locale: :en), locale: :en)
+    cu = category_url(id: Category.last.id, locale: :en)
     check_page page, cu, "h1", "Category"
     # 2nd try to create category 'mountain' as '山' in Japanese
     check_page page, new_category_url(locale: :ja), "h1", "カテゴリを追加", 190 # actual size is only 191 bytes
-    fill_in "category_name_ja", with: "山"
+    fill_in "category_name_ja", with: "日本"
     click_on "保存"
-    check_this_page page, nil, 'カテゴリ"山" は既に存在する。'
+    check_this_page page, nil, 'カテゴリ"日本" は既に存在する。'
   end
 
   # NICE cannot delete category created by another user

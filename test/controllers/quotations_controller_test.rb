@@ -64,10 +64,10 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
 
   test "not public quote" do
     get quotation_url id: @quotation_public_false
-    assert_forbidden
+    assert_response :success
     login :second_user
     get quotation_url @quotation_public_false
-    assert_forbidden
+    assert_response :success
     get '/logout'
     login :first_user
     get quotation_url @quotation_public_false

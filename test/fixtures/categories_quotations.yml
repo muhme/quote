@@ -1,9 +1,24 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  category_id: 1
-  quotation_id: 1
-  
+  category_id: 1 # public_category
+  quotation_id: 1 # public_quotation
+
+two:
+  category_id: 1 # public_category
+  quotation_id: 2 # second_quotation
+
+three:
+  category_id: 2 # public_false
+  quotation_id: 20004 # public_false
+
+# having the category public_false 100 quotes so it has the most and is visible on first page listing categories
+<% 100.times do |i| %>
+A<%= i %>:
+  category_id: 2
+  quotation_id: 100<%= i %>
+<% end %>
+
 # create five thousend direct assignments from one category to one quote
 <% 100.upto(5100) do |i| %>
 fix_<%= i %>:

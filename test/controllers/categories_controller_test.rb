@@ -9,10 +9,10 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
   
   test "setup" do
-    assert_equal @category_one.quotation_ids.size, 1
-    assert_equal @category_one.user_id, users(:first_user).id
+    assert_equal 2, @category_one.quotation_ids.size
+    assert_equal users(:first_user).id, @category_one.user_id
     assert_not @category_public_false.public
-    assert_equal @category_without_quotes.quotation_ids.size, 0
+    assert_equal 0, @category_without_quotes.quotation_ids.size
   end
 
   test "should get index" do
@@ -64,10 +64,10 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   
   test "not public category" do
     get category_url id: @category_public_false
-    assert_forbidden
+    assert_response :success
     login :second_user
     get category_url id: @category_public_false
-    assert_forbidden
+    assert_response :success
     get '/logout'
     login :first_user
     get category_url id: @category_one
@@ -167,7 +167,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   test "delete category as admin" do
     login :admin_user
     assert_difference('Category.count', -1) do
-      delete category_url @category_public_false
+      delete category_url @category_without_quotes
     end
     assert_redirected_to categories_url
   end

@@ -11,11 +11,6 @@ class QuotationsController < ApplicationController
   def index
     pattern = params[:pattern].blank? ? "%" : my_sql_sanitize(params[:pattern])
     sql = "select distinct * from quotations where quotation like '%" + pattern + "%' "
-    if current_user
-      sql += " and ( public = 1 or user_id = #{current_user.id} ) " unless current_user.admin
-    else
-      sql += " and public = 1"
-    end
     sql += " order by id desc"
 
     @quotations = Quotation.paginate_by_sql(sql, page: params[:page], :per_page => 5)
@@ -30,7 +25,6 @@ class QuotationsController < ApplicationController
 
   # GET /quotations/1
   def show
-    return unless access?(:read, @quotation)
   end
 
   # GET /quotations/new

@@ -32,6 +32,22 @@ class AuthorsTest < ApplicationSystemTestCase
     assert_equal "Zitat-Service – Autor Barbara", page.title
   end
   
+  test "list and show non-public" do
+    check_page page, authors_path(locale: :en), nil, "Public False Author"
+    check_page page, "/en/authors/list_by_letter/P", nil, "Public False Author"
+    check_page page, author_url(locale: :en, id: Author.find_by(name: "Public False Author Name")), "h1", "Author"
+    
+    do_login
+    check_page page, authors_path(locale: :en), nil, "Public False Author"
+    check_page page, "/en/authors/list_by_letter/P", nil, "Public False Author"
+    check_page page, author_url(locale: :en, id: Author.find_by(name: "Public False Author Name")), "h1", "Author"
+    
+    do_login :admin_user, :admin_user_password
+    check_page page, authors_path(locale: :en), nil, "Public False Author"
+    check_page page, "/en/authors/list_by_letter/P", nil, "Public False Author"
+    check_page page, author_url(locale: :en, id: Author.find_by(name: "Public False Author Name")), "h1", "Author"
+  end
+
   # /authors/new
   test "first or last name is needed" do
     do_login

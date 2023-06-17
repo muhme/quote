@@ -15,13 +15,13 @@ class QuotationsTest < ApplicationSystemTestCase
   end
 
   test "list by category w/o login" do
-    check_page page, "quotations/list_by_category/" + Category.first.id.to_s, "h1", "1 Zitat für die Kategorie public_category"
+    check_page page, "quotations/list_by_category/" + Category.first.id.to_s, "h1", /Zitat.* für die Kategorie public_category/
     assert_equal "Zitat-Service – Zitate zu public_category", page.title
   end
   test "list by category with login" do
     do_login
     check_this_page page, nil, "Hallo first_user, schön dass Du da bist."
-    check_page page, "quotations/list_by_category/" + Category.first.id.to_s, "h1", "1 Zitat für die Kategorie public_category"
+    check_page page, "quotations/list_by_category/" + Category.first.id.to_s, "h1", /Zitat.* für die Kategorie public_category/
   end
   test "failed to list not existing category" do
     check_page page, "quotations/list_by_category/bla", nil, /Kann keine Kategorie mit der ID.*bla.* finden!/
@@ -46,6 +46,39 @@ class QuotationsTest < ApplicationSystemTestCase
   test "show quote" do
     check_page page, quotation_url(id: 1), "h1", "Zitat"
     assert_equal "Zitat-Service – Zitat von Barbara", page.title
+  end
+
+  test "list and show non-public" do
+    # create non-public category and non-public quote
+    npc = "non-public-category"
+    npq = "non-public-quote"
+    do_login
+    check_page page, new_category_url(locale: :en), "h1", "Create Category"
+    fill_in "category_name_en", with: npc
+    click_on "Save"
+    check_this_page page, "h2", "Comments" # let Capybara wait until the new category exists
+    visit new_quotation_url(locale: :en)
+    fill_in "quotation_quotation", with: npq
+    fill_in "author", with: authors(:public_false).name
+    fill_in "category", with: npc
+    check_this_page page, nil, /category.*#{npc}/ # wait for autocompletion
+    click_on "Save"
+    check_this_page page, nil, "quote has been added"
+    visit logout_path
+
+    # try it w/o login, as user and as admin
+    3.times do |i|
+      visit logout_path if i == 0
+      do_login if i == 1
+      do_login :admin_user, :admin_user_password if i == 2
+      check_page page, quotations_path(locale: :en), nil, npq
+      check_page page, quotations_path(locale: :en, pattern: npq), nil, npq
+      check_page page, "/en/quotations/list_by_category/#{Category .last.id}", nil, npq
+      check_page page, "/en/quotations/list_by_user/#{users(:first_user).id}", nil, npq
+      check_page page, "/en/quotations/list_by_user/#{users(:first_user).id}", nil, npq
+      check_page page, "/en/quotations/list_by_author/#{authors(:public_false).id}", nil, npq
+    end
+
   end
 
   # linking author's name with that author's quotes #13
@@ -210,13 +243,13 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, /Autor:.*#{new_author_name}/
   end
 
-  test "edit someone else quote" do
+  test "show non-public quote w/ someone else login" do
     do_login :second_user, :second_user_password
-    check_page page, quotation_url(id: Quotation.find_by_quotation("public_false")), "h1", /Zugriff wurde verweigert .* 403/
+    check_page page, quotation_url(id: Quotation.find_by_quotation("public_false")), "h1", /Zitat/
   end
 
-  test "try to edit quote from someone else" do
-    check_page page, quotation_url(id: Quotation.find_by_quotation("public_false")), "h1", /Zugriff wurde verweigert .* 403/
+  test "show non-public quote w/o login" do
+    check_page page, quotation_url(id: Quotation.find_by_quotation("public_false")), "h1", /Zitat/
   end
 
   test "create new quote and delete" do
@@ -303,7 +336,6 @@ class QuotationsTest < ApplicationSystemTestCase
     visit new_quotation_url
     fill_in "quotation_quotation", with: quote
     fill_in "category", with: "tw"
-    sleep 10 # TODO
     check_this_page page, nil, /Kategorie.*two/ # wait for autocompletion
     click_on "Speichern"
     check_this_page page, nil, "Zitat wurde angelegt."
@@ -317,10 +349,8 @@ class QuotationsTest < ApplicationSystemTestCase
     visit new_quotation_url
     fill_in "quotation_quotation", with: quote
     fill_in "category", with: "tw"
-    sleep 10 # TODO
     check_this_page page, nil, /Kategorie.*two/ # wait for autocompletion
     fill_in "category", with: "th"
-    sleep 10 # TODO
     check_this_page page, nil, /Kategorie.*three/ # wait for autocompletion
     click_on "Speichern"
     check_this_page page, nil, "Zitat wurde angelegt."
@@ -336,7 +366,7 @@ class QuotationsTest < ApplicationSystemTestCase
     fill_in "quotation_quotation", with: quote
     1101.upto(1200) do |i|
       fill_in "category", with: "#{i}" # 1101 ... 1200
-      sleep 2 # TODO
+      sleep 1 # TODO
       check_this_page page, nil, /Kategorie.*#{i}_category/ # wait for autocompletion
     end
     click_on "Speichern"
@@ -353,12 +383,10 @@ class QuotationsTest < ApplicationSystemTestCase
     visit new_quotation_url
     fill_in "quotation_quotation", with: quote
     fill_in "author", with: "Eva"
-    # TODO check_this_page page, "div", "Eva 10" # wait for autocompletion
-    sleep 10
+    check_this_page page, "div", "Eva 10" # wait for autocompletion
     click_on "Eva 10"
     fill_in "category", with: "100"
-    # TODO check_this_page page, "div", "1001_category" # wait for autocompletion
-    sleep 10
+    check_this_page page, "div", "1001_category" # wait for autocompletion
     click_on "1001_category"
     check_this_page page, nil, /Kategorie.*1001_category/ # wait for autocompletion
     click_on "Speichern"

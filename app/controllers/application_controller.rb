@@ -69,22 +69,12 @@ class ApplicationController < ActionController::Base
   def sql_quotations_for_category(category_id)
     # one sample: select distinct q.* from quotations q where q.public = 1 and q.id in (select cq.quotation_id from categories_quotations cq where cq.category_id = '487');
     sql = "select distinct q.* from quotations q where"
-    if current_user
-      sql += " ( q.public = 1 or q.user_id = '#{current_user.id}' ) and" unless current_user.admin
-    else
-      sql += " q.public = 1 and"
-    end
     return sql + " q.id in (select cq.quotation_id from categories_quotations cq where cq.category_id = '#{category_id.to_i}')"
   end
 
   # give user context visible quotations for an author
   def sql_quotations_for_author(author_id)
     sql = "select * from quotations where author_id = '#{author_id}'"
-    if current_user
-      sql += " and ( public = 1 or user_id = #{current_user.id} ) " unless current_user.admin
-    else
-      sql += " and public = 1"
-    end
     return sql
   end
 

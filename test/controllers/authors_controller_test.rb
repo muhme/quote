@@ -51,10 +51,10 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     get author_url @author_one
     assert_response :success
   end
-  test "fail to show not-public author with someone else login" do
+  test "show not-public author with someone else login" do
     login :second_user
     get author_url @author_public_false
-    assert_forbidden
+    assert_response :success
   end
   test "should show not-public author to admin" do
     login :admin_user

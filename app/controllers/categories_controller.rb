@@ -12,8 +12,6 @@ class CategoriesController < ApplicationController
         AND mst.locale = '#{I18n.locale}'
         AND mst.key = 'category'
     SQL
-    sql += " where c.public = 1" if not current_user or current_user.admin != true
-    sql += " or c.user_id = #{current_user.id}" if current_user and current_user.admin != true
     sql += params[:order] == "categories" ?
     # by category name alphabeticaly
       " order by mst.value" :
@@ -27,8 +25,6 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1
   def show
-    return unless access?(:read, @category)
-
     sql = <<-SQL
       SELECT DISTINCT t1.locale, t2.translatable_id AS t2
         FROM mobility_string_translations t1

@@ -7,8 +7,6 @@ class AuthorsController < ApplicationController
   # own entries for logged in users and all entries for admins
   def index
     sql = "select distinct * from authors a"
-    sql += " where public = 1" if not current_user or current_user.admin != true
-    sql += " or user_id = #{current_user.id}" if current_user and current_user.admin != true
     sql += params[:order] == "authors" ?
     # by authors name and firstname alphabeticaly
     # using select with IF to sort the empty names authores at the end
@@ -23,7 +21,6 @@ class AuthorsController < ApplicationController
 
   # GET /authors/1
   def show
-    return unless access?(:read, @author)
   end
 
   # POST /authors/search

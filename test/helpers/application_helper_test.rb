@@ -156,7 +156,8 @@ class ApplicationHelperTest < ActionView::TestCase
     # Noting that "fr" is not in the available locales, it should return the original locales
     assert_equal default_locales, ordered_locales(:fr)
 
-    # Testing default locale which is :de
+    # Testing actual locale
+    I18n.locale = :de
     assert_equal default_locales, ordered_locales()
   end
 end
