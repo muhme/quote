@@ -68,14 +68,14 @@ class Category < ApplicationRecord
   def self.filter_by_category(search, category_ids)
     return [] if search.blank?
     sql = "SELECT DISTINCT c.* from categories c "
-    sql <<   "INNER JOIN mobility_string_translations mst " 
-    sql <<   "ON c.id = mst.translatable_id "
-    sql <<   "AND mst.translatable_type = 'Category' "
-    sql <<   "AND mst.key = 'category' "
-    sql <<   "AND mst.locale = '#{I18n.locale.to_s}' "
-    sql <<   "AND mst.value LIKE '#{search}%' "
-    sql <<   "AND mst.translatable_id NOT IN (#{category_ids.join(",")}) " if category_ids.present?
-    sql <<   "ORDER BY mst.value LIMIT 10;"
+    sql << "INNER JOIN mobility_string_translations mst "
+    sql << "ON c.id = mst.translatable_id "
+    sql << "AND mst.translatable_type = 'Category' "
+    sql << "AND mst.key = 'category' "
+    sql << "AND mst.locale = '#{I18n.locale.to_s}' "
+    sql << "AND mst.value LIKE '#{search}%' "
+    sql << "AND mst.translatable_id NOT IN (#{category_ids.join(",")}) " if category_ids.present?
+    sql << "ORDER BY mst.value LIMIT 10;"
     return Category.find_by_sql sql
   end
 
@@ -102,24 +102,46 @@ class Category < ApplicationRecord
     ret = []
     quotation = quotation.quotation if quotation.is_a?(Quotation)
     if quotation.present?
-      categories = Category.i18n.select(:id, :category).distinct
-      categories.each do |category|
-        category.category.downcase!
-        category.category.tr!("äöü", "aou")
-        category.category.gsub!("ß", "ss")
-      end
-      quotation.split(/[ ,.;\-—!?"'„”]/).map(&:downcase).each do |word|
-        word.tr!("äöü", "aou")
-        word.gsub!("ß", "ss")
-        categories.each do |category|
-          # category.category + "e" or "en" or "s" etc.
-          w1 = EXCLUDED_WORDS.include?(word.chop) ? nil : word.chop
-          w2 = EXCLUDED_WORDS.include?(word.chop.chop) ? nil : word.chop.chop
-          ret |= [category.id] if word == category.category or w1 == category.category or w2 == category.category
+      categories = Category.i18n.distinct.pluck(:id, :category)
+      if (I18n.locale == :ja)
+        i = 0
+        while i < quotation.length
+          match_found = false
+          categories.each do |id, category|
+            next if category.blank? # Skip empty or nil categories
+            if quotation[i, category.length] == category
+              ret << id
+              i += category.length
+              match_found = true
+              break
+            end
+          end
+          unless match_found
+            i += 1
+          end
+        end
+      else
+        categories.each do |id, category|
+          next if category.blank? # Skip empty or nil categories
+          category.downcase!
+          category.tr!("äöü", "aou")
+          category.gsub!("ß", "ss")
+
+          words = quotation.split(/[ ,.;\-—!?"'„”]/).map(&:downcase)
+          words.each do |word|
+            next if word.blank? # Skip empty words or punctuation marks
+            word.tr!("äöü", "aou")
+            word.gsub!("ß", "ss")
+
+            next if EXCLUDED_WORDS.include?(word.chop)
+            next if EXCLUDED_WORDS.include?(word.chop.chop)
+
+            ret << id if word == category || word.chop == category || word.chop.chop == category
+          end
         end
       end
     end
-    return ret
+    return ret.uniq
   end
 
   private
