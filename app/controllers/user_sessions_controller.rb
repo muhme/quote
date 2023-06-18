@@ -7,7 +7,8 @@ class UserSessionsController < ApplicationController
   def create
     @user_session = UserSession.new(user_session_params.to_h)
     if @user_session.save
-      flash[:notice] = t(".hello", user: current_user.login)
+      @current_user = @user_session.user
+      flash[:notice] = t(".hello", user: current_user&.login)
       redirect_to root_path(locale: I18n.locale)
     else
       flash[:error] = t(".login_failed")
@@ -23,6 +24,6 @@ class UserSessionsController < ApplicationController
   private
 
     def user_session_params
-      params.require(:user_session).permit(:login, :password, :remember_me)
+      params.require(:user_session).permit(:login, :password)
     end
 end
