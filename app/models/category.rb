@@ -7,6 +7,15 @@ class Category < ApplicationRecord
   before_destroy :check_quotes_and_comments
   validate :validate_category
 
+  # words, exluded from word matching without last or two last letters
+  EXCLUDED_WORDS_GERMAN =
+    ["ei",           # prevents "das Ei" for "ein/eine"
+     "sein"].freeze  # prevents "das Sein" for "seinem/seiner/seine"
+  EXCLUDED_WORDS_ENGLISH =
+    ["car",          # prevents "the car" for "cards" (but also disables "cars")
+     "star",         # prevents "the star" for "start" (but also disables "stars")
+     "plan"].freeze  # prevents "the plan" for "plant"
+
   # doing Mobility case-insensitive search on category
   # returns a Category::ActiveRecord_Relation or nil
   scope :search_case_insensitive, ->(category_looking_for) do
@@ -88,60 +97,23 @@ class Category < ApplicationRecord
 
   # Build list of recommenced categories from quotation.
   #
-  # words, exluded from word matching without last or two last letters
-  #
-  EXCLUDED_WORDS = ["ei",   # prevents "ei" for "ein"/"eine"
-                    "sein"] # "sein" for "seinem"
-  # everthing are mapped to lowercase to compare
-  # even compared with one or two letters less in the ending to find e.g. "Liebe" for "lieben" and "Spiel" for "spielen",
-  # but not for EXLUDED_WORDS
-  # German Umlaut (äöüß) are mapped to find e.g. "Kampf" for "kämpfen" or "süss" for "süßer"
   # quotation is Quotation object or String
   # return id list of categories found in quote
-  def Category.check(quotation)
-    ret = []
+  def self.check(quotation)
     quotation = quotation.quotation if quotation.is_a?(Quotation)
     if quotation.present?
-      categories = Category.i18n.distinct.pluck(:id, :category)
-      if (I18n.locale == :ja)
-        i = 0
-        while i < quotation.length
-          match_found = false
-          categories.each do |id, category|
-            next if category.blank? # Skip empty or nil categories
-            if quotation[i, category.length] == category
-              ret << id
-              i += category.length
-              match_found = true
-              break
-            end
-          end
-          unless match_found
-            i += 1
-          end
-        end
+      ids_and_categories = Category.i18n.distinct.pluck(:id, :category)
+      case I18n.locale
+      when :ja
+        ret = check_japanese(quotation, ids_and_categories)
+      when :de
+        ret = check_german(quotation, ids_and_categories)
       else
-        categories.each do |id, category|
-          next if category.blank? # Skip empty or nil categories
-          category.downcase!
-          category.tr!("äöü", "aou")
-          category.gsub!("ß", "ss")
-
-          words = quotation.split(/[ ,.;\-—!?"'„”]/).map(&:downcase)
-          words.each do |word|
-            next if word.blank? # Skip empty words or punctuation marks
-            word.tr!("äöü", "aou")
-            word.gsub!("ß", "ss")
-
-            next if EXCLUDED_WORDS.include?(word.chop)
-            next if EXCLUDED_WORDS.include?(word.chop.chop)
-
-            ret << id if word == category || word.chop == category || word.chop.chop == category
-          end
-        end
+        ret = check_american_english(quotation, ids_and_categories)
+        # if needed we can implement :es and :uk
       end
     end
-    return ret.uniq
+    ret.nil? ? [] : ret.uniq
   end
 
   private
@@ -182,6 +154,85 @@ class Category < ApplicationRecord
     if comments.any?
       errors.add :base, :has_comments
       throw :abort
+    end
+  end
+
+  class << self # opens up the singleton class to define private class methods as only private applies to instance and not to class methods
+    private
+
+    # In Japanese, there are no spaces to separate words, so we just have to go through each character one by one.
+    def check_japanese(quotation, ids_and_categories)
+      # sort the list of categories for length to find e.g. "時間厳守" (punctuality) before "時間" (time)
+      ids_and_categories.sort_by! { |_, category| -category.to_s.length }
+      ret = []
+      i = 0
+      while i < quotation.length
+        match_found = false
+        ids_and_categories.each do |id, category|
+          next if category.blank? # Skip empty or nil categories
+          if quotation[i, category.length] == category
+            ret << id
+            i += category.length
+            match_found = true
+            break
+          end
+        end
+        i += 1 unless match_found
+      end
+      ret
+    end
+
+    # everthing is mapped to lowercase to compare
+    # even compared with one or two letters less in the ending to find e.g. "Liebe" for "lieben" and "Spiel" for "spielen",
+    # but not for excluded_words
+    # German Umlaut (äöü) and sharp S (ß) are mapped to find e.g. "Kampf" for "kämpfen" or "süss" for "süßer"
+    def check_german(quotation, ids_and_categories)
+      ret = []
+      # create a lowercase list of words
+      words = quotation.split(/[ ,.;\-—!?"'„”]/).map(&:downcase).reject(&:blank?)
+
+      ids_and_categories.each do |id, category|
+        next if category.blank? # Skip empty or nil categories
+        category.downcase!
+        category.tr!("äöü", "aou")
+        category.gsub!("ß", "ss")
+        words.each do |word|
+          next if word.blank? # Skip empty words or punctuation marks
+          word.tr!("äöü", "aou")
+          word.gsub!("ß", "ss")
+          # prevents e.g. "ei" for "ein"
+          next if EXCLUDED_WORDS_GERMAN.include?(word.chop)
+          # prevents e.g. "ei" for "eine" or "sein" for "seinem"
+          next if EXCLUDED_WORDS_GERMAN.include?(word.chop.chop)
+          # finds identical and also e.g. "Liebe" for "lieben" and "Spiel" for "spielen",
+          ret << id if word == category || word.chop == category || word.chop.chop == category
+        end
+      end
+      ret
+    end
+
+    # everthing is mapped to lowercase to compare
+    # even compared with one or two letters less in the ending to find e.g. "German" for "Germany" and "time" for "timely",
+    # but not for excluded_words
+    def check_american_english(quotation, ids_and_categories)
+      ret = []
+      # create a lowercase list of words
+      words = quotation.split(/[ ,.;\-—!?"'„”]/).map(&:downcase).reject(&:blank?)
+
+      ids_and_categories.each do |id, category|
+        next if category.blank? # Skip empty or nil categories
+        category.downcase!
+        words.each do |word|
+          next if word.blank? # Skip empty words or punctuation marks
+          # prevents e.g. "plan" for "plant"
+          next if EXCLUDED_WORDS_ENGLISH.include?(word.chop)
+          # prevents e.g. "car" for "cards"
+          next if EXCLUDED_WORDS_ENGLISH.include?(word.chop.chop)
+          # finds identical and also e.g. "Liebe" for "lieben" and "Spiel" for "spielen",
+          ret << id if word == category || word.chop == category || word.chop.chop == category
+        end
+      end
+      ret
     end
   end
 end

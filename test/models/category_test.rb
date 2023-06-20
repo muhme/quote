@@ -71,9 +71,45 @@ class CategoryTest < ActiveSupport::TestCase
     assert_equal three_categories, Category.check(Quotation.new(quotation: "山の上には雲と太陽がある。")).sort
     I18n.locale = :uk
     assert_equal three_categories, Category.check(Quotation.new(quotation: "Над Гора - хмара і сонце.")).sort
-
-    # NICE German äöüß
-    # NICE excluded words ei, sein
   end
-  
+
+  # 20 Übermut
+  # 21 Ärgernis
+  # 22 Ödipus
+  # 23 Straße
+  test "check German Umlaut and Sharp S" do
+    I18n.locale = :de
+    assert_equal [20, 21, 22, 23], Category.check("voller übermut läuft ödipus über die STRASSE - zum Ärgernis aller.").sort
+  end
+
+  # 24 Ei prevents ein or eine
+  # 25 Sein prevents seine or seinem
+  test "check German excluded words" do
+    I18n.locale = :de
+    assert_equal [20], Category.check("ein oder eine oder seine oder seinem Übermut")
+    # cross check Ei and Sein are existing and found
+    assert_equal [22, 24, 25], Category.check("Ödipus sein Ei bestimmt sein Sein").sort
+  end
+
+  # 30 car prevents cards
+  # 31 star prevents start (but also disables stars)
+  # 32 plan prevents plant
+  test "check English excluded words" do
+    I18n.locale = :en
+    assert_equal [11], Category.check("We start to plant cards on the Mountain.")
+    # cross check car, star and plan are existing and found
+    assert_equal [11, 30, 31, 32], Category.check("The car plan to be a star in next mountain.").sort
+  end
+
+  # 40 時間厳守 (punctuality)
+  # 41 時間     (time)
+  test "check Japanese longest categories first" do
+    I18n.locale = :ja
+    assert_equal [41], Category.check("時間は人を待たない。") # Time waits for no one. (real)
+    # cross check longer 時間厳守 is found
+    assert_equal [40], Category.check("成功の秘訣は時間厳守です。") # The secret of success is punctuality. (real)
+    # both?
+    assert_equal [40, 41], Category.check("時間は貴重です、だから時間厳守を重視しましょう。").sort # Time is valuable, so we should value punctuality. (generic)
+  end
+
 end

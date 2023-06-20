@@ -40,6 +40,45 @@ cloud:
   id: 12
   user_id: 1
 
+# for testing German Umlaut, sharp S and excluded words
+uebermut:
+  id: 20
+  user_id: 1
+aergernis:
+  id: 21
+  user_id: 1
+oedipus:
+  id: 22
+  user_id: 1
+strasse:
+  id: 23
+  user_id: 1
+ei:
+  id: 24
+  user_id: 1
+sein:
+  id: 25
+  user_id: 1
+
+# for testing English excluded words
+car:
+  id: 30
+  user_id: 1
+star:
+  id: 31
+  user_id: 1
+plan:
+  id: 32
+  user_id: 1
+
+# for testing japanese longest categories first 
+punctuality:
+  id: 40
+  user_id: 1
+time:
+  id: 41
+  user_id: 1
+
 # create five thousand categories (April 2018 we have 533 categories)
 <% 100.upto(5100) do |i| %>
 fix_<%= i %>:
