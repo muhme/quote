@@ -128,8 +128,7 @@ en:
       edit_category: Edit Category
     id_does_not_exist: There is no category with the ID "%{id}".
     list_by_letter:
-      letter_missing: Letter missing!
-      not_starting_with_a_letter: "– not starting with a letter"
+      not_starting_with_a_letter: "– not starting with English letters"
       with_initial_letter: – with initial letter "%{letter}"
     list_content:
       category_delete: Really delete the category "%{category}"?

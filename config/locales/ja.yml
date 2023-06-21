@@ -128,8 +128,7 @@ ja:
       edit_category: カテゴリを編集
     id_does_not_exist: ID "%{id}" のカテゴリは存在しません。
     list_by_letter:
-      letter_missing: 文字が欠けています！
-      not_starting_with_a_letter: 文字ではない
+      not_starting_with_a_letter: ひらがなまたはカタカナで始まらない
       with_initial_letter: の頭文字をとって「%{letter}」
     list_content:
       category_delete: 本当にカテゴリ "%{category}" を削除しますか？

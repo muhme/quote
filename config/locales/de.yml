@@ -108,8 +108,8 @@ de:
     list_by_letter:
       lastname_starts: Nachname beginnt
       letter: mit dem Buchstaben „%{letter}”
-      letter_missing: Letter missing
-      not_a_letter: nicht mit einem Buchstaben
+      letter_missing: Buchstabe fehlt!
+      not_a_letter: nicht mit einem deutschen Buchstaben
     list_content:
       author_delete: Wirklich den Eintrag für den Autor „%{author}” löschen?
       author_new: Autor anlegen
@@ -128,8 +128,7 @@ de:
       edit_category: Kategorie bearbeiten
     id_does_not_exist: Es gibt keine Kategorie mit der ID %{id}!
     list_by_letter:
-      letter_missing: Buchstabe fehlt!
-      not_starting_with_a_letter: "– nicht mit einem Buchstaben beginnend"
+      not_starting_with_a_letter: "– die nicht mit deutschen Buchstaben anfangen"
       with_initial_letter: "– mit dem Anfangsbuchstaben „%{letter}”"
     list_content:
       category_delete: Wirklich die Kategorie „%{category}” löschen?

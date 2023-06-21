@@ -108,7 +108,7 @@ es:
     list_by_letter:
       lastname_starts: Apellido comienza
       letter: con la letra "%{letter}"
-      letter_missing: no empieza con una letra
+      letter_missing: "¡Falta una letra!"
       not_a_letter: no con una letra
     list_content:
       author_delete: ¿Realmente borrar la entrada para el autor "%{author}"?
@@ -128,8 +128,7 @@ es:
       edit_category: Editar categoría
     id_does_not_exist: No existe una categoría con el ID "%{id}".
     list_by_letter:
-      letter_missing: ¡Falta una letra!"
-      not_starting_with_a_letter: "– que no empieza por una letra"
+      not_starting_with_a_letter: "– que no empiecen por letras españolas"
       with_initial_letter: – con la letra inicial "%{letter}"
     list_content:
       category_delete: ¿Realmente borrar la categoría "%{category}"?

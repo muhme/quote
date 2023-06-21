@@ -41,7 +41,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     get '/categories/list_by_letter/'
     assert_response :redirect
     get '/categories/list_by_letter/%20'
-    assert_response :missing # 404
+    assert_response :success
   end
   
   test "404 for not existing category" do

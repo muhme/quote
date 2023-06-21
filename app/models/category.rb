@@ -1,4 +1,5 @@
 class Category < ApplicationRecord
+  include ReusableMethods
   extend Mobility
   translates :category, type: :string
   belongs_to :user
@@ -29,46 +30,14 @@ class Category < ApplicationRecord
     return count_by_sql("select count(*) from categories where public = 0")
   end
 
-  # gives an array with all existing categories names initial chars, e.g. ["a", "b", "d" ...]
+  # gives an array with all existing categories names initial chars plus '*' if no mapping exists
+  # e.g. ["a", "b", "d" ... "z", "*"]
   def Category.init_chars
-    sql = <<-SQL
-      SELECT DISTINCT SUBSTRING(UPPER(TRIM(value)), 1, 1) AS init
-      FROM mobility_string_translations
-      WHERE `key` = 'category' AND translatable_type = 'Category' AND locale = '#{I18n.locale}'
-      ORDER BY init
-      SQL
-    a = Category.find_by_sql(sql)
-    ret = []
-    for i in 0..(a.length - 1)
-      ret[i] = a[i].nil? ? "*" : a[i].attributes["init"]
-      # cannot use map, must use gsub for multibyte-support (from ActiveSupport::Multibyte)
-      ret[i] = ret[i].gsub("Ä", "A")
-      ret[i] = ret[i].gsub("Ö", "O")
-      ret[i] = ret[i].gsub("Ü", "U")
-      ret[i] = ret[i].gsub("ß", "s")
-      if I18n.locale == :uk
-        ret[i] = "*" unless ("А".."Я").include?(ret[i])
-      elsif I18n.locale == :ja
-        if HIRAGANA.include?(ret[i])
-          # ok
-        elsif KATAKANA.include?(ret[i])
-          ret[i] = HIRAGANA[KATAKANA.index(ret[i])]
-        elsif HIRAGANA_DAKUTEN.include?(ret[i])
-          ret[i] = HIRAGANA[HIRAGANA_DAKUTEN.index(ret[i])]
-        elsif HIRAGANA_HANDAKUTEN.include?(ret[i])
-          ret[i] = HIRAGANA[HIRAGANA_HANDAKUTEN.index(ret[i])]
-        elsif KATAKANA_DAKUTEN.include?(ret[i])
-          ret[i] = HIRAGANA[KATAKANA_DAKUTEN.index(ret[i])]
-        elsif KATAKANA_HANDAKUTEN.include?(ret[i])
-          ret[i] = HIRAGANA[KATAKANA_HANDAKUTEN.index(ret[i])]
-        else
-          ret[i] = "*"
-        end
-      else
-        ret[i] = "*" unless ("A".."Z").include?(ret[i])
-      end
-    end
-    ret.uniq
+    # Fetch all category names in the current locale
+    category_names = Category.i18n.select(:category).distinct.pluck(:category)
+  
+    # Extract the initial character of each category name, map to base letter, and eliminate doubled entries
+    category_names.compact.map { |category| base_letter(category[0].upcase) }.uniq
   end
 
   # search for category with starting letters without category_ids

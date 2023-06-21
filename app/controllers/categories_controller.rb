@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  include ReusableMethods
   before_action :set_category, only: [:show, :edit, :update, :translate, :destroy]
   before_action :set_comments, only: [:show, :destroy]
 
@@ -169,37 +170,13 @@ class CategoriesController < ApplicationController
         AND mst.key = 'category'
       WHERE mst.value 
     SQL
-    if letter == "*"
-      sql << " NOT REGEXP '^[#{LETTERS}].*'"
-    elsif letter =~ /[#{BY_LETTER}]/
-      sql << " LIKE '#{letter}%'"
-      if I18n.locale == :ja
-        # looking additional for corresponding katakana, dakuten and handakuten
-        HIRAGANA.each_with_index do |hiragana, index|
-          if hiragana == letter
-            if KATAKANA[index].present?
-              sql << " OR mst.value LIKE '#{KATAKANA[index]}%'"
-            end
-            if HIRAGANA_DAKUTEN[index].present?
-              sql << " OR mst.value LIKE '#{HIRAGANA_DAKUTEN[index]}%'"
-            end
-            if HIRAGANA_HANDAKUTEN[index].present?
-              sql << " OR mst.value LIKE '#{HIRAGANA_HANDAKUTEN[index]}%'"
-            end
-            if KATAKANA_DAKUTEN[index].present?
-              sql << " OR mst.value LIKE '#{KATAKANA_DAKUTEN[index]}%'"
-            end
-            if KATAKANA_HANDAKUTEN[index].present?
-              sql << " OR mst.value LIKE '#{KATAKANA_HANDAKUTEN[index]}%'"
-            end
-            break
-          end
-        end
-      end
-    else # needed to be hanlded here, as route restrictions constraints not trivial working with UTF8
-      flash[:error] = t(".letter_missing")
-      render "static_pages/not_found", status: :not_found
-      return
+    if letter =~ /[#{ALL_LETTERS[I18n.locale].join}]/
+      sql << " REGEXP '^[#{mapped_letters(letter)}]'"
+    else
+      # 1. needed to be handled here, as route restrictions constraints not trivial working with UTF8
+      # 2. and we simple map all to "*" to ignore special cases like this letter is not part of actual locale letters
+      params[:letter] = '*'
+      sql << " NOT REGEXP '^[#{ALL_LETTERS[I18n.locale].join}]'"
     end
     sql << " ORDER BY mst.value"
     @categories = Category.paginate_by_sql sql, page: params[:page], per_page: PER_PAGE

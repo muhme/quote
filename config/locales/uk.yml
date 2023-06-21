@@ -128,8 +128,7 @@ uk:
       edit_category: Редагувати категоріюх
     id_does_not_exist: Категорії з ID "%{id}" не існує!
     list_by_letter:
-      letter_missing: Не вистачає літери!
-      not_starting_with_a_letter: "– що не починаються на літеру"
+      not_starting_with_a_letter: "– не починається з українських літер"
       with_initial_letter: – з початковою літерою "%{letter}"
     list_content:
       category_delete: Ви дійсно хочете видалити категорію "%{category}"?

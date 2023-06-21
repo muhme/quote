@@ -93,30 +93,14 @@ module ApplicationHelper
   end
 
   # gives links to the categories by 1st letter as table
+  # en/de/es
+  #   A B C D E F G
+  #   H I J K L M N
+  #   O P Q R S T U
+  #   V W X Y Z *
   def category_links
     init_chars = Category.init_chars
-    if I18n.locale == :uk
-      # А	Б	В	Г	Д	Е	Ж
-      # З	И	Й	К	Л	М	Н
-      # О	П	Р	С	Т	У	Ф
-      # Х	Ц	Ч	Ш	Щ	Ъ	Ы
-      # Ь	Э	Ю	Я	*
-      all = ("А".."Я").to_a
-    elsif I18n.locale == :ja
-      # あ	い	う	え	お	か	き
-      # く	け	こ	さ	し	す	せ
-      # そ	た	ち	つ	て	と	な
-      # に	ぬ	ね	の	は	ひ	ふ
-      # へ	ほ	ま	み	む	め	も
-      # や	ゆ	よ	*
-      all = HIRAGANA.dup
-    else # :es, :en or :de
-      # A B C D E F G
-      # H I J K L M N
-      # O P Q R S T U
-      # V W X Y Z *
-      all = ("A".."Z").to_a
-    end
+    all = BASE_LETTERS[I18n.locale].dup
     if I18n.locale == :ja
       all[-3] = "*" # use a not used letter place, to save one more line
     else
