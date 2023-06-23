@@ -575,3 +575,7 @@ form#new_comment_form {
     min-width: 2ch;
     text-align: right;
 }
+
+table#details tr:not(:last-child) td.border-bottom-0 {
+    border-bottom: 0;
+}

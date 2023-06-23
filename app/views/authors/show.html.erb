@@ -7,19 +7,30 @@
       <tr>
         <td><%= t("g.id") %>:</td>
         <td><%= h(@author.id) %></td>
-      </tr><tr>
-        <td><%= t("g.name") %>:</td>
-        <td><b><%= h(@author.name) %></b></td>
-      </tr><tr>
-        <td><%= t("g.firstname") %>:</td>
-        <td><b><%= h(@author.firstname) %></b></td>
-      </tr><tr>
-        <td><%= t("g.description") %>:</td>
-        <td><%= h(@author.description) %></td>
-      </tr><tr>
-        <td><%= t("g.link") %>:</td>
-        <td><%= lh(@author.link) %></td>
-      </tr><tr>
+      </tr>
+      <% ordered_locales.each do |locale| %>
+        <tr>
+          <td class="border-bottom-0"><%= "#{t("g.name")}, #{t("g.firstname")}:" if locale == I18n.locale %></td>
+          <td class="border-bottom-0">
+            <% if locale == I18n.locale %>
+              <b><%= "#{h(@author.name)}, #{h(@author.firstname)}"  %></b>
+            <% else %>
+              <span class="opacity-50"><%= display_name_or_not(@author, locale) %></span>
+            <% end %>
+            <span class="float-right <%= "opacity-50" if locale != I18n.locale %>">
+              <%= raw string_for_locale(locale, true) %>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="border-bottom-0"><%= "#{t("g.description")}:" if locale == I18n.locale %></td>
+          <td class="border-bottom-0"><%= h(@author.description) %></td>
+        </tr><tr>
+          <td><%= "#{t("g.link")}:" if locale == I18n.locale %></td>
+          <td><%= display_link_in_other_locale_or_not(@author, locale) %></td>
+        </tr>
+      <% end %>
+      <tr>
         <td><%= t("g.created") %>:</td>
         <td><%= nice_date(@author.created_at) %></td>
       </tr><tr>
@@ -37,14 +48,23 @@
         <td><%= t("g.public_value.#{@author.public}") %></td>
       </tr><tr>
         <td><%= t("g.quotes", count: @author.quotation_ids.size) %></td>
-        <td><%= link_to(@author.quotation_ids.size.to_s, controller: "quotations", action: "list_by_author", author: @author.id) %></td>
+        <td><%= link_to(
+            @author.quotation_ids.size.to_s,
+            controller: "quotations",
+            action: "list_by_author",
+            author: @author.id
+          ) %></td>
       </tr>
     </table>
   </div>
   <% if can_edit?(@author.user_id) %>
-  <div class="padding-left-10px">
-    <%= link_to(image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit")), { action: "edit", id: @author.id }, { class: "no-decoration"} ) %>
-  </div>
+    <div class="padding-left-10px">
+      <%= link_to(
+        image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit")),
+        { action: "edit", id: @author.id },
+        { class: "no-decoration" }
+      ) %>
+    </div>
   <% end %>
 </div>
 

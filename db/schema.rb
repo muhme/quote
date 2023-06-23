@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_07_151456) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_23_060000) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -25,7 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_151456) do
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
-    t.text "metadata"
+    t.text "metadata", size: :medium
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
@@ -40,10 +40,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_151456) do
   end
 
   create_table "authors", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
-    t.text "name", size: :tiny
-    t.text "firstname", size: :tiny
-    t.text "description"
-    t.text "link"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "public", default: false
@@ -51,7 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_151456) do
     t.index ["user_id"], name: "index_authors_on_user_id"
   end
 
-  create_table "categories", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+  create_table "categories", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "public", default: false
@@ -60,7 +56,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_151456) do
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
-  create_table "categories_quotations", id: false, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+  create_table "categories_quotations", id: false, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "category_id", null: false
     t.bigint "quotation_id", null: false
     t.index ["category_id", "quotation_id"], name: "index_categories_quotations_on_category_id_and_quotation_id"
@@ -95,7 +91,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_151456) do
   create_table "mobility_text_translations", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "locale", null: false
     t.string "key", null: false
-    t.text "value"
+    t.text "value", size: :medium
     t.string "translatable_type"
     t.bigint "translatable_id"
     t.datetime "created_at", null: false

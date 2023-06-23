@@ -1,4 +1,10 @@
 class Author < ApplicationRecord
+  include ReusableMethods
+  extend Mobility
+  translates :firstname, type: :string
+  translates :name, type: :string
+  translates :description, type: :string
+  translates :link, type: :string
   belongs_to :user
   has_many :quotations
   has_many :comments, as: :commentable
@@ -14,19 +20,13 @@ class Author < ApplicationRecord
     return count_by_sql("select count(*) from authors where public = 0")
   end
 
-  # gives an array with initial letters from all existing author names, e.g. ["A", "C", "D" ...]
+  # gives an array with initial letters from all existing author names plus '*', e.g. ["A", "C", "D" ... "*"]
   def Author.init_chars
-    a = Author.find_by_sql "select distinct substring(upper(trim(name)) from 1 for 1) as init from authors order by init"
-    ret = []
-    for i in 0..(a.length - 1)
-      ret[i] = a[i].nil? ? "*" : a[i].attributes["init"]
-      ret[i] = "A" if ret[i] == "Ä"
-      ret[i] = "O" if ret[i] == "Ö"
-      ret[i] = "U" if ret[i] == "Ü"
-      ret[i] = "S" if ret[i] == "ß"
-      ret[i] = "*" unless ("A".."Z").include?(ret[i])
-    end
-    ret
+    # Fetch all category names in the current locale
+    author_names = Author.i18n.select(:name).distinct.pluck(:name)
+  
+    # Extract the initial character of each category name, map to base letter, and eliminate doubled entries
+    author_names.compact.map { |name| base_letter(name[0].upcase) }.uniq
   end
 
   # returns authors name or blank

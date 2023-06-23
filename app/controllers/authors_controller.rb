@@ -1,4 +1,5 @@
 class AuthorsController < ApplicationController
+  include ReusableMethods
   before_action :set_author, only: [:show, :edit, :update, :destroy]
   before_action :set_comments, only: [:show, :destroy]
 
@@ -57,7 +58,7 @@ class AuthorsController < ApplicationController
 
   rescue Exception => exc
     problem = "#{exc.class} #{exc.message}"
-    logger.error "create author failed: #{problem}" 
+    logger.error "create author failed: #{problem}"
     flash[:error] = t(".failed", author: @author.get_author_name_or_blank, exception: problem)
     render :new, status: :unprocessable_entity
   end
@@ -90,18 +91,26 @@ class AuthorsController < ApplicationController
   # get authors list for a letter or all-no-letters
   # NICE only showing public or own entries to be extended like in index
   def list_by_letter
-    letter = params[:letter]
-    if letter == "*"
-      sql = "select * from authors where name NOT REGEXP '^[A-Z].*'"
-    elsif letter =~ /[A-Za-z]/
-      sql = "select * from authors where name like ?"
-    else # not reachable, because route restrictions already forbid it - but, just in case
-      flash[:error] = t(".letter_missing")
-      redirect_to :action => "list"
-      return
+    letter = params[:letter].first.upcase
+    sql = <<-SQL
+    SELECT DISTINCT a.* FROM authors a
+      INNER JOIN mobility_string_translations mst
+        ON a.id = mst.translatable_id
+        AND mst.translatable_type = 'Author'
+        AND mst.locale = '#{I18n.locale.to_s}'
+        AND mst.key = 'name'
+      WHERE mst.value 
+    SQL
+    if letter =~ /[#{ALL_LETTERS[I18n.locale].join}]/
+      sql << " REGEXP '^[#{mapped_letters(letter)}]'"
+    else
+      # 1. needed to be handled here, as route restrictions constraints not trivial working with UTF8
+      # 2. and we simple map all to "*" to ignore special cases like this letter is not part of actual locale letters
+      params[:letter] = "*"
+      sql << " NOT REGEXP '^[#{ALL_LETTERS[I18n.locale].join}]'"
     end
-    sql += " order by name, firstname"
-    @authors = Author.paginate_by_sql [sql, "#{letter.first}%"], :page => params[:page], :per_page => 10
+    sql << " ORDER BY mst.value"
+    @authors = Author.paginate_by_sql sql, page: params[:page], per_page: PER_PAGE
     # check pagination second time with number of pages
     bad_pagination?(@authors.total_pages)
   end
