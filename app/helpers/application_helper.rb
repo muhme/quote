@@ -83,13 +83,13 @@ module ApplicationHelper
     all << "*"
     for i in 0..(all.length - 1)
       if init_chars.include?(all[i])
-        ret <<= "<td>" + link_to(all[i], locale: locale, controller: :authors, action: :list_by_letter, letter: all[i]) + "</td>"
+        ret << "<td>" + link_to(all[i], locale: locale, controller: :authors, action: :list_by_letter, letter: all[i]) + "</td>"
       else
-        ret <<= "<td id=\"unused\">#{all[i]}</td>"
+        ret << "<td id=\"unused\">#{all[i]}</td>"
       end
-      ret <<= "</tr><tr>" if ((i + 1) % 7) == 0
+      ret << "</tr><tr>" if ((i + 1) % 7) == 0
     end
-    ret <<= "</tr></table>"
+    ret << "</tr></table>"
   end
 
   # gives links to the categories by 1st letter as table
@@ -109,13 +109,13 @@ module ApplicationHelper
     ret = "<table id=\"letter\"><tr>"
     for i in 0..(all.length - 1)
       if init_chars.include?(all[i])
-        ret <<= "<td>" + link_to(all[i], controller: :categories, action: :list_by_letter, letter: all[i]) + "</td>"
+        ret << "<td>" + link_to(all[i], controller: :categories, action: :list_by_letter, letter: all[i]) + "</td>"
       else
-        ret <<= "<td id=\"unused\">#{all[i]}</td>"
+        ret << "<td id=\"unused\">#{all[i]}</td>"
       end
-      ret <<= "</tr><tr>" if ((i + 1) % (I18n.locale == :ja ? 5 : 9)) == 0
+      ret << "</tr><tr>" if ((i + 1) % (I18n.locale == :ja ? 5 : 9)) == 0
     end
-    ret <<= "</tr></table>"
+    ret << "</tr></table>"
   end
 
   # TODO: replace with I18N
@@ -137,9 +137,10 @@ module ApplicationHelper
   end
 
   # do an html_escape() and remove "http://" or "https://" and set a visible link
+  # return nil is not a link (starting with http:// or https://)
   def lh(link)
+    return link_to(link[8..link.size], link, :popup => true) if link =~ /^https:\/\//i
     return link_to(link[7..link.size], link, :popup => true) if link =~ /^http:\/\//i
-    link_to(link[8..link.size], link, :popup => true) if link =~ /^https:\/\//i
   end
 
   # depending on 3rd param 'bool' if true
@@ -192,9 +193,9 @@ module ApplicationHelper
   def label_and_description(name, sample = nil)
     ret = name.dup
     if sample.present?
-      ret << ' <span class="example">('
+      ret << ' <span class="example">'
       ret << sample
-      ret << ")</span>"
+      ret << "</span>"
     end
     raw(ret)
   end

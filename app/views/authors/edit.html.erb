@@ -1,3 +1,111 @@
 <h1><%= t(".edit_author") %></h1>
 
-<%= render "form", author: @author %>
+<%= form_with(model: @author, local: true) do |form| %>
+  <% if @author and @author.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t("g.error", count: @author.errors.count) %></h2>
+      <ul>
+        <% @author.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="font-size-smaller">
+    <%= form.label :author,
+               label_and_description(
+                 t("activerecord.attributes.author.name"),
+                 t("authors.name_sample")
+               ) %>
+    <%= form.label :author,
+               label_and_description(
+                 t("activerecord.attributes.author.firstname"),
+                 t("authors.firstname_sample")
+               ) %>
+  </div>
+  <% ordered_locales.each do |locale| %>
+    <% Mobility.with_locale(locale) do %>
+      <div
+        class="margin-bottom-0-2em flex <%= "opacity-50" if locale != I18n.locale %>"
+      >
+        <div>
+          <%= form.text_field "name_#{locale}",
+                          id: "author_name_#{locale}",
+                          autofocus: (locale == I18n.locale).to_s,
+                          value: @author.name %>
+        </div>
+        <div class="padding-left-0-5ch">
+          <%= form.text_field "firstname_#{locale}",
+                          id: "author_firstname_#{locale}",
+                          value: @author.firstname %>
+        </div>
+        <div class="padding-left-0-5ch">
+          <%= raw string_for_locale(locale, true) %>
+        </div>
+      </div>
+      <%= if I18n.locale == locale
+        form.label(
+          :description,
+          label_and_description(
+            t("activerecord.attributes.author.description"),
+            t("authors.description_sample")
+          ),
+          class: "font-size-smaller"
+        )
+      end %>
+      <div
+        class="margin-bottom-0-2em flex <%= "opacity-50" if locale != I18n.locale %>"
+      >
+        <div>
+          <%= form.text_field "description_#{locale}",
+                          id: "author_description_#{locale}",
+                          value: @author.description,
+                          size: 80,
+                          maxlength: 255 %>
+        </div>
+      </div>
+      <%= if I18n.locale == locale
+        form.label(
+          :link,
+          label_and_description(t("g.link"), t("authors.link_sample")),
+          class: "font-size-smaller"
+        )
+      end %>
+      <div class="flex <%= "opacity-50" if locale != I18n.locale %>">
+        <div class="field">
+          <%= form.text_field "link_#{locale}",
+                          id: "author_link_#{locale}",
+                          value: @author.link,
+                          size: 80,
+                          maxlength: 255 %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if current_user and self.current_user.admin %>
+    <div class="field">
+      <%= form.label :public, label_and_description(t("g.public")) %><br/>
+      <%= form.check_box :public %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit t("g.save"), name: :save %>
+    &nbsp;
+    <%= form.submit t("g.translate"), name: :translate %>
+    &nbsp;
+    <%= link_to(
+      image_tag(
+        "arrow_undo.png",
+        alt: t("g.arrow_undo_alt"),
+        title: t("g.back"),
+        border: "0"
+      ),
+      action: :show,
+      id: @author.id
+    ) %>
+  </div>
+
+<% end %>

@@ -3,7 +3,6 @@ require "test_helper"
 class CommentsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
-    I18n.locale = "en"
   end
 
   # POST /comments

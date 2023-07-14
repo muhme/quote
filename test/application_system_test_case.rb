@@ -11,7 +11,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   
   def setup
     Capybara.app_host = "http://rails:3100"
-    # Capybara.default_max_wait_time = 10 # default 2 seconds are long enough
+    Capybara.default_max_wait_time = 10 # default 2 seconds are not long enough for translations
     Capybara.server_port = 3100       # puma listening port 3100 on TEST 
     Capybara.server_host = "0.0.0.0"
     Capybara.default_driver = :selenium # not using default :rack_test w/o JavaScript
@@ -23,8 +23,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   # visiting page with given path, finding content for selector, verifying minimum page size and loading speed
   # if running longer than one second first time, after a short breath, making a second attempt to be successfull in Docker env as well
-  def check_page page, path, selector, content, size = DEFAULT_MIN_PAGE_SIZE, first_time = true
-    Rails.logger.debug "check_page path=#{path} selector=#{selector} " + content.class.name + "-content=\"#{content}\" size=#{size} first_time=#{first_time}"
+  def check_page page, path, selector, content, size = DEFAULT_MIN_PAGE_SIZE, first_time = true, max_execution_time = MAX_EXECUTION_TIME
+    Rails.logger.debug "check_page path=#{path} selector=#{selector} " + content.class.name + "-content=\"#{content}\" size=#{size} first_time=#{first_time} max_execution_time=#{max_execution_time}"
     start_millisecond = (Time.now.to_f * 1000).to_i
     visit path unless path.nil?
     run_time = (Time.now.to_f * 1000).to_i - start_millisecond
@@ -34,7 +34,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       assert_selector selector, text: content, visible: true
     end
     assert page.text.length >= size, "page \"#{page.current_url}\" is with #{page.text.length.to_s} smaller than #{size.to_s}"
-    if run_time > MAX_EXECUTION_TIME
+    if run_time > max_execution_time
       if first_time
         Rails.logger.debug "execution time was too slow with #{run_time} ms, trying second time"
         # just take a breath and then try it a second time, maybe the Docker environment was too slow at first
@@ -47,19 +47,19 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   # do check_page w/o visiting new path
-  def check_this_page page, selector, content
-    check_page page, nil, selector, content
+  def check_this_page page, selector, content, size = DEFAULT_MIN_PAGE_SIZE, first_time = true, max_execution_time = MAX_EXECUTION_TIME
+    check_page page, nil, selector, content, size, first_time, max_execution_time
   end
 
   def check_page_source page, pattern
     assert false, "page \"#{page.current_url}\" is missing pattern \"#{pattern}\"" unless page.source =~ /#{pattern}/m
   end
 
-  def do_login user = :first_user, password = :first_user_password, pattern = /Herzlich Willkommen/
+  def do_login user = :first_user, password = :first_user_password, pattern = /Welcome to the quote service zitat-service.de/
     visit login_url
     fill_in 'user_session_login', with: user
     fill_in 'user_session_password', with: password
-    click_on 'Anmelden'
+    click_on 'Log In'
     check_this_page page, "h1", pattern # wait for turbo to be completed
   end
 

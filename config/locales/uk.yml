@@ -4,12 +4,11 @@ uk:
     attributes:
       author:
         description: Опис
-        firstname: Ім'я та прізвище
+        firstname: Ім'я
         link: Посилання
         name: Прізвище
       category:
         category: Категорія
-        description: Опис
       comment:
         comment: Коментар
       quotation:
@@ -92,29 +91,24 @@ uk:
     create:
       created: Автор "%{author}" створений.
       failed: Створення автора "%{author}" не вдалося! (%{exception})
+    description_sample: напр. норвезький письменник (нар. 1968)
     destroy:
       deleted: Запис автора "%{author}" видалений.
     edit:
       edit_author: Редагувати автора
-    form:
-      description: Опис
-      description_sample: напр. німецький поет (1749 - 1832)
-      firstname: Ім'я
-      firstname_sample: напр. Йоганн Вольфганг фон
-      link_sample: напр. http://de.wikipedia.org/wiki/Goethe
-      name: Прізвище
-      name_sample: напр. Гете
+    firstname_sample: напр. Карл Уве
     id_does_not_exist: Автора з ID "%{id}" не існує!
+    link_sample: напр. https://uk.wikipedia.org/wiki/Карл_Уве_Кнеусгор
     list_by_letter:
       lastname_starts: Прізвище починається
       letter: з літери "%{letter}"
-      letter_missing: Літера відсутня
-      not_a_letter: не з літери
+      not_a_letter: не з української літери
     list_content:
       author_delete: Ви дійсно хочете видалити запис автора "%{author}"?
       author_new: Створити автора
       needs_login: Увійдіть за допомогою %{login_link}, щоб додати тут авторів.
     login_missing: Відсутність входу для створення нового запису автора!
+    name_sample: напр. Кнеусгор
     update:
       updated: Запис для автора "%{author}" було оновлено.
   categories:
@@ -199,7 +193,6 @@ uk:
     created: Створено
     date: Дата та час
     delete: Видалити
-    description: Опис
     duplicate:
       few: Дублікати
       many: Дублікатів
@@ -213,7 +206,6 @@ uk:
       other: "%{count} помилок"
     error_alt: жовтий попереджувальний знак зі знаком оклику
     eye: Око
-    firstname: Ім'я
     for: до
     from: від
     have: мають
@@ -223,7 +215,7 @@ uk:
     link: Посилання
     locale: Мова
     machine_translation_failed: не вдалося виконати машинний переклад
-    name: Прізвище
+    name: Назва
     no_admin: Немає прав адміністратора!
     no_right: Немає прав %{name} %{id} на %{msg}!
     not_logged_in: Не ввійшли до системи
@@ -262,6 +254,7 @@ uk:
     update: Змінити
     updated: Оновлено
     user: Користувач
+    words_separator: ", "
   layouts:
     application:
       admin: Адміністратор

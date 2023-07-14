@@ -115,7 +115,7 @@ class QuotationsController < ApplicationController
       # Are associated categories changed? Compare from params with existing list by hand as changed? does not exist for has_and_belongs_to_many.
       categories_changed = category_ids.sort != @quotation.category_ids.sort
       @quotation.assign_attributes(quotation_params)
-      logger.debug { "update() categories_changed=#{categories_changed}, quotation #{@quotation.inspect}" }
+      logger.debug { "update() categories_changed=#{categories_changed}, quotation.changed #{@quotation.changes}" }
       if @quotation.changed? or categories_changed
         if @quotation.save
           # set Quotation.updated_at even if there are changes in associated categories
@@ -210,6 +210,9 @@ class QuotationsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def quotation_params
+    # source and source_link are optional and saved as NULL in database if blank
+    params[:quotation][:source]      = nil if params[:quotation][:source].blank?
+    params[:quotation][:source_link] = nil if params[:quotation][:source_link].blank?
     params.require(:quotation).permit(:author_id, :quotation, :source, :source_link, :public, :pattern, :category_ids => [])
   end
 

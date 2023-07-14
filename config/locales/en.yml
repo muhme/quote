@@ -4,12 +4,11 @@ en:
     attributes:
       author:
         description: Description
-        firstname: First name
+        firstname: First names
         link: Link
         name: Last name
       category:
         category: Category
-        description: Description
       comment:
         comment: Comment
       quotation:
@@ -92,29 +91,24 @@ en:
     create:
       created: The author "%{author}" has been created.
       failed: The creation of the author "%{author}" has failed! (%{exception})
+    description_sample: e.g. Norwegian writer (born 1968)
     destroy:
       deleted: The entry for the author "%{author}" has been deleted.
     edit:
       edit_author: Edit author
-    form:
-      description: Description
-      description_sample: e.g. German poet (1749-1832)
-      firstname: First Name
-      firstname_sample: e.g. Johann Wolfgang von
-      link_sample: e.g. http://en.wikipedia.org/wiki/Goethe
-      name: Last Name
-      name_sample: e.g. Goethe
+    firstname_sample: e.g. Karl Ove
     id_does_not_exist: There is no author with the ID "%{id}".
+    link_sample: e.g. https://en.wikipedia.org/wiki/Karl_Ove_Knausgård
     list_by_letter:
       lastname_starts: Last Name begins
       letter: with the letter "%{letter}"
-      letter_missing: Letter missing
-      not_a_letter: not with a letter
+      not_a_letter: not with an English letter
     list_content:
       author_delete: Really delete the entry for the author "%{author}"?
       author_new: Create Author
       needs_login: Log in with %{login_link} to add authors here.
     login_missing: Login is missing to create a new author entry!
+    name_sample: e.g. Knausgård
     update:
       updated: The entry for the author "%{author}" has been updated.
   categories:
@@ -193,7 +187,6 @@ en:
     created: Created
     date: Date & Time
     delete: Delete
-    description: Description
     duplicate:
       one: Duplicate
       other: Duplicates
@@ -203,7 +196,6 @@ en:
       other: "%{count} Errors"
     error_alt: yellow warning sign with exclamation mark
     eye: Eye
-    firstname: First name
     for: to
     from: from
     have: have
@@ -245,6 +237,7 @@ en:
     update: Change
     updated: Updated
     user: User
+    words_separator: ", "
   layouts:
     application:
       admin: Administrator

@@ -14,7 +14,6 @@ Rails.application.routes.draw do
     get 'start/list'           => 'static_pages#list'
     # start from the beginning with a direct URL, e.g. "joomla" instead "start/joomla"
     get 'joomla'               => 'static_pages#joomla'
-    get 'joomla_english'       => 'static_pages#joomla_english'
 
     # dynamic generated humans.txt
     get "humans.txt" => "static_pages#humans"
@@ -23,7 +22,7 @@ Rails.application.routes.draw do
     get  'categories/list_by_letter/:letter'      => 'categories#list_by_letter'
     get  'categories/list_duplicates'             => 'categories#list_duplicates'
     get  'authors/list_no_public'                 => 'authors#list_no_public'
-    get  'authors/list_by_letter/:letter'         => 'authors#list_by_letter', constraints: { letter: /[A-Za-z*]/ }
+    get  'authors/list_by_letter/:letter'         => 'authors#list_by_letter'
     get  'quotations/list_no_public'              => 'quotations#list_no_public'
     get  'quotations/list_by_user/:user'          => 'quotations#list_by_user'
     get  'quotations/list_by_category/:category'  => 'quotations#list_by_category'

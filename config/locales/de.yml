@@ -4,12 +4,11 @@ de:
     attributes:
       author:
         description: Beschreibung
-        firstname: Vorname
+        firstname: Vornamen
         link: Link
         name: Nachname
       category:
         category: Kategorie
-        description: Beschreibung
       comment:
         comment: Kommentar
       quotation:
@@ -92,29 +91,24 @@ de:
     create:
       created: Der Autor „%{author}” wurde angelegt.
       failed: Das Anlegen des Autors „%{author}” ist gescheitert! (%{exception})
+    description_sample: z.B. norwegischer Schriftsteller (*1968)
     destroy:
       deleted: Der Eintrag für den Autor „%{author}” wurde gelöscht.
     edit:
       edit_author: Autor bearbeiten
-    form:
-      description: Beschreibung
-      description_sample: z.B. deutscher Dichter (1749 - 1832)
-      firstname: Vorname
-      firstname_sample: z.B. Johann Wolfgang von
-      link_sample: z.B. http://de.wikipedia.org/wiki/Goethe
-      name: Nachname
-      name_sample: z.B. Goethe
+    firstname_sample: z.B. Karl Ove
     id_does_not_exist: Es gibt keinen Autor mit der ID %{id}!
+    link_sample: z.B. https://de.wikipedia.org/wiki/Karl_Ove_Knausgård
     list_by_letter:
       lastname_starts: Nachname beginnt
       letter: mit dem Buchstaben „%{letter}”
-      letter_missing: Buchstabe fehlt!
       not_a_letter: nicht mit einem deutschen Buchstaben
     list_content:
       author_delete: Wirklich den Eintrag für den Autor „%{author}” löschen?
       author_new: Autor anlegen
       needs_login: Mit %{login_link} anmelden, um hier Autoren hinzuzufügen.
     login_missing: Anmeldung fehlt, um einen neuen Autor-Eintrag anzulegen!
+    name_sample: z.B. Knausgård
     update:
       updated: Der Eintrag für den Autor „%{author}” wurde aktualisiert.
   categories:
@@ -193,7 +187,6 @@ de:
     created: Erstellt
     date: Datum & Uhrzeit
     delete: Löschen
-    description: Beschreibung
     duplicate:
       one: Duplikat
       other: Duplikate
@@ -203,7 +196,6 @@ de:
       other: "%{count} Fehler"
     error_alt: gelbes Warnschild mit Ausrufezeichen
     eye: Auge
-    firstname: Vornamen
     for: zu
     from: von
     have: haben
@@ -245,6 +237,7 @@ de:
     update: Ändern
     updated: Aktualisiert
     user: Benutzer
+    words_separator: ", "
   layouts:
     application:
       admin: Administrator

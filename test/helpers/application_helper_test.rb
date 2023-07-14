@@ -3,6 +3,9 @@ include ERB::Util # for e.g. html_escape
 
 class ApplicationHelperTest < ActionView::TestCase
 
+  def setup
+  end
+
   # this test is only very basic, for real test it is needed to set controller name and controller action, but even this is useless if controller name or controllers action name is changing, therefore page title is tested in system test
   test "page_title method" do
     assert_equal "Zitat-Service", page_title
@@ -54,6 +57,8 @@ class ApplicationHelperTest < ActionView::TestCase
 
   test "lh without link" do
     assert_nil lh("Donald J. Trump")
+    assert_nil lh("")
+    assert_nil lh(nil)
   end
 
   test "lh with http link" do
@@ -68,17 +73,14 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal "<a href=\"/joomla/a.zip\">a.zip</a>", link_to_joomla("a.zip")
   end
 
-  #  "Schiller, Friedrich, deutscher Dichter und Philosoph (1759 - 1805)" with max length 80
-  #  or "" for unknown author (id=0) or id isn't set
   test "author selected name" do
-    assert_equal author_selected_name(authors(:schiller).id), "Schiller, Friedrich, deutscher Dichter und Philosoph (1759 - 1805)"
-    assert_equal author_selected_name(authors(:all_fields_max_sizes).id).length, 80
-    assert_equal author_selected_name(authors(:unknown).id), "unknown, Unknown Author with ID 0"
-    assert_equal author_selected_name(nil), ""
-    assert_equal author_selected_name(authors(:only_name).id), "author with only name field set"
-    assert_equal author_selected_name(authors(:only_firstname).id), "author with only firstname field set"
-    assert_equal author_selected_name(authors(:only_description).id), "author with only description field set"
-    assert_equal author_selected_name(authors(:name_and_firstname).id), "name field, firstname field"
+    assert_equal "Schiller, Friedrich, German poet and philosopher (1759 - 1805)", author_selected_name(authors(:schiller).id)
+    assert_equal "unknown, Unknown Author with ID 0", author_selected_name(authors(:unknown).id)
+    assert_equal "", author_selected_name(nil)
+    assert_equal "author with only name field set", author_selected_name(authors(:only_name).id)
+    assert_equal "author with only firstname field set", author_selected_name(authors(:only_firstname).id)
+    assert_equal "author with only description field set", author_selected_name(authors(:only_description).id)
+    assert_equal "name field, firstname field", author_selected_name(authors(:name_and_firstname).id)
   end
 
   test "string for locale" do

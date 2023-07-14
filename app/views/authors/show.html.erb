@@ -9,26 +9,40 @@
         <td><%= h(@author.id) %></td>
       </tr>
       <% ordered_locales.each do |locale| %>
-        <tr>
-          <td class="border-bottom-0"><%= "#{t("g.name")}, #{t("g.firstname")}:" if locale == I18n.locale %></td>
-          <td class="border-bottom-0">
+        <% Mobility.with_locale(locale) do %>
+          <tr>
+            <td class="border-bottom-0"><%= if locale == I18n.locale
+                "#{t("activerecord.attributes.author.name")}#{t("g.words_separator")}#{t("activerecord.attributes.author.firstname")}:"
+              end %></td>
+            <td class="border-bottom-0">
+              <% if locale == I18n.locale %>
+                <b><%= name_comma_firstname(@author.name, @author.firstname, locale) %></b>
+              <% else %>
+                <span class="opacity-50"><%= name_comma_firstname(@author.name, @author.firstname, locale) %></span>
+              <% end %>
+              <span class="float-right <%= "opacity-50" if locale != I18n.locale %>">
+                <%= raw string_for_locale(locale, true) %>
+              </span>
+            </td>
+          </tr>
+          <tr>
             <% if locale == I18n.locale %>
-              <b><%= "#{h(@author.name)}, #{h(@author.firstname)}"  %></b>
+              <td class="border-bottom-0"><%= "#{t("activerecord.attributes.author.description")}:" %></td>
+              <td class="border-bottom-0"><%= h(@author.description) %></td>
             <% else %>
-              <span class="opacity-50"><%= display_name_or_not(@author, locale) %></span>
+              <td class="border-bottom-0"></td>
+              <td class="border-bottom-0 opacity-50"><%= h(@author.description) %></td>
             <% end %>
-            <span class="float-right <%= "opacity-50" if locale != I18n.locale %>">
-              <%= raw string_for_locale(locale, true) %>
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <td class="border-bottom-0"><%= "#{t("g.description")}:" if locale == I18n.locale %></td>
-          <td class="border-bottom-0"><%= h(@author.description) %></td>
-        </tr><tr>
-          <td><%= "#{t("g.link")}:" if locale == I18n.locale %></td>
-          <td><%= display_link_in_other_locale_or_not(@author, locale) %></td>
-        </tr>
+          </tr><tr>
+            <% if locale == I18n.locale %>
+              <td><%= "#{t("g.link")}:" %></td>
+              <td><%= lh(@author.link) %></td>
+            <% else %>
+              <td></td>
+              <td class="opacity-50"><%= lh(@author.link) %></td>
+            <% end %>
+          </tr>
+        <% end %>
       <% end %>
       <tr>
         <td><%= t("g.created") %>:</td>

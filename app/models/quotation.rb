@@ -4,6 +4,7 @@ class Quotation < ApplicationRecord
   belongs_to :author
   has_and_belongs_to_many :categories
   has_many :comments, as: :commentable
+  before_validation :convert_empty_strings_to_nil
   before_destroy :check_comments
   validates :quotation, presence: true, length: { maximum: 512 }, uniqueness: {case_sensitive: false}
   validates :source, presence: false, length: { maximum: 255 }, uniqueness: false
@@ -33,6 +34,12 @@ class Quotation < ApplicationRecord
   end
 
   private
+
+  # source and source_link are optional and saved as NULL in database if blank
+  def convert_empty_strings_to_nil
+    self.source      = nil if self.source.blank?
+    self.source_link = nil if self.source_link.blank?
+  end
 
   # don't delete quotes with comments
   def check_comments

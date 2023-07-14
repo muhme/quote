@@ -3,49 +3,37 @@
 # unknown author with id 0 must exist
 unknown:
   id: 0
-  name: unknown
-  description: Unknown Author with ID 0
   public: true
   user_id: 1
 
 # Barbara (author id 1) has more than two quotes
 one:
   id: 1
-  name: Barbara
-  description: Pseudonym einer deutschen Streetart-Künstlerin
   public: true
   user_id: 1
 
 # "second author" w/ one quote and w/ one comment, owned by first_user
 second:
   id: 2
-  name: second author
   public: true
   user_id: 1
 
 third:
   id: 3
-  name: third author
   public: true
   user_id: 3
 
 public_false:
   id: 4
-  name: Public False Author Name
-  firstname: Public False Author Firstame
-  description: Public False Author Description
-  link: Public False Author Link
   public: false
   user_id: 1
 
 without_quotes_and_comments:
   id: 5
-  name: Author Entry not related to any quotation
   user_id: 1
 
 with_one_comment:
   id: 6
-  name: Author with one comment and w/o quotes
   user_id: 1
   public: true
   created_at: 2023-05-01 12:00:00
@@ -54,55 +42,41 @@ with_one_comment:
 # real world
 schiller:
   id: 7
-  name: "Schiller"
-  firstname: "Friedrich"
-  description: "deutscher Dichter und Philosoph (1759 - 1805)"
   public: true
   user_id: 1
 
 all_fields_max_sizes:
   id: 8
-  name:        <%= ("name-field max size 64 " + 'X' * 64)[0,64] %>
-  firstname:   <%= ("firstname-field max size 64 " + 'X' * 64)[0,64] %>
-  link:        <%= ("link-field max size 255 " + 'X' * 255)[0,255] %>
-  description: <%= ("description-field max size 255 " + 'X' * 255)[0,255] %>
   user_id: 1
 
 only_name:
   id: 9
-  name: "author with only name field set"
   user_id: 1
 
 only_firstname:
   id: 10
-  firstname: "author with only firstname field set"
   user_id: 1
 
 only_description:
   id: 11
-  description: "author with only description field set"
   user_id: 1
 
 name_and_firstname:
   id: 12
-  name: "name field"
-  firstname: "firstname field"
   user_id: 1
 
 # 20 users Eva 1 ... Eva 20 for autocompletion test
 <% 1.upto(20) do |i| %>
 eva<%= i %>:
-  name: "Eva <%= i %>"
+  id: <%= 100 + i %>
   public: true
   user_id: 1 
 <% end %>
 
-# create five thousend authors (in April 2018 we have 523 authors)
-<% 100.upto(5100) do |i| %>
+# create five thousend authors (in June 2023 we have 563 authors)
+<% 1000.upto(6000) do |i| %>
 fix_<%= i %>:
   id: <%= i %>
-  name: <%= i %>_author
-  description: Description for <%= i %>_author
   public: <%= i % 2 == 0 ? 'true' : 'false' %>
   user_id: 1
 <% end %>

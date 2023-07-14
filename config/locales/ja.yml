@@ -4,12 +4,11 @@ ja:
     attributes:
       author:
         description: 商品説明
-        firstname: 氏名（ふりがな
+        firstname: 名
         link: リンク
-        name: ラストネーム
+        name: 姓
       category:
         category: カテゴリ
-        description: 商品説明
       comment:
         comment: コメント
       quotation:
@@ -92,29 +91,24 @@ ja:
     create:
       created: 著者 "%{author}" が作成されました。
       failed: 著者 "%{author}" の作成に失敗しました！ 「%{exception}」
+    description_sample: 例：ノルウェー人作家（*1968年）
     destroy:
       deleted: 著者 "%{author}" のエントリが削除されました。
     edit:
       edit_author: 著者を編集
-    form:
-      description: 説明
-      description_sample: 例：ドイツの詩人 「1749 - 1832」
-      firstname: 名
-      firstname_sample: 例：ヨハン・ヴォルフガング・フォン
-      link_sample: 例：http://de.wikipedia.org/wiki/Goethe
-      name: 姓
-      name_sample: 例：ゲーテ
+    firstname_sample: 例：はカール・オーヴェ
     id_does_not_exist: ID "%{id}" の著者は存在しません。
+    link_sample: 例：https://ja.wikipedia.org/wiki/カール・オーヴェ・クナウスゴール
     list_by_letter:
       lastname_starts: 姓が始まる
       letter: 文字「%{letter}」で
-      letter_missing: 文字が欠けています
-      not_a_letter: 文字ではない
+      not_a_letter: ひらがなまたはカタカナ
     list_content:
       author_delete: 本当に著者 "%{author}" のエントリを削除しますか？
       author_new: 著者を追加
       needs_login: "%{login_link}でログインして、ここに著者を追加してください。"
     login_missing: 新しい著者エントリを作成するためのログインがありません！
+    name_sample: 例：クナウスゴード
     update:
       updated: 著者 "%{author}" のエントリが更新されました。
   categories:
@@ -193,7 +187,6 @@ ja:
     created: 作成されました
     date: 日付と時刻
     delete: 削除
-    description: 説明
     duplicate:
       one: デュプリケート
       other: デュプリケート
@@ -203,7 +196,6 @@ ja:
       other: "%{count} エラー"
     error_alt: 感嘆符付きの黄色い警告サイン
     eye: 目
-    firstname: 名
     for: に
     from: から
     have: 持っている
@@ -213,7 +205,7 @@ ja:
     link: リンク
     locale: 言語
     machine_translation_failed: 機械翻訳の失敗
-    name: 名前
+    name: 名
     no_admin: 管理者ではありません！
     no_right: "%{name} %{id} を %{msg} する権利がありません！"
     not_logged_in: ログインしていません
@@ -245,6 +237,7 @@ ja:
     update: 変更
     updated: 更新されました
     user: ユーザー
+    words_separator: "、"
   layouts:
     application:
       admin: 管理者
