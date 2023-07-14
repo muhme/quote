@@ -7,6 +7,8 @@ class Category < ApplicationRecord
   has_many :comments, as: :commentable
   before_destroy :check_quotes_and_comments
   validate :validate_category
+  after_save    :expire_category_init_chars_cache
+  after_destroy :expire_category_init_chars_cache
 
   # words, exluded from word matching without last or two last letters
   EXCLUDED_WORDS_GERMAN =
@@ -20,10 +22,10 @@ class Category < ApplicationRecord
   # doing Mobility case-insensitive search on category
   # returns a Category::ActiveRecord_Relation or nil
   scope :search_case_insensitive, ->(category_looking_for) do
-          i18n do
-            category.lower.matches("#{category_looking_for.downcase}")
-          end
-        end
+                                    i18n do
+                                      category.lower.matches("#{category_looking_for.downcase}")
+                                    end
+                                  end
 
   # count all non-public categories
   def Category.count_non_public
@@ -33,11 +35,12 @@ class Category < ApplicationRecord
   # gives an array with all existing categories names initial chars plus '*' if no mapping exists
   # e.g. ["a", "b", "d" ... "z", "*"]
   def Category.init_chars
-    # Fetch all category names in the current locale
-    category_names = Category.i18n.select(:category).distinct.pluck(:category)
-  
-    # Extract the initial character of each category name, map to base letter, and eliminate doubled entries
-    category_names.compact.map { |category| base_letter(category[0].upcase) }.uniq
+    Rails.cache.fetch('category_init_chars', expires_in: 1.hours) do
+      # Fetch all category names in the current locale
+      category_names = Category.i18n.select(:category).distinct.pluck(:category)
+      # Extract the initial character of each category name, map to base letter, and eliminate doubled entries
+      category_names.compact.map { |category| base_letter(category[0].upcase) }.uniq
+    end
   end
 
   # search for category with starting letters without category_ids
@@ -45,6 +48,7 @@ class Category < ApplicationRecord
   # returns always an Category array with 0...10 entries
   def self.filter_by_category(search, category_ids)
     return [] if search.blank?
+
     sql = "SELECT DISTINCT c.* from categories c "
     sql << "INNER JOIN mobility_string_translations mst "
     sql << "ON c.id = mst.translatable_id "
@@ -59,7 +63,8 @@ class Category < ApplicationRecord
 
   # returns the category if the id is present, otherwise an empty string (e.g. id is 0 as marker for category isn't set)
   def Category.category_or_empty(id = nil)
-    return Category.find(id).category
+    category = Category.find(id).category
+    return category.nil? ? "" : category
   rescue
     return ""
   end
@@ -126,6 +131,10 @@ class Category < ApplicationRecord
     end
   end
 
+  def expire_category_init_chars_cache
+    Rails.cache.delete('category_init_chars_cache')
+  end
+
   class << self # opens up the singleton class to define private class methods as only private applies to instance and not to class methods
     private
 
@@ -139,6 +148,7 @@ class Category < ApplicationRecord
         match_found = false
         ids_and_categories.each do |id, category|
           next if category.blank? # Skip empty or nil categories
+
           if quotation[i, category.length] == category
             ret << id
             i += category.length
@@ -162,17 +172,20 @@ class Category < ApplicationRecord
 
       ids_and_categories.each do |id, category|
         next if category.blank? # Skip empty or nil categories
+
         category.downcase!
         category.tr!("äöü", "aou")
         category.gsub!("ß", "ss")
         words.each do |word|
           next if word.blank? # Skip empty words or punctuation marks
+
           word.tr!("äöü", "aou")
           word.gsub!("ß", "ss")
           # prevents e.g. "ei" for "ein"
           next if EXCLUDED_WORDS_GERMAN.include?(word.chop)
           # prevents e.g. "ei" for "eine" or "sein" for "seinem"
           next if EXCLUDED_WORDS_GERMAN.include?(word.chop.chop)
+
           # finds identical and also e.g. "Liebe" for "lieben" and "Spiel" for "spielen",
           ret << id if word == category || word.chop == category || word.chop.chop == category
         end
@@ -190,6 +203,7 @@ class Category < ApplicationRecord
 
       ids_and_categories.each do |id, category|
         next if category.blank? # Skip empty or nil categories
+
         category.downcase!
         words.each do |word|
           next if word.blank? # Skip empty words or punctuation marks
@@ -197,6 +211,7 @@ class Category < ApplicationRecord
           next if EXCLUDED_WORDS_ENGLISH.include?(word.chop)
           # prevents e.g. "car" for "cards"
           next if EXCLUDED_WORDS_ENGLISH.include?(word.chop.chop)
+
           # finds identical and also e.g. "Liebe" for "lieben" and "Spiel" for "spielen",
           ret << id if word == category || word.chop == category || word.chop.chop == category
         end

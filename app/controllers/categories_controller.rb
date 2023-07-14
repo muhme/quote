@@ -6,18 +6,24 @@ class CategoriesController < ApplicationController
   # GET /categories
   def index
     sql = <<-SQL
-    SELECT DISTINCT c.* FROM categories c
-      INNER JOIN mobility_string_translations mst
-        ON c.id = mst.translatable_id
-        AND mst.translatable_type = 'Category'
-        AND mst.locale = '#{I18n.locale}'
-        AND mst.key = 'category'
+      SELECT DISTINCT c.*, COALESCE(mst.value, mst_en.value) AS value FROM categories c
+        LEFT JOIN mobility_string_translations mst
+          ON c.id = mst.translatable_id
+          AND mst.translatable_type = 'Category'
+          AND mst.locale = '#{I18n.locale}'
+          AND mst.key = 'category'
+        LEFT JOIN mobility_string_translations mst_en
+          ON c.id = mst_en.translatable_id
+          AND mst_en.translatable_type = 'Category'
+          AND mst_en.locale = 'en'
+          AND mst_en.key = 'category'
     SQL
+
     sql += params[:order] == "categories" ?
-    # by category name alphabeticaly
-      " order by mst.value" :
-    # by the number of quotations that the categories have
-      " order by (select count(*) from categories_quotations cq, quotations q where cq.quotation_id = q.id and cq.category_id = c.id) desc"
+        # by category name alphabetically
+        " ORDER BY COALESCE(mst.value, mst_en.value)" :
+        # by the number of quotations that the categories have
+        " ORDER BY (SELECT COUNT(*) FROM categories_quotations cq, quotations q WHERE cq.quotation_id = q.id AND cq.category_id = c.id) DESC"
 
     @categories = Category.paginate_by_sql(sql, page: params[:page], :per_page => PER_PAGE)
     # check pagination second time with number of pages
@@ -54,6 +60,7 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     return unless logged_in? t("categories.login_missing")
+
     @category = Category.new(user_id: current_user.id)
   end
 
@@ -70,29 +77,28 @@ class CategoriesController < ApplicationController
 
     unless @category.valid?
       flash[:error] = e = @category.errors.any? ? @category.errors.first.full_message : "error"
-      logger.error "create failed with #{e}"
+      logger.error "create category not valid with #{e}"
       return render :new, status: :unprocessable_entity
     end
 
     actual_locale = I18n.locale
     error_logged = false
     I18n.available_locales.each do |locale|
-      I18n.with_locale(locale.to_s) do
-        if locale != actual_locale
-          translated = deepl_translate(@category.category(locale: actual_locale), actual_locale, locale)
-          if translated.present?
-            @category.category = translated
-          elsif !error_logged
-            flash[:error] = t("g.machine_translation_failed")
-            error_logged = true
-          end
+      if locale != actual_locale
+        translated = deepl_translate_words(@category.category(locale: actual_locale), actual_locale, locale)
+        if translated.present?
+          @category.send("category_#{locale}=", translated)
+        elsif !error_logged
+          flash[:error] = t("g.machine_translation_failed")
+          error_logged = true
         end
       end
     end
     @category.public = current_user.admin ? params[:category][:public] : false
 
     if @category.save
-      return redirect_to category_path(@category, locale: I18n.locale), notice: t(".created", category: @category.category)
+      return redirect_to category_path(@category, locale: I18n.locale),
+                         notice: t(".created", category: @category.category)
     else
       flash[:error] = e = @category.errors.any? ? @category.errors.first.full_message : "error"
       logger.error "create failed with #{e}"
@@ -113,28 +119,27 @@ class CategoriesController < ApplicationController
     actual_locale = I18n.locale
     error_logged = false
     I18n.available_locales.each do |locale|
-      I18n.with_locale(locale.to_s) do
-        if params[:translate]
-          if locale == actual_locale
-            @category.category = params[:category]["category_#{actual_locale}"]
-          else
-            translated = deepl_translate(params[:category]["category_#{actual_locale}"], actual_locale, locale)
-            if translated.present?
-              @category.category = translated
-            elsif !error_logged
-              flash[:error] = t("g.machine_translation_failed", locale: actual_locale)
-              error_logged = true
-            end
-          end
+      if params[:translate]
+        if locale == actual_locale
+          @category.category = params[:category]["category_#{locale}"]
         else
-          @category.category = params[:category]["category_#{locale.to_s}"]
+          translated = deepl_translate_words(params[:category]["category_#{actual_locale}"], actual_locale, locale)
+          if translated.present?
+            @category.send("category_#{locale}=", translated)
+          elsif !error_logged
+            flash[:error] = t("g.machine_translation_failed", locale: actual_locale)
+            error_logged = true
+          end
         end
+      else
+        @category.send("category_#{locale}=", params[:category]["category_#{locale}"])
       end
     end
     @category.public = current_user.admin ? params[:category][:public] : false
 
     if @category.save
-      return redirect_to category_path(@category, locale: I18n.locale), notice: t(".updated", category: @category.category)
+      return redirect_to category_path(@category, locale: I18n.locale),
+                         notice: t(".updated", category: @category.category)
     else
       flash[:error] = e = @category.errors.any? ? @category.errors.first.full_message : "error"
       logger.error "save category ID=#{@category.id} – failed with #{e}"
@@ -145,6 +150,7 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   def destroy
     return unless access?(:destroy, @category)
+
     category = @category.category
     if @category.destroy
       flash[:notice] = e = t(".deleted", category: category)
@@ -158,17 +164,25 @@ class CategoriesController < ApplicationController
   end
 
   # get category list for a letter or all-no-letters
-  # NICE only showing public or own entries to be extended like in index
   def list_by_letter
     letter = params[:letter].first.upcase
+    # first LEFT JOIN attempts to get the translation in the current locale, and the second one gets the English translation as default
+    # The COALESCE function returns the first non-null argument, so it will use the current locale's translation if available, otherwise,
+    # it falls back to English.
     sql = <<-SQL
-    SELECT DISTINCT c.* FROM categories c
-      INNER JOIN mobility_string_translations mst
-        ON c.id = mst.translatable_id
-        AND mst.translatable_type = 'Category'
-        AND mst.locale = '#{I18n.locale.to_s}'
-        AND mst.key = 'category'
-      WHERE mst.value 
+      SELECT DISTINCT c.*, COALESCE(mst.value, mst_en.value) AS value
+      FROM categories c
+      LEFT JOIN mobility_string_translations mst
+          ON c.id = mst.translatable_id
+          AND mst.translatable_type = 'Category'
+          AND mst.key = 'category'
+          AND mst.locale = '#{I18n.locale.to_s}'
+      LEFT JOIN mobility_string_translations mst_en
+          ON c.id = mst_en.translatable_id
+          AND mst_en.translatable_type = 'Category'
+          AND mst_en.key = 'category'
+          AND mst_en.locale = 'en'
+      WHERE (SELECT COALESCE(mst.value, mst_en.value))
     SQL
     if letter =~ /[#{ALL_LETTERS[I18n.locale].join}]/
       sql << " REGEXP '^[#{mapped_letters(letter)}]'"
@@ -178,7 +192,7 @@ class CategoriesController < ApplicationController
       params[:letter] = '*'
       sql << " NOT REGEXP '^[#{ALL_LETTERS[I18n.locale].join}]'"
     end
-    sql << " ORDER BY mst.value"
+    sql << " ORDER BY COALESCE(mst.value, mst_en.value)"
     @categories = Category.paginate_by_sql sql, page: params[:page], per_page: PER_PAGE
     # check pagination second time with number of pages
     bad_pagination?(@categories.total_pages)
@@ -188,7 +202,8 @@ class CategoriesController < ApplicationController
   def list_no_public
     return unless access?(:admin, Category.new)
 
-    @categories = Category.paginate_by_sql "select * from categories where public = 0", :page => params[:page], :per_page => PER_PAGE
+    @categories = Category.paginate_by_sql "select * from categories where public = 0", :page => params[:page],
+                                                                                        :per_page => PER_PAGE
     # check pagination second time with number of pages
     bad_pagination?(@categories.total_pages)
   end

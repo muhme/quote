@@ -1,4 +1,10 @@
 class Author < ApplicationRecord
+  include ReusableMethods
+  extend Mobility
+  translates :firstname, type: :string
+  translates :name, type: :string
+  translates :description, type: :string
+  translates :link, type: :string
   belongs_to :user
   has_many :quotations
   has_many :comments, as: :commentable
@@ -8,25 +14,23 @@ class Author < ApplicationRecord
   validates :link, presence: false, length: { maximum: 255 }, uniqueness: false
   validates :description, presence: false, length: { maximum: 255 }, uniqueness: false
   validate :first_or_last_name
+  after_save    :expire_author_init_chars_cache
+  after_destroy :expire_author_init_chars_cache
 
   # count all non-public authors
   def Author.count_non_public
     return count_by_sql("select count(*) from authors where public = 0")
   end
 
-  # gives an array with initial letters from all existing author names, e.g. ["A", "C", "D" ...]
+  # gives an array with initial letters from all existing author names plus '*' if no mapping exists
+  # e.g. ["A", "C", "D" ... "*"]
   def Author.init_chars
-    a = Author.find_by_sql "select distinct substring(upper(trim(name)) from 1 for 1) as init from authors order by init"
-    ret = []
-    for i in 0..(a.length - 1)
-      ret[i] = a[i].nil? ? "*" : a[i].attributes["init"]
-      ret[i] = "A" if ret[i] == "Ä"
-      ret[i] = "O" if ret[i] == "Ö"
-      ret[i] = "U" if ret[i] == "Ü"
-      ret[i] = "S" if ret[i] == "ß"
-      ret[i] = "*" unless ("A".."Z").include?(ret[i])
+    Rails.cache.fetch('author_init_chars', expires_in: 1.hours) do
+      # Fetch all category names in the current locale
+      author_names = Author.i18n.select(:name).distinct.pluck(:name)
+      # Extract the initial character of each category name, map to base letter, and eliminate doubled entries
+      author_names.compact.map { |name| base_letter(name[0].upcase) }.uniq
     end
-    ret
   end
 
   # returns authors name or blank
@@ -42,6 +46,7 @@ class Author < ApplicationRecord
 
   # returns authors name, linked if possible, or blank
   # returns "", "firstname", "lastname" or "firstname lastname"
+  # TODO: adopt for japanese w/o space, btw where used, really needed?
   #
   def get_linked_author_name_or_blank
     ret = get_author_name_or_blank
@@ -66,12 +71,35 @@ class Author < ApplicationRecord
   # returns always an Authors array with 0...10 entries
   def Author.filter_by_name_firstname_description(search)
     return [] if search.blank?
+
     name, firstname, description = search.split(",", 3)
-    sql = "SELECT * from authors where name LIKE '#{name}%'"
-    sql << " AND firstname LIKE '#{firstname.lstrip}%'" if firstname.present?
-    sql << " AND description LIKE '#{description.lstrip}%'" if description.present?
-    sql << " ORDER BY name LIMIT 10;"
-    return Author.find_by_sql sql
+
+    # Build the base query
+    authors = Author.joins(
+      "LEFT JOIN mobility_string_translations name_translations
+          ON authors.id = name_translations.translatable_id
+          AND name_translations.translatable_type = 'Author'
+          AND name_translations.key = 'name'
+          AND name_translations.locale = '#{I18n.locale}'",
+      "LEFT JOIN mobility_string_translations firstname_translations
+          ON authors.id = firstname_translations.translatable_id
+          AND firstname_translations.translatable_type = 'Author'
+          AND firstname_translations.key = 'firstname'
+          AND firstname_translations.locale = '#{I18n.locale}'",
+      "LEFT JOIN mobility_string_translations description_translations
+          ON authors.id = description_translations.translatable_id
+          AND description_translations.translatable_type = 'Author'
+          AND description_translations.key = 'description'
+          AND description_translations.locale = '#{I18n.locale}'"
+    )
+
+    # Apply filters based on the search criteria
+    authors = authors.where("name_translations.value LIKE ?", "#{name}%") if name.present?
+    authors = authors.where("firstname_translations.value LIKE ?", "#{firstname.lstrip}%") if firstname.present?
+    authors = authors.where("description_translations.value LIKE ?", "#{description.lstrip}%") if description.present?
+
+    # Limit and order the results
+    authors.limit(10).order("name_translations.value")
   end
 
   private
@@ -94,4 +122,7 @@ class Author < ApplicationRecord
     end
   end
 
+  def expire_author_init_chars_cache
+    Rails.cache.delete('author_init_chars_cache')
+  end
 end

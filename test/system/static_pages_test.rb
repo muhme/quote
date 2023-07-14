@@ -3,27 +3,37 @@ require "application_system_test_case"
 class StaticPagessTest < ApplicationSystemTestCase
 
   test "home" do
-    check_page page, "/", "h2", "Dankeschön", 1000
+    check_page page, root_url, "h2", "Thank You", 1000
+    assert_equal "Zitat-Service", page.title
+    check_page page, root_url(locale: :de), "h2", "Dankeschön", 1000
     assert_equal "Zitat-Service", page.title
   end
   
   test "contact" do
-    check_page page, "start/contact", "h1", "Impressum", 500
+    check_page page, start_contact_url, "h1", "Imprint", 500
+    assert_equal "Zitat-Service – Contact", page.title
+    check_page page, start_contact_url(locale: :de), "h1", "Impressum", 500
     assert_equal "Zitat-Service – Impressum", page.title
   end
   
   test "help" do
-    check_page page, "start/help", "h1", "Hilfe", 3000
+    check_page page, start_help_url, "h1", "Help", 3000
+    assert_equal "Zitat-Service – Don't worry, we're happy to help!", page.title
+    check_page page, start_help_url(locale: :de), "h1", "Hilfe", 3000
     assert_equal "Zitat-Service – Keine Sorge, wir helfen Dir gerne weiter!", page.title
   end
   
   test "project" do
-    check_page page, "start/project", "h1", "Projekt", 1500
+    check_page page, start_project_url, "h1", "Project", 1300
+    assert_equal "Zitat-Service – Project", page.title
+    check_page page, start_project_url(locale: :de), "h1", "Projekt", 1500
     assert_equal "Zitat-Service – Projekt", page.title
   end
   
   test "use" do
-    check_page page, "start/use", "h1", "Zitate einbinden", 3000
+    check_page page, start_use_url, "h1", "Embedding Quotes", 3000
+    assert_equal "Zitat-Service – Embed quotes into your own homepage", page.title
+    check_page page, start_use_url(locale: :de), "h1", "Zitate einbinden", 3000
     assert_equal "Zitat-Service – Zitate in die eigene Homepage einbinden", page.title
   end
   
@@ -32,31 +42,35 @@ class StaticPagessTest < ApplicationSystemTestCase
   end
     
   test "joomla" do
-    check_page page, "joomla", "h2", "Fehler oder Erweiterungen", 4000
+    check_page page, joomla_url, "h2", "Limitations and Error Handling", 4000
+    assert_equal "Zitat-Service – Integrate quotes into your own homepage with Joomla!", page.title
+    check_page page, joomla_url(locale: :de), "h2", "Fehler oder Erweiterungen", 4000
     assert_equal "Zitat-Service – Zitate mit Joomla! in die eigene Homepage einbinden", page.title
   end
 
   test "UTF-8 German Umlaut" do
-    check_page page, "start/use", "p", "für", 3000
-    check_page page, "start/use", "p", "geöffnet", 3000
-    check_page page, "start/use", "p", "Änderung", 3000
+    url = start_use_url(locale: :de)
+    check_page page, url, "p", "für", 3000
+    check_page page, url, "p", "geöffnet", 3000
+    check_page page, url, "p", "Änderung", 3000
   end
   
   test "403 forbidden" do
-      check_page(page, "/quotations/list_no_public", "div", "Kein Administrator!", 150)
+      check_page(page, quotations_list_no_public_url, "div", "Not an Administrator!", 150)
+      check_page(page, quotations_list_no_public_url(locale: :de), "div", "Kein Administrator!", 150)
   end
   test "404 not found" do
     ["/bla", "/bla.html", "/bla.png", "/bla.gif", "/bla.css", "/bla.js", "/bla.tiff", "/quotations.jpg",
      "/a/b", "/a/b.html", "/a/b.png", "/a/b.gif", "/a/b.css", "/a/b.js", "/authors/0.jpg", "/quotations/1.json", "/categories/1.json"
     ].each {
-      |url| check_page(page, url, "h1", /Seite nicht gefunden .* 404/, 150)
+      |url| check_page(page, url, "h1", /Page not found .* 404/, 150)
     }
   end
   test "422 unprocessable entity" do
-    check_page(page, "/422", "h1", "HTTP-Statuscode 422", 150)
+    check_page(page, "/422", "h1", /Unprocessable Entity .* 422/, 150)
   end
   test "500 internal server error" do
-    check_page(page, "/500", "h1", "HTTP-Statuscode 500", 150)
+    check_page(page, "/500", "h1", /Internal Server Error .* 500/, 150)
   end
 
   test "author link" do  

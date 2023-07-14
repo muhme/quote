@@ -48,9 +48,7 @@ services:
       - chrome
   chrome:
     container_name: quote_chrome
-    build:
-      context: .
-      dockerfile: chrome.Dockerfile
+    image: selenium/standalone-chrome
     ports:
       - "8104:5900" # VNC
       - "8105:7900" # noVNC http://localhost:8105/?autoconnect=1&resize=scale&password=secret

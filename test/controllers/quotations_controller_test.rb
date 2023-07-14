@@ -118,17 +118,17 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update quotation" do
     login :first_user
-    patch quotation_url(@quotation_one), params: { commit: "Speichern", quotation: { quotation: 'The early bird catches the worm' } }
+    patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm' } }
     assert_redirected_to quotation_url @quotation_one
     get '/logout'
     login :admin_user
-    patch quotation_url(@quotation_one), params: { commit: "Speichern", quotation: { quotation: 'The early bird catches the worm!' } }
+    patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm!' } }
     assert_redirected_to quotation_url @quotation_one
     get '/logout'
-    patch quotation_url(@quotation_one), params: { commit: "Speichern", quotation: { quotation: 'The early bird catches the worm!!!' } }
+    patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm!!!' } }
     assert_forbidden
     login :first_user
-    patch quotation_url(@quotation_one), params: { commit: "Speichern", quotation: { quotation: '' } }
+    patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: '' } }
     assert_response :unprocessable_entity # 422
     assert_match /1 fehler|1 error/i, @response.body
   end

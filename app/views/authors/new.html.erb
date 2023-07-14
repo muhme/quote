@@ -1,3 +1,50 @@
 <h1><%= "#{t('g.authors', count: 1)} #{t('g.create').downcase}" %></h1>
 
-<%= render 'form', author: @author %>
+<%= form_with(model: @author, local: true) do |form| %>
+  <% if @author and @author.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= t("g.error", count: @author.errors.count) %></h2>
+      <ul>
+        <% @author.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name, label_and_description(t("activerecord.attributes.author.name"), t("authors.name_sample")) %><br/>
+    <%= form.text_field "name_#{I18n.locale}", id: :author_name, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :firstname, label_and_description(t("activerecord.attributes.author.firstname"), t("authors.firstname_sample")) %><br/>
+    <%= form.text_field "firstname_#{I18n.locale}", id: :author_firstname %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description,
+               label_and_description(t("activerecord.attributes.author.description"), t("authors.description_sample")) %><br/>
+    <%= form.text_field "description_#{I18n.locale}", id: :author_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :link, label_and_description(t("g.link"), t("authors.link_sample")) %><br/>
+    <%= form.text_field "link_#{I18n.locale}", id: :author_link %>
+  </div>
+
+  <% if current_user and current_user.admin %>
+    <div class="field">
+      <%= form.label :public, label_and_description(t("g.public")) %><br/>
+      <%= form.check_box :public %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit t("g.save") %>
+    &nbsp;
+    <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: "0"), action: "index" ) %>
+  </div>
+
+<% end %>
+

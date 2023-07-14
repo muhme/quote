@@ -12,6 +12,8 @@ AllCops:
 #   EnforcedStyle: single_quotes
 #   Enabled: true
 
+Layout:
+  Enabled: true
 I18n/RailsI18n:
   Enabled: true
 I18n/GetText:

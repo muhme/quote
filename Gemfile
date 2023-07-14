@@ -80,6 +80,7 @@ group :development, :test do
   gem 'i18n-tasks', '~> 1.0', require: false
   gem 'rubocop', require: false
   gem 'rubocop-i18n', require: false
+  gem 'htmlbeautifier' # for erb-formatter
   gem 'erb-formatter', require: false
 end
 

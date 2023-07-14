@@ -87,11 +87,11 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create category" do
-    post categories_url, params: { category: { category: "Game" } }
+    post categories_url(locale: :de), params: { category: { category_de: "Spiel" } }
     assert_forbidden
     assert_difference('Category.count') do
       login :first_user
-      post categories_url, params: { locale: "de", category: { category_de: "Spiel" } }
+      post categories_url(locale: :de), params: { category: { category_de: "Spiel" } }
     end
     assert_redirected_to category_url(id: Category.last.id, locale: 'de')
     category = Category.i18n.find_by(category: 'Spiel', locale: :de)

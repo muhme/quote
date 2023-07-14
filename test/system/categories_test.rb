@@ -2,8 +2,8 @@ require "application_system_test_case"
 
 class CategoriesTest < ApplicationSystemTestCase
   test "category" do
-    check_page page, "/categories", "h1", "Kategorie"
-    assert_equal "Zitat-Service – Kategorien", page.title
+    check_page page, "/categories", "h1", "Categories"
+    assert_equal "Zitat-Service – Categories", page.title
   end
 
   test "category list by letter" do
@@ -20,29 +20,29 @@ class CategoriesTest < ApplicationSystemTestCase
   end
 
   test "category not letter" do
-    check_page page, "/categories/list_by_letter/*", "h1", "Kategorie"
-    assert_equal "Zitat-Service – Kategorien, die mit * beginnen", page.title
+    check_page page, "/categories/list_by_letter/*", "h1", "Categories"
+    assert_equal "Zitat-Service – Categories, starting with *", page.title
   end
 
   test "show category" do
-    check_page page, category_url(id: Category.i18n.find_by(category: "public_category")), "h1", "Kategorie"
-    assert_equal "Zitat-Service – Kategorie public_category", page.title
+    check_page page, category_url(id: Category.i18n.find_by(category: "public_category")), "h1", "Category"
+    assert_equal "Zitat-Service – Category public_category", page.title
   end
 
   test "list and show non-public" do
     check_page page, categories_path, nil, "two"
-    check_page page, "/de/categories/list_by_letter/T", nil, "two"
-    check_page page, category_url(id: Category.i18n.find_by(category: "two")), "h1", "Kategorie"
+    check_page page, "/categories/list_by_letter/T", nil, "two"
+    check_page page, category_url(id: Category.i18n.find_by(category: "two")), "h1", "Category"
     
     do_login
     check_page page, categories_path, nil, "two"
-    check_page page, "/de/categories/list_by_letter/T", nil, "two"
-    check_page page, category_url(id: Category.i18n.find_by(category: "two")), "h1", "Kategorie"
+    check_page page, "/categories/list_by_letter/T", nil, "two"
+    check_page page, category_url(id: Category.i18n.find_by(category: "two")), "h1", "Category"
     
     do_login :admin_user, :admin_user_password
     check_page page, categories_path, nil, "two"
-    check_page page, "/de/categories/list_by_letter/T", nil, "two"
-    check_page page, category_url(id: Category.i18n.find_by(category: "two")), "h1", "Kategorie"
+    check_page page, "/categories/list_by_letter/T", nil, "two"
+    check_page page, category_url(id: Category.i18n.find_by(category: "two")), "h1", "Category"
   end
 
   # /categories/new
@@ -106,7 +106,7 @@ class CategoriesTest < ApplicationSystemTestCase
 
   # /categorys/new
   test "new category without login" do
-    check_page page, new_category_url, "h1", /Zugriff wurde verweigert.*403/
+    check_page page, new_category_url, "h1", /Access Denied .* 403/
   end
 
   test "edit own category" do
@@ -115,7 +115,7 @@ class CategoriesTest < ApplicationSystemTestCase
     fill_in "category_name_de", with: "SchönererName"
     click_on "Speichern"
     check_this_page page, nil, /Kategorie .* wurde aktualisiert/
-    check_page page, quotation_url(id: 1), nil, /Kategorien:.*SchönererName/
+    check_page page, quotation_url(locale: :de, id: 1), nil, /Kategorien:.*SchönererName/
   end
   test "edit own category with empty category name fails" do
     do_login
@@ -145,27 +145,27 @@ class CategoriesTest < ApplicationSystemTestCase
   end
 
   test "admin needed to list not public categories" do
-    check_page page, categories_list_no_public_url, nil, "Kein Administrator!"
+    check_page page, categories_list_no_public_url, nil, "Not an Administrator!"
     do_login
-    check_page page, categories_list_no_public_url, nil, "Kein Administrator!"
+    check_page page, categories_list_no_public_url, nil, "Not an Administrator!"
   end
   test "list not public categories" do
     do_login :admin_user, :admin_user_password
-    check_this_page page, nil, "Hallo admin_user, schön dass Du da bist."
-    check_page page, categories_list_no_public_url, "h1", "Nicht veröffentlichte Kategorien"
+    check_this_page page, nil, "Hello admin_user, nice to have you here."
+    check_page page, categories_list_no_public_url, "h1", "Not published Categories"
   end
 
   test "trailing slash" do
-    check_page page, categories_url + "/", "h1", "Kategorie"
-    assert_equal "Zitat-Service – Kategorien", page.title
+    check_page page, categories_url + "/", "h1", "Categories"
+    assert_equal "Zitat-Service – Categories", page.title
     # redirected URL w/o slash
     assert_equal page.current_url, categories_url
   end
 
   test "pagination with trailing slash" do
     url = categories_url + "?page=2/"
-    check_page page, url, "h1", "Kategorie"
-    check_this_page page, nil, "Aktionen"
+    check_page page, url, "h1", "Categories"
+    check_this_page page, nil, "Actions"
     # redirected URL w/o slash
     assert_equal page.current_url, url.chop
   end

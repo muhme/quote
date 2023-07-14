@@ -4,7 +4,7 @@ class I18nTest < ApplicationSystemTestCase
 
   # without language (locale) click on quotes menu entry, wait the quotes page is loaded and check h1 and url
   test "home without language" do
-    check_page page, "/", "h1", "Herzlich Willkommen bei zitat-service.de"
+    check_page page, "/", "h1", "Welcome to the quote service zitat-service.de"
     click_on I18n.t("g.quotes", locale: I18n.default_locale, count: 0)
     # first find h1 to wait until the page is loaded ...
     find("h1", text: I18n.t("g.quotes", locale: I18n.default_locale, count: 2))
@@ -84,7 +84,7 @@ class I18nTest < ApplicationSystemTestCase
       # w/ locale from browser
       # TODO needs some magic or another driver as cypyabara/selenium/chrome to set locale in headless chrome
       # I18n.available_locales.each do |locale|
-      [:de].each do |locale|
+      [:en].each do |locale|
         visit url
         check_page_source page, "<html lang=\"#{locale.to_s}\">"
       end

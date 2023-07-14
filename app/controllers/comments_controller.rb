@@ -64,7 +64,7 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
-    return unless access?:destroy, @comment
+    return unless access?(:destroy, @comment)
 
     respond_to do |format|
       if @comment.destroy

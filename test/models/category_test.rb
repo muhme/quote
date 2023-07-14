@@ -48,9 +48,8 @@ class CategoryTest < ActiveSupport::TestCase
   end
 
   test "check" do
-    I18n.locale = :de
     # from string
-    assert_equal [categories(:one).id], Category.check("category():one) has the name public_category in :de")
+    assert_equal [categories(:one).id], Category.check("category():one) has the name public_category")
     # from quote
     assert_equal [categories(:one).id], Category.check(quotations(:one))
     # nothing found

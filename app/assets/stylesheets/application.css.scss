@@ -402,6 +402,9 @@ table#details {
 table#details tr:not(:last-child) td {
     border-bottom: 1px solid #DDD;
 }
+table#details tr:not(:last-child) td.border-bottom-0 {
+    border-bottom: 0;
+}
 
 @keyframes ligthgreen {
     from {
@@ -493,6 +496,12 @@ span#side div.language-option {
 
 .padding-left-10px {
     padding-left: 10px;
+}
+.padding-left-0-5ch {
+    padding-left: 0.5ch;
+}
+.margin-bottom-0-2em {
+    margin-bottom: 0.2em;
 }
 
 .opacity-25 {

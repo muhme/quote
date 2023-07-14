@@ -37,6 +37,14 @@ with_one_comment:
   author_id: 4 # 4th author "Public False Author" should have 2 quotes to be on the 1st page
   public: false
 
+schiller_quote:
+  quotation: Die Sterne lügen nicht.
+  user_id: 1
+  author_id: 7 # Schiller
+  public: true
+  source: Wallenstein, 1800
+  source_link: https://www.projekt-gutenberg.org/schiller/wallens1/wall3305.html
+
 # create ten thousend quotes (April 2018 we have 1,332)
 <% 100.upto(10100) do |i| %>
 fix_<%= i %>:

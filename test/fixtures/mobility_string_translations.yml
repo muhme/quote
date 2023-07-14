@@ -1,54 +1,66 @@
-category_one_de:
+#  .d8888b.           888                                      d8b                   
+# d88P  Y88b          888                                      Y8P                   
+# 888    888          888                                                            
+# 888         8888b.  888888 .d88b.   .d88b.   .d88b.  888d888 888  .d88b.  .d8888b  
+# 888            "88b 888   d8P  Y8b d88P"88b d88""88b 888P"   888 d8P  Y8b 88K      
+# 888    888 .d888888 888   88888888 888  888 888  888 888     888 88888888 "Y8888b. 
+# Y88b  d88P 888  888 Y88b. Y8b.     Y88b 888 Y88..88P 888     888 Y8b.          X88 
+#  "Y8888P"  "Y888888  "Y888 "Y8888   "Y88888  "Y88P"  888     888  "Y8888   88888P' 
+#                                         888                                        
+#                                    Y8b d88P                                        
+#                                     "Y88P"                                         
+                                    
+category_one_en:
   translatable_type: Category
   key: category
   translatable_id: 1
   value: public_category
-  locale: de
+  locale: en
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
-category_public_false_de:
+category_public_false_en:
   translatable_type: Category
   key: category
   translatable_id: 2
   value: two
-  locale: de
+  locale: en
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
   
-category_without_quotes_de:
+category_without_quotes_en:
   translatable_type: Category
   key: category
   translatable_id: 3
   value: three
-  locale: de
+  locale: en
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
-category_without_comments_de:
+category_without_comments_en:
   translatable_type: Category
   key: category
   translatable_id: 4
   value: without comments
-  locale: de
+  locale: en
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
-category_with_1000_comments_de:
+category_with_1000_comments_en:
   translatable_type: Category
   key: category
   translatable_id: 5
   value: with_1000_comments
-  locale: de
+  locale: en
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
-category_with_one_comment_de:
+category_with_one_comment_en:
   translatable_type: Category
   key: category
   translatable_id: 6
   value: with one comment
-  locale: de
+  locale: en
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
@@ -275,7 +287,395 @@ category_fix_<%= i %>:
   key: category
   translatable_id: <%= i %>
   value: <%= i %>_category
+  locale: en
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+<% end %>
+
+#        d8888          888    888                                
+#       d88888          888    888                                
+#      d88P888          888    888                                
+#     d88P 888 888  888 888888 88888b.   .d88b.  888d888 .d8888b  
+#    d88P  888 888  888 888    888 "88b d88""88b 888P"   88K      
+#   d88P   888 888  888 888    888  888 888  888 888     "Y8888b. 
+#  d8888888888 Y88b 888 Y88b.  888  888 Y88..88P 888          X88 
+# d88P     888  "Y88888  "Y888 888  888  "Y88P"  888      88888P' 
+                                                                
+# Translations for 'unknown' author
+author_unknown_name:
+  translatable_type: Author
+  key: name
+  translatable_id: 0
+  locale: en
+  value: unknown
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_unknown_description:
+  translatable_type: Author
+  key: description
+  translatable_id: 0
+  locale: en
+  value: Unknown Author with ID 0
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_one_name:
+  translatable_type: Author
+  key: name
+  translatable_id: 1
+  locale: en
+  value: Barbara
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_one_description:
+  translatable_type: Author
+  key: description
+  translatable_id: 1
+  locale: en
+  value: Pseudonym einer deutschen Streetart-Künstlerin
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_second_name:
+  translatable_type: Author
+  key: name
+  translatable_id: 2
+  locale: en
+  value: second author
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_third_name:
+  translatable_type: Author
+  key: name
+  translatable_id: 3
+  locale: en
+  value: third author
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_public_false_name:
+  translatable_type: Author
+  key: name
+  translatable_id: 4
+  locale: en
+  value: Public False Author Name
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_public_false_firstname:
+  translatable_type: Author
+  key: firstname
+  translatable_id: 4
+  locale: en
+  value: Public False Author Firstname
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_public_false_description:
+  translatable_type: Author
+  key: description
+  translatable_id: 4
+  locale: en
+  value: Public False Author Description
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_public_false_link:
+  translatable_type: Author
+  key: link
+  translatable_id: 4
+  locale: en
+  value: Public False Author Link
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_without_quotes_and_comments_name:
+  translatable_type: Author
+  key: name
+  translatable_id: 5
+  locale: en
+  value: Author Entry not related to any quotation
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_with_one_comment_name:
+  translatable_type: Author
+  key: name
+  translatable_id: 6
+  locale: en
+  value: Author with one comment and w/o quotes
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+# de and es as fallback
+author_schiller_name_en:
+  translatable_type: Author
+  key: name
+  translatable_id: 7
+  locale: en
+  value: Schiller
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_name_ja:
+  translatable_type: Author
+  key: name
+  translatable_id: 7
+  locale: ja
+  value: シラー # Schiller
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_name_uk:
+  translatable_type: Author
+  key: name
+  translatable_id: 7
+  locale: uk
+  value: Шиллер
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_firstname_en:
+  translatable_type: Author
+  key: firstname
+  translatable_id: 7
+  locale: en
+  value: Friedrich
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_firstname_ja:
+  translatable_type: Author
+  key: firstname
+  translatable_id: 7
+  locale: ja
+  value: フリードリヒ # Friedrich
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_firstname_uk:
+  translatable_type: Author
+  key: firstname
+  translatable_id: 7
+  locale: uk
+  value: Фрідріх
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_description_de:
+  translatable_type: Author
+  key: description
+  translatable_id: 7
   locale: de
+  value: deutscher Dichter und Philosoph (1759 - 1805)
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_description_en:
+  translatable_type: Author
+  key: description
+  translatable_id: 7
+  locale: en
+  value: German poet and philosopher (1759 - 1805)
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_description_es:
+  translatable_type: Author
+  key: description
+  translatable_id: 7
+  locale: es
+  value: Poeta y filósofo alemán (1759 - 1805)
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_description_ja:
+  translatable_type: Author
+  key: description
+  translatable_id: 7
+  locale: ja
+  value: ドイツの詩人、哲学者（1759年 - 1805年）
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_description_uk:
+  translatable_type: Author
+  key: description
+  translatable_id: 7
+  locale: uk
+  value: Німецький поет і філософ (1759 - 1805)
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_link_de:
+  translatable_type: Author
+  key: link
+  translatable_id: 7
+  locale: de
+  value: https://de.wikipedia.org/wiki/Friedrich_Schiller
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_link_en:
+  translatable_type: Author
+  key: link
+  translatable_id: 7
+  locale: en
+  value: https://en.wikipedia.org/wiki/Friedrich_Schiller
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_link_es:
+  translatable_type: Author
+  key: link
+  translatable_id: 7
+  locale: es
+  value: https://es.wikipedia.org/wiki/Friedrich_Schiller
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_link_ja:
+  translatable_type: Author
+  key: link
+  translatable_id: 7
+  locale: ja
+  value: https://ja.wikipedia.org/wiki/フリードリヒ・フォン・シラー
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_schiller_link_uk:
+  translatable_type: Author
+  key: link
+  translatable_id: 7
+  locale: uk
+  value: https://uk.wikipedia.org/wiki/Фрідріх_Шиллер
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_all_fields_max_sizes:
+  translatable_type: Author
+  key: name
+  translatable_id: 8
+  locale: en
+  value: <%= ("name-field max size 64 " + 'X' * 64)[0,64] %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_all_fields_max_sizes:
+  translatable_type: Author
+  key: firstname
+  translatable_id: 8
+  locale: en
+  value: <%= ("firstname-field max size 64 " + 'X' * 64)[0,64] %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_all_fields_max_sizes:
+  translatable_type: Author
+  key: link
+  translatable_id: 8
+  locale: en
+  value: <%= ("link-field max size 255 " + 'X' * 255)[0,255] %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_all_fields_max_sizes:
+  translatable_type: Author
+  key: description
+  translatable_id: 8
+  locale: en
+  value: <%= ("description-field max size 255 " + 'X' * 255)[0,255] %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_only_name:
+  translatable_type: Author
+  key: name
+  translatable_id: 9
+  locale: en
+  value: "author with only name field set"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_only_name:
+  translatable_type: Author
+  key: name
+  translatable_id: 9
+  locale: en
+  value: "author with only name field set"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_only_firstname:
+  translatable_type: Author
+  key: firstname
+  translatable_id: 10
+  locale: en
+  value: "author with only firstname field set"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_only_description:
+  translatable_type: Author
+  key: description
+  translatable_id: 11
+  locale: en
+  value: "author with only description field set"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_name_and_firstname_name:
+  translatable_type: Author
+  key: name
+  translatable_id: 12
+  locale: en
+  value: "name field"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+author_name_and_firstname_firstname:
+  translatable_type: Author
+  key: firstname
+  translatable_id: 12
+  locale: en
+  value: "firstname field"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+# 20 users Eva 1 ... Eva 20 for autocompletion test
+<% 1.upto(20) do |i| %>
+eva<%= i %>:
+  translatable_type: Author
+  key: name
+  translatable_id: <%= 100 + i %>
+  locale: en
+  value: "Eva <%= i %>"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+<% end %>
+
+# create five thousend authors (in June 2023 we have 563 authors)
+<% 1000.upto(6000) do |i| %>
+fix_<%= i %>:
+  translatable_type: Author
+  key: name
+  translatable_id: <%= i %>
+  locale: en
+  value: <%= i %>_author
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+<% end %>
+
+<% 1000.upto(6000) do |i| %>
+fix_<%= i %>:
+  translatable_type: Author
+  key: description
+  translatable_id: <%= i %>
+  locale: en
+  value: Description for <%= i %>_author
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 <% end %>

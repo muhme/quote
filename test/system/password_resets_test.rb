@@ -4,6 +4,9 @@ class PasswordResetsTest < ApplicationSystemTestCase
 
   test "password reset page" do
     visit new_password_reset_url
+    check_this_page page, "h1", "Reset password"
+    # :de
+    visit new_password_reset_url(locale: :de)
     check_this_page page, "h1", "Passwort zurücksetzen"
   end
 
@@ -11,13 +14,16 @@ class PasswordResetsTest < ApplicationSystemTestCase
     do_login
     check_this_page page, "a", "Logout"
     visit new_password_reset_url
+    check_this_page page, "h1", "Reset password"
+    # :de
+    visit new_password_reset_url(locale: :de)
     check_this_page page, "h1", "Passwort zurücksetzen"
   end
 
   test "password reset link given" do
-    do_login :bla, :bli, /Bitte melde Dich an/
-    check_this_page page, nil, "Fehler bei der Anmeldung!"
-    check_this_page page, nil, "Passwort zurücksetzen"
+    do_login :bla, :bli, "Please register"
+    check_this_page page, nil, "Login was not successful!"
+    check_this_page page, nil, "Reset passwor"
     check_page_source page, /href=".*\/password_resets\/new/
   end
 
@@ -26,8 +32,8 @@ class PasswordResetsTest < ApplicationSystemTestCase
     np = '348ZQHjdeqr+'
     visit new_password_reset_url
     fill_in 'email', with: 'first_user@whatever.com'
-    click_on 'E-Mail schicken'
-    check_this_page page, nil, /Eine E-Mail mit dem Link zum Zurücksetzen des Passworts wurde an .* gesendet./
+    click_on 'Send email'
+    check_this_page page, nil, "An email with the password reset link has been sent to"
     # do it
     last_email = ActionMailer::Base.deliveries.last
     #    <a href=3D"http://zitat-service.de/password_resets/V6mb1Fjyd4e7B_d4DAw=
@@ -38,8 +44,8 @@ class PasswordResetsTest < ApplicationSystemTestCase
     visit url
     fill_in 'password', with: np
     fill_in 'password_confirmation', with: np
-    click_on 'Neues Passwort setzen'
-    check_this_page page, nil, /Das Passwort für .* wurde erfolgreich aktualisiert./
+    click_on 'Set new password'
+    check_this_page page, nil, 'The password for "first_user" has been successfully updated.'
     click_on 'Logout'
     do_login :first_user, np
     check_page page, root_url, "a", "Logout"
@@ -48,8 +54,8 @@ class PasswordResetsTest < ApplicationSystemTestCase
   test "password reset unknown email" do
     visit new_password_reset_url
     fill_in 'email', with: 'bla'
-    click_on 'E-Mail schicken'
-    check_this_page page, nil, /Kein Benutzer mit der E-Mail .* gefunden!/
+    click_on 'Send email'
+    check_this_page page, nil, "No user found with the email"
   end
 
 end

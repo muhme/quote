@@ -28,7 +28,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Ein Benutzer „second” wurde für dich angelegt./, @response.body
+    assert_match /A user .*second.* has been created for you./, @response.body
   end
 
   test "failed to create new user without email address" do
@@ -36,7 +36,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       post users_url, params: { user: { login: "test", email: "bla" , password: "123QWEasd", password_confirmation: "123QWEasd" } }
     end
     assert_response :unprocessable_entity # 422
-    assert_match /E-Mail sollte wie eine E-Mail Adresse aussehen./, @response.body
+    assert_match /Mail should look like an email address./, @response.body
   end
 
   # user, e.g. /users/1/show
@@ -55,26 +55,26 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get '/users/1/edit'
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Nicht angemeldet!/, @response.body
+    assert_match /Not logged in!/, @response.body
   end
 
   test "should get edit" do
     login :first_user
     get '/users/current/edit'
-    assert_match /Benutzer-Eintrag aktualisieren/, @response.body
+    assert_match /Update User Entry/, @response.body
   end
 
   test "login" do
     login :first_user
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Hallo #{@first_user.login}, schön dass Du da bist/, @response.body
+    assert_match /Hello first_user, nice to have you here./, @response.body
   end
 
   test "failed login" do
     post user_sessions_url, :params => { :user_session => { :login => 'bla', :password => 'bli' } }
     assert_response :unprocessable_entity
-    assert_match /Benutzername ist nicht gültig/, @response.body
+    assert_match /login is not valid/, @response.body
   end
 
   test "own user update" do
@@ -82,12 +82,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     patch user_url(@first_user), params: { user: { login: @changed_user.login, email: @changed_user.email, password: :changed_user_password, password_confirmation: :changed_user_password } }
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Dein Benutzereintrag „changed_user” wurde geändert./, @response.body
+    assert_match /Your user entry .*changed_user.* has been changed./, @response.body
     get '/logout'
     login :changed_user
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Hallo #{@changed_user.login}, schön dass Du da bist/, @response.body
+    assert_match /Hello changed_user, nice to have you here./, @response.body
   end
 
   test "failed own user change" do
@@ -96,19 +96,19 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       patch user_url(id: @second_user), params: { user: { email: @first_user.email } }
     end
     assert_response :unprocessable_entity # 422
-    assert_match /E-Mail wird bereits verwendet/, @response.body
+    assert_match /Mail has already been taken/, @response.body
   end
 
   test "not logged-in try for user update" do
     patch user_url(id: @first_user), params: { user: { login: @changed_user.login, email: @changed_user.email, password: :changed_user_password, password_confirmation: :changed_user_password } }
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Nicht angemeldet!/, @response.body
+    assert_match /Not logged in!/, @response.body
     # and login is still possible with 1st user credentials
     login :first_user
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Hallo #{@first_user.login}, schön dass Du da bist/, @response.body
+    assert_match /Hello first_user, nice to have you here./, @response.body
   end
 
   test "destroy user not allowed" do

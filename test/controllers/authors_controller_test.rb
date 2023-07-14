@@ -29,7 +29,8 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     get '/authors/list_by_letter/'
     assert_response :redirect
     get '/authors/list_by_letter/%20'
-    assert_response :missing # 404
+    assert_response :success
+    assert_match /0 Authors/i, @response.body
   end
   
   test "404 for not existing author without login" do
@@ -73,16 +74,16 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "fail to create author without login" do
-    post authors_url, params: { author: { name: 'Johnson' } }
+    post authors_url, params: { author: { name_en: 'Johnson' } }
     assert_forbidden
   end
   test "should create author with login" do
     assert_difference 'Author.count' do
       login :first_user
-      post authors_url, params: { author: { name: 'Johnson' } }
+      post authors_url, params: { author: { name_en: 'Johnson' } }
     end
     assert_redirected_to author_url(Author.last)
-    author = Author.find_by_name 'Johnson'
+    author = Author.i18n.find_by_name 'Johnson'
     assert_not author.public
   end
 
@@ -108,26 +109,26 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update own author entry" do
     login :first_user
-    patch author_url(@author_one), params: { author: { description: 'New Description', firstname: 'New Firstname', link: 'New Link', name: 'Luther' } }
+    patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'New Link', name_en: 'Luther' } }
     assert_redirected_to author_url(@author_one)
   end
   test "fail to edit other users author entry" do
     login :second_user
-    patch author_url(@author_one), params: { author: { description: 'New Description', firstname: 'New Firstname', link: 'New Link', name: 'Luther' } }
+    patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'New Link', name_en: 'Luther' } }
     assert_forbidden
   end
   test "should update other users author entry as admin" do
     login :admin_user
-    patch author_url(@author_one), params: { author: { description: 'New Description', firstname: 'New Firstname', link: 'New Link', name: 'Luther', public: true } }
+    patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'New Link', name_en: 'Luther', public: true } }
     assert_redirected_to author_url @author_one
-    author = Author.find_by_name 'Luther'
+    author = Author.i18n.find_by_name 'Luther'
     assert author.public
   end
   test "return to edit if validation fails" do
     login :first_user
-    patch author_url(@author_one), params: { author: { name: '' } }
+    patch author_url(@author_one), params: { author: { name_en: '' } }
     assert_response :unprocessable_entity # 422
-    assert_match /1 fehler|1 error/i, @response.body
+    assert_match /1 error/i, @response.body
   end
 
   test "should destroy own author entry" do
