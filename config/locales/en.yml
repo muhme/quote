@@ -90,7 +90,6 @@ en:
   authors:
     create:
       created: The author "%{author}" has been created.
-      failed: The creation of the author "%{author}" has failed! (%{exception})
     description_sample: e.g. Norwegian writer (born 1968)
     destroy:
       deleted: The entry for the author "%{author}" has been deleted.
@@ -115,7 +114,6 @@ en:
     category_sample: a word as a noun in the singular, e.g. Success
     create:
       created: The category "%{category}" has been created.
-      failed: The creation of the category "%{category}" has failed! (%{exception})
     destroy:
       deleted: The category "%{category}" has been deleted.
     edit:

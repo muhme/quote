@@ -23,52 +23,6 @@ class ApplicationController < ActionController::Base
     { locale: I18n.locale }
   end
 
-  # translates one word (e.g. category) or some words (e.g. author description)
-  # returns translated string and can throw DeepL::Exception
-  def deepl_translate_words(text, source_lang, target_lang)
-    if ENV["DEEPL_API_KEY"].present?
-      begin
-        source = source_lang.to_s.upcase
-        target = target_lang.to_s.upcase
-        ret = DeepL.translate(text, source, target).to_s
-        logger.debug { "translated #{source} \"#{text}\" -> #{target} \"#{ret}\"" }
-        return wash_translation(ret, target_lang)
-      rescue DeepL::Exceptions::Error => exc
-        logger.error "DeepL translation failed #{exc.class} #{exc.message} \”#{text}\" #{source}->#{target}"
-      end
-    else
-      logger.warn("DEEPL_API_KEY environment is missing, no DeepL translation")
-    end
-    return nil
-  end
-
-  # Define notations for different locales
-  BORN = {
-    de: "(* 0000)",
-    en: "(born 0000)",
-    es: "(n. 0000)",
-    ja: "(0000生)",
-    uk: "(нар. 0000)"
-  }.freeze
-  def wash_translation(ret, target_lang)
-    # Українська translation has often a dot in the end
-    ret.chomp!(".")
-    # Українська translation has sometimes double quote in the beginning
-    ret.sub!(/"/, "")
-    # one time seen, 日本語 translation added japanese dot in the end
-    ret.sub!(/。/, "")
-
-    # (*1961) etc, see BORN
-    match = ret.match(/(.*)\([^\d]*(\d{4})[\d]*\)$/)
-    if match
-      logger.debug("TODO #{match.inspect}")
-      ret = match[1] ? match[1] : ""
-      ret << BORN[target_lang.downcase.to_sym]
-      ret.gsub!("0000", match[2])
-    end
-    ret
-  end
-
   private
 
   # set from param :locale, request HTTP_ACCEPT_LANGUAGE or use default :en

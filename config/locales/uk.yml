@@ -90,7 +90,6 @@ uk:
   authors:
     create:
       created: Автор "%{author}" створений.
-      failed: Створення автора "%{author}" не вдалося! (%{exception})
     description_sample: напр. норвезький письменник (нар. 1968)
     destroy:
       deleted: Запис автора "%{author}" видалений.
@@ -115,7 +114,6 @@ uk:
     category_sample: слово як іменник в однині, наприклад Успіх
     create:
       created: Категорія "%{category}" створена.
-      failed: Створення категорії "%{category}" не вдалося! (%{exception})
     destroy:
       deleted: Категорія "%{category}" видалена.
     edit:

@@ -45,9 +45,9 @@
       <% end %>
       </p>
       <div class="flex-center"><%= raw category_links %></div>
-      <p id="letter">
+      <p class="<%= I18n.locale == :ja ? "write-vertical float-left" : "" %>" id="letter">
         <%= link_to t("g.authors", count: 0), controller: "authors" %> <%= link_to("+", controller: "authors", action: "list_no_public") if has_non_public(Author) %>
-        <div class="flex-center"><%= raw author_links I18n.locale %></div>
+        <div class="flex-center"><%= raw author_links %></div>
       </p>
       <p><%= link_to t("g.help"),   locale: I18n.locale, controller: :static_pages, action: :help    %></p>
       <p><%= link_to t(".to_use"),  locale: I18n.locale, controller: :static_pages, action: :use     %></p>

@@ -58,8 +58,19 @@ class AuthorsController < ApplicationController
       return render :new, status: :unprocessable_entity
     end
 
-    if !author_deepl_translate(actual_locale)
-      flash[:error] = t("g.machine_translation_failed", locale: actual_locale)
+    begin
+      # if we have wikipedia link, then find links in other locales and use author name from wikipedia
+      ask_wikipedia(actual_locale)
+
+      # translate description and name (if not already found on wikipedia)
+      if !DeeplService.new.author_translate(actual_locale, @author)
+        flash[:error] = t("g.machine_translation_failed", locale: actual_locale)
+      end
+    rescue Exception => exc
+      # note problem with the translation and continue
+      problem = "#{exc.class} #{exc.message}"
+      logger.error "create author machine translation problem: #{problem}"
+      flash[:error] = "#{t("g.machine_translation_failed")} #{problem}"
     end
 
     if @author.save
@@ -69,12 +80,6 @@ class AuthorsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
 
-    # NICE give warning if the same autor already exists
-  rescue Exception => exc
-    problem = "#{exc.class} #{exc.message}"
-    logger.error "create author failed: #{problem}"
-    flash[:error] = t(".failed", author: @author.get_author_name_or_blank, exception: problem)
-    render :new, status: :unprocessable_entity
   end
 
   # PATCH/PUT /authors/1
@@ -89,8 +94,20 @@ class AuthorsController < ApplicationController
       @author.firstname   = params[:author]["firstname_#{actual_locale}"]
       @author.name        = params[:author]["name_#{actual_locale}"]
       @author.link        = params[:author]["link_#{actual_locale}"]
-      if !author_deepl_translate(actual_locale)
-        flash[:error] = t("g.machine_translation_failed", locale: actual_locale)
+
+      begin
+        # if we have wikipedia link, then find links in other locales and use author name from wikipedia
+        ask_wikipedia(actual_locale)
+
+        # translate description and name (if not already found on wikipedia)
+        if !DeeplService.new.author_translate(actual_locale, @author)
+          flash[:error] = t("g.machine_translation_failed", locale: actual_locale)
+        end
+      rescue Exception => exc
+        # note problem with the translation and continue
+        problem = "#{exc.class} #{exc.message}"
+        logger.error "update author machine translation problem: #{problem}"
+        flash[:error] = "#{t("g.machine_translation_failed")} #{problem}"
       end
     else
       I18n.available_locales.each do |locale|
@@ -166,107 +183,26 @@ class AuthorsController < ApplicationController
 
   private
 
-  # Der Text wurde geschrieben von dem Autor Johann Wolfgang von Goethe.
-  # The text was written by the author Johann Wolfgang von Goethe.
-  # El texto fue escrito por el autor Johann Wolfgang von Goethe.
-  # 著者はヨハン・ヴォルフガング・フォン・ゲーテ。
-  # Текст написаний автором Йоганном Вольфгангом фон Гете.
-  TRANSLATE_NAME = {
-    de: ["Der Text wurde geschrieben von dem Autor mit dem Namen °°°.",
-         "Der Text wurde von einem Autor namens °°° geschrieben.",
-         "Der Text wurde von einem Autor mit dem Namen °°° geschrieben.",
-         "Es wurde von einem Autor namens Thomas Mann geschrieben."],
-    en: ["The text was written by the author with the name °°°."],
-    es: ["El texto fue escrito por un autor llamado °°°.",
-         "El texto fue escrito por el autor llamado °°°."],
-    ja: ["°°°という作家が書いた文章だ。",
-         "°°°という作家が書いたものだ。",
-         "この文章°°°という作家によって書かれた。"],
-    uk: ["Текст був написаний автором на ім'я °°°."],
-  }.freeze
-
-  # translates authors name, first name and description
-  # can throw DeepL::Exception
-  # returns true on success, else false
-  def author_deepl_translate(src_locale, author = @author)
-    dst_locales = I18n.available_locales - [src_locale]
-    src_deleminator = src_locale == :ja ? "・" : " "
-    if ENV["DEEPL_API_KEY"].present?
-      begin
-        text = TRANSLATE_NAME[src_locale][0].gsub("°°°", first_last_or_both(author, src_deleminator))
-        dst_locales.each do |dst_locale|
-          # description
-          if (author.description.present?)
-            ret = deepl_translate_words(author.description, src_locale.to_s.upcase, dst_locale.to_s.upcase)
+  # if we have wikipedia link, then find links in other locales and use author name from wikipedia
+  def ask_wikipedia(actual_locale)
+    if @author.link =~ /http.*wikipedia.org\//
+      result = WikipediaService.new.call(actual_locale, @author.link)
+      links = result[:links]
+      names = result[:names]
+      I18n.available_locales.each do |locale|
+        if locale != actual_locale
+          @author.send("link_#{locale}=", links[locale.to_s])
+          if names[locale.to_s].present?
+            result = split_name(names[locale.to_s], locale)
+            @author.send("firstname_#{locale}=", result[:firstname])
+            @author.send("name_#{locale}=", result[:lastname])
           else
-            ret = ""
-          end
-          author.send("description_#{dst_locale}=", ret)
-          # firstname and name
-          ret = DeepL.translate(text, src_locale.to_s.upcase, dst_locale.to_s.upcase).to_s
-          logger.debug { "translated #{src_locale} \”#{text}\" -> #{dst_locale} \"#{ret}\"" }
-          # "Текст був написаний автором Томасом Чендлером Галібартоном (Thomas Chandler Haliburton)."
-          ret = ret.gsub(/\s?\(.*?\)/, '') # delete space + round brackets with the content inside
-          found = false
-          TRANSLATE_NAME[dst_locale].each do |e|
-            pattern = Regexp.new(e.gsub("°°°", "([^.。]+)").gsub(".", "\\."))
-            if (match = ret.match(pattern))
-              found = match[1].split(/ |・/)
-              mode = names_mode(author)
-              if mode == :both
-                author.send("name_#{dst_locale}=", found.pop)
-                author.send("firstname_#{dst_locale}=", found.join(dst_locale == :ja ? "・" : " "))
-                logger.debug {
-                  "#{dst_locale} firstname=[#{author.firstname(locale: dst_locale)}] name=[#{author.name(locale: dst_locale)}]"
-                }
-              elsif mode == :firstname
-                author.send("firstname_#{dst_locale}=", match[1])
-                logger.debug { "#{dst_locale} firstname=[#{author.firstname(locale: dst_locale)}]" }
-              elsif mode == :name
-                author.send("name_#{dst_locale}=", match[1])
-                logger.debug { "#{dst_locale} name=[#{author.name(locale: dst_locale)}]" }
-              end
-              found = true
-              break # done
-            end
-          end
-          if (found == false)
-            logger.warn { "translation was not matching #{src_locale} \”#{text}\" -> #{dst_locale} \"#{ret}\"" }
-            # translate without context
-            ["name", "firstname"].each do |attr|
-              value = author.send(attr)
-              if value.present?
-                ret = deepl_translate_words(value, src_locale.to_s.upcase, dst_locale.to_s.upcase)
-                author.send("#{attr}_#{dst_locale}=", ret)
-                logger.debug { "#{dst_locale} #{attr}=[#{ret}]" }
-              end
-            end
+            @author.send("firstname_#{locale}=", nil)
+            @author.send("name_#{locale}=", nil)
           end
         end
-        return true
-      rescue DeepL::Exceptions::Error => exc
-        logger.error "DeepL translation failed #{exc.class} #{exc.message}"
       end
-    else
-      logger.warn("DEEPL_API_KEY environment is missing, no DeepL translation")
     end
-    return false
-  end
-
-  def first_last_or_both(author, src_deleminator)
-    return "#{author.firstname}#{src_deleminator}#{author.name}" if author.firstname.present? and author.name.present?
-    return author.firstname if author.firstname.present?
-    return author.name if author.name.present?
-
-    return ""
-  end
-
-  def names_mode(author)
-    return :both if author.firstname.present? and author.name.present?
-    return :firstname if author.firstname.present?
-    return :name if author.name.present?
-
-    return ""
   end
 
   def set_author
@@ -296,5 +232,12 @@ class AuthorsController < ApplicationController
     @comments = Comment.where(commentable: @author)
     @commentable_type = "Author"
     @commentable_id = @author.id
+  end
+
+  def split_name(fullname, locale)
+    delimiter = locale == :ja ? '・' : ' '
+    parts = fullname.rpartition(delimiter)
+    logger.debug("split_name #{parts.inspect}")
+    { firstname: parts[0], lastname: parts[2] }
   end
 end

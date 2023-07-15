@@ -90,7 +90,6 @@ ja:
   authors:
     create:
       created: 著者 "%{author}" が作成されました。
-      failed: 著者 "%{author}" の作成に失敗しました！ 「%{exception}」
     description_sample: 例：ノルウェー人作家（*1968年）
     destroy:
       deleted: 著者 "%{author}" のエントリが削除されました。
@@ -115,7 +114,6 @@ ja:
     category_sample: たんすのこやし
     create:
       created: カテゴリ "%{category}" が作成されました。
-      failed: カテゴリ "%{category}" の作成に失敗しました！ 「%{exception}」
     destroy:
       deleted: カテゴリ "%{category}" が削除されました。
     edit:

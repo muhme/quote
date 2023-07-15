@@ -90,7 +90,6 @@ es:
   authors:
     create:
       created: El autor "%{author}" ha sido creado.
-      failed: ¡La creación del autor "%{author}" ha fallado! (%{exception})
     description_sample: p. ej., Escritor noruego (n. 1968)
     destroy:
       deleted: La entrada para el autor "%{author}" ha sido eliminada.
@@ -115,7 +114,6 @@ es:
     category_sample: una palabra como sustantivo en singular, por ejemplo, Éxito
     create:
       created: La categoría "%{category}" ha sido creada.
-      failed: ¡La creación de la categoría "%{category}" ha fallado! (%{exception})
     destroy:
       deleted: La categoría "%{category}" ha sido eliminada.
     edit:
