@@ -43,4 +43,14 @@ class WikipediaServiceTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "clean link method" do
+    assert_nil WikipediaService.new.clean_link(nil)
+    assert_nil WikipediaService.new.clean_link("")
+
+    assert_equal "https://de.wikipedia.org/wiki/Friedrich_Schiller", WikipediaService.new.clean_link("http://de.wikipedia.org/wiki/Friedrich_Schiller")
+    assert_equal "https://de.wikipedia.org/wiki/Olena_Selenska", WikipediaService.new.clean_link("https://de.m.wikipedia.org/wiki/Olena_Selenska")
+    assert_equal "https://de.wikipedia.org/wiki/Friedrich_Schiller", WikipediaService.new.clean_link("http://de.wikipedia.org/wiki/Schiller")
+    assert_equal "https://de.wikipedia.org/wiki/Ryūichi_Sakamoto", WikipediaService.new.clean_link("https://de.wikipedia.org/wiki/Ry%C5%ABichi_Sakamoto")
+  end
 end

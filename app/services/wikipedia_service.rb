@@ -1,6 +1,9 @@
 require 'net/http'
 require 'json'
 require 'uri'
+require 'rest-client'
+require 'nokogiri'
+require 'addressable/uri'
 
 # collection of all Wikipedia API requests and helper methods
 #
@@ -12,7 +15,7 @@ class WikipediaService
   #   4. If the response status is 200 (OK), it processes the response.
   #      - It parses the JSON response body to get the "pages" field.
   #      - For each page in the response, it checks if the page has "langlinks".
-  #      - For each language link in "langlinks", it checks if the language is one of the desired ones (English, Spanish, Ukrainian, Japanese, or German).
+  #      - For each language link in "langlinks", it checks if the language is one of the desired ones (English, Spanish, Ukrainian, Japanese or German).
   #      - If it is, it sets the author's link for this language to the URL provided in the response.
   def call(locale, link)
     return if link.blank?
@@ -67,4 +70,49 @@ class WikipediaService
     { links: links, names: names }
   end
 
+  # clean the authors link in the analogy of washing clothes
+  # changes by sample are:
+  #   1. http to https
+  #        http://de.wikipedia.org/wiki/Friedrich_Schiller
+  #        https://de.wikipedia.org/wiki/Friedrich_Schiller
+  #   2. delete mobile version
+  #        https://de.m.wikipedia.org/wiki/Olena_Selenska
+  #        https://de.wikipedia.org/wiki/Olena_Selenska
+  #   3. follow redirection
+  #        http://de.wikipedia.org/wiki/Schiller
+  #        http://de.wikipedia.org/wiki/Friedrich_Schiller
+  #   4. URL encode
+  #        https://de.wikipedia.org/wiki/Ry%C5%ABichi_Sakamoto
+  #        https://de.wikipedia.org/wiki/Ryūichi_Sakamoto
+  #
+  # for #3 we have to find the redirection in HTML/CSS by sample:
+  # <div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="de" dir="ltr">
+  #   <div class="mw-parser-output">
+  #     <div class="redirectMsg">
+  #       <p>Weiterleitung nach:</p>
+  #       <ul class="redirectText"><li><a href="/wiki/Friedrich_Schiller" title="Friedrich Schiller">Friedrich Schiller</a></li>
+  #
+  def clean_link(link)
+    return nil if link.blank?
+
+    uri = Addressable::URI.parse(link)
+    uri.scheme = 'https' # 1
+    uri.host = uri.host.sub(/\.m\./, '.') # 2
+
+    # HTTP Requests and HTML Parsing to check redirect
+    response = RestClient.get("#{uri.to_s}?redirect=no")
+    if response.code != 200
+      Rails.logger.warn { "Failed to follow redirects for #{uri.to_s}. Response code: #{response.code}." }
+    else
+      doc = Nokogiri::HTML(response.body)
+      redirect_link = doc.at_css('.redirectText a')
+      if redirect_link && redirect_link_href = redirect_link['href']
+        uri.path = redirect_link_href # 3
+      end
+    end
+
+    washed = Addressable::URI.unencode(uri) # 4
+    Rails.logger.debug { "WikipediaService.clean_link cleaned=#{washed}" if washed != link }
+    washed
+  end
 end

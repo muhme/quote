@@ -186,6 +186,8 @@ class AuthorsController < ApplicationController
   # if we have wikipedia link, then find links in other locales and use author name from wikipedia
   def ask_wikipedia(actual_locale)
     if @author.link =~ /http.*wikipedia.org\//
+      # change http to https, delete mobile version, follow redirection
+      @author.link = WikipediaService.new.clean_link(@author.link)
       result = WikipediaService.new.call(actual_locale, @author.link)
       links = result[:links]
       names = result[:names]

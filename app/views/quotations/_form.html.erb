@@ -13,21 +13,21 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :quotation, label_and_description(t("g.quotes", count: 1), t(".quotation_sample")) %><br/>
+    <%= form.label :quotation, label_and_description(t("g.quotes", count: 1), t(".quotation_sample")), class: "font-size-smaller" %><br/>
     <%= form.text_area :quotation, { cols: 80, rows: 2, autofocus: true } %>
   </div>
 
-  <%= label_tag :author, label_and_description(t("g.authors", count: 1), t(".author_hint")) %>
+  <%= form.label :author, label_and_description(t("g.authors", count: 1), t(".author_hint")), class: "font-size-smaller" %>
   <%= render "quotations/search_author", author_id: quotation ? quotation.author_id : 0, animation: :no %>
   <%= render "quotations/search_author_results", authors: [] %>
 
   <div class="top_space_field">
-    <%= form.label :source, label_and_description(t(".source"), t(".source_description")) %><br/>
+    <%= form.label :source, label_and_description(t(".source"), t(".source_description")), class: "font-size-smaller" %><br/>
     <%= form.text_field :source, { size: 80, maxlength: 255 } %>
   </div>
 
   <div class="field">
-    <%= form.label :source, label_and_description(t(".link"), t(".link_description")) %><br/>
+    <%= form.label :source, label_and_description(t(".link"), t(".link_description")), class: "font-size-smaller" %><br/>
     <%= form.text_field :source_link, { size: 80, maxlength: 255 } %>
   </div>
 
@@ -43,7 +43,7 @@
 
   <% if current_user and current_user.admin == true %>
     <div class="top_space_field">
-      <label for="author_public"><%= t("g.public") %></label><br/>
+      <%= form.label :public, label_and_description(t("g.public")), class: "font-size-smaller" %><br/>
       <%= form.check_box :public %>
     </div>
   <% end %>

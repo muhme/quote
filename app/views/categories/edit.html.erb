@@ -12,7 +12,7 @@
     </div>
   <% end %>
 
-  <%= form.label :category, label_and_description(t("g.category"), t("categories.category_sample")) %><br/>
+  <%= form.label :category, label_and_description(t("g.category"), t("categories.category_sample")), class: "font-size-smaller" %><br/>
 
     <div class="flex">
       <div class="field">
@@ -37,7 +37,7 @@
 
   <% if current_user and self.current_user.admin %>
     <div class="field">
-      <%= form.label :public, label_and_description(t("g.public")) %><br/>
+      <%= form.label :public, label_and_description(t("g.public")), class: "font-size-smaller" %><br/>
       <%= form.check_box :public %>
     </div>
   <% end %>
