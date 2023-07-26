@@ -26,4 +26,34 @@ class DeeplServiceTest < ActiveSupport::TestCase
     translation = DeeplService.new.translate_words("Berg", "XX", "YY")
     assert_nil translation
   end
+
+  # real world sample id 290
+  test "author translate" do
+    I18n.locale = :de
+    author = Author.new
+    author.id = 42
+    author.user_id = 1
+    author.name_de = 'Covington'
+    author.firstname_de = 'Michael A.'
+    author.description_de = 'US-amerikanischer Professor für Computerwissenschaften'
+
+    # translate
+    assert DeeplService.new.author_translate(:de, author)
+
+    # check firstname and name
+    [:en, :es].each do |locale|
+      assert_equal author.name_de, author.send("name_#{locale}"), "author.name wrong in #{locale}"
+      assert_equal author.firstname_de, author.send("firstname_#{locale}"), "author.firstname wrong in #{locale}"
+    end
+    assert_equal "Ковінгтон" , author.send("name_uk")     , "author.name wrong in :uk"
+    assert_equal "Майкл А."  , author.send("firstname_uk"), "author.firstname wrong in :uk"
+    assert_equal "コヴィントン", author.send("name_ja")     , "author.name wrong in :ja"
+    assert_equal "マイケル・A" , author.send("firstname_ja"), "author.firstname wrong in :ja"
+
+    # check description
+    assert_equal "US professor of computer science"        , author.send("description_en"), "author.description wrong in :en"
+    assert_equal "Profesor estadounidense de informática"  , author.send("description_es"), "author.description wrong in :es"
+    assert_equal "米コンピューターサイエンス教授"               , author.send("description_ja"), "author.description wrong in :ja"
+    assert_equal "Американський професор комп'ютерних наук", author.send("description_uk"), "author.description wrong in :uk"
+  end
 end

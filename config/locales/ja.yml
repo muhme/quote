@@ -204,6 +204,7 @@ ja:
     locale: 言語
     machine_translation_failed: 機械翻訳の失敗
     name: 名
+    name_seperator: "・"
     no_admin: 管理者ではありません！
     no_right: "%{name} %{id} を %{msg} する権利がありません！"
     not_logged_in: ログインしていません

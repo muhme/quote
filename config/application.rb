@@ -7,7 +7,6 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 module Quote
-
   # catch ActionController::BadRequest from Rack, see #54
   # set params[bad_request] as flag which will be handled by bad_request?() with HTTP 404, and note the reason as well
   # not calling static_pages/bad_request directly as ChatGPT says:
@@ -57,5 +56,13 @@ module Quote
     config.i18n.load_path += Dir[Gem::Specification.find_by_name("rails-i18n").gem_dir + "/rails/*/{#{config.i18n.available_locales.join(',')}}.{rb,yml}"]
     config.i18n.default_locale = :en
     config.i18n.fallbacks = { de: :en, es: :en, ja: :en, uk: :en }
+
+    # having own log format with datetime and severity
+    Rails.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")
+    Rails.logger.formatter = proc do |severity, time, progname, msg|
+      # %y%m%d %H:%M:%S'   INFO message, e.g.
+      # 230723 15:08:20    INFO Completed 200 OK in 322ms
+      "#{time.to_s[2..18].gsub('-', '')} #{severity.rjust(7)} #{msg}\n"
+    end
   end
 end

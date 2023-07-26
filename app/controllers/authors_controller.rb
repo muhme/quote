@@ -60,7 +60,7 @@ class AuthorsController < ApplicationController
 
     begin
       # if we have wikipedia link, then find links in other locales and use author name from wikipedia
-      ask_wikipedia(actual_locale)
+      WikipediaService.new.ask_wikipedia(actual_locale, @author)
 
       # translate description and name (if not already found on wikipedia)
       if !DeeplService.new.author_translate(actual_locale, @author)
@@ -96,8 +96,16 @@ class AuthorsController < ApplicationController
       @author.link        = params[:author]["link_#{actual_locale}"]
 
       begin
+        # first clean name and firstname to distingues it is already set by wikipedia or not
+        (I18n.available_locales - [actual_locale]).each do |locale|
+          @author.send("description_#{locale}=", nil)
+          @author.send("firstname_#{locale}=", nil)
+          @author.send("name_#{locale}=", nil)
+          @author.send("link_#{locale}=", nil)
+        end
+
         # if we have wikipedia link, then find links in other locales and use author name from wikipedia
-        ask_wikipedia(actual_locale)
+        WikipediaService.new.ask_wikipedia(actual_locale, @author)
 
         # translate description and name (if not already found on wikipedia)
         if !DeeplService.new.author_translate(actual_locale, @author)
@@ -145,26 +153,26 @@ class AuthorsController < ApplicationController
     end
   end
 
-  # get authors list for a letter or all-no-letters
+  # get authors list for first name letter or all-no-letters and no-name
   # NICE only showing public or own entries to be extended like in index
   def list_by_letter
     letter = params[:letter].first.upcase
     sql = <<-SQL
     SELECT DISTINCT a.* FROM authors a
-      INNER JOIN mobility_string_translations mst
+      LEFT JOIN mobility_string_translations mst
         ON a.id = mst.translatable_id
         AND mst.translatable_type = 'Author'
-        AND mst.locale = '#{I18n.locale.to_s}'
         AND mst.key = 'name'
-      WHERE mst.value
+        AND mst.locale = '#{I18n.locale.to_s}'
+      WHERE 
     SQL
     if letter =~ /[#{ALL_LETTERS[I18n.locale].join}]/
-      sql << " REGEXP '^[#{mapped_letters(letter)}]'"
+      sql << "mst.value REGEXP '^[#{mapped_letters(letter)}]'"
     else
       # 1. needed to be handled here, as route restrictions constraints not trivial working with UTF8
       # 2. and we simple map all to "*" to ignore special cases like this letter is not part of actual locale letters
       params[:letter] = "*"
-      sql << " NOT REGEXP '^[#{ALL_LETTERS[I18n.locale].join}]'"
+      sql << "(mst.value NOT REGEXP '^[#{ALL_LETTERS[I18n.locale].join}]' OR mst.value IS NULL OR mst.value = '')"
     end
     sql << " ORDER BY mst.value"
     @authors = Author.paginate_by_sql sql, page: params[:page], per_page: PER_PAGE
@@ -182,30 +190,6 @@ class AuthorsController < ApplicationController
   end
 
   private
-
-  # if we have wikipedia link, then find links in other locales and use author name from wikipedia
-  def ask_wikipedia(actual_locale)
-    if @author.link =~ /http.*wikipedia.org\//
-      # change http to https, delete mobile version, follow redirection
-      @author.link = WikipediaService.new.clean_link(@author.link)
-      result = WikipediaService.new.call(actual_locale, @author.link)
-      links = result[:links]
-      names = result[:names]
-      I18n.available_locales.each do |locale|
-        if locale != actual_locale
-          @author.send("link_#{locale}=", links[locale.to_s])
-          if names[locale.to_s].present?
-            result = split_name(names[locale.to_s], locale)
-            @author.send("firstname_#{locale}=", result[:firstname])
-            @author.send("name_#{locale}=", result[:lastname])
-          else
-            @author.send("firstname_#{locale}=", nil)
-            @author.send("name_#{locale}=", nil)
-          end
-        end
-      end
-    end
-  end
 
   def set_author
     @author = Author.find(params[:id])
@@ -236,10 +220,4 @@ class AuthorsController < ApplicationController
     @commentable_id = @author.id
   end
 
-  def split_name(fullname, locale)
-    delimiter = locale == :ja ? '・' : ' '
-    parts = fullname.rpartition(delimiter)
-    logger.debug("split_name #{parts.inspect}")
-    { firstname: parts[0], lastname: parts[2] }
-  end
 end

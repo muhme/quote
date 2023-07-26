@@ -1,7 +1,6 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-
   # Settings specified here will take precedence over those in config/application.rb.
 
   # anyone from any private network is welcome
@@ -46,9 +45,9 @@ Rails.application.configure do
   # using quote_maildev docker image
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :address => "quote_maildev",
-      :port => 1025,
-      :openssl_verify_mode => 'none'
+    :address => "quote_maildev",
+    :port => 1025,
+    :openssl_verify_mode => 'none'
   }
 
   # Print deprecation notices to the Rails logger.
@@ -65,7 +64,6 @@ Rails.application.configure do
 
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
-
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

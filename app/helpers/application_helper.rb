@@ -164,7 +164,7 @@ module ApplicationHelper
     end
     unless name.blank?
       ret = truncate(html_escape(ret), length: 25) # to have enough space for the <b>A</b> and not truncate in tag
-      ret += " " unless firstname.blank?
+      ret += t('g.name_seperator') unless firstname.blank?
       ret += "<b>".html_safe + h(name[0..0]) + "</b>".html_safe + h(name[1..name.size])
     end
     truncate(ret, length: 40, escape: false)

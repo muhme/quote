@@ -53,4 +53,8 @@ class WikipediaServiceTest < ActiveSupport::TestCase
     assert_equal "https://de.wikipedia.org/wiki/Friedrich_Schiller", WikipediaService.new.clean_link("http://de.wikipedia.org/wiki/Schiller")
     assert_equal "https://de.wikipedia.org/wiki/Ryūichi_Sakamoto", WikipediaService.new.clean_link("https://de.wikipedia.org/wiki/Ry%C5%ABichi_Sakamoto")
   end
+
+  test "clean link for non-wikipedia" do
+    assert_equal "https://www.e-stories.de/view-autoren.phtml?tspic", WikipediaService.new.clean_link("https://www.e-stories.de/view-autoren.phtml?tspic")
+  end
 end

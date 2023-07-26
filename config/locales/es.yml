@@ -90,7 +90,7 @@ es:
   authors:
     create:
       created: El autor "%{author}" ha sido creado.
-    description_sample: p. ej., Escritor noruego (n. 1968)
+    description_sample: p. ej., escritor noruego (n. 1968)
     destroy:
       deleted: La entrada para el autor "%{author}" ha sido eliminada.
     edit:
@@ -204,6 +204,7 @@ es:
     locale: Idioma
     machine_translation_failed: la traducción automática ha fallado
     name: Nombre
+    name_seperator: " "
     no_admin: "¡No hay administrador!"
     no_right: "¡No hay derecho %{name} %{id} a %{msg}!"
     not_logged_in: No registrado

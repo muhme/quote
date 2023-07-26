@@ -30,7 +30,6 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     get '/authors/list_by_letter/%20'
     assert_response :success
-    assert_match /0 Authors/i, @response.body
   end
   
   test "404 for not existing author without login" do

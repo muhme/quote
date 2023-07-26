@@ -49,9 +49,11 @@ class WikipediaService
         if page["langlinks"]
           # for each language link in "langlinks"
           page["langlinks"].each do |langlink|
-            # get language and URL of the link
+            # get language, URL of the link and name (*)
             lang = langlink["lang"]
             name = langlink["*"]
+            # "Мадонна (співачка)" ->  "Мадонна"
+            name = name.gsub(/ \(.*\)/, "")
             wiki_url = langlink["url"]
             # set the link attribute in the different locales
             if ['de', 'en', 'es', 'ja', 'uk'].include?(lang)
@@ -70,6 +72,30 @@ class WikipediaService
     { links: links, names: names }
   end
 
+  # if we have wikipedia link, then find links in other locales and use author name from wikipedia
+  def ask_wikipedia(actual_locale, author)
+    if author.link =~ /http.*wikipedia.org\//
+      # change http to https, delete mobile version, follow redirection
+      author.link = WikipediaService.new.clean_link(author.link)
+      result = WikipediaService.new.call(actual_locale, author.link)
+      links = result[:links]
+      names = result[:names]
+      I18n.available_locales.each do |locale|
+        if locale != actual_locale
+          author.send("link_#{locale}=", links[locale.to_s])
+          if names[locale.to_s].present?
+            result = split_name(names[locale.to_s], locale)
+            author.send("firstname_#{locale}=", result[:firstname])
+            author.send("name_#{locale}=", result[:lastname])
+          else
+            author.send("firstname_#{locale}=", nil)
+            author.send("name_#{locale}=", nil)
+          end
+        end
+      end
+    end
+  end
+
   # clean the authors link in the analogy of washing clothes
   # changes by sample are:
   #   1. http to https
@@ -78,7 +104,7 @@ class WikipediaService
   #   2. delete mobile version
   #        https://de.m.wikipedia.org/wiki/Olena_Selenska
   #        https://de.wikipedia.org/wiki/Olena_Selenska
-  #   3. follow redirection
+  #   3. follow wikipedia redirection
   #        http://de.wikipedia.org/wiki/Schiller
   #        http://de.wikipedia.org/wiki/Friedrich_Schiller
   #   4. URL encode
@@ -99,20 +125,47 @@ class WikipediaService
     uri.scheme = 'https' # 1
     uri.host = uri.host.sub(/\.m\./, '.') # 2
 
-    # HTTP Requests and HTML Parsing to check redirect
-    response = RestClient.get("#{uri.to_s}?redirect=no")
-    if response.code != 200
-      Rails.logger.warn { "Failed to follow redirects for #{uri.to_s}. Response code: #{response.code}." }
-    else
-      doc = Nokogiri::HTML(response.body)
-      redirect_link = doc.at_css('.redirectText a')
-      if redirect_link && redirect_link_href = redirect_link['href']
-        uri.path = redirect_link_href # 3
+    # HTTP Requests and HTML Parsing to check redirect in wikipedia
+    if uri.host.include?('wikipedia.org')
+      begin
+        # doing unencode before encode to ensure not to encode twice
+        uri_encoded = Addressable::URI.encode(Addressable::URI.unencode(uri))
+        response = RestClient.get("#{uri_encoded}?redirect=no")
+        if response.code != 200
+          Rails.logger.warn { "Failed to follow redirects for #{uri_encoded}. Response code: #{response.code}." }
+        else
+          doc = Nokogiri::HTML(response.body)
+          redirect_link = doc.at_css('.redirectText a')
+          if redirect_link && redirect_link_href = redirect_link['href']
+            uri.path = redirect_link_href # 3
+          end
+        end
+      rescue Exception => exc
+        # note problem
+        problem = "#{exc.class} #{exc.message}"
+        Rails.logger.error "RestClient.get(#{uri_encoded}) exception #{problem}"
+        # no flash[:error]
       end
     end
 
     washed = Addressable::URI.unencode(uri) # 4
     Rails.logger.debug { "WikipediaService.clean_link cleaned=#{washed}" if washed != link }
     washed
+  end
+
+  private
+
+  # split in firstname on last space or japanese ・
+  # if not special case with
+  #   en: ' the ' e.g. Seneca the Younger
+  def split_name(fullname, locale)
+    if locale == :en and fullname =~ / the /
+      return { firstname: '', lastname: fullname } 
+    end
+
+    delimiter = locale == :ja ? '・' : ' '
+    parts = fullname.rpartition(delimiter)
+    Rails.logger.debug("split_name #{parts.inspect}")
+    { firstname: parts[0], lastname: parts[2] }
   end
 end

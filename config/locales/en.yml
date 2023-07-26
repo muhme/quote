@@ -204,6 +204,7 @@ en:
     locale: Language
     machine_translation_failed: the machine translation failed
     name: Name
+    name_seperator: " "
     no_admin: Not an Administrator!
     no_right: No right to %{name} %{id} %{msg}!
     not_logged_in: Not logged in

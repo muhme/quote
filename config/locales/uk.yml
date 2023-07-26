@@ -214,6 +214,7 @@ uk:
     locale: Мова
     machine_translation_failed: не вдалося виконати машинний переклад
     name: Назва
+    name_seperator: " "
     no_admin: Немає прав адміністратора!
     no_right: Немає прав %{name} %{id} на %{msg}!
     not_logged_in: Не ввійшли до системи
