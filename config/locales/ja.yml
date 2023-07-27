@@ -201,6 +201,8 @@ ja:
     id: 内部番号
     lightning: 雷
     link: リンク
+    link_changed: リンク「%{link}」が「%{new}」に変更されました。
+    link_invalid: リンク「%{link}」にアクセスできません！
     locale: 言語
     machine_translation_failed: 機械翻訳の失敗
     name: 名

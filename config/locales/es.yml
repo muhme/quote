@@ -201,6 +201,8 @@ es:
     id: Nº interno
     lightning: haz de luz
     link: Enlace
+    link_changed: El enlace “%{link}” ha cambiado a “%{new}”.
+    link_invalid: "¡El enlace “%{link}” no se puede acceder!"
     locale: Idioma
     machine_translation_failed: la traducción automática ha fallado
     name: Nombre

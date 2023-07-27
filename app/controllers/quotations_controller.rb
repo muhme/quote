@@ -30,6 +30,7 @@ class QuotationsController < ApplicationController
   # GET /quotations/new
   def new
     return unless logged_in? t("quotations.login_missing")
+
     @quotation = Quotation.new(user_id: current_user.id)
   end
 
@@ -42,6 +43,7 @@ class QuotationsController < ApplicationController
   # called from search author result list as a click on a link
   def author_selected
     return unless logged_in? t("quotations.login_missing")
+
     turbo_author(nil, params[:author_id])
     render turbo_stream: turbo_stream_do_actions
   end
@@ -52,10 +54,14 @@ class QuotationsController < ApplicationController
   # first entry in the choosen categories list is the new selected category
   def category_selected
     return unless logged_in? t("quotations.login_missing")
+
     category_ids = split_two_id_arrays(params[:ids], 0)
     category_id = category_ids[0]
     rec_ids = split_two_id_arrays(params[:ids], 1)
-    logger.debug { "category_selected() category_id=#{nol(category_id)} category_ids=#{nol(category_ids, true)} rec_ids=#{nol(rec_ids, true)}" }
+    logger.debug {
+      "category_selected() category_id=#{nol(category_id)} " +
+        "category_ids=#{nol(category_ids, true)} rec_ids=#{nol(rec_ids, true)}"
+    }
     turbo_category(category_id, category_ids, rec_ids)
     render turbo_stream: turbo_stream_do_actions
   end
@@ -67,6 +73,7 @@ class QuotationsController < ApplicationController
   # right from minus separator is the list of recommended categories
   def delete_category
     return unless logged_in? t("quotations.login_missing")
+
     category_ids = split_two_id_arrays(params[:ids], 0)
     rec_ids = split_two_id_arrays(params[:ids], 1)
     logger.debug { "delete_category() category_ids=#{nol(category_ids, true)} rec_ids=#{nol(rec_ids, true)}" }
@@ -77,11 +84,14 @@ class QuotationsController < ApplicationController
   # POST /quotations
   def create
     return unless logged_in? t("quotations.login_missing")
+
     # set @authors and @categories from autocompletion fields and return hidden fields authors ID and category IDs
     author_id, category_ids = scan_params_for_create_or_update
 
     if params[:commit]
       @quotation = Quotation.new(quotation_params)
+      return unless verify_and_improve_link(:new)
+
       @quotation.user_id = current_user.id
       @quotation.author_id = 0 unless @quotation.author_id # empty author field is an unknown author, which has id 0
       logger.debug { "saving #{@quotation.inspect}" }
@@ -100,7 +110,7 @@ class QuotationsController < ApplicationController
     end
   rescue Exception => exc
     problem = "#{exc.class} #{exc.message}"
-    logger.error "create quotation failed: #{problem}" 
+    logger.error "create quotation failed: #{problem}"
     flash[:error] = t(".failed", exception: problem)
     render :new, status: :unprocessable_entity
   end
@@ -108,6 +118,7 @@ class QuotationsController < ApplicationController
   # PATCH/PUT /quotations/1
   def update
     return unless access?(:update, @quotation)
+
     # set @authors and @categories from autocompletion fields and return hidden fields authors ID and category IDs
     author_id, category_ids = scan_params_for_create_or_update
 
@@ -115,6 +126,8 @@ class QuotationsController < ApplicationController
       # Are associated categories changed? Compare from params with existing list by hand as changed? does not exist for has_and_belongs_to_many.
       categories_changed = category_ids.sort != @quotation.category_ids.sort
       @quotation.assign_attributes(quotation_params)
+      return unless verify_and_improve_link(:edit)
+
       logger.debug { "update() categories_changed=#{categories_changed}, quotation.changed #{@quotation.changes}" }
       if @quotation.changed? or categories_changed
         if @quotation.save
@@ -143,6 +156,7 @@ class QuotationsController < ApplicationController
   # DELETE /quotations/1
   def destroy
     return unless access?(:destroy, @quotation)
+
     if @quotation.destroy
       flash[:notice] = e = t(".deleted", quote: truncate(@quotation.quotation, length: 20))
       logger.debug { "destroyed quotation ID=#{@quotation.id} – #{e}" }
@@ -161,7 +175,8 @@ class QuotationsController < ApplicationController
       return redirect_to root_url
     end
 
-    sql = ["select distinct * from quotations where user_id = ? order by created_at desc", my_sql_sanitize(params[:user])]
+    sql = ["select distinct * from quotations where user_id = ? order by created_at desc",
+           my_sql_sanitize(params[:user])]
     @quotations = Quotation.paginate_by_sql sql, :page => params[:page], :per_page => 5
     # check pagination second time with number of pages
     bad_pagination?(@quotations.total_pages)
@@ -173,7 +188,8 @@ class QuotationsController < ApplicationController
       return redirect_to root_url
     end
     @category = Category.find params[:category]
-    @quotations = Quotation.paginate_by_sql sql_quotations_for_category(@category.id), :page => params[:page], :per_page => 5
+    @quotations = Quotation.paginate_by_sql sql_quotations_for_category(@category.id), :page => params[:page],
+                                                                                       :per_page => 5
     # check pagination second time with number of pages
     bad_pagination?(@quotations.total_pages)
   end
@@ -185,7 +201,8 @@ class QuotationsController < ApplicationController
       return redirect_to root_url
     end
     @author = Author.find params[:author]
-    @quotations = Quotation.paginate_by_sql sql_quotations_for_author(@author.id), :page => params[:page], :per_page => 5
+    @quotations = Quotation.paginate_by_sql sql_quotations_for_author(@author.id), :page => params[:page],
+                                                                                   :per_page => 5
     # check pagination second time with number of pages
     bad_pagination?(@quotations.total_pages)
   end
@@ -193,8 +210,9 @@ class QuotationsController < ApplicationController
   # for admins list all not public categories
   def list_no_public
     return unless access?(:admin, Quotation.new)
-    
-    @quotations = Quotation.paginate_by_sql "select * from quotations where public = 0", :page => params[:page], :per_page => 5
+
+    @quotations = Quotation.paginate_by_sql "select * from quotations where public = 0", :page => params[:page],
+                                                                                         :per_page => 5
     # check pagination second time with number of pages
     bad_pagination?(@quotations.total_pages)
   end
@@ -213,7 +231,8 @@ class QuotationsController < ApplicationController
     # source and source_link are optional and saved as NULL in database if blank
     params[:quotation][:source]      = nil if params[:quotation][:source].blank?
     params[:quotation][:source_link] = nil if params[:quotation][:source_link].blank?
-    params.require(:quotation).permit(:author_id, :quotation, :source, :source_link, :public, :pattern, :category_ids => [])
+    params.require(:quotation).permit(:author_id, :quotation, :source, :source_link, :public, :pattern,
+                                      :category_ids => [])
   end
 
   # categories are collected as one string in hidden field, transform in place to an array
@@ -245,12 +264,16 @@ class QuotationsController < ApplicationController
       authors = @authors
     end
 
-    logger.debug { "turbo_author() old_author_id=#{nol(old_author_id)}, author_id=#{nol(author_id)}, authors=#{nol(authors)}" }
+    logger.debug {
+      "turbo_author() old_author_id=#{nol(old_author_id)}, author_id=#{nol(author_id)}, authors=#{nol(authors)}"
+    }
 
     # author selection list for the letters submitted so far
-    turbo_stream_add_update("search_author_results", partial: "quotations/search_author_results", locals: { authors: authors })
+    turbo_stream_add_update("search_author_results", partial: "quotations/search_author_results",
+                                                     locals: { authors: authors })
     # fill author field if there is exactly one entry and animate it if there is a change
-    author_id && turbo_stream_add_update("search_author", partial: "quotations/search_author", locals: { author_id: author_id, animation: old_author_id.to_i != author_id.to_i ? :animated : :none })
+    author_id && turbo_stream_add_update("search_author", partial: "quotations/search_author",
+                                                          locals: { author_id: author_id, animation: old_author_id.to_i != author_id.to_i ? :animated : :none })
   end
 
   # Two Turbo Stream Updates for category autocompletion. Add a new category:
@@ -268,7 +291,10 @@ class QuotationsController < ApplicationController
   # rec_ids      - recommended category IDs (Array)
   # @categories  - up to 10 entries (Array Category[], nil)
   def turbo_category(category_id, category_ids, rec_ids)
-    logger.debug { "turbo_category() category_id=#{nol(category_id)}, @categories=#{nol(@categories)}, category_ids=#{nol(category_ids, true)} rec_ids=#{nol(rec_ids, true)}" }
+    logger.debug {
+      "turbo_category() category_id=#{nol(category_id)}, " +
+      "@categories=#{nol(@categories)}, category_ids=#{nol(category_ids, true)} " +
+      "rec_ids=#{nol(rec_ids, true)}"}
 
     # ensure category_ids existing as array
     category_ids = ids_to_array(category_ids)
@@ -285,57 +311,82 @@ class QuotationsController < ApplicationController
       categories = @categories
     end
 
-    logger.debug { "turbo_category() category_id=#{nol(category_id)}, categories=#{nol(categories)}, category_ids=#{nol(category_ids, true)}, rec_ids=#{nol(rec_ids, true)}" }
+    logger.debug {
+      "turbo_category() category_id=#{nol(category_id)}, categories=#{nol(categories)}, category_ids=#{nol(category_ids,
+                                                                                                           true)}, rec_ids=#{nol(
+                                                                                                             rec_ids, true
+                                                                                                           )}"
+    }
 
     # update the automplete search list or let the list disappear with categories []
-    turbo_stream_add_update("search_category_results", partial: "quotations/search_category_results", locals: { categories: categories, category_ids: category_ids, rec_ids: rec_ids })
+    turbo_stream_add_update("search_category_results", partial: "quotations/search_category_results",
+                                                       locals: { categories: categories, category_ids: category_ids, rec_ids: rec_ids })
 
     # update hidden field quotation[category_ids] and show list of collected and recommended categories
-    turbo_stream_add_update("search_category_collected", partial: "quotations/search_category_collected", locals: { categories: categories, category_id: category_id, category_ids: category_ids, rec_ids: rec_ids })
+    turbo_stream_add_update("search_category_collected", partial: "quotations/search_category_collected",
+                                                         locals: { categories: categories, category_id: category_id, category_ids: category_ids, rec_ids: rec_ids })
   end
-end
 
-# return [] for "" or "[]" or [""]
-# return [42,4711] for "42,4711" or "[42,4711]" or [42,4711]
-# returns [305, 464] for ["305", "464"]
-def ids_to_array(ids)
-  if ids.blank? or ids == "[]" or (ids.is_a?(Array) and ids.count == 1 and ids[0].blank?)
-    ids = []
-  elsif ids.is_a?(String)
-    ids = ids.tr("[]", "").split(",").map(&:to_i)
+  # return [] for "" or "[]" or [""]
+  # return [42,4711] for "42,4711" or "[42,4711]" or [42,4711]
+  # returns [305, 464] for ["305", "464"]
+  def ids_to_array(ids)
+    if ids.blank? or ids == "[]" or (ids.is_a?(Array) and ids.count == 1 and ids[0].blank?)
+      ids = []
+    elsif ids.is_a?(String)
+      ids = ids.tr("[]", "").split(",").map(&:to_i)
+    end
+    return ids.map(&:to_i)
   end
-  return ids.map(&:to_i)
-end
 
-# set @authors and @categories from autocompletion fields and return hidden fields authors ID and category IDs
-# scan params for create or update
-# - hidden field [:quotation][:author_id] returns old author ID
-# - hidden field [:quotation][:category_ids] returns list of old category IDs
-# - autocomplete field [:author] with first letters from "name, firstname, comment"
-#    -> this fills @authors
-# - autocomplete field [:category] with first letters
-#    -> this fills @categories
-# returns author ID and category IDs from hidden fields
-def scan_params_for_create_or_update
-  author_id = params[:quotation][:author_id]
-  category_ids = ids_to_array(params[:quotation][:category_ids])
-  @authors = Author.filter_by_name_firstname_description(my_sql_sanitize(params[:author]))
-  logger.debug { "#{@authors.count} authors found for #{nol(params[:author])}" }
-  @categories = Category.filter_by_category(my_sql_sanitize(params[:category]), category_ids)
-  logger.debug { "#{@categories.count} categories found for #{nol(params[:category])} and without #{nol(category_ids, true)}}" }
-  return [author_id, category_ids]
-end
+  # set @authors and @categories from autocompletion fields and return hidden fields authors ID and category IDs
+  # scan params for create or update
+  # - hidden field [:quotation][:author_id] returns old author ID
+  # - hidden field [:quotation][:category_ids] returns list of old category IDs
+  # - autocomplete field [:author] with first letters from "name, firstname, comment"
+  #    -> this fills @authors
+  # - autocomplete field [:category] with first letters
+  #    -> this fills @categories
+  # returns author ID and category IDs from hidden fields
+  def scan_params_for_create_or_update
+    author_id = params[:quotation][:author_id]
+    category_ids = ids_to_array(params[:quotation][:category_ids])
+    @authors = Author.filter_by_name_firstname_description(my_sql_sanitize(params[:author]))
+    logger.debug { "#{@authors.count} authors found for #{nol(params[:author])}" }
+    @categories = Category.filter_by_category(my_sql_sanitize(params[:category]), category_ids)
+    logger.debug {
+      "#{@categories.count} categories found for #{nol(params[:category])} and without #{nol(category_ids, true)}}"
+    }
+    return [author_id, category_ids]
+  end
 
-# split two ID list, separated by minus
-# "327,139,42-44,45"
-# pos is 0 or 1
-def split_two_id_arrays(param, pos)
-  splitted = param.split("-") if param
-  return param && splitted[pos] ? splitted[pos].split(",").map(&:to_i) : []
-end
+  # split two ID list, separated by minus
+  # "327,139,42-44,45"
+  # pos is 0 or 1
+  def split_two_id_arrays(param, pos)
+    splitted = param.split("-") if param
+    return param && splitted[pos] ? splitted[pos].split(",").map(&:to_i) : []
+  end
 
-def set_comments
-  @comments = Comment.where(commentable: @quotation)
-  @commentable_type = "Quotation"
-  @commentable_id = @quotation.id
+  def set_comments
+    @comments = Comment.where(commentable: @quotation)
+    @commentable_type = "Quotation"
+    @commentable_id = @quotation.id
+  end
+
+  def verify_and_improve_link(to_render)
+    new_link = UrlCheckerService.check(@quotation.source_link)
+    if @quotation.source_link.present? and new_link.nil?
+      flash[:error] = t("g.link_invalid", link: @quotation.source_link)
+      logger.info { "invalid link #{@quotation.source_link}" }
+      render to_render, status: :unprocessable_entity
+      return false
+    end
+    if new_link != @quotation.source_link
+      flash[:error] = t("g.link_changed", link: @quotation.source_link, new: new_link) # TODO change to :warn
+      logger.info "link changed from #{@quotation.source_link} to #{new_link}"
+      @quotation.source_link = new_link
+    end
+    return true
+  end
 end

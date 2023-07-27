@@ -201,6 +201,8 @@ en:
     id: Internal No.
     lightning: Lightning
     link: Link
+    link_changed: The link “%{link}” has been changed to “%{new}”.
+    link_invalid: The link “%{link}” cannot be accessed!
     locale: Language
     machine_translation_failed: the machine translation failed
     name: Name

@@ -201,6 +201,8 @@ de:
     id: Interne Nr.
     lightning: Blitz
     link: Link
+    link_changed: Der Link „%{link}” wurde geändert in „%{new}”.
+    link_invalid: Der Link „%{link}” kann nicht aufgerufen werden!
     locale: Sprache
     machine_translation_failed: die maschinelle Übersetzung scheiterte
     name: Name

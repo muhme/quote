@@ -58,6 +58,8 @@ class AuthorsController < ApplicationController
       return render :new, status: :unprocessable_entity
     end
 
+    return unless verify_and_improve_link(:new)
+
     begin
       # if we have wikipedia link, then find links in other locales and use author name from wikipedia
       WikipediaService.new.ask_wikipedia(actual_locale, @author)
@@ -79,7 +81,6 @@ class AuthorsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-
   end
 
   # PATCH/PUT /authors/1
@@ -103,6 +104,8 @@ class AuthorsController < ApplicationController
           @author.send("name_#{locale}=", nil)
           @author.send("link_#{locale}=", nil)
         end
+
+        return unless verify_and_improve_link(:edit)
 
         # if we have wikipedia link, then find links in other locales and use author name from wikipedia
         WikipediaService.new.ask_wikipedia(actual_locale, @author)
@@ -164,7 +167,7 @@ class AuthorsController < ApplicationController
         AND mst.translatable_type = 'Author'
         AND mst.key = 'name'
         AND mst.locale = '#{I18n.locale.to_s}'
-      WHERE 
+      WHERE
     SQL
     if letter =~ /[#{ALL_LETTERS[I18n.locale].join}]/
       sql << "mst.value REGEXP '^[#{mapped_letters(letter)}]'"
@@ -220,4 +223,19 @@ class AuthorsController < ApplicationController
     @commentable_id = @author.id
   end
 
+  def verify_and_improve_link(to_render)
+    new_link = UrlCheckerService.check(@author.link)
+    if @author.link.present? and new_link.nil?
+      flash[:error] = t("g.link_invalid", link: @author.link)
+      logger.info { "invalid link #{@author.link}" }
+      render to_render, status: :unprocessable_entity
+      return false
+    end
+    if new_link != @author.link
+      flash[:error] = t("g.link_changed", link: @author.link, new: new_link) # TODO change to :warn
+      logger.info "link changed from #{@author.link} to #{new_link}"
+      @author.link = new_link
+    end
+    return true
+  end
 end

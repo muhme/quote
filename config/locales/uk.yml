@@ -211,6 +211,8 @@ uk:
     id: Внутрішній номер
     lightning: Блискавка
     link: Посилання
+    link_changed: Посилання “%{link}” було змінено на “%{new}”.
+    link_invalid: Посилання “%{link}” неможливо відкрити!
     locale: Мова
     machine_translation_failed: не вдалося виконати машинний переклад
     name: Назва
