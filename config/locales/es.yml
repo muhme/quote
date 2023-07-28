@@ -90,8 +90,7 @@ es:
   authors:
     create:
       created: El autor "%{author}" ha sido creado.
-      failed: ¡La creación del autor "%{author}" ha fallado! (%{exception})
-    description_sample: p. ej., Escritor noruego (n. 1968)
+    description_sample: p. ej., escritor noruego (n. 1968)
     destroy:
       deleted: La entrada para el autor "%{author}" ha sido eliminada.
     edit:
@@ -115,7 +114,6 @@ es:
     category_sample: una palabra como sustantivo en singular, por ejemplo, Éxito
     create:
       created: La categoría "%{category}" ha sido creada.
-      failed: ¡La creación de la categoría "%{category}" ha fallado! (%{exception})
     destroy:
       deleted: La categoría "%{category}" ha sido eliminada.
     edit:
@@ -203,9 +201,12 @@ es:
     id: Nº interno
     lightning: haz de luz
     link: Enlace
+    link_changed: El enlace “%{link}” ha cambiado a “%{new}”.
+    link_invalid: "¡El enlace “%{link}” no se puede acceder!"
     locale: Idioma
     machine_translation_failed: la traducción automática ha fallado
     name: Nombre
+    name_seperator: " "
     no_admin: "¡No hay administrador!"
     no_right: "¡No hay derecho %{name} %{id} a %{msg}!"
     not_logged_in: No registrado

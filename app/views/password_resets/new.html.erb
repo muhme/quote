@@ -4,7 +4,7 @@
  
 <div class="actions">
   <%= form_tag password_resets_path do %>
-    <%= label_tag(:email, label_and_description(t(".email"), t(".email_description"))) %><br />
+    <%= label_tag :email, label_and_description(t(".email"), t(".email_description")), class: "font-size-smaller" %><br />
     <%= text_field_tag(:email, '', autofocus: true) %><br /><br />
     <%= submit_tag t('.send') %>
     &nbsp; <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: "0"), root_url) %>

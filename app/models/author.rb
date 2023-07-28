@@ -8,6 +8,7 @@ class Author < ApplicationRecord
   belongs_to :user
   has_many :quotations
   has_many :comments, as: :commentable
+  before_save :unescape_link
   before_destroy :check_quotes_and_comments
   validates :name, presence: false, length: { maximum: 64 }, uniqueness: false
   validates :firstname, presence: false, length: { maximum: 64 }, uniqueness: false
@@ -124,5 +125,10 @@ class Author < ApplicationRecord
 
   def expire_author_init_chars_cache
     Rails.cache.delete('author_init_chars_cache')
+  end
+
+  # often by cut&paste from browser URL decode is needed and not damaging
+  def unescape_link
+    self.link = CGI.unescape(link) if self.link.present?
   end
 end

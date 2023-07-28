@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     # static_pages controller with historical and nicer 'start' URL
     get 'start/humans'         => 'static_pages#humans'
     get 'start/contact'        => 'static_pages#contact'
-    get 'start/joomla_english' => 'static_pages#joomla_english'
+    get 'start/joomla_english' => redirect('/en/joomla') # map the old page to new I18n
     get 'start/project'        => 'static_pages#project'
     get 'start/use'            => 'static_pages#use'
     get 'start/help'           => 'static_pages#help'
@@ -50,6 +50,9 @@ Rails.application.routes.draw do
     get "/404" => "static_pages#not_found"
     get "/500" => "static_pages#internal_server"
     get "/422" => "static_pages#unprocessable"
+
+    # even if we have linked unique asset link some are still requesting favicon.ico from root, do a redirect
+    get '/favicon.ico' => redirect(ActionController::Base.helpers.asset_path('favicon.ico'))
 
     # catch all
     match "*path" => "static_pages#catch_all", via: :all

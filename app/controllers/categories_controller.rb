@@ -81,19 +81,28 @@ class CategoriesController < ApplicationController
       return render :new, status: :unprocessable_entity
     end
 
-    actual_locale = I18n.locale
-    error_logged = false
-    I18n.available_locales.each do |locale|
-      if locale != actual_locale
-        translated = deepl_translate_words(@category.category(locale: actual_locale), actual_locale, locale)
-        if translated.present?
-          @category.send("category_#{locale}=", translated)
-        elsif !error_logged
-          flash[:error] = t("g.machine_translation_failed")
-          error_logged = true
+    begin
+      actual_locale = I18n.locale
+      error_logged = false
+      I18n.available_locales.each do |locale|
+        if locale != actual_locale
+          translated = DeeplService.new.translate_words(@category.category(locale: actual_locale), actual_locale,
+                                                        locale)
+          if translated.present?
+            @category.send("category_#{locale}=", translated)
+          elsif !error_logged
+            flash[:error] = t("g.machine_translation_failed")
+            error_logged = true
+          end
         end
       end
+    rescue Exception => exc
+      # note problem with the translation and continue
+      problem = "#{exc.class} #{exc.message}"
+      logger.error "create category machine translation problem: #{problem}"
+      flash[:error] = "#{t("g.machine_translation_failed")} #{problem}"
     end
+
     @category.public = current_user.admin ? params[:category][:public] : false
 
     if @category.save
@@ -104,11 +113,6 @@ class CategoriesController < ApplicationController
       logger.error "create failed with #{e}"
       render :new, status: :unprocessable_entity
     end
-  rescue Exception => exc
-    problem = "#{exc.class} #{exc.message}"
-    logger.error "create category failed: #{problem}"
-    flash[:error] = t(".failed", category: @category.category, exception: problem)
-    render :new, status: :unprocessable_entity
   end
 
   # PATCH/PUT /categories/1
@@ -117,24 +121,32 @@ class CategoriesController < ApplicationController
 
     category_params
     actual_locale = I18n.locale
+    @category.category = params[:category]["category_#{actual_locale}"]
     error_logged = false
-    I18n.available_locales.each do |locale|
-      if params[:translate]
-        if locale == actual_locale
-          @category.category = params[:category]["category_#{locale}"]
-        else
-          translated = deepl_translate_words(params[:category]["category_#{actual_locale}"], actual_locale, locale)
-          if translated.present?
-            @category.send("category_#{locale}=", translated)
-          elsif !error_logged
-            flash[:error] = t("g.machine_translation_failed", locale: actual_locale)
-            error_logged = true
+    begin
+      I18n.available_locales.each do |locale|
+        if params[:translate]
+          if locale != actual_locale
+            translated = DeeplService.new.translate_words(params[:category]["category_#{actual_locale}"], actual_locale,
+                                                          locale)
+            if translated.present?
+              @category.send("category_#{locale}=", translated)
+            elsif !error_logged
+              flash[:error] = t("g.machine_translation_failed", locale: actual_locale)
+              error_logged = true
+            end
           end
+        else
+          @category.send("category_#{locale}=", params[:category]["category_#{locale}"])
         end
-      else
-        @category.send("category_#{locale}=", params[:category]["category_#{locale}"])
       end
+    rescue Exception => exc
+      # note problem with the translation and continue
+      problem = "#{exc.class} #{exc.message}"
+      logger.error "update category machine translation problem: #{problem}"
+      flash[:error] = "#{t("g.machine_translation_failed")} #{problem}"
     end
+
     @category.public = current_user.admin ? params[:category][:public] : false
 
     if @category.save

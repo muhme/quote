@@ -90,7 +90,6 @@ uk:
   authors:
     create:
       created: Автор "%{author}" створений.
-      failed: Створення автора "%{author}" не вдалося! (%{exception})
     description_sample: напр. норвезький письменник (нар. 1968)
     destroy:
       deleted: Запис автора "%{author}" видалений.
@@ -115,7 +114,6 @@ uk:
     category_sample: слово як іменник в однині, наприклад Успіх
     create:
       created: Категорія "%{category}" створена.
-      failed: Створення категорії "%{category}" не вдалося! (%{exception})
     destroy:
       deleted: Категорія "%{category}" видалена.
     edit:
@@ -213,9 +211,12 @@ uk:
     id: Внутрішній номер
     lightning: Блискавка
     link: Посилання
+    link_changed: Посилання “%{link}” було змінено на “%{new}”.
+    link_invalid: Посилання “%{link}” неможливо відкрити!
     locale: Мова
     machine_translation_failed: не вдалося виконати машинний переклад
     name: Назва
+    name_seperator: " "
     no_admin: Немає прав адміністратора!
     no_right: Немає прав %{name} %{id} на %{msg}!
     not_logged_in: Не ввійшли до системи

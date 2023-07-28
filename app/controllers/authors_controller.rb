@@ -58,8 +58,21 @@ class AuthorsController < ApplicationController
       return render :new, status: :unprocessable_entity
     end
 
-    if !author_deepl_translate(actual_locale)
-      flash[:error] = t("g.machine_translation_failed", locale: actual_locale)
+    return unless verify_and_improve_link(:new)
+
+    begin
+      # if we have wikipedia link, then find links in other locales and use author name from wikipedia
+      WikipediaService.new.ask_wikipedia(actual_locale, @author)
+
+      # translate description and name (if not already found on wikipedia)
+      if !DeeplService.new.author_translate(actual_locale, @author)
+        flash[:error] = t("g.machine_translation_failed", locale: actual_locale)
+      end
+    rescue Exception => exc
+      # note problem with the translation and continue
+      problem = "#{exc.class} #{exc.message}"
+      logger.error "create author machine translation problem: #{problem}"
+      flash[:error] = "#{t("g.machine_translation_failed")} #{problem}"
     end
 
     if @author.save
@@ -68,13 +81,6 @@ class AuthorsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-
-    # NICE give warning if the same autor already exists
-  rescue Exception => exc
-    problem = "#{exc.class} #{exc.message}"
-    logger.error "create author failed: #{problem}"
-    flash[:error] = t(".failed", author: @author.get_author_name_or_blank, exception: problem)
-    render :new, status: :unprocessable_entity
   end
 
   # PATCH/PUT /authors/1
@@ -89,10 +95,34 @@ class AuthorsController < ApplicationController
       @author.firstname   = params[:author]["firstname_#{actual_locale}"]
       @author.name        = params[:author]["name_#{actual_locale}"]
       @author.link        = params[:author]["link_#{actual_locale}"]
-      if !author_deepl_translate(actual_locale)
-        flash[:error] = t("g.machine_translation_failed", locale: actual_locale)
+
+      begin
+        # first clean name and firstname to distingues it is already set by wikipedia or not
+        (I18n.available_locales - [actual_locale]).each do |locale|
+          @author.send("description_#{locale}=", nil)
+          @author.send("firstname_#{locale}=", nil)
+          @author.send("name_#{locale}=", nil)
+          @author.send("link_#{locale}=", nil)
+        end
+
+        return unless verify_and_improve_link(:edit)
+
+        # if we have wikipedia link, then find links in other locales and use author name from wikipedia
+        WikipediaService.new.ask_wikipedia(actual_locale, @author)
+
+        # translate description and name (if not already found on wikipedia)
+        if !DeeplService.new.author_translate(actual_locale, @author)
+          flash[:error] = t("g.machine_translation_failed", locale: actual_locale)
+        end
+      rescue Exception => exc
+        # note problem with the translation and continue
+        problem = "#{exc.class} #{exc.message}"
+        logger.error "update author machine translation problem: #{problem}"
+        flash[:error] = "#{t("g.machine_translation_failed")} #{problem}"
       end
     else
+      @author.link = params[:author]["link_#{actual_locale}"]
+      return unless verify_and_improve_link(:edit)
       I18n.available_locales.each do |locale|
         @author.send("description_#{locale}=", params[:author]["description_#{locale}"])
         @author.send("firstname_#{locale}=", params[:author]["firstname_#{locale}"])
@@ -128,26 +158,26 @@ class AuthorsController < ApplicationController
     end
   end
 
-  # get authors list for a letter or all-no-letters
+  # get authors list for first name letter or all-no-letters and no-name
   # NICE only showing public or own entries to be extended like in index
   def list_by_letter
     letter = params[:letter].first.upcase
     sql = <<-SQL
     SELECT DISTINCT a.* FROM authors a
-      INNER JOIN mobility_string_translations mst
+      LEFT JOIN mobility_string_translations mst
         ON a.id = mst.translatable_id
         AND mst.translatable_type = 'Author'
-        AND mst.locale = '#{I18n.locale.to_s}'
         AND mst.key = 'name'
-      WHERE mst.value
+        AND mst.locale = '#{I18n.locale.to_s}'
+      WHERE
     SQL
     if letter =~ /[#{ALL_LETTERS[I18n.locale].join}]/
-      sql << " REGEXP '^[#{mapped_letters(letter)}]'"
+      sql << "mst.value REGEXP '^[#{mapped_letters(letter)}]'"
     else
       # 1. needed to be handled here, as route restrictions constraints not trivial working with UTF8
       # 2. and we simple map all to "*" to ignore special cases like this letter is not part of actual locale letters
       params[:letter] = "*"
-      sql << " NOT REGEXP '^[#{ALL_LETTERS[I18n.locale].join}]'"
+      sql << "(mst.value NOT REGEXP '^[#{ALL_LETTERS[I18n.locale].join}]' OR mst.value IS NULL OR mst.value = '')"
     end
     sql << " ORDER BY mst.value"
     @authors = Author.paginate_by_sql sql, page: params[:page], per_page: PER_PAGE
@@ -165,109 +195,6 @@ class AuthorsController < ApplicationController
   end
 
   private
-
-  # Der Text wurde geschrieben von dem Autor Johann Wolfgang von Goethe.
-  # The text was written by the author Johann Wolfgang von Goethe.
-  # El texto fue escrito por el autor Johann Wolfgang von Goethe.
-  # 著者はヨハン・ヴォルフガング・フォン・ゲーテ。
-  # Текст написаний автором Йоганном Вольфгангом фон Гете.
-  TRANSLATE_NAME = {
-    de: ["Der Text wurde geschrieben von dem Autor mit dem Namen °°°.",
-         "Der Text wurde von einem Autor namens °°° geschrieben.",
-         "Der Text wurde von einem Autor mit dem Namen °°° geschrieben.",
-         "Es wurde von einem Autor namens Thomas Mann geschrieben."],
-    en: ["The text was written by the author with the name °°°."],
-    es: ["El texto fue escrito por un autor llamado °°°.",
-         "El texto fue escrito por el autor llamado °°°."],
-    ja: ["°°°という作家が書いた文章だ。",
-         "°°°という作家が書いたものだ。",
-         "この文章°°°という作家によって書かれた。"],
-    uk: ["Текст був написаний автором на ім'я °°°."],
-  }.freeze
-
-  # translates authors name, first name and description
-  # can throw DeepL::Exception
-  # returns true on success, else false
-  def author_deepl_translate(src_locale, author = @author)
-    dst_locales = I18n.available_locales - [src_locale]
-    src_deleminator = src_locale == :ja ? "・" : " "
-    if ENV["DEEPL_API_KEY"].present?
-      begin
-        text = TRANSLATE_NAME[src_locale][0].gsub("°°°", first_last_or_both(author, src_deleminator))
-        dst_locales.each do |dst_locale|
-          # description
-          if (author.description.present?)
-            ret = deepl_translate_words(author.description, src_locale.to_s.upcase, dst_locale.to_s.upcase)
-          else
-            ret = ""
-          end
-          author.send("description_#{dst_locale}=", ret)
-          # firstname and name
-          ret = DeepL.translate(text, src_locale.to_s.upcase, dst_locale.to_s.upcase).to_s
-          logger.debug { "translated #{src_locale} \”#{text}\" -> #{dst_locale} \"#{ret}\"" }
-          # "Текст був написаний автором Томасом Чендлером Галібартоном (Thomas Chandler Haliburton)."
-          ret = ret.gsub(/\s?\(.*?\)/, '') # delete space + round brackets with the content inside
-          found = false
-          TRANSLATE_NAME[dst_locale].each do |e|
-            pattern = Regexp.new(e.gsub("°°°", "([^.。]+)").gsub(".", "\\."))
-            if (match = ret.match(pattern))
-              found = match[1].split(/ |・/)
-              mode = names_mode(author)
-              if mode == :both
-                author.send("name_#{dst_locale}=", found.pop)
-                author.send("firstname_#{dst_locale}=", found.join(dst_locale == :ja ? "・" : " "))
-                logger.debug {
-                  "#{dst_locale} firstname=[#{author.firstname(locale: dst_locale)}] name=[#{author.name(locale: dst_locale)}]"
-                }
-              elsif mode == :firstname
-                author.send("firstname_#{dst_locale}=", match[1])
-                logger.debug { "#{dst_locale} firstname=[#{author.firstname(locale: dst_locale)}]" }
-              elsif mode == :name
-                author.send("name_#{dst_locale}=", match[1])
-                logger.debug { "#{dst_locale} name=[#{author.name(locale: dst_locale)}]" }
-              end
-              found = true
-              break # done
-            end
-          end
-          if (found == false)
-            logger.warn { "translation was not matching #{src_locale} \”#{text}\" -> #{dst_locale} \"#{ret}\"" }
-            # translate without context
-            ["name", "firstname"].each do |attr|
-              value = author.send(attr)
-              if value.present?
-                ret = deepl_translate_words(value, src_locale.to_s.upcase, dst_locale.to_s.upcase)
-                author.send("#{attr}_#{dst_locale}=", ret)
-                logger.debug { "#{dst_locale} #{attr}=[#{ret}]" }
-              end
-            end
-          end
-        end
-        return true
-      rescue DeepL::Exceptions::Error => exc
-        logger.error "DeepL translation failed #{exc.class} #{exc.message}"
-      end
-    else
-      logger.warn("DEEPL_API_KEY environment is missing, no DeepL translation")
-    end
-    return false
-  end
-
-  def first_last_or_both(author, src_deleminator)
-    return "#{author.firstname}#{src_deleminator}#{author.name}" if author.firstname.present? and author.name.present?
-    return author.firstname if author.firstname.present?
-    return author.name if author.name.present?
-
-    return ""
-  end
-
-  def names_mode(author)
-    return :both if author.firstname.present? and author.name.present?
-    return :firstname if author.firstname.present?
-    return :name if author.name.present?
-
-    return ""
-  end
 
   def set_author
     @author = Author.find(params[:id])
@@ -296,5 +223,21 @@ class AuthorsController < ApplicationController
     @comments = Comment.where(commentable: @author)
     @commentable_type = "Author"
     @commentable_id = @author.id
+  end
+
+  def verify_and_improve_link(to_render)
+    new_link = UrlCheckerService.check(@author.link)
+    if @author.link.present? and new_link.nil?
+      flash[:error] = t("g.link_invalid", link: @author.link)
+      logger.info { "invalid link #{@author.link}" }
+      render to_render, status: :unprocessable_entity
+      return false
+    end
+    if new_link != @author.link
+      flash[:error] = t("g.link_changed", link: @author.link, new: new_link) # TODO change to :warn
+      logger.info "link changed from #{@author.link} to #{new_link}"
+      @author.link = new_link
+    end
+    return true
   end
 end

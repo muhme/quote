@@ -71,33 +71,38 @@ module ApplicationHelper
     long_name[0, 80]
   end
 
-  # gives links to the authors by 1st letter as four-rows-table
-  # A B C D E F G
-  # H I J K L M N
-  # O P Q R S T U
-  # V W X Y Z *
-  def author_links(locale)
+  # gives links to the authors by 1st letter as table
+  # e.g. for :en
+  #   A B C D E F G H I
+  #   J K L M N O P Q R
+  #   S T U V W X Y Z *
+  #
+  def author_links
     init_chars = Author.init_chars
+    all = BASE_LETTERS[I18n.locale].dup
+    if I18n.locale == :ja
+      all[-3] = "*" # use a not used letter place, to save one more line
+    else
+      all << "*"
+    end
     ret = "<table id=\"letter\"><tr>"
-    all = ("A".."Z").to_a
-    all << "*"
     for i in 0..(all.length - 1)
       if init_chars.include?(all[i])
-        ret << "<td>" + link_to(all[i], locale: locale, controller: :authors, action: :list_by_letter, letter: all[i]) + "</td>"
+        ret << "<td>" + link_to(all[i], controller: :authors, action: :list_by_letter, letter: all[i]) + "</td>"
       else
         ret << "<td id=\"unused\">#{all[i]}</td>"
       end
-      ret << "</tr><tr>" if ((i + 1) % 7) == 0
+      ret << "</tr><tr>" if ((i + 1) % (I18n.locale == :ja ? 5 : 9)) == 0
     end
     ret << "</tr></table>"
   end
 
   # gives links to the categories by 1st letter as table
-  # en/de/es
-  #   A B C D E F G
-  #   H I J K L M N
-  #   O P Q R S T U
-  #   V W X Y Z *
+  # e.g. for :en
+  #   A B C D E F G H I
+  #   J K L M N O P Q R
+  #   S T U V W X Y Z *
+  #
   def category_links
     init_chars = Category.init_chars
     all = BASE_LETTERS[I18n.locale].dup
@@ -159,7 +164,7 @@ module ApplicationHelper
     end
     unless name.blank?
       ret = truncate(html_escape(ret), length: 25) # to have enough space for the <b>A</b> and not truncate in tag
-      ret += " " unless firstname.blank?
+      ret += t('g.name_seperator') unless firstname.blank?
       ret += "<b>".html_safe + h(name[0..0]) + "</b>".html_safe + h(name[1..name.size])
     end
     truncate(ret, length: 40, escape: false)

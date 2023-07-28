@@ -1,7 +1,7 @@
 <%= turbo_frame_tag :search_category_collected do %>
   <%#= raw("#{category_ids.class} category_ids=#{category_ids}, #{rec_ids.class} rec_ids=#{rec_ids}<br />") %>
   <%= hidden_field_tag 'quotation[category_ids][]', category_ids.join(',') %>
-  <%= label_tag :category, t('g.number_of_categories', count: category_ids.count) %>
+  <%= label_tag :category, t('g.number_of_categories', count: category_ids.count), class: "font-size-smaller" %>
   <%# so far collected category list, linked to be removed from list %>
   <% category_ids.each do |id| %>
     <%# use CSS class="animated" for new added category %>

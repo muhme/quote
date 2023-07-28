@@ -4,9 +4,8 @@
 
 <h2>Willkommen</h2>
 <p>Um zur Startseite der Webanwendung zurückkehren, klicke einfach auf das Logo <%= image_tag("quote_service_16.png", :alt => "Logo", :title => "www.zitat-service.de") %> oben links klicken. Dort hast du z.B. eine Textsuche über alle Zitate.</p>
-<div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Das Anlegen eines Zites wird gezeigt.", :title => "Ansehen", :border => 1, size: '466x315') %><br />Beispiel: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/de/quotations/898' %></div>
 
-<h2>Sprachauswahl</h2>
+<h2>Sprachauswahl 🇩🇪</h2>
 <p>
   Mit einem Klick auf die Flagge kannst du die gewünschte Sprache auswählen.
   Möglich ist auch der direkte Aufruf,
@@ -15,8 +14,14 @@
   Zitate, Kategorien und Kommentare werden in der gerade ausgewählten Sprache erstellt.
   Anschließend werden die Kategorien automatisch in die anderen Sprachen übersetzt.
   Bitte beachte, dass wir für Englisch die amerikanische Schreibweise verwenden.
+</p><p>
+  Englisch ist die Standardsprache unserer Webanwendung.
+  Sollten bestimmte Felder (z.B. ein Web-Link) in anderen Sprachen nicht ausgefüllt sein,
+  ergänzen wir diese automatisch mit den Informationen aus der englischen Version.
+  Damit stellen wir sicher, dass dir stets alle benötigten Informationen zur Verfügung stehen.
 </p>
 
+<div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Das Anlegen eines Zites wird gezeigt.", :title => "Ansehen", :border => 1, size: '466x315') %><br />Beispiel: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/de/quotations/898' %></div>
 <h2>Zitate</h2>
 <p>In der Liste der <%= link_to 'Zitate', '/quotations' %> kannst du mit dem Auge <%= image_tag("eye.png", :alt => "Auge", :title => "Ansehen") %> alle Einzelheiten zu einem Zitat sehen. Wenn du angemeldest bist, dann kannst du neue Zitate eingeben. du kannst deine eigenen Zitate bearbeiten, indem du auf den Stift <%= image_tag("pencil.png", :alt => "Stift", :title => "Ändern") %> klickst, oder löschen, indem du auf das rote Kreuz <%= image_tag("cancel.png", :alt => "rotes Kreuz", :title => "Löschen") %>  klickst. Bitte beachte, dass das Löschen nur möglich ist, wenn das Zitat keine Kommentare hat.</p>
 <p>Wenn du ein neues Zitat hinzufügst, kannst du den Autor auswählen, indem du die ersten Buchstaben seines Nachnamens eingibst. Wenn du den Autor nicht kennst, lasse das Feld einfach frei.</p>
@@ -52,6 +57,7 @@
 
 <h2>Autoren</h2>
 <p>Wenn du die Liste der <%= link_to 'Autoren', '/authors' %> aufrufst, kannst du auf das Auge <%= image_tag("eye.png", :alt => "Auge", :title => "Ansehen") %> klicken, um weitere Details zu einem Autor zu sehen. Falls du selbst einen Autor angelegt hast, kannst du ihn mit dem Stift <%= image_tag("pencil.png", :alt => "Stift", :title => "Ändern") %> bearbeiten. Außerdem kannst du sehen, wie viele Zitate einem Autor zugeordnet sind und alle Zitate dieses Autors anzeigen lassen.</p>
+<p>Autoren werden mit Vorname, Nachname und Beschreibung maschinell in die anderen Sprachen übersetzt. Wenn der Link ein Wikipedia-Artikel ist, dann wird versucht die Wikipedia-Artikel in den anderen Sprachen zu finden. Du kannst die Übersetzung der von dir angelegten Autoren bearbeiten oder erneut übersetzen. 
 <p>Du kannst einen von dir erstellten Autoren-Eintrag durch Klicken auf das rote Kreuz <%= image_tag("cancel.png", :alt => "rotes Kreuz", :title => "Löschen") %> löschen, sofern dieser keine Zitate oder Kommentare enthält.</p>
 
 <h2 id="comments">Kommentare</h2>

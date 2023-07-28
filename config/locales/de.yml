@@ -90,8 +90,7 @@ de:
   authors:
     create:
       created: Der Autor „%{author}” wurde angelegt.
-      failed: Das Anlegen des Autors „%{author}” ist gescheitert! (%{exception})
-    description_sample: z.B. norwegischer Schriftsteller (*1968)
+    description_sample: z.B. Norwegischer Schriftsteller (*1968)
     destroy:
       deleted: Der Eintrag für den Autor „%{author}” wurde gelöscht.
     edit:
@@ -115,7 +114,6 @@ de:
     category_sample: ein Wort als Substantiv in der Einzahl, z.B. Erfolg
     create:
       created: Die Kategorie „%{category}” wurde angelegt.
-      failed: Das Anlegen der Kategorie „%{category}” ist gescheitert! (%{exception})
     destroy:
       deleted: Die Kategorie „%{category}” wurde gelöscht.
     edit:
@@ -203,9 +201,12 @@ de:
     id: Interne Nr.
     lightning: Blitz
     link: Link
+    link_changed: Der Link „%{link}” wurde geändert in „%{new}”.
+    link_invalid: Der Link „%{link}” kann nicht aufgerufen werden!
     locale: Sprache
     machine_translation_failed: die maschinelle Übersetzung scheiterte
     name: Name
+    name_seperator: " "
     no_admin: Kein Administrator!
     no_right: Kein Recht %{name} ID=%{id} zu %{msg}!
     not_logged_in: Nicht angemeldet

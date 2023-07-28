@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  include ActionView::Helpers::TextHelper # for truncate()
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   # GET /comments only for admins

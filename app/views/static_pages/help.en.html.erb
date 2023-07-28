@@ -4,9 +4,8 @@
 
 <h2>Welcome</h2>
 <p>To return to the home page of the web application, simply click on the logo <%= image_tag("quote_service_16.png", :alt => "Logo", :title => "www.zitat-service.de") %> in the top left corner. There you have e.g. a text search over all quotes.</p>
-<div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Creating a quote is shown.", :title => "View", :border => 1, size: '466x315') %><br />Example: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/en/quotations/898' %></div>
 
-<h2>Language Selection</h2>
+<h2>Language Selection 🇺🇸</h2>
 <p>By clicking on the flag, you can select the desired language.
    Direct access is also possible, e.g., for English with:
    <a href="https://www.zitat-service.de/en/">https://www.zitat-service.de/en/</a>.
@@ -14,8 +13,14 @@
    Quotes, categories, and comments are created in the currently selected language.
    Subsequently, the categories are automatically translated into other languages.
    Please note that we use American spelling for English.
+</p><p>
+   English is the default language of our web application.
+   If certain fields (such as a web link) are not filled out in other languages,
+   we automatically supplement them with information from the English version.
+   This ensures that all necessary information is always available to you.
 </p>
 
+<div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Creating a quote is shown.", :title => "View", :border => 1, size: '466x315') %><br />Example: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/en/quotations/898' %></div>
 <h2>Quotes</h2>
 <p>In the list of <%= link_to 'quotes', '/en/quotations' %>, you can view all the details of a quote by clicking on the eye <%= image_tag("eye.png", :alt => "Eye", :title => "View") %>. If you are logged in, you can enter new quotes. You can edit your own quotes by clicking on the pencil <%= image_tag("pencil.png", :alt => "Pencil", :title => "Edit") %>, or delete them by clicking on the red cross <%= image_tag("cancel.png", :alt => "Red cross", :title => "Delete") %>. Please note that deletion is only possible if the quote has no comments.</p>
 <p>When adding a new quote, you can select the author by typing the first letters of their last name. If you do not know the author, simply leave the field blank.</p>
@@ -53,6 +58,7 @@ allowed, but there should be no more than five to ten quotes per author. When it
 
 <h2>Authors</h2>
 <p>When you view the list of <%= link_to 'authors', '/en/authors' %>, you can click on the eye <%= image_tag("eye.png", :alt => "Eye", :title => "View") %> to see more details about an author. If you have created an author yourself, you can edit them using the pencil <%= image_tag("pencil.png", :alt => "Pencil", :title => "Edit") %>. You can also see how many quotes are assigned to an author and display all quotes from that author.</p>
+<p>Authors are machine-translated into other languages, considering their first name, last name, and description. If the link refers to a Wikipedia article, an attempt is made to find the corresponding articles in other languages. You have the option to edit or re-translate the translations of the authors you have created.</p>
 <p>You can delete an author entry you've created by clicking on the red cross <%= image_tag("cancel.png", :alt => "red cross", :title => "Delete") %> as long as it doesn't contain any quotes or comments.</p>
 
 <h2 id="comments">Comments</h2>

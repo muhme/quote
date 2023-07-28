@@ -4,9 +4,8 @@
 
 <h2>Bienvenida</h2>
 <p>Para volver a la página principal de la aplicación web, simplemente haz clic en el logo <%= image_tag("quote_service_16.png", :alt => "Logo", :title => "www.zitat-service.de") %> en la esquina superior izquierda. Ahí tienes, por ejemplo, una búsqueda de texto de todas las citas.</p>
-<div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Se muestra cómo crear una cita.", :title => "Ver", :border => 1, size: '466x315') %><br />Ejemplo: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/es/quotations/898' %></div>
 
-<h2>Selección de idioma</h2>
+<h2>Selección de idioma 🇪🇸</h2>
 <p>
   Al hacer clic en la bandera, puedes seleccionar el idioma deseado.
   El acceso directo también es posible, por ejemplo, para inglés con:
@@ -15,8 +14,14 @@
   Las citas, categorías y comentarios se crean en el idioma seleccionado actualmente.
   Posteriormente, las categorías se traducen automáticamente a otros idiomas.
   Por favor, ten en cuenta que utilizamos la ortografía americana para el inglés.
+</p><p>
+  El inglés es el idioma predeterminado de nuestra aplicación web.
+  Si ciertos campos (como un enlace web) no están completos en otros idiomas,
+  los complementamos automáticamente con la información de la versión en inglés.
+  Esto asegura que siempre tengas a tu disposición toda la información necesaria.
 </p>
 
+<div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Se muestra cómo crear una cita.", :title => "Ver", :border => 1, size: '466x315') %><br />Ejemplo: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/es/quotations/898' %></div>
 <h2>Citas</h2>
 <p>En la lista de <%= link_to 'citas', '/es/quotations' %>, puedes ver todos los detalles de una cita haciendo clic en el ojo <%= image_tag("eye.png", :alt => "Ojo", :title => "Ver") %>. Si has iniciado sesión, puedes ingresar nuevas citas.
 Puedes editar tus propias citas haciendo clic en el lápiz <%= image_tag("pencil.png", :alt => "Lápiz", :title => "Editar") %>, o eliminarlas haciendo clic en la cruz roja <%= image_tag("cancel.png", :alt => "Cruz roja", :title => "Eliminar") %>. Por favor, ten en cuenta que la eliminación sólo es posible si la cita no tiene comentarios.</p>
@@ -54,6 +59,7 @@ Puedes editar tus propias citas haciendo clic en el lápiz <%= image_tag("pencil
 
 <h2>Autores</h2>
 <p>Al ver la lista de <%= link_to 'autores', '/es/authors' %>, puedes hacer clic en el ojo <%= image_tag("eye.png", :alt => "Ojo", :title => "Ver") %> para ver más detalles sobre un autor. Si has creado un autor tú mismo, puedes editarlo usando el lápiz <%= image_tag("pencil.png", :alt => "Lápiz", :title => "Editar") %>. También puedes ver cuántas citas están asignadas a un autor y mostrar todas las citas de ese autor.</p>
+<p>Los autores se traducen automáticamente a otros idiomas, teniendo en cuenta su nombre, apellido y descripción. Si el enlace se refiere a un artículo de Wikipedia, se intentará encontrar los artículos correspondientes en otros idiomas. Tienes la opción de editar o volver a traducir las traducciones de los autores que has creado.</p>
 <p>Puedes eliminar una entrada de autor que hayas creado haciendo clic en la cruz roja <%= image_tag("cancel.png", :alt => "cruz roja", :title => "Eliminar") %> siempre que no contenga ninguna cita o comentario.</p>
 
 <h2 id="comments">Comentarios</h2>
