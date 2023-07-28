@@ -26,7 +26,7 @@ class Author < ApplicationRecord
   # gives an array with initial letters from all existing author names plus '*' if no mapping exists
   # e.g. ["A", "C", "D" ... "*"]
   def Author.init_chars
-    Rails.cache.fetch('author_init_chars', expires_in: 1.hours) do
+    Rails.cache.fetch("author_init_chars_#{I18n.locale}", expires_in: 1.hours) do
       # Fetch all category names in the current locale
       author_names = Author.i18n.select(:name).distinct.pluck(:name)
       # Extract the initial character of each category name, map to base letter, and eliminate doubled entries

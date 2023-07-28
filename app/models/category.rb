@@ -35,7 +35,7 @@ class Category < ApplicationRecord
   # gives an array with all existing categories names initial chars plus '*' if no mapping exists
   # e.g. ["a", "b", "d" ... "z", "*"]
   def Category.init_chars
-    Rails.cache.fetch('category_init_chars', expires_in: 1.hours) do
+    Rails.cache.fetch("category_init_chars_#{I18n.locale}", expires_in: 1.hours) do
       # Fetch all category names in the current locale
       category_names = Category.i18n.select(:category).distinct.pluck(:category)
       # Extract the initial character of each category name, map to base letter, and eliminate doubled entries
