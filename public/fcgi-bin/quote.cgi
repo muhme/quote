@@ -135,7 +135,7 @@ sub authorAndSource($$$$$$) {
             AND mst.translatable_type = 'Category'
             AND mst.value = ?";
         }
-        $sql .= " and a.name = ?" if $author;
+        $sql .= " and n_mst.value = ?" if $author;
         $sql .= " ORDER BY rand() LIMIT 1";
         my @statement = ($sql);
         push (@statement, undef); # unused \%attr
