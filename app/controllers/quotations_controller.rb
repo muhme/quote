@@ -293,8 +293,9 @@ class QuotationsController < ApplicationController
   def turbo_category(category_id, category_ids, rec_ids)
     logger.debug {
       "turbo_category() category_id=#{nol(category_id)}, " +
-      "@categories=#{nol(@categories)}, category_ids=#{nol(category_ids, true)} " +
-      "rec_ids=#{nol(rec_ids, true)}"}
+        "@categories=#{nol(@categories)}, category_ids=#{nol(category_ids, true)} " +
+        "rec_ids=#{nol(rec_ids, true)}"
+    }
 
     # ensure category_ids existing as array
     category_ids = ids_to_array(category_ids)
@@ -312,10 +313,9 @@ class QuotationsController < ApplicationController
     end
 
     logger.debug {
-      "turbo_category() category_id=#{nol(category_id)}, categories=#{nol(categories)}, category_ids=#{nol(category_ids,
-                                                                                                           true)}, rec_ids=#{nol(
-                                                                                                             rec_ids, true
-                                                                                                           )}"
+      "turbo_category() category_id=#{nol(category_id)}, " +
+        "categories=#{nol(categories)}, category_ids=#{nol(category_ids, true)}, " +
+        "rec_ids=#{nol(rec_ids, true)}"
     }
 
     # update the automplete search list or let the list disappear with categories []

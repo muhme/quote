@@ -121,6 +121,8 @@ class AuthorsController < ApplicationController
         flash[:error] = "#{t("g.machine_translation_failed")} #{problem}"
       end
     else
+      @author.link = params[:author]["link_#{actual_locale}"]
+      return unless verify_and_improve_link(:edit)
       I18n.available_locales.each do |locale|
         @author.send("description_#{locale}=", params[:author]["description_#{locale}"])
         @author.send("firstname_#{locale}=", params[:author]["firstname_#{locale}"])
