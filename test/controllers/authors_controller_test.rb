@@ -6,7 +6,6 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     @author_one = authors(:one)
     @author_public_false = authors(:public_false)
     @author_without_quotes_and_comments = authors(:without_quotes_and_comments)
-    activate_authlogic
   end
   
   test "should get index without login" do
@@ -106,19 +105,39 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "nonsense link" do
+    login :first_user
+    patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'nonsense', name_en: 'Luther' } }
+    assert_response :unprocessable_entity # 422
+    assert_match /The link .* cannot be accessed!/i, @response.body
+  end
+  test "not reachable link" do
+    login :first_user
+    patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'https://en.wikipedia.org/wiki/Martin_LutherXXX', name_en: 'Luther' } }
+    assert_response :unprocessable_entity # 422
+    assert_match /The link .* cannot be accessed!/i, @response.body
+  end
+  test "change link to https" do
+    login :first_user
+    patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'http://en.wikipedia.org/wiki/Martin_Luther', name_en: 'Luther' } }
+    assert_redirected_to author_url(@author_one)
+    get author_url @author_one
+    assert_match /https:\/\/en.wikipedia.org\/wiki\/Martin_Luther/, @response.body
+  end
+
   test "should update own author entry" do
     login :first_user
-    patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'New Link', name_en: 'Luther' } }
+    patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'https://en.wikipedia.org/wiki/Martin_Luther', name_en: 'Luther' } }
     assert_redirected_to author_url(@author_one)
   end
   test "fail to edit other users author entry" do
     login :second_user
-    patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'New Link', name_en: 'Luther' } }
+    patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'https://en.wikipedia.org/wiki/Martin_Luther', name_en: 'Luther' } }
     assert_forbidden
   end
   test "should update other users author entry as admin" do
     login :admin_user
-    patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'New Link', name_en: 'Luther', public: true } }
+    patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'https://en.wikipedia.org/wiki/Martin_Luther', name_en: 'Luther', public: true } }
     assert_redirected_to author_url @author_one
     author = Author.i18n.find_by_name 'Luther'
     assert author.public

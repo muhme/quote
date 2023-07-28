@@ -4,7 +4,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @first_user = users(:first_user)
     @second_user = users(:second_user)
-    activate_authlogic
     # not as fixture, as this user has not to be created
     @changed_user = User.new()
     @changed_user.login = "changed_user"

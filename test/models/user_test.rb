@@ -4,7 +4,6 @@ class UserTest < ActiveSupport::TestCase
   
   def setup
     @user = User.find_by_login(:first_user)
-    activate_authlogic
   end
   
   test "validate setup" do

@@ -80,10 +80,6 @@ You can also set this DEEPL_API_KEY in the environment for translations with i18
 ## Roadmap
 
 * Complete #65 I18N
-  * Authors with locales
-    * Shift description field to comments
-    * Implement machine translation for authors, using first and last name
-    * Attempt to locate Wikipedia links in other languages and automate translation, if possible
   * Incorporate locale into quotes
     * w/o translating the quotes; only add a locale field
     * Include at least three quotes in each locale
@@ -99,7 +95,7 @@ You can also set this DEEPL_API_KEY in the environment for translations with i18
 
 ## History
 
-* 2023 updated Rails 7.0.5
+* 2023 updated Rails 7.0.5 ... 7.0.6
 * 2023 translated web application interface in English 🇺🇸, español 🇪🇸, 日本語 🇯🇵 und українська 🇺🇦
 * 2023 using Hotwire Turbo (see [Autocomplete mit Rails & Turbo](https://www.consulting.heikol.de/en/blog/autocomplete-ruby-on-rails-turbo/))
 * 2022 updated to Ruby 3.0 and Rails 7.0.1 ... 7.0.4

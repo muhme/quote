@@ -5,7 +5,6 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     @category_one = categories(:one)
     @category_public_false = categories(:public_false)
     @category_without_quotes = categories(:without_quotes)
-    activate_authlogic
   end
   
   test "setup" do

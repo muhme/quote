@@ -4,7 +4,6 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @quotation_one = quotations(:one)
     @quotation_public_false = quotations(:public_false)
-    activate_authlogic
   end
   
   test "setup" do
