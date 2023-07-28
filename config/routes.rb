@@ -51,9 +51,6 @@ Rails.application.routes.draw do
     get "/500" => "static_pages#internal_server"
     get "/422" => "static_pages#unprocessable"
 
-    # even if we have linked unique asset link some are still requesting favicon.ico from root, do a redirect
-    get '/favicon.ico' => redirect(ActionController::Base.helpers.asset_path('favicon.ico'))
-
     # catch all
     match "*path" => "static_pages#catch_all", via: :all
     
