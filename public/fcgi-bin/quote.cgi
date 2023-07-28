@@ -113,10 +113,14 @@ sub authorAndSource($$$$$$) {
 
         $dbh->do("SET character_set_results=\"$charset\"");
 
-        $sql = "SELECT q.id, q.quotation, q.source, q.source_link, a.firstname, a.name, a.link FROM quotations q, authors a ";
+        $sql = "SELECT q.id, q.quotation, q.source, q.source_link, f_mst.value, n_mst.value, l_mst.value FROM quotations q, authors a, ";
+        $sql .= " mobility_string_translations f_mst, mobility_string_translations n_mst, mobility_string_translations l_mst ";
         $sql .= ", categories_quotations cq, categories c, mobility_string_translations mst" if $category;
         $sql .= ", users u" if $user;
-        $sql .= " WHERE q.author_id = a.id";
+        $sql .= " WHERE q.author_id = a.id and ";
+        $sql .= " f_mst.locale = 'de' and f_mst.translatable_type = 'Author' and f_mst.key = 'firstname' and f_mst.translatable_id = a.id AND";
+        $sql .= " n_mst.locale = 'de' and n_mst.translatable_type = 'Author' and n_mst.key = 'name' and n_mst.translatable_id = a.id AND ";
+        $sql .= " l_mst.locale = 'de' and l_mst.translatable_type = 'Author' and l_mst.key = 'link' and l_mst.translatable_id = a.id ";
         if ($user) {
             $sql .= " AND u.login = ? AND u.id = q.user_id";
         } else {
