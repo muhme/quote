@@ -18,6 +18,7 @@ sub convert_special_chars($) {
     my $array_pointer = shift;
 
     foreach (@{$array_pointer}) {
+        next unless defined $_; # skip the loop if $_ is not defined
         $_ =~ s/\'/\&#39;/g;
         $_ =~ s/\"/\&#34;/g;
         $_ =~ s/\(/\&#40;/g;
@@ -50,7 +51,6 @@ sub isGiven($) {
 # with hyperlink if author_link isGiven
 # added by ", source" if given and source hyperlink
 sub authorAndSource($$$$$$) {
-    next unless defined $_; # skip the loop if $_ is not defined
     my $firstname = shift;
     my $name = shift;
     my $author_link = shift;
