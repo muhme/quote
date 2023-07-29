@@ -67,7 +67,7 @@ sub authorAndSource($$$$$$) {
 
     $ret = "<a href=\"$author_link\" target=\"" . $window . "\">$ret</a>" if isGiven $author_link;
 
-    $source = "<a href=\"$source_link\" target=\"" . $window . "\">$source</a>" if isGiven $source_link;
+    $source = "<a href=\"$source_link\" target=\"" . $window . "\">$source</a>" if isGiven $source and isGiven $source_link;
 
     if (isGiven $source) {
         if ($ret eq "Unbekannt") {
