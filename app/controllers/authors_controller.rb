@@ -4,19 +4,25 @@ class AuthorsController < ApplicationController
   before_action :set_comments, only: [:show, :destroy]
 
   # GET /authors
-  # get all public for not logged in users and
-  # own entries for logged in users and all entries for admins
   def index
-    sql = "select distinct * from authors a"
-    sql += params[:order] == "authors" ?
-      # by authors name and firstname alphabeticaly
-      # using select with IF to sort the empty names authores at the end
-      ' order by IF(a.name="","ZZZ",a.name), a.firstname' :
-      # by the number of quotations that the authors have
-      " order by (select count(*) from quotations q where q.author_id = a.id) desc"
+    if params[:order] == "authors"
+      # order by authors (last) name, and order authors w/o (last) name at the end
+      authors_with_name = Author.i18n.where.not(name: [nil, ""]).order(name: :asc, firstname: :asc)
+      authors_without_name = Author.i18n.where(name: [nil, ""]).order(firstname: :asc)
+      @authors = authors_with_name + authors_without_name # this creates an array, we loose the ActiveRecord relation
+      # Convert the authors array back to an ActiveRecord relation
+      author_ids = @authors.map(&:id)
+      @authors = Author.in_order_of(:id, author_ids)
+      # TODO: this is not perfect working in :ja and :uk as there are also *-characters in the beginning of the list
+    else
+      # 'simple' order by the number of quotations
+      @authors = Author.left_joins(:quotations).group(:id).order('COUNT(quotations.id) DESC')
+    end
 
-    @authors = Author.paginate_by_sql(sql, page: params[:page], :per_page => 10)
-    # check pagination second time with number of pages
+    # Pagination with will_paginate
+    @authors = @authors.paginate(page: params[:page], per_page: 10)
+
+    # Check pagination second time with number of pages
     bad_pagination?(@authors.total_pages)
   end
 
@@ -123,6 +129,7 @@ class AuthorsController < ApplicationController
     else
       @author.link = params[:author]["link_#{actual_locale}"]
       return unless verify_and_improve_link(:edit)
+
       I18n.available_locales.each do |locale|
         @author.send("description_#{locale}=", params[:author]["description_#{locale}"])
         @author.send("firstname_#{locale}=", params[:author]["firstname_#{locale}"])

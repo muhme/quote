@@ -4,7 +4,13 @@ class AuthorsTest < ApplicationSystemTestCase
 
   # /authors
   test "authors" do
-    check_page page, authors_url, "h1", "Author"
+    check_page page, authors_url(locale :en), "h1", "Author"
+    assert_equal "Zitat-Service – Authors", page.title
+    check_this_page page, "h1", /.* Authors/
+  end
+
+  test "authors list ordered by author name" do
+    check_page page, authors_url + "?order=authors", "h1", "Author"
     assert_equal "Zitat-Service – Authors", page.title
   end
 
