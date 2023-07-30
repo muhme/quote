@@ -123,8 +123,11 @@ class Author < ApplicationRecord
     end
   end
 
+  # delete caches for all locales if we have saved or deleted an author
   def expire_author_init_chars_cache
-    Rails.cache.delete('author_init_chars_cache')
+    I18n.available_locales.each do |locale|
+      Rails.cache.delete("author_init_chars_#{I18n.locale}")
+    end
   end
 
   # often by cut&paste from browser URL decode is needed and not damaging

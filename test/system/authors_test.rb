@@ -4,7 +4,7 @@ class AuthorsTest < ApplicationSystemTestCase
 
   # /authors
   test "authors" do
-    check_page page, authors_url(locale :en), "h1", "Author"
+    check_page page, authors_url(locale: :en), "h1", "Author"
     assert_equal "Zitat-Service – Authors", page.title
     check_this_page page, "h1", /.* Authors/
   end
@@ -151,6 +151,23 @@ class AuthorsTest < ApplicationSystemTestCase
     # wrong URL have to be shown
     check_this_page page, nil, url
     check_page_source page, /href=".*quote\/issues/
+  end
+
+  test "cache invalidation" do
+    # depends on caching is enabled
+
+    check_page page, "/en/authors", "h1", "Authors"
+    # ensure there is no link to letter 'X' in authors letters before
+    assert false, "oops link to author X already exists" if page.source =~ /<a href=".*\/authors\/list_by_letter\/X/
+
+    # create author 'X'
+    do_login
+    check_page page, new_author_url(locale: :en), "h1", "Author create"
+    fill_in 'author_name', with: "X"
+    click_on 'Save'
+    check_this_page page, nil, "has been created" # make Capybara wait until the new author is created
+
+    assert false, "link to author X is missing" unless page.source =~ /<a href=".*\/authors\/list_by_letter\/X/
   end
 
 end

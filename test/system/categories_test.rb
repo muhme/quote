@@ -177,4 +177,22 @@ class CategoriesTest < ApplicationSystemTestCase
     check_this_page page, nil, url
     check_page_source page, /href=".*quote\/issues/
   end
+
+  test "cache invalidation" do
+    # depends on caching is enabled
+
+    check_page page, "/en/categories", "h1", "Categories"
+    # ensure there is no link to letter 'X' in categories letters before
+    assert false, "oops link to category X already exists" if page.source =~ /<a href=".*\/categories\/list_by_letter\/X/
+
+    # create category 'X'
+    do_login
+    check_page page, new_category_url(locale: :en), "h1", "Create Category"
+    fill_in "category_name_en", with: "X"
+    click_on "Save"
+    check_this_page page, "h2", "Comments" # let Capybara wait until the new category exists
+
+    assert false, "link to category X is missing" unless page.source =~ /<a href=".*\/categories\/list_by_letter\/X/
+  end
+
 end

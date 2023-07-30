@@ -131,8 +131,11 @@ class Category < ApplicationRecord
     end
   end
 
+  # delete caches for all locales if we have saved or deleted a category
   def expire_category_init_chars_cache
-    Rails.cache.delete('category_init_chars_cache')
+    I18n.available_locales.each do |locale|
+      Rails.cache.delete("category_init_chars_#{I18n.locale}")
+    end
   end
 
   class << self # opens up the singleton class to define private class methods as only private applies to instance and not to class methods
