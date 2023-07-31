@@ -374,6 +374,9 @@ class QuotationsController < ApplicationController
     @commentable_id = @quotation.id
   end
 
+  # reading from and writing on @quotation.source_link with actual locale
+  # change http to https, URL unencode and verify URL is reachable
+  # returns false if the link is not reachable
   def verify_and_improve_link(to_render)
     new_link = UrlCheckerService.check(@quotation.source_link)
     if @quotation.source_link.present? and new_link.nil?

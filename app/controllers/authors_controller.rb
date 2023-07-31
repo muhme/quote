@@ -127,14 +127,12 @@ class AuthorsController < ApplicationController
         flash[:error] = "#{t("g.machine_translation_failed")} #{problem}"
       end
     else
-      @author.link = params[:author]["link_#{actual_locale}"]
-      return unless verify_and_improve_link(:edit)
-
       I18n.available_locales.each do |locale|
         @author.send("description_#{locale}=", params[:author]["description_#{locale}"])
         @author.send("firstname_#{locale}=", params[:author]["firstname_#{locale}"])
         @author.send("name_#{locale}=", params[:author]["name_#{locale}"])
         @author.send("link_#{locale}=", params[:author]["link_#{locale}"])
+        return unless verify_and_improve_link(:edit, locale)
       end
     end
 
@@ -232,18 +230,25 @@ class AuthorsController < ApplicationController
     @commentable_id = @author.id
   end
 
-  def verify_and_improve_link(to_render)
-    new_link = UrlCheckerService.check(@author.link)
-    if @author.link.present? and new_link.nil?
-      flash[:error] = t("g.link_invalid", link: @author.link)
-      logger.info { "invalid link #{@author.link}" }
+  # reading from and writing on @author.link with locale
+  # change http to https, URL unencode and verify URL is reachable
+  # doing it by default for the actual locale (from create or translate) or
+  # for given locale in case of save, where the method has to be called for all locales
+  # returns false if the link is not reachable
+  def verify_and_improve_link(to_render, locale = I18n.locale)
+    new_link = UrlCheckerService.check(@author.link(locale: locale))
+    if @author.link(locale: locale).present? and new_link.nil?
+      flash[:error] = t("g.link_invalid", link: @author.link(locale: locale))
+      logger.info { "invalid link #{@author.link(locale: locale)}" }
       render to_render, status: :unprocessable_entity
       return false
     end
-    if new_link != @author.link
-      flash[:error] = t("g.link_changed", link: @author.link, new: new_link) # TODO change to :warn
-      logger.info "link changed from #{@author.link} to #{new_link}"
-      @author.link = new_link
+    if new_link != @author.link(locale: locale)
+      # add error as we can have it multiple times with the locales
+      flash[:error] = (flash[:error].present? ? flash[:error] + " " : "") +
+        t("g.link_changed", link: @author.link(locale: locale), new: new_link) # TODO change to :warn
+      logger.info "link in locale #{locale} changed from #{@author.link(locale: locale)} to #{new_link}"
+      @author.send("link_#{locale}=", new_link)
     end
     return true
   end
