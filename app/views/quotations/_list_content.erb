@@ -1,47 +1,68 @@
-<%= will_paginate @quotations %>
 
-<table class="border">
-  <tr>
-    <th><%= t("g.quotes", count: 2) %></th>
-    <th><%= image_tag("comment.png", alt: t("g.comment_alt"), title: t("g.comments")) %></th>
-    <th class="min-width-8ch"><%= t("g.actions") %></th>
-  </tr>
-  <%
-    odd_or_even = 0
-    for quotation in @quotations
-      odd_or_even = 1 - odd_or_even
-      number_of_comments = Comment.number_of(quotation)
-  %>
-      <tr valign="top" class="ListLine<%= odd_or_even %>">
+<div>
+  <%= form_tag('#', id: 'quotation_locales', method: :get) do |form| %>
+    <% selected_locales = ((params[:locales] && params[:locales].split(',')) || []).map(&:to_sym) %>
+    <% I18n.available_locales.each do |locale| %>
+      <%= check_box_tag 'locales[]', locale, selected_locales.include?(locale), id: "locale_#{locale}", class: 'locale-checkbox' %>
+      <%= label_tag "locale_#{locale}", string_for_locale(locale, true, true).html_safe %>
+      &nbsp;
+    <% end %>
+  <% end %>
+</div>
+
+<div class="quotes-container">
+  <table class="border">
+    <tr>
+      <th>&#127757;</th> <!-- 🌎 -->
+      <th><%= t("g.quotes", count: 2) %></th>
+      <th><%= image_tag("comment.png", alt: t("g.comment_alt"), title: t("g.comments")) %></th>
+      <th class="min-width-8ch"><%= t("g.actions") %></th>
+    </tr>
+    <%
+      odd_or_even = 0
+      for quotation in @quotations
+        odd_or_even = 1 - odd_or_even
+        number_of_comments = Comment.number_of(quotation)
+    %>
+        <tr valign="top" class="ListLine<%= odd_or_even %>">
+          <td>
+            <span class="center">
+            <%= raw string_for_locale(quotation.locale, true, true) %>
+          </span>
+        </td>
         <td class="ListQuote">
-          <span class="ListQuote"><%= h(quotation.quotation) %></span><br />
-          <%= raw_span_class_if_present('ListSource', quotation.get_author_and_source_name) %>
+          <span class="ListQuote"><%= h(quotation.quotation) %></span><br/>
+          <%= raw_span_class_if_present("ListSource", quotation.get_author_and_source_name) %>
         </td>
         <td class="center"><%= number_of_comments if number_of_comments > 0 %></td>
         <td class="actions">
-          <%= link_to image_tag("eye.png", :alt => t("g.eye"), :title => t("g.show"), :border => 0), {:action => 'show', :id => quotation} %>
+          <%= link_to image_tag("eye.png", alt: t("g.eye"), title: t("g.show"), border: 0), { action: :show, id: quotation } %>
           <% if can_edit?(quotation.user_id) %>
-            <%= link_to image_tag("pencil.png", :alt => t("g.pencil"), :title => t("g.edit"), :border => 0), :action => 'edit', :id => quotation %>
+            <%= link_to image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit"), border: 0), action: :edit, id: quotation %>
             <% if number_of_comments == 0 %>
-              <%= link_to image_tag("cancel.png", :alt => t("g.red_cross"), :title => t("g.delete"), :border => 0),
-                    { :action => 'destroy', :id => quotation },
+              <%= link_to image_tag("cancel.png", alt: t("g.red_cross"), title: t("g.delete"), border: 0),
+                    { action: "destroy", id: quotation },
                     method: :delete,
-                    data: {
-                      turbo_method: :delete,
-                      turbo_confirm: t(".delete", quote: truncate(quotation.quotation, length: 20) )
-                    }
-              %>
+                    data: { turbo_method: :delete, turbo_confirm: t(".delete", quote: truncate(quotation.quotation, length: 20)) } %>
             <% end %>
           <% end %>
         </td>
       </tr>
     <% end %>
-</table>
+  </table>
+  <div class="quotes-pagination">
+    <%= will_paginate @quotations %>
+  </div>
+</div>
 
 <% if current_user %>
   <p class="ListNavi">
-    <%= button_to t(".new"), { :action => "new" }, method: :get %>
+    <%= button_to t(".new"), { action: :new }, method: :get %>
   </p>
 <% else %>
-  <p class="opacity-50 font-size-smaller "><%= raw t(".needs_login", login_link: link_to(t('layouts.application.login'), login_path(locale: I18n.locale))) %></p>
+  <p class="opacity-50 font-size-smaller "><%= raw t(
+      ".needs_login",
+      login_link:
+        link_to(t("layouts.application.login"), login_path(locale: I18n.locale))
+    ) %></p>
 <% end %>

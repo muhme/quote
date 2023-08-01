@@ -9,6 +9,7 @@ class Quotation < ApplicationRecord
   validates :quotation, presence: true, length: { maximum: 512 }, uniqueness: {case_sensitive: false}
   validates :source, presence: false, length: { maximum: 255 }, uniqueness: false
   validates :source_link, presence: false, length: { maximum: 255 }, uniqueness: false
+  validates :locale, presence: true
   
   # count all non-public quotes
   def Quotation.count_non_public

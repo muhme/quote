@@ -209,6 +209,7 @@ uk:
     have: мають
     help: Допомога
     id: Внутрішній номер
+    language: Мова
     lightning: Блискавка
     link: Посилання
     link_changed: Посилання “%{link}” було змінено на “%{new}”.

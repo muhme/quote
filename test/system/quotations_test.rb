@@ -107,16 +107,27 @@ class QuotationsTest < ApplicationSystemTestCase
     check_page_source page, /href=".*\/quotations\/list_by_user\//
   end
 
+  test "quotes for languages" do
+    check_page page, quotations_url + "?locales=en", "h1", "Quotes"
+    check_page page, quotations_url + "?locales=de", "h1", "Quotes"
+    check_page page, quotations_url + "?locales=ja,uk", "h1", "Quotes"
+    check_page page, quotations_url + "?locales=", "h1", "Quotes"
+    check_page page, quotations_url + "?locales=XX", "h1", "Quotes"
+    check_page page, quotations_url(locale: :de) + "?locales=de", "h1", "Zitate"
+  end
+
   test "edit own quote" do
     do_login
     check_page page, edit_quotation_url(id: 1), "h1", "Edit quote"
     fill_in "author", with: "schiller"
     fill_in "quotation_source", with: "jo!"
     assert page.has_css?(".animated") # wait for autocompletion
+    select 'Українська', from: 'quotation_locale'
     click_on "Save"
     check_this_page page, nil, "The quote has been updated."
     check_page page, quotation_url(id: 1), nil, /Original source:.*jo!/
     check_this_page page, nil, /Author:.*Friedrich Schiller/
+    check_this_page page, nil, "🇺🇦 UK"
   end
   test "edit own quote fails" do
     do_login
@@ -256,11 +267,13 @@ class QuotationsTest < ApplicationSystemTestCase
   test "create new quote and delete" do
     do_login
     visit new_quotation_url
-    fill_in "quotation_quotation", with: "Yes, we can."
+    fill_in "quotation_quotation", with: "Слава Україні!"
+    select 'Українська', from: 'quotation_locale'
     click_on "Save"
     check_this_page page, nil, "quote has been added."
     new_quote = Quotation.last
     check_page page, quotation_url(id: new_quote), nil, /Public:.*No/
+    check_this_page page, nil, "🇺🇦 UK"
     # delete
     visit quotations_url
     accept_alert do

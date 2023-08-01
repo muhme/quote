@@ -199,6 +199,7 @@ es:
     have: tienen
     help: Ayuda
     id: Nº interno
+    language: Idioma
     lightning: haz de luz
     link: Enlace
     link_changed: El enlace “%{link}” ha cambiado a “%{new}”.

@@ -7,13 +7,16 @@ class QuotationsController < ApplicationController
   # GET /quotations
   # GET /quotations?pattern=berlin
   # GET /quotations?page=42
-  # get all public for not logged in users and own entries for logged in users and all entries for admins
+  # GET /quotations?locales=uk,es
   def index
     pattern = params[:pattern].blank? ? "%" : my_sql_sanitize(params[:pattern])
-    sql = "select distinct * from quotations where quotation like '%" + pattern + "%' "
-    sql += " order by id desc"
+    # "locales"=>"es,uk" -> "'es','uk'"
+    locales = params[:locales].split(',').map { |locale| "'#{locale}'" }.join(',') if params[:locales]
+    sql = "SELECT DISTINCT * FROM quotations WHERE quotation LIKE '%" + pattern + "%'"
+    sql << " AND locale IN (#{locales})" if locales.present?
+    sql << " ORDER BY id DESC"
 
-    @quotations = Quotation.paginate_by_sql(sql, page: params[:page], :per_page => 5)
+    @quotations = Quotation.paginate_by_sql(sql, page: params[:page], per_page: 5)
     # check pagination second time with number of pages
     bad_pagination?(@quotations.total_pages)
 
@@ -31,7 +34,7 @@ class QuotationsController < ApplicationController
   def new
     return unless logged_in? t("quotations.login_missing")
 
-    @quotation = Quotation.new(user_id: current_user.id)
+    @quotation = Quotation.new(user_id: current_user.id, locale: I18n.locale)
   end
 
   # GET /quotations/1/edit
@@ -231,7 +234,7 @@ class QuotationsController < ApplicationController
     # source and source_link are optional and saved as NULL in database if blank
     params[:quotation][:source]      = nil if params[:quotation][:source].blank?
     params[:quotation][:source_link] = nil if params[:quotation][:source_link].blank?
-    params.require(:quotation).permit(:author_id, :quotation, :source, :source_link, :public, :pattern,
+    params.require(:quotation).permit(:author_id, :quotation, :source, :source_link, :public, :pattern, :locale,
                                       :category_ids => [])
   end
 

@@ -589,3 +589,28 @@ form#new_comment_form {
 .min-width-8ch {
     min-width: 8ch;
 }
+
+.quotes-container {
+    display: inline-block;  /* This will make the div only as wide as its contents */
+    position: relative;  /* Needed to position the checkboxes div */
+    width: 100%;
+}
+.quotes-pagination {
+    font-size: smaller;
+    position: absolute;  /* This allows the div to be positioned relative to table-container */
+    right: 0;  /* This makes the div float to the right */
+    bottom: -27px;  /* Adjust this as needed to position the div below the table */
+}
+.quotes-container table {
+    width: 100%;
+}
+/* This applies when the screen is 600px or wider */
+@media screen and (min-width: 960px) {
+    .quotes-container table {
+        width: 800px;
+    }
+
+    .quotes-container, div#comments.table, table#details {
+        width: 800px;
+    }
+}

@@ -199,6 +199,7 @@ ja:
     have: 持っている
     help: ヘルプ
     id: 内部番号
+    language: 言語
     lightning: 雷
     link: リンク
     link_changed: リンク「%{link}」が「%{new}」に変更されました。

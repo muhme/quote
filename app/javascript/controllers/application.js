@@ -100,4 +100,20 @@ document.addEventListener("turbo:load", () => {
   });
 });
 
+document.addEventListener("turbo:load", function() {
+  let checkboxes = document.querySelectorAll('.locale-checkbox');
+  // console.log(`Found ${checkboxes.length} checkboxes`); // Log the number of checkboxes found
+
+  checkboxes.forEach(function(checkbox, index) {
+    // console.log(`Adding event listener to checkbox ${index}`); // Log the index of each checkbox as the event listener is added
+    checkbox.addEventListener('change', function() {
+      // console.log(`Checkbox ${index} changed`); // Log when a checkbox is changed
+      let selectedLocales = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
+      let locales = selectedLocales.join(',');
+      let url = window.location.pathname + "?locales=" + locales;
+      window.location.href = url;
+    });
+  });
+});
+
 export { application }

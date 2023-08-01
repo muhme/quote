@@ -8,6 +8,7 @@ one:
   source: "Zitat-Service"
   source_link: "https://www.zitat-service.de"
   public: true
+  locale: en
 
 second:
   id: 2
@@ -15,6 +16,7 @@ second:
   user_id: 1
   author_id: 2 # second author
   public: true
+  locale: en
 
 third:
   id: 3

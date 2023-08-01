@@ -11,6 +11,7 @@ class QuotationTest < ActiveSupport::TestCase
     @quotation.user_id = User.first.id
     @quotation.quotation = "Be the change you wish to see." # Mahatma Gandhi
     @quotation.author_id = @author.id
+    @quotation.locale = "en"
     @quotation.save!
   end
   

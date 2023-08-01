@@ -84,11 +84,11 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test "string for locale" do
-    assert_match /DE/, string_for_locale
-    assert_match /DE/, string_for_locale(nil)
-    assert_match /DE/, string_for_locale(nil, true)
+    assert_match /EN/, string_for_locale
+    assert_match /EN/, string_for_locale(nil)
+    assert_match /EN/, string_for_locale(nil, true)
     assert_match /DE/, string_for_locale("de")
-    assert_match /DE/, string_for_locale("quark cake")
+    assert_match /EN/, string_for_locale("quark cake")
     assert_match /DE/, string_for_locale("de", true)
     assert_match /DE/, string_for_locale("de", false)
     assert_match /Deutsch/, string_for_locale("de", false)
@@ -105,6 +105,16 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_match /UK/, string_for_locale("uk", false)
     assert_match /Українська/, string_for_locale("uk", false)
     refute_match /Українська/, string_for_locale("uk", true)
+  end
+
+  test "string for locale only flag" do
+    assert_equal '&#x1F1FA;&#x1F1F8;', string_for_locale(nil, nil, true) # 🇺🇸
+    assert_equal '&#x1F1FA;&#x1F1F8;', string_for_locale("en", nil, true) # 🇺🇸
+    assert_equal '&#x1F1FA;&#x1F1F8;', string_for_locale(:en, nil, true) # 🇺🇸
+    assert_equal '&#x1F1E9;&#x1F1EA;', string_for_locale(:de, nil, true) # 🇩🇪
+    assert_equal '&#x1F1EA;&#x1F1F8;', string_for_locale(:es, nil, true) # 🇪🇸
+    assert_equal '&#x1F1EF;&#x1F1F5;', string_for_locale(:ja, nil, true) # 🇯🇵
+    assert_equal '&#x1F1FA;&#x1F1E6;', string_for_locale(:uk, nil, true) # 🇺🇦
   end
 
   # [:de, :en, :es, :ja, :uk]

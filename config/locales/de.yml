@@ -199,6 +199,7 @@ de:
     have: haben
     help: Hilfe
     id: Interne Nr.
+    language: Sprache
     lightning: Blitz
     link: Link
     link_changed: Der Link „%{link}” wurde geändert in „%{new}”.

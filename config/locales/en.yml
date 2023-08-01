@@ -199,6 +199,7 @@ en:
     have: have
     help: Help
     id: Internal No.
+    language: Language
     lightning: Lightning
     link: Link
     link_changed: The link “%{link}” has been changed to “%{new}”.

@@ -88,11 +88,11 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create quotation" do
-    post quotations_url, params: { commit: "Speichern", quotation: { quotation: "Yes we can." } }
+    post quotations_url, params: { commit: "Speichern", quotation: { quotation: "Yes we can.", author_id: 0, locale: "en" } }
     assert_forbidden
     assert_difference('Quotation.count') do
       login :first_user
-      post quotations_url, params: { commit: "Speichern", quotation: { quotation: "Yes we can.", author_id: 0 } }
+      post quotations_url, params: { commit: "Speichern", quotation: { quotation: "Yes we can.", author_id: 0, locale: "en" } }
     end
     assert_redirected_to quotation_url(Quotation.last)
     quotation = Quotation.find_by_quotation 'Yes we can.'
@@ -117,14 +117,14 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update quotation" do
     login :first_user
-    patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm' } }
+    patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm', locale: "en" } }
     assert_redirected_to quotation_url @quotation_one
     get '/logout'
     login :admin_user
-    patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm!' } }
+    patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm!', locale: "en" } }
     assert_redirected_to quotation_url @quotation_one
     get '/logout'
-    patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm!!!' } }
+    patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm!!!', locale: "en" } }
     assert_forbidden
     login :first_user
     patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: '' } }

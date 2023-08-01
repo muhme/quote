@@ -210,23 +210,32 @@ module ApplicationHelper
     str.present? ? raw("<span class=\"#{class_name}\">#{h(str)}</span>") : ""
   end
 
-  # returns e.g. "🇺🇦 UK – українська" or "🇺🇦 UK" if shorten is true for symbol :uk
-  # falls back to :de for unknown locale or nil
-  #
-  def string_for_locale(locale = "de", shorten = false)
+  # returns e.g.
+  #   "🇺🇦 UK – українська" for string_for_locale(:uk)
+  #   "🇺🇦 UK" for string_for_locale(:uk, true)
+  #   "🇺🇦" for string_for_locale(:uk, true, true)
+  # falls back to :en for unknown locale or nil
+  def string_for_locale(locale = "en", shorten = false, only_flag = false)
     # logger.debug { "string_for_locale(#{locale.class} #{locale}, #{shorten})" }
-    locales = {
-      :de => '<span class="flags">&#x1F1E9;&#x1F1EA;&nbsp;DE</span> – Deutsch',
-      :en => '<span class="flags">&#x1F1FA;&#x1F1F8;&nbsp;EN</span> – English',
-      :es => '<span class="flags">&#x1F1EA;&#x1F1F8;&nbsp;ES</span> – Español',
-      :ja => '<span class="flags">&#x1F1EF;&#x1F1F5;&nbsp;JA</span> – 日本語',
-      :uk => '<span class="flags">&#x1F1FA;&#x1F1E6;&nbsp;UK</span> – Українська'
-    }
-
+    flag = {
+      :de => '&#x1F1E9;&#x1F1EA;',
+      :en => '&#x1F1FA;&#x1F1F8;',
+      :es => '&#x1F1EA;&#x1F1F8;',
+      :ja => '&#x1F1EF;&#x1F1F5;',
+      :uk => '&#x1F1FA;&#x1F1E6;'
+    }.freeze
+    lang = {
+      :de => 'Deutsch',
+      :en => 'English',
+      :es => 'Español',
+      :ja => '日本語',
+      :uk => 'Українська'
+    }.freeze
     l = locale&.to_sym&.downcase
-    l = :de unless locales.has_key?(l)
-    ret = locales[l]
-    ret = ret.split(" – ").first if shorten
+    l = :en unless flag.has_key?(l)
+    return flag[l] if only_flag
+    ret = "<span class=\"flags\">#{flag[l]}&nbsp;#{l.upcase}</span>"
+    ret = "#{ret} – #{lang[l]}" unless shorten
     # logger.debug { "string_for_locale ret=\”#{ret}\”" }
     ret
   end

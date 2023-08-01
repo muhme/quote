@@ -38,7 +38,7 @@
     <table id="details">
         <tr>
           <td valign=top><%= t("g.id") %>:</td>
-          <td><%= h(@quotation.id) %></td>
+          <td><%= raw "<span class=\"float-right\">#{string_for_locale(@quotation.locale, true)}</span>#{@quotation.id}" %></td>
         </tr><tr>
           <td valign=top><%= t("g.quotes", count: 1) %>:</td>
           <td><b><%= h(@quotation.quotation) %></b></td>

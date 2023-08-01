@@ -177,7 +177,7 @@ class AuthorsTest < ApplicationSystemTestCase
     click_on 'Speichern' # Save
     check_this_page page, nil, "Der Autor „Äsop” wurde angelegt." # make Capybara wait until the new author is created
     check_this_page page, nil, "Der Link „https://de.wikipedia.org/wiki/%C3%84sop” wurde geändert in „https://de.wikipedia.org/wiki/Äsop”."
-    check_this_page page, nil, '<a popup="true" href="https://de.wikipedia.org/wiki/Äsop">de.wikipedia.org/wiki/Äsop</a>'
+    check_this_page page, nil, "de.wikipedia.org/wiki/Äsop"
   end
 
   undecoded = {

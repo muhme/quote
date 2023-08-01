@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_13_171337) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_31_111618) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -109,6 +109,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_13_171337) do
     t.boolean "public", default: false
     t.bigint "user_id"
     t.bigint "author_id"
+    t.string "locale"
     t.index ["author_id"], name: "index_quotations_on_author_id"
     t.index ["public"], name: "index_quotations_on_public"
     t.index ["user_id"], name: "index_quotations_on_user_id"

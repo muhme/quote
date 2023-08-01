@@ -41,6 +41,11 @@
   </div>
   <%= render "quotations/search_category_results", categories: [], rec_ids: [] %>
 
+  <div class="top_space_field">
+    <%= form.label :public, label_and_description(t("g.language")), class: "font-size-smaller" %><br/>
+    <%= form.select :locale, I18n.available_locales.map { |locale| [string_for_locale(locale).html_safe, locale] } %>
+  </div>
+  
   <% if current_user and current_user.admin == true %>
     <div class="top_space_field">
       <%= form.label :public, label_and_description(t("g.public")), class: "font-size-smaller" %><br/>
