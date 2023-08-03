@@ -21,7 +21,7 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
 ```
 * quote_mariadb – MariaDB database server
   * database admin user is root/root
-  * Database quote_development with database user quote_development/quote_development and LIVE database import from June 2023 and three additional users created with the three different user roles 
+  * Database quote_development with database user quote_development/quote_development and LIVE database import from August 2023 and three additional users created with the three different user roles 
   * database quote_test with database user quote_test/quote_test created
 * quote_mysqladmin – phpMyAdmin (user root/root)
   * http://localhost:8101
@@ -83,7 +83,6 @@ You can also set this DEEPL_API_KEY in the environment for translations with i18
   * Incorporate locale into quotes
     * w/o translating the quotes; only add a locale field
     * Include at least three quotes in each locale
-    * Display a random quote from the current locale on the landing page
     * Enable the option to list and search quotes exclusively in the current locale or in all locales
 * Develop a new JSON API for fetching quotes
   * As a future alternative to the Perl script

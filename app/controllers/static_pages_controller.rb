@@ -45,7 +45,7 @@ class StaticPagesController < ApplicationController
   # get last three users they have created new quotes, linked to there list of quotes and with a count of there quotes at all
   def list
     # select * from quotations where public = 1 order by rand() limit 1
-    @quotation = Quotation.where(public: true).order(Arel.sql("rand()")).first
+    @quotation = Quotation.where(public: true, locale: I18n.locale).order(Arel.sql("rand()")).first
 
     # for inner limit see https://stackoverflow.com/questions/26372511/mysql-order-by-inside-subquery
     sql = "select distinct x.user_id from ( select q.user_id from quotations q order by created_at desc limit 1000) as x limit 0,3"
