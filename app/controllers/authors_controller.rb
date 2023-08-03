@@ -64,7 +64,8 @@ class AuthorsController < ApplicationController
       return render :new, status: :unprocessable_entity
     end
 
-    return unless verify_and_improve_link(:new)
+    # set https if needed and possible and follow redirects, if not reachable set flash[:warning]
+    verify_and_improve_link(:new)
 
     begin
       # if we have wikipedia link, then find links in other locales and use author name from wikipedia
@@ -111,7 +112,8 @@ class AuthorsController < ApplicationController
           @author.send("link_#{locale}=", nil)
         end
 
-        return unless verify_and_improve_link(:edit)
+        # set https if needed and possible and follow redirects, if not reachable set flash[:warning]
+        verify_and_improve_link(:edit)
 
         # if we have wikipedia link, then find links in other locales and use author name from wikipedia
         WikipediaService.new.ask_wikipedia(actual_locale, @author)
@@ -132,7 +134,8 @@ class AuthorsController < ApplicationController
         @author.send("firstname_#{locale}=", params[:author]["firstname_#{locale}"])
         @author.send("name_#{locale}=", params[:author]["name_#{locale}"])
         @author.send("link_#{locale}=", params[:author]["link_#{locale}"])
-        return unless verify_and_improve_link(:edit, locale)
+        # set https if needed and possible and follow redirects, if not reachable set flash[:warning]
+        verify_and_improve_link(:edit, locale)
       end
     end
 
@@ -234,22 +237,20 @@ class AuthorsController < ApplicationController
   # change http to https, URL unencode and verify URL is reachable
   # doing it by default for the actual locale (from create or translate) or
   # for given locale in case of save, where the method has to be called for all locales
-  # returns false if the link is not reachable
+  # if link is not reachable writes into flash[:warning]
   def verify_and_improve_link(to_render, locale = I18n.locale)
     new_link = UrlCheckerService.check(@author.link(locale: locale))
     if @author.link(locale: locale).present? and new_link.nil?
-      flash[:error] = t("g.link_invalid", link: @author.link(locale: locale))
+      # add warning as we can have it multiple times with the locales
+      flash[:warning] = (flash[:warning].present? ? flash[:warning] + " " : "") +
+        t("g.link_invalid", link: @author.link(locale: locale))
       logger.info { "invalid link #{@author.link(locale: locale)}" }
-      render to_render, status: :unprocessable_entity
-      return false
-    end
-    if new_link != @author.link(locale: locale)
+    elsif new_link != @author.link(locale: locale)
       # add error as we can have it multiple times with the locales
       flash[:error] = (flash[:error].present? ? flash[:error] + " " : "") +
         t("g.link_changed", link: @author.link(locale: locale), new: new_link) # TODO change to :warn
       logger.info "link in locale #{locale} changed from #{@author.link(locale: locale)} to #{new_link}"
       @author.send("link_#{locale}=", new_link)
     end
-    return true
   end
 end

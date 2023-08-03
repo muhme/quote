@@ -256,6 +256,7 @@ uk:
     update: Змінити
     updated: Оновлено
     user: Користувач
+    warning: Попередження
     words_separator: ", "
   layouts:
     application:

@@ -108,14 +108,16 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
   test "nonsense link" do
     login :first_user
     patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'nonsense', name_en: 'Luther' } }
-    assert_response :unprocessable_entity # 422
-    assert_match /The link .* cannot be accessed!/i, @response.body
+    assert_redirected_to author_url(@author_one)
+    get author_url @author_one
+    assert_match /The link .* cannot be accessed!/, @response.body
   end
   test "not reachable link" do
     login :first_user
     patch author_url(@author_one), params: { author: { description_en: 'New Description', firstname_en: 'New Firstname', link_en: 'https://en.wikipedia.org/wiki/Martin_LutherXXX', name_en: 'Luther' } }
-    assert_response :unprocessable_entity # 422
-    assert_match /The link .* cannot be accessed!/i, @response.body
+    assert_redirected_to author_url(@author_one)
+    get author_url @author_one
+    assert_match /The link .* cannot be accessed!/, @response.body
   end
   test "change link to https" do
     login :first_user

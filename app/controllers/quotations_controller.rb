@@ -93,7 +93,8 @@ class QuotationsController < ApplicationController
 
     if params[:commit]
       @quotation = Quotation.new(quotation_params)
-      return unless verify_and_improve_link(:new)
+      # set https if needed and possible and follow redirects, if not reachable set flash[:warning]
+      verify_and_improve_link(:new)
 
       @quotation.user_id = current_user.id
       @quotation.author_id = 0 unless @quotation.author_id # empty author field is an unknown author, which has id 0
@@ -129,7 +130,8 @@ class QuotationsController < ApplicationController
       # Are associated categories changed? Compare from params with existing list by hand as changed? does not exist for has_and_belongs_to_many.
       categories_changed = category_ids.sort != @quotation.category_ids.sort
       @quotation.assign_attributes(quotation_params)
-      return unless verify_and_improve_link(:edit)
+      # set https if needed and possible and follow redirects, if not reachable set flash[:warning]
+      verify_and_improve_link(:edit)
 
       logger.debug { "update() categories_changed=#{categories_changed}, quotation.changed #{@quotation.changes}" }
       if @quotation.changed? or categories_changed
@@ -379,20 +381,18 @@ class QuotationsController < ApplicationController
 
   # reading from and writing on @quotation.source_link with actual locale
   # change http to https, URL unencode and verify URL is reachable
-  # returns false if the link is not reachable
+  # if link is not reachable writes into flash[:warning]
   def verify_and_improve_link(to_render)
     new_link = UrlCheckerService.check(@quotation.source_link)
     if @quotation.source_link.present? and new_link.nil?
-      flash[:error] = t("g.link_invalid", link: @quotation.source_link)
+      # add warning as we can have it multiple times with the locales
+      flash[:warning] = (flash[:warning].present? ? flash[:warning] + " " : "") +
+      t("g.link_invalid", link: @quotation.source_link)
       logger.info { "invalid link #{@quotation.source_link}" }
-      render to_render, status: :unprocessable_entity
-      return false
-    end
-    if new_link != @quotation.source_link
-      flash[:error] = t("g.link_changed", link: @quotation.source_link, new: new_link) # TODO change to :warn
+    elsif new_link != @quotation.source_link
+      flash[:warning] = t("g.link_changed", link: @quotation.source_link, new: new_link)
       logger.info "link changed from #{@quotation.source_link} to #{new_link}"
       @quotation.source_link = new_link
     end
-    return true
   end
 end

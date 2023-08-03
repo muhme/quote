@@ -72,6 +72,9 @@
       <% if flash[:error] %>
         <div id="error"><%= image_tag("exclamation.png", alt: t(".exclamation_alt"), title: t(".exclamation")) %> <%= flash[:error] %></div>
       <% end %>
+      <% if flash[:warning] %>
+        <div id="warning"><%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.warning")) %> <%= flash[:warning] %></div>
+      <% end %>
       <% if flash[:notice] -%>
         <div id="notice"><%= image_tag("flag_green.png", alt: t(".green_flag_alt"), title: t(".green_flag")) %> <%= flash[:notice] %></div>
       <% end %>

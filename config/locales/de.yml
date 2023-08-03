@@ -239,6 +239,7 @@ de:
     update: Ändern
     updated: Aktualisiert
     user: Benutzer
+    warning: Warnung
     words_separator: ", "
   layouts:
     application:

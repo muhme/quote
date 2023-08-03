@@ -30,6 +30,7 @@ class UrlCheckerService
     http_working_url if http_working_url.present?
   end
 
+  # do the HTTP head request
   def self.send_head_request(uri)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = (uri.scheme == 'https')
@@ -37,6 +38,7 @@ class UrlCheckerService
     http.request(request)
   end
 
+  # check HTTP request response
   def self.process_response(response, uri, iteration, http_working_url, url_unencoded)
     case response
     when Net::HTTPSuccess

@@ -239,6 +239,7 @@ ja:
     update: 変更
     updated: 更新されました
     user: ユーザー
+    warning: 警告
     words_separator: "、"
   layouts:
     application:

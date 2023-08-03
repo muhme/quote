@@ -239,6 +239,7 @@ es:
     update: Cambiar
     updated: Actualizado
     user: usuarios
+    warning: Advertencia
     words_separator: ", "
   layouts:
     application:
