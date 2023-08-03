@@ -67,6 +67,7 @@ class DeeplService
   # can throw DeepL::Exception
   # returns true on success
   def author_translate(src_locale, author)
+    Rails.logger.debug { "author_translate(src_locale=#{src_locale}, #{author.inspect})"}
     return false unless ENV["DEEPL_API_KEY"].present?
 
     begin
