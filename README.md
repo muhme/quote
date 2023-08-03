@@ -46,7 +46,7 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
 <details>
   <summary>The application uses DeepL API Free for translation.</summary>
   
-  You can register there and then store your own API key in the .env file.
+  You can register there and then store your own API key in the .env file and rebuild quote_rails container.
 ```
 DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx"
 ```

@@ -157,7 +157,7 @@ class ApplicationController < ActionController::Base
       end
     end
   rescue => e
-    logger.warn "bad pagination! \"#{e.message}\" url=#{request.original_url}"
+    logger.info "bad pagination! url=#{request.original_url}"
     flash[:error] = e.message
     render "static_pages/bad_request", :status => :bad_request # 400
   end
