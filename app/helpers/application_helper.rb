@@ -156,16 +156,26 @@ module ApplicationHelper
   end
 
   # do an html_escape() and a truncate overall on 40 chars
-  # make the 1st name letter bold
-  def author_name(firstname, name)
+  # make the 1st (last)name letter bold
+  # having (last)name・firstname for :ja and "firstname name" for others
+  def author_name(firstname, name, locale = I18n.locale)
     ret = ""
-    unless firstname.blank?
-      ret = h(firstname)
-    end
-    unless name.blank?
-      ret = truncate(html_escape(ret), length: 25) # to have enough space for the <b>A</b> and not truncate in tag
-      ret += t('g.name_seperator') unless firstname.blank?
-      ret += "<b>".html_safe + h(name[0..0]) + "</b>".html_safe + h(name[1..name.size])
+    # "<b>G</b>oethe"
+    bold_name = "<b>".html_safe + h(name[0..0]) + "</b>".html_safe + h(name[1..name.size]) unless name.blank?
+    
+    if locale == :ja
+      ret = bold_name if bold_name
+      unless firstname.blank?
+        ret += t('g.name_seperator', locale: locale) unless ret.blank?
+        ret += firstname
+      end
+    else
+      ret = h(firstname) unless firstname.blank?
+      unless bold_name.blank?
+        ret = truncate(html_escape(ret), length: 25) # to have enough space for the <b>A</b> and not truncate in tag
+        ret += t('g.name_seperator', locale: locale) unless ret.blank?
+        ret += bold_name
+      end
     end
     truncate(ret, length: 40, escape: false)
   end

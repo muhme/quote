@@ -55,6 +55,22 @@ class ApplicationHelperTest < ActionView::TestCase
     assert_equal "<b>Ä</b>sop", author_name(nil, "Äsop")
   end
 
+  test "author_name method for japanese" do
+    assert_equal "<b>ゲ</b>ーテ・ヨハン・ヴォルフガング・フォン", author_name("ヨハン・ヴォルフガング・フォン", "ゲーテ", :ja)
+    assert_equal "<b>不</b>明", author_name(nil, "不明", :ja)
+    assert_equal "ボビー, 7年", author_name("ボビー, 7年", nil, :ja)
+  end
+
+  test "author_name method for stability" do
+    assert_equal "", author_name(nil, nil)
+    assert_equal "", author_name("", nil)
+    assert_equal "", author_name(nil, "")
+    assert_equal "", author_name("", "")
+    assert_equal "", author_name(nil, nil, nil)
+    assert_equal "", author_name(nil, nil, :XX)
+    assert_equal "", author_name(" ", " ")
+  end
+
   test "lh without link" do
     assert_nil lh("Donald J. Trump")
     assert_nil lh("")
