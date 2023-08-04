@@ -10,8 +10,10 @@ class QuotationsController < ApplicationController
   # GET /quotations?locales=uk,es
   def index
     pattern = params[:pattern].blank? ? "%" : my_sql_sanitize(params[:pattern])
+    # use current locale as default if param locales is not set
+    params[:locales] = I18n.locale.to_s unless params[:locales]
     # "locales"=>"es,uk" -> "'es','uk'"
-    locales = params[:locales].split(',').map { |locale| "'#{locale}'" }.join(',') if params[:locales]
+    locales = params[:locales].split(',').map { |locale| "'#{locale}'" }.join(',')
     sql = "SELECT DISTINCT * FROM quotations WHERE quotation LIKE '%" + pattern + "%'"
     sql << " AND locale IN (#{locales})" if locales.present?
     sql << " ORDER BY id DESC"
