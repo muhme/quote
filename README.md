@@ -79,11 +79,6 @@ You can also set this DEEPL_API_KEY in the environment for translations with i18
 
 ## Roadmap
 
-* Complete #65 I18N
-  * Incorporate locale into quotes
-    * w/o translating the quotes; only add a locale field
-    * Include at least three quotes in each locale
-    * Enable the option to list and search quotes exclusively in the current locale or in all locales
 * Develop a new JSON API for fetching quotes
   * As a future alternative to the Perl script
   * Including the option to select the locale
@@ -95,7 +90,7 @@ You can also set this DEEPL_API_KEY in the environment for translations with i18
 ## History
 
 * 2023 updated Rails 7.0.5 ... 7.0.6
-* 2023 translated web application interface in English 🇺🇸, español 🇪🇸, 日本語 🇯🇵 und українська 🇺🇦
+* 2023 everything translated from German 🇩🇪 into English 🇺🇸, español 🇪🇸, 日本語 🇯🇵 and українська 🇺🇦
 * 2023 using Hotwire Turbo (see [Autocomplete mit Rails & Turbo](https://www.consulting.heikol.de/en/blog/autocomplete-ruby-on-rails-turbo/))
 * 2022 updated to Ruby 3.0 and Rails 7.0.1 ... 7.0.4
 * 2021 updated to Rails 6.1.3 ... 6.1.4
