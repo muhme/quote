@@ -385,9 +385,7 @@ class QuotationsController < ApplicationController
   def verify_and_improve_link(to_render)
     new_link = UrlCheckerService.check(@quotation.source_link)
     if @quotation.source_link.present? and new_link.nil?
-      # add warning as we can have it multiple times with the locales
-      flash[:warning] = (flash[:warning].present? ? flash[:warning] + " " : "") +
-      t("g.link_invalid", link: @quotation.source_link)
+      flash[:warning] =  t("g.link_invalid", link: @quotation.source_link)
       logger.info { "invalid link #{@quotation.source_link}" }
     elsif new_link != @quotation.source_link
       flash[:warning] = t("g.link_changed", link: @quotation.source_link, new: new_link)

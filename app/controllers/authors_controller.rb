@@ -247,8 +247,8 @@ class AuthorsController < ApplicationController
       logger.info { "invalid link #{@author.link(locale: locale)}" }
     elsif new_link != @author.link(locale: locale)
       # add error as we can have it multiple times with the locales
-      flash[:error] = (flash[:error].present? ? flash[:error] + " " : "") +
-        t("g.link_changed", link: @author.link(locale: locale), new: new_link) # TODO change to :warn
+      flash[:warning] = (flash[:warning].present? ? flash[:warning] + " " : "") +
+        t("g.link_changed", link: @author.link(locale: locale), new: new_link)
       logger.info "link in locale #{locale} changed from #{@author.link(locale: locale)} to #{new_link}"
       @author.send("link_#{locale}=", new_link)
     end
