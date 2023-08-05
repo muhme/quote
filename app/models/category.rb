@@ -82,9 +82,11 @@ class Category < ApplicationRecord
         ret = check_japanese(quotation, ids_and_categories)
       when :de
         ret = check_german(quotation, ids_and_categories)
+      when :es
+        ret = check_spanish(quotation, ids_and_categories)
       else
         ret = check_american_english(quotation, ids_and_categories)
-        # if needed we can implement :es and :uk
+        # if needed we can implement :uk
       end
     end
     ret.nil? ? [] : ret.uniq
@@ -217,6 +219,30 @@ class Category < ApplicationRecord
 
           # finds identical and also e.g. "Liebe" for "lieben" and "Spiel" for "spielen",
           ret << id if word == category || word.chop == category || word.chop.chop == category
+        end
+      end
+      ret
+    end
+
+    # everthing is mapped to lowercase to compare
+    # even compared with one or two letters less in the ending of word from quotation
+    # also tries the other way round to remove last letter from category name (if the category name has at least 3 chars)
+    def check_spanish(quotation, ids_and_categories)
+      ret = []
+      # create a lowercase list of words
+      words = quotation.split(/[ ,.;\-—!?"'„”]/).map(&:downcase).reject(&:blank?)
+
+      ids_and_categories.each do |id, category|
+        next if category.blank? # Skip empty or nil categories
+
+        category.downcase!
+        words.each do |word|
+          next if word.blank? # Skip empty words or punctuation marks
+
+          # finds identical and also e.g. "Ver" for "ve" and "Ojo" for "ojes",
+          # and "Humano" for "humanas", but not "Su" for "se"
+          ret << id if word == category || word.chop == category || word.chop.chop == category ||
+                       (category.size > 2 and (word == category.chop || word.chop == category.chop))
         end
       end
       ret

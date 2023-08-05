@@ -79,6 +79,11 @@ time:
   id: 41
   user_id: 1
 
+# for testing spanish
+human:
+  id: 50
+  user_id: 1
+
 # create five thousand categories (April 2018 we have 533 categories)
 <% 100.upto(5100) do |i| %>
 fix_<%= i %>:

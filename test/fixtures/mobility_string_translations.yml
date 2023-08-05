@@ -280,6 +280,16 @@ time:
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
 
+# for testing spanish
+human:
+  translatable_type: Category
+  key: category
+  translatable_id: 50
+  value: Humano
+  locale: es
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
 # create five thousand categories (April 2018 we have 533 categories)
 <% 100.upto(5100) do |i| %>
 category_fix_<%= i %>:

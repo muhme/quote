@@ -111,4 +111,10 @@ class CategoryTest < ActiveSupport::TestCase
     assert_equal [40, 41], Category.check("時間は貴重です、だから時間厳守を重視しましょう。").sort # Time is valuable, so we should value punctuality. (generic)
   end
 
+  # 50 Humano (human)
+  test "check spanish category name without last letter" do
+    I18n.locale = :es
+    assert_equal [50], Category.check("Hay dos cosas infinitas: el universo y la estupidez humana, y no estoy seguro de la primera.") # Time waits for no one. (real)
+  end
+
 end
