@@ -155,8 +155,9 @@ class AuthorsController < ApplicationController
   def destroy
     return unless access?(:destroy, @author)
 
+    author_name = @author.get_author_name_or_blank
     if @author.destroy
-      flash[:notice] = e = t(".deleted", author: @author.get_author_name_or_blank)
+      flash[:notice] = e = t(".deleted", author: author_name)
       logger.debug { "destroy author ID=#{@author.id} – #{e}" }
       redirect_to authors_url
     else

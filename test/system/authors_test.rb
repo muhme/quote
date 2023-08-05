@@ -79,12 +79,14 @@ class AuthorsTest < ApplicationSystemTestCase
   end
 
   test "delete author" do
-    new_author_name = 'XYZ'
+    new_author_name = "X LastName"
+    new_author_firstname = "FirstName"
     do_login
     check_page page, new_author_url, "h1", "Author create"
     fill_in 'author_name', with: new_author_name
+    fill_in 'author_firstname', with: new_author_firstname
     click_on 'Save'
-    check_this_page page, nil, "has been created", 200, true, 10000 # make Capybara wait until the new author is created
+    check_this_page page, nil, "The author \"#{new_author_firstname} #{new_author_name}\" has been created.", 200, true, 10000 # make Capybara wait until the new author is created
     au = author_url(id: Author.i18n.find_by_name(new_author_name))
     check_page page, au, "h1", "Author"
     # delete
@@ -92,6 +94,7 @@ class AuthorsTest < ApplicationSystemTestCase
     accept_alert do
       find("img[title='Delete']", match: :first).click
     end
+    check_this_page page, nil, "The entry for the author \"#{new_author_firstname} #{new_author_name}\" has been deleted."
     check_page page, au, "h1", /Page not found .* 404/
   end
 
