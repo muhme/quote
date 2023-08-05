@@ -139,7 +139,7 @@ class QuotationsTest < ApplicationSystemTestCase
     check_page page, quotations_url + "?locales=ja,uk", "h1", "Quote"
     check_page page, quotations_url + "?locales=", "h1", "Quote"
     check_page page, quotations_url + "?locales=XX", "h1", "Quote"
-    check_page page, quotations_url(locale: :de) + "?locales=de", "h1", "Zitate"
+    check_page page, quotations_url(locale: :de) + "?locales=de", "h1", "Zitat"
   end
 
   test "edit own quote" do
