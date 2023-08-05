@@ -34,6 +34,46 @@ class Quotation < ApplicationRecord
     ret
   end
 
+  # returns list of quotations
+  # can be reduced by pattern or by locales
+  # sorted by created_at
+  def self.search_by_pattern_and_locales(pattern, locales)
+    if pattern.present?
+      quotations = where("quotation LIKE ?", "%#{pattern}%").order(created_at: :desc)
+    else
+      quotations = all.order(created_at: :desc)
+    end
+    quotations = quotations.where(locale: locales) if locales.present?
+    quotations
+  end
+
+  # returns list of quotations of the given author ID and 
+  # can be reduced by locales
+  # sorted by created_at
+  def self.by_author_and_locales(author_id, locales = nil)
+    quotations = where(author_id: author_id).order(created_at: :desc)
+    quotations = quotations.where(locale: locales) if locales.present?
+    quotations
+  end
+
+  # returns list of quotations of the given category ID and 
+  # can be reduced by locales
+  # sorted by created_at
+  def self.by_category_and_locales(category_id, locales = nil)
+    quotations = joins(:categories).where(categories: { id: category_id }).distinct.order(created_at: :desc)
+    quotations = quotations.where(locale: locales) if locales.present?
+    quotations
+  end
+
+  # returns list of non-public quotations and 
+  # can be reduced by locales
+  # sorted by created_at
+  def self.not_public_and_by_locales(locales = nil)
+    quotations = where(public: 0).order(created_at: :desc)
+    quotations = quotations.where(locale: locales) if locales.present?
+    quotations
+  end
+
   private
 
   # source and source_link are optional and saved as NULL in database if blank

@@ -182,7 +182,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     get '/quotations?page=1'
     assert_response :success
     # 2nd page
-    get '/quotations?page=2'
+    get '/quotations?page=2&locales='
     assert_response :success
     # out of range
     get '/quotations?page=42000000'

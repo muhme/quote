@@ -13,7 +13,7 @@
   <% odd_or_even = 0
     for category in @categories
       odd_or_even = 1 - odd_or_even
-      quotations = Quotation.find_by_sql(sql_quotations_for_category(category.id)).size
+      quotations = Quotation.by_category_and_locales(category.id).size
       number_of_comments = Comment.number_of(category) %>
       <tr valign="top" class="ListLine<%= odd_or_even %>">
         <td><%= raw th(category.category, 40) %></td>

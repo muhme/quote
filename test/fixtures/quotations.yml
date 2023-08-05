@@ -46,6 +46,7 @@ schiller_quote:
   public: true
   source: Wallenstein, 1800
   source_link: https://www.projekt-gutenberg.org/schiller/wallens1/wall3305.html
+  locale: de
 
 # create ten thousend quotes (April 2018 we have 1,332)
 <% 100.upto(10100) do |i| %>

@@ -4,21 +4,19 @@ class QuotationsController < ApplicationController
   before_action :category_ids_param_to_array
   before_action :set_comments, only: [:show, :destroy]
 
-  # GET /quotations
-  # GET /quotations?pattern=berlin
-  # GET /quotations?page=42
-  # GET /quotations?locales=uk,es
+  # list quotations
+  # with the ability to reduce the list by search pattern or if locales are given
+  # e.g. GET /quotations
+  #      GET /quotations?pattern=berlin
+  #      GET /quotations?page=42
+  #      GET /quotations?locales=uk,es
   def index
-    pattern = params[:pattern].blank? ? "%" : my_sql_sanitize(params[:pattern])
     # use current locale as default if param locales is not set
-    params[:locales] = I18n.locale.to_s unless params[:locales]
-    # "locales"=>"es,uk" -> "'es','uk'"
-    locales = params[:locales].split(',').map { |locale| "'#{locale}'" }.join(',')
-    sql = "SELECT DISTINCT * FROM quotations WHERE quotation LIKE '%" + pattern + "%'"
-    sql << " AND locale IN (#{locales})" if locales.present?
-    sql << " ORDER BY id DESC"
+    params[:locales] ||= I18n.locale.to_s
 
-    @quotations = Quotation.paginate_by_sql(sql, page: params[:page], per_page: 5)
+    @quotations = Quotation.search_by_pattern_and_locales(params[:pattern], split_params_locales)
+                           .paginate(page: params[:page], per_page: QUOTES_PER_PAGE)
+
     # check pagination second time with number of pages
     bad_pagination?(@quotations.total_pages)
 
@@ -175,56 +173,90 @@ class QuotationsController < ApplicationController
     end
   end
 
-  # list quotations created by a user
+  # list quotations created by a user ID
+  # with the ability to reduce the list if locales are given
+  # e.g. GET /quotations/list_by_user/1
+  #      GET /quotations/list_by_user/1?page=42
+  #      GET /quotations/list_by_user/1?locales=uk,es
   def list_by_user
-    unless User.exists?(:id => params[:user])
+    user_id = my_sql_sanitize(params[:user])
+
+    unless User.exists?(id: user_id)
       flash[:error] = t(".no_user", user: params[:user])
       return redirect_to root_url
     end
 
-    sql = ["select distinct * from quotations where user_id = ? order by created_at desc",
-           my_sql_sanitize(params[:user])]
-    @quotations = Quotation.paginate_by_sql sql, :page => params[:page], :per_page => 5
+    locales = split_params_locales
+
+    @quotations = Quotation.where(user_id: user_id)
+                           .order(created_at: :desc)
+
+    @quotations = @quotations.where(locale: locales) if locales.present?
+
+    @quotations = @quotations.paginate(page: params[:page], per_page: QUOTES_PER_PAGE)
     # check pagination second time with number of pages
     bad_pagination?(@quotations.total_pages)
   end
 
+  # list quotations by catgegory ID
+  # with the ability to reduce the list if locales are given
+  # e.g. GET /quotations/list_by_category/1
+  #      GET /quotations/list_by_category/1?page=42
+  #      GET /quotations/list_by_category/1?locales=uk,es
   def list_by_category
-    unless Category.exists? params[:category]
-      flash[:error] = t(".no_category", id: params[:category])
+    category_id = params[:category]
+    unless @category = Category.find_by(id: category_id)
+      flash[:error] = t(".no_category", id: category_id)
       return redirect_to root_url
     end
-    @category = Category.find params[:category]
-    @quotations = Quotation.paginate_by_sql sql_quotations_for_category(@category.id), :page => params[:page],
-                                                                                       :per_page => 5
+
+    @quotations = Quotation.by_category_and_locales(category_id, split_params_locales)
+                           .paginate(page: params[:page], per_page: QUOTES_PER_PAGE)
+
     # check pagination second time with number of pages
     bad_pagination?(@quotations.total_pages)
   end
 
-  # select * from `quotations` where q.public = 1 and author_id = ?
+  # list quotations by author ID
+  # with the ability to reduce the list if locales are given
+  # e.g. GET /quotations/list_by_author/1
+  #      GET /quotations/list_by_author/1?page=42
+  #      GET /quotations/list_by_author/1?locales=uk,es
   def list_by_author
-    unless Author.exists? params[:author]
-      flash[:error] = t(".no_author", id: params[:author])
+    author_id = params[:author]
+
+    unless @author = Author.find_by(id: author_id)
+      flash[:error] = t(".no_author", id: author_id)
       return redirect_to root_url
     end
-    @author = Author.find params[:author]
-    @quotations = Quotation.paginate_by_sql sql_quotations_for_author(@author.id), :page => params[:page],
-                                                                                   :per_page => 5
+
+    @quotations = Quotation.by_author_and_locales(author_id, split_params_locales)
+                           .paginate(page: params[:page], per_page: QUOTES_PER_PAGE)
+
     # check pagination second time with number of pages
     bad_pagination?(@quotations.total_pages)
   end
 
   # for admins list all not public categories
+  # with the ability to reduce the list if locales are given
   def list_no_public
     return unless access?(:admin, Quotation.new)
 
-    @quotations = Quotation.paginate_by_sql "select * from quotations where public = 0", :page => params[:page],
-                                                                                         :per_page => 5
+    locales = split_params_locales
+    @quotations = Quotation.not_public_and_by_locales(locales)
+                           .paginate(page: params[:page], per_page: QUOTES_PER_PAGE)
+
     # check pagination second time with number of pages
     bad_pagination?(@quotations.total_pages)
   end
 
   private
+
+  # return nil if params[:locales] is not set, else
+  # return array ['es','uk'] from e.g. Parameters: {"locales"=>"es,uk"}
+  def split_params_locales
+    params[:locales].split(',') if params[:locales]
+  end
 
   def set_quotation
     @quotation = Quotation.find(params[:id])
@@ -387,7 +419,7 @@ class QuotationsController < ApplicationController
   def verify_and_improve_link(to_render)
     new_link = UrlCheckerService.check(@quotation.source_link)
     if @quotation.source_link.present? and new_link.nil?
-      flash[:warning] =  t("g.link_invalid", link: @quotation.source_link)
+      flash[:warning] = t("g.link_invalid", link: @quotation.source_link)
       logger.info { "invalid link #{@quotation.source_link}" }
     elsif new_link != @quotation.source_link
       flash[:warning] = t("g.link_changed", link: @quotation.source_link, new: new_link)

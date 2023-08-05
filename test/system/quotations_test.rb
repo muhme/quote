@@ -1,43 +1,70 @@
 require "application_system_test_case"
 
 class QuotationsTest < ApplicationSystemTestCase
-
   test "quotations" do
-    check_page page, quotations_url, "h1", "Quotes"
-    assert_equal "Zitat-Service – Quotes", page.title
+    2.times do # 1st run w/o, 2nd w/ login
+      check_page page, quotations_url, "h1", "Quotes"
+      assert_equal "Zitat-Service – Quotes", page.title
+      check_this_page page, "h1", "2 Quotes"
+      uncheck 'locale_en'
+      check_this_page page, "h1", /10,[0-9]{3} Quotes/ # actual 10,007
+      check 'locale_uk'
+      check_this_page page, "h1", "0 Quotes"
+      do_login
+    end
   end
 
-  test "quotations with login" do
-    do_login
-    check_this_page page, nil, "Hello first_user, nice to have you here."
-    check_page page, quotations_url, "h1", "Quotes"
-    assert_equal "Zitat-Service – Quotes", page.title
-  end
-
-  test "list by category w/o login" do
-    check_page page, "quotations/list_by_category/" + Category.first.id.to_s, "h1", "Quotes for the category public_category"
-    assert_equal "Zitat-Service – Quotes to public_category", page.title
-  end
-  test "list by category with login" do
-    do_login
-    check_this_page page, nil, "Hello first_user, nice to have you here."
-    check_page page, "quotations/list_by_category/" + Category.first.id.to_s, "h1", "Quotes for the category public_category"
+  test "list by category" do
+    2.times do # 1st run w/o, 2nd w/ login
+      2.times do # 1st no locale is selected, 2nd :en
+        check_page page, "quotations/list_by_category/" + Category.first.id.to_s, "h1",
+                   "2 Quotes for the category public_category"
+        assert_equal "Zitat-Service – Quotes to public_category", page.title
+        check 'locale_en'
+      end
+      uncheck 'locale_en'
+      check 'locale_uk'
+      check_this_page page, "h1", "0 Quotes for the category public_category"
+      do_login
+    end
   end
   test "failed to list not existing category" do
     check_page page, "quotations/list_by_category/bla", nil, 'Cannot find a category with the ID="bla"!'
   end
 
   test "list by user" do
-    check_page page, "quotations/list_by_user/#{User.first.id}", "h1", 'Quotes of the user "first_user"'
+    2.times do # 1st run w/o, 2nd w/ login
+      2.times do # 1st no locale is selected, 2nd :en
+        check_page page, "quotations/list_by_user/#{User.first.id}", "h1",
+                   /10,[0-9]{3} Quotes of the user "first_user"/ # actual 10,006
+        assert_equal "Zitat-Service – Quotes of the user first_user", page.title
+        # 2nd time :en
+        check 'locale_en'
+      end
+      uncheck 'locale_en'
+      check 'locale_uk'
+      check_this_page page, "h1", '0 Quotes of the user "first_user"'
+      do_login
+    end
   end
-
   test "try to list for not existing user" do
     check_page page, "quotations/list_by_user/leon3", nil, 'Cannot find a user with ID="leon3"!'
   end
 
   test "list by author" do
-    check_page page, "quotations/list_by_author/#{authors(:schiller).id}", "h1", /1 Quote by Friedrich Schiller/
-    assert_equal "Zitat-Service – Quotes from Friedrich Schiller", page.title
+    2.times do # 1st run w/o, 2nd w/ login
+      2.times do # 1st no locale is selected, 2nd :en
+        check_page page, "quotations/list_by_author/#{authors(:schiller).id}", "h1",
+                   "1 Quote by Friedrich Schiller"
+        assert_equal "Zitat-Service – Quotes from Friedrich Schiller", page.title
+        # 2nd time :en
+        check 'locale_de'
+      end
+      uncheck 'locale_de'
+      check 'locale_en'
+      check_this_page page, "h1", "0 Quotes by Friedrich Schiller"
+      do_login
+    end
   end
   test "failed to list not existing author" do
     check_page page, "quotations/list_by_author/bli", nil, 'Cannot find an author with the ID="bli"!'
@@ -73,12 +100,11 @@ class QuotationsTest < ApplicationSystemTestCase
       do_login :admin_user, :admin_user_password if i == 2
       check_page page, quotations_path, nil, npq
       check_page page, quotations_path(pattern: npq), nil, npq
-      check_page page, "/quotations/list_by_category/#{Category .last.id}", nil, npq
+      check_page page, "/quotations/list_by_category/#{Category.last.id}", nil, npq
       check_page page, "/quotations/list_by_user/#{users(:first_user).id}", nil, npq
       check_page page, "/quotations/list_by_user/#{users(:first_user).id}", nil, npq
       check_page page, "/quotations/list_by_author/#{authors(:public_false).id}", nil, npq
     end
-
   end
 
   # linking author's name with that author's quotes #13
@@ -108,11 +134,11 @@ class QuotationsTest < ApplicationSystemTestCase
   end
 
   test "quotes for languages" do
-    check_page page, quotations_url + "?locales=en", "h1", "Quotes"
-    check_page page, quotations_url + "?locales=de", "h1", "Quotes"
-    check_page page, quotations_url + "?locales=ja,uk", "h1", "Quotes"
-    check_page page, quotations_url + "?locales=", "h1", "Quotes"
-    check_page page, quotations_url + "?locales=XX", "h1", "Quotes"
+    check_page page, quotations_url + "?locales=en", "h1", "Quote"
+    check_page page, quotations_url + "?locales=de", "h1", "Quote"
+    check_page page, quotations_url + "?locales=ja,uk", "h1", "Quote"
+    check_page page, quotations_url + "?locales=", "h1", "Quote"
+    check_page page, quotations_url + "?locales=XX", "h1", "Quote"
     check_page page, quotations_url(locale: :de) + "?locales=de", "h1", "Zitate"
   end
 
@@ -188,7 +214,8 @@ class QuotationsTest < ApplicationSystemTestCase
     fill_in "quotation_quotation", with: "Those who do not venture beyond reality will never conquer the truth."
     click_on "Save"
     check_this_page page, nil, "The quote has been updated."
-    check_page page, quotation_url(id: 1), nil, /Quote:.*Those who do not venture beyond reality will never conquer the truth./
+    check_page page, quotation_url(id: 1), nil,
+               /Quote:.*Those who do not venture beyond reality will never conquer the truth./
     check_this_page page, nil, /Author:.*Friedrich Schiller/
     # existing author is not changed
     check_page page, edit_quotation_url(id: 1), "h1", "Edit quote"
@@ -276,6 +303,7 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, "🇺🇦 UK"
     # delete
     visit quotations_url
+    check 'locale_uk'
     accept_alert do
       find("img[title='Delete']", match: :first).click
     end
@@ -317,7 +345,7 @@ class QuotationsTest < ApplicationSystemTestCase
   end
 
   test "pagination with trailing slash" do
-    url = quotations_url + "?page=2/"
+    url = quotations_url + "?locales=&page=2/"
     check_page page, url, "h1", "Quote"
     check_this_page page, nil, "Actions"
     # redirected URL w/o slash
@@ -335,7 +363,8 @@ class QuotationsTest < ApplicationSystemTestCase
 
   # as seen from Internet, getting HTTP error 500 from ActionController::BadRequest with #54
   test "ActionController BadRequest" do
-    check_page page, "/quotations?page=2&pattern=-6177%25%27%20UNION%20ALL%20SELECT%201693%2C1693%2C1693%2C1693%2C1693%2C1693%2C1693%2C1693%2CCONCAT%280x7171767a71%2C0x4e4c6547675956596d4e4d6958496a6f6a4a4c494f586b5a756745544c6a494a436f596b724b6e47%2C0x71717a6a71%29%2", "h1", /Bad Request .* 400/
+    check_page page,
+               "/quotations?page=2&pattern=-6177%25%27%20UNION%20ALL%20SELECT%201693%2C1693%2C1693%2C1693%2C1693%2C1693%2C1693%2C1693%2CCONCAT%280x7171767a71%2C0x4e4c6547675956596d4e4d6958496a6f6a4a4c494f586b5a756745544c6a494a436f596b724b6e47%2C0x71717a6a71%29%2", "h1", /Bad Request .* 400/
   end
 
   test "ActionController BadRequest2" do
@@ -382,7 +411,7 @@ class QuotationsTest < ApplicationSystemTestCase
     fill_in "quotation_quotation", with: quote
     1101.upto(1200) do |i|
       fill_in "category", with: "#{i}" # 1101 ... 1200
-      #sleep 1 # TODO
+      # sleep 1 # TODO
       check_this_page page, nil, /categor.*#{i}_category/ # wait for autocompletion
     end
     click_on "Save"
@@ -480,7 +509,8 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, /Quote:.*Yes We Can/
     changed_quote = Quotation.find(1)
     assert_equal last_created, changed_quote.created_at
-    assert last_updated < changed_quote.updated_at, "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
+    assert last_updated < changed_quote.updated_at,
+           "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
   end
 
   test "check update time changes with author" do
@@ -494,7 +524,8 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, "The quote has been updated."
     changed_quote = Quotation.find(1)
     assert_equal last_created, changed_quote.created_at
-    assert last_updated < changed_quote.updated_at, "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
+    assert last_updated < changed_quote.updated_at,
+           "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
   end
 
   test "check update time changes with source" do
@@ -508,7 +539,8 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, /Original source:.*The Internet/
     changed_quote = Quotation.find(1)
     assert_equal last_created, changed_quote.created_at
-    assert last_updated < changed_quote.updated_at, "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
+    assert last_updated < changed_quote.updated_at,
+           "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
   end
 
   test "check update time changes with link" do
@@ -522,7 +554,8 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, /Link to original source:.*github.com\/muhme\/quote/
     changed_quote = Quotation.find(1)
     assert_equal last_created, changed_quote.created_at
-    assert last_updated < changed_quote.updated_at, "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
+    assert last_updated < changed_quote.updated_at,
+           "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
   end
 
   test "check update time changes with adding category" do
@@ -537,7 +570,8 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, /Categories:.*two/
     changed_quote = Quotation.find(1)
     assert_equal last_created, changed_quote.created_at
-    assert last_updated < changed_quote.updated_at, "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
+    assert last_updated < changed_quote.updated_at,
+           "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
   end
 
   test "check update time changes with removing category" do
@@ -552,7 +586,8 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, /Categories:$/
     changed_quote = Quotation.find(1)
     assert_equal last_created, changed_quote.created_at
-    assert last_updated < changed_quote.updated_at, "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
+    assert last_updated < changed_quote.updated_at,
+           "last_updated=#{last_updated} < changed.updated_at=#{changed_quote.updated_at}"
   end
 
   test "check update time does not change without change" do
@@ -571,5 +606,4 @@ class QuotationsTest < ApplicationSystemTestCase
   end
 
   # NICE cannot delete quote created by another user
-
 end

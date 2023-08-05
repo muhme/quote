@@ -31,7 +31,7 @@ module ApplicationHelper
         d += " – #{t("g.quotes", count: 2)}"
         d += " #{t("g.from")} #{@author.get_author_name_or_blank}" if controller.action_name == "list_by_author" and @author.present?
         d += " #{t("g.for")} #{@category.category}" if controller.action_name == "list_by_category" and @category.present?
-        d += " #{t("layouts.application.of_the_user")} #{h(params[:user])}" if controller.action_name == "list_by_user"
+        d += " #{t("layouts.application.of_the_user")} #{hu(params[:user])}" if controller.action_name == "list_by_user"
       end
     end
 

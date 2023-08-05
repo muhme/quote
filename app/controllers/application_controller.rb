@@ -2,7 +2,7 @@ require "deepl"
 
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :current_user_session, :current_user, :access?, :has_non_public, :can_edit?, :sql_quotations_for_category, :sql_quotations_for_author
+  helper_method :current_user_session, :current_user, :access?, :has_non_public, :can_edit?
   before_action do
     bad_request? # check params[bad_request] which means BadRequest exception from Rack middleware
     bad_pagination? # check params[page] if existing
@@ -42,19 +42,6 @@ class ApplicationController < ActionController::Base
         I18n.locale = Mobility.locale = I18n.default_locale
       end
     end
-  end
-
-  # give user context visible quotations for a category
-  def sql_quotations_for_category(category_id)
-    # one sample: select distinct q.* from quotations q where q.public = 1 and q.id in (select cq.quotation_id from categories_quotations cq where cq.category_id = '487');
-    sql = "select distinct q.* from quotations q where"
-    return sql + " q.id in (select cq.quotation_id from categories_quotations cq where cq.category_id = '#{category_id.to_i}')"
-  end
-
-  # give user context visible quotations for an author
-  def sql_quotations_for_author(author_id)
-    sql = "select * from quotations where author_id = '#{author_id}'"
-    return sql
   end
 
   # return true is the user is logged in and is an admin, or the owner
