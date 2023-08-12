@@ -37,8 +37,6 @@ services:
       - .:/quote
     environment:
       QUOTE_DATABASE_PASSWORD: quote_development
-    env_file:
-      - .env # to set DEEPL_API_KEY
     ports:
       - "8102:3000" # development environment
       - "8112:3100" # test environment, if running
