@@ -48,11 +48,11 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
   
   You can register there and then store your own API key in the .env file and restart quote_rails container for the development stage.
 ```
-DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx"
+user@host:/quote $ echo 'DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx"' > .env
 ```
 Or you set this DEEPL_API_KEY environment variable inside the container then you have it also for test stage and translations with i18n-tasks command:
 ```
-root@3aea66898357:/quote# echo "export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx" >> ~/.bashrc
+root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx' >> ~/.bashrc
 ```
 </details>
 
