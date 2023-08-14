@@ -92,6 +92,34 @@ class Category < ApplicationRecord
     ret.nil? ? [] : ret.uniq
   end
 
+  # returns hash {locale => id} with identical category names
+  # found in all locales for the actual @category.id
+  # returns only one finding for each locale
+  def self.find_duplicate_by_id(category_id)
+    sql = <<-SQL
+        SELECT DISTINCT t1.locale, t2.translatable_id AS t2
+          FROM mobility_string_translations t1
+          JOIN mobility_string_translations t2
+            ON t1.value = t2.value
+            AND t1.locale = t2.locale
+            AND t1.locale IN ('#{I18n.available_locales.join("', '")}')
+            AND t1.translatable_id <> t2.translatable_id
+            AND t1.translatable_type = 'Category'
+            AND t2.translatable_type = 'Category'
+            AND t1.key = 'category'
+            AND t2.key = 'category'
+          WHERE t1.translatable_id = #{category_id};
+    SQL
+    result = ActiveRecord::Base.connection.execute(sql)
+    duplicate = {}
+    result.each do |row|
+      locale = row[0]
+      id = row[1]
+      duplicate[locale] = id
+    end
+    duplicate
+  end
+
   private
 
   # doing validation by own with Mobility
@@ -201,6 +229,7 @@ class Category < ApplicationRecord
     # everthing is mapped to lowercase to compare
     # even compared with one or two letters less in the ending to find e.g. "German" for "Germany" and "time" for "timely",
     # but not for excluded_words
+    # also tries the other way round to remove last letter from category name (if the category name has at least 3 chars)
     def check_american_english(quotation, ids_and_categories)
       ret = []
       # create a lowercase list of words
@@ -217,8 +246,11 @@ class Category < ApplicationRecord
           # prevents e.g. "car" for "cards"
           next if EXCLUDED_WORDS_ENGLISH.include?(word.chop.chop)
 
-          # finds identical and also e.g. "Liebe" for "lieben" and "Spiel" for "spielen",
-          ret << id if word == category || word.chop == category || word.chop.chop == category
+          # finds identical and also e.g. "German" for "Germany" and "time" for "timely",
+          # and the other way round "politics" for "politic"
+          ret << id if word == category || word.chop == category || word.chop.chop == category ||
+                       (category.size > 2 and
+                         (word == category.chop || word.chop == category.chop || word.chop.chop == category.chop))
         end
       end
       ret
@@ -242,7 +274,8 @@ class Category < ApplicationRecord
           # finds identical and also e.g. "Ver" for "ve" and "Ojo" for "ojes",
           # and "Humano" for "humanas", but not "Su" for "se"
           ret << id if word == category || word.chop == category || word.chop.chop == category ||
-                       (category.size > 2 and (word == category.chop || word.chop == category.chop))
+                       (category.size > 2 and
+                         (word == category.chop || word.chop == category.chop || word.chop.chop == category.chop))
         end
       end
       ret

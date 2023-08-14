@@ -69,7 +69,7 @@ class CategoryTest < ActiveSupport::TestCase
     I18n.locale = :ja
     assert_equal three_categories, Category.check(Quotation.new(quotation: "山の上には雲と太陽がある。")).sort
     I18n.locale = :uk
-    assert_equal three_categories, Category.check(Quotation.new(quotation: "Над Гора - хмара і сонце.")).sort
+    assert_equal three_categories, Category.check(Quotation.new(quotation: "Над горою хмари і сонце.")).sort
   end
 
   # 20 Übermut

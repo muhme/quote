@@ -31,30 +31,11 @@ class CategoriesController < ApplicationController
   end
 
   # GET /categories/1
+  # sets hash @duplicate {locale => id} with category IDs with identical
+  # category name found in all locales for the actual @category.id
   def show
-    sql = <<-SQL
-      SELECT DISTINCT t1.locale, t2.translatable_id AS t2
-        FROM mobility_string_translations t1
-        JOIN mobility_string_translations t2
-          ON t1.value = t2.value
-          AND t1.locale = t2.locale
-          AND t1.locale IN ('en', 'de', 'es', 'ja', 'uk')
-          AND t1.translatable_id <> t2.translatable_id
-          AND t1.translatable_type = 'Category'
-          AND t2.translatable_type = 'Category'
-          AND t1.key = 'category'
-          AND t2.key = 'category'
-        WHERE t1.translatable_id = #{@category.id};
-    SQL
-    result = ActiveRecord::Base.connection.execute(sql)
-    @duplicate = {}
-    result.each do |row|
-      locale = row[0]
-      id = row[1]
-      @duplicate[locale] = id
-    end
-
-    logger.debug { "found #{@duplicate.to_s}" }
+    @duplicate = Category.find_duplicate_by_id(@category.id)
+    logger.debug { "found duplicates #{@duplicate.to_s}" }
   end
 
   # GET /categories/new
@@ -224,13 +205,15 @@ class CategoriesController < ApplicationController
   def list_duplicates
     return unless access?(:admin, Category.new)
 
+    # t1 and t2 are equal category names from different category IDs
+    # t3 and t4 are the category names in the actual locale
     sql = <<-SQL
       SELECT DISTINCT t1.locale, t1.value AS v1, t3.value AS v3, t1.translatable_id AS t1, t4.value AS v4, t2.translatable_id as t2
         FROM mobility_string_translations t1
         JOIN mobility_string_translations t2
           ON t1.value = t2.value
           AND t1.locale = t2.locale
-          AND t1.locale IN ('en', 'de', 'es', 'ja', 'uk')
+          AND t1.locale IN ('#{I18n.available_locales.join("', '")}')
           AND t1.translatable_id <> t2.translatable_id
           AND t1.translatable_type = 'Category'
           AND t2.translatable_type = 'Category'
@@ -238,12 +221,12 @@ class CategoriesController < ApplicationController
           AND t2.key = 'category'
         JOIN mobility_string_translations t3
           ON t1.translatable_id = t3.translatable_id
-          AND t3.locale = 'de'
+          AND t3.locale = '#{I18n.locale}'
           AND t3.translatable_type = 'Category'
           AND t3.key = 'category'
         JOIN mobility_string_translations t4
           ON t2.translatable_id = t4.translatable_id
-          AND t4.locale = 'de'
+          AND t4.locale = '#{I18n.locale}'
           AND t4.translatable_type = 'Category'
           AND t4.key = 'category'
         WHERE t1.translatable_id < t2.translatable_id

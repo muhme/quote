@@ -65,7 +65,7 @@ category_with_one_comment_en:
   updated_at: <%= Time.current %>
 
 # 3 categories with all 5 locales
-sun_en:
+cloud_en:
   translatable_type: Category
   key: category
   translatable_id: 10
@@ -73,7 +73,7 @@ sun_en:
   locale: en
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
-sun_de:
+cloud_de:
   translatable_type: Category
   key: category
   translatable_id: 10
@@ -81,7 +81,7 @@ sun_de:
   locale: de
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
-sun_es:
+cloud_es:
   translatable_type: Category
   key: category
   translatable_id: 10
@@ -89,15 +89,15 @@ sun_es:
   locale: es
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
-sun_ja:
+cloud_ja:
   translatable_type: Category
   key: category
   translatable_id: 10
-  value: 太陽
+  value: 雲
   locale: ja
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
-sun_uk:
+cloud_uk:
   translatable_type: Category
   key: category
   translatable_id: 10
@@ -145,43 +145,43 @@ mountain_uk:
   locale: uk
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
-cloud_en:
+sun_en:
   translatable_type: Category
   key: category
   translatable_id: 12
-  value: Cloud
+  value: Sun
   locale: en
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
-cloud_de:
+sun_de:
   translatable_type: Category
   key: category
   translatable_id: 12
-  value: Wolke
+  value: Sonne
   locale: de
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
-cloud_es:
+sun_es:
   translatable_type: Category
   key: category
   translatable_id: 12
-  value: Nube
+  value: Sol
   locale: es
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
-cloud_ja:
+sun_ja:
   translatable_type: Category
   key: category
   translatable_id: 12
-  value: 雲
+  value: 太陽
   locale: ja
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
-cloud_uk:
+sun_uk:
   translatable_type: Category
   key: category
   translatable_id: 12
-  value: хмара
+  value: Сонце
   locale: uk
   created_at: <%= Time.current %>
   updated_at: <%= Time.current %>
