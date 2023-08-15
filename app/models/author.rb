@@ -19,8 +19,8 @@ class Author < ApplicationRecord
   after_destroy :expire_author_init_chars_cache
 
   # count all non-public authors
-  def Author.count_non_public
-    return count_by_sql("select count(*) from authors where public = 0")
+  def self.count_non_public
+    where(public: false).count
   end
 
   # gives an array with initial letters from all existing author names plus '*' if no mapping exists
