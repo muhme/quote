@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     get 'start/list'           => 'static_pages#list'
     # start from the beginning with a direct URL, e.g. "joomla" instead "start/joomla"
     get 'joomla'               => 'static_pages#joomla'
+    # used from Joomla module, version 1.4
+    get 'joomla_english'       => redirect('/en/joomla')
 
     # dynamic generated humans.txt
     get "humans.txt" => "static_pages#humans"
