@@ -605,6 +605,7 @@ form#new_comment_form {
     position: absolute;  /* This allows the div to be positioned relative to table-container */
     right: 0;  /* This makes the div float to the right */
     bottom: -27px;  /* Adjust this as needed to position the div below the table */
+    z-index: 10; /* if not set, the "Log in with Login to add quotes here." lays over paging buttons */
 }
 .quotes-container table {
     width: 100%;
