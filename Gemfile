@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '~> 3.0'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '~> 7.0.7'
+gem 'rails', '~> 7.0.8'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -48,7 +48,7 @@ gem "sassc-rails"
 # Use Puma as the app server
 gem 'puma'
 
-gem 'will_paginate', '~> 3.1'
+gem 'will_paginate', '~> 4.0'
 gem 'authlogic', '~> 6'
 # for authlogic >= 6
 gem "scrypt", "~> 3.0"
