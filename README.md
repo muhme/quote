@@ -92,7 +92,7 @@ root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc1
 
 ## History
 
-* 2023 updated Rails 7.0.5 ... 7.0.8
+* 2023 updated Rails 7.0.5 ... 7.0.8, Ruby 3.1
 * 2023 everything translated from German 🇩🇪 into English 🇺🇸, español 🇪🇸, 日本語 🇯🇵 and українська 🇺🇦
 * 2023 using Hotwire Turbo (see [Autocomplete mit Rails & Turbo](https://www.consulting.heikol.de/en/blog/autocomplete-ruby-on-rails-turbo/))
 * 2022 updated to Ruby 3.0 and Rails 7.0.1 ... 7.0.4
