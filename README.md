@@ -2,6 +2,8 @@
 
 muhme/quote - Ruby on Rails web application, serving website [zitat-service.de](https://www.zitat-service.de)
 
+Database is used for JSON API [api.zitat-service.de](https://api.zitat-service.de) too.
+
 ## Docker Containers
 There is a Docker test and development environment prepared. You can create your own test and development instance with the following commands:
 ```
@@ -82,11 +84,6 @@ root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc1
 
 ## Roadmap
 
-* Develop a new JSON API for fetching quotes
-  * As a future alternative to the Perl script
-  * Including the option to select the locale
-  * Relying on IDs (unlike the current approach of using category names, author names, user names)
-  * Capable of handling at least 1 million requests per day, which equates to 11 requests per second
 * Upgrade Joomla plugin with the new API
 * Develop a Wordpress plugin
 

@@ -25,6 +25,8 @@
 <p><%= User.count %> usuarios se han registrado. Las últimas citas publicadas son de <%= raw @users[0] %>, <%= raw @users[1] %> y <%= raw @users[2] %>.</p>
 <h2>Noticias</h2>
 <dl>
+  <dt><%= image_tag("lightning.png", :alt => "un rayo amarillo", :title => "¡Hurra!") %> 20 de septiembre de 2023</dt>
+    <dd>Hay una nueva API: <a href="https://api.zitat-service.de">api.zitat-service.de</a>.</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 5 de mayo de 2023</dt>
     <dd>Se agregaron los idiomas
       <%= link_to(raw("English &#x1F1FA;&#x1F1F8;"), root_url(locale: :en)) %>,

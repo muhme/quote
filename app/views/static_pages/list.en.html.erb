@@ -25,6 +25,8 @@
 <p><%= User.count %> users have signed up. The most recently added quotes are from <%= raw @users[0] %>, <%= raw @users[1] %> and <%= raw @users[2] %>.</p>
 <h2>News</h2>
 <dl>
+  <dt><%= image_tag("lightning.png", :alt => "a yellow lightning bolt", :title => "Hooray") %> September 20, 2023</dt>
+    <dd>There's a new API: <a href="https://api.zitat-service.de">api.zitat-service.de</a>.</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> May 5th, 2023</dt>
     <dd>Added the languages
       <%= link_to(raw("English &#x1F1FA;&#x1F1F8;"), root_url(locale: :en)) %>,
