@@ -198,7 +198,7 @@ es:
     from: tener
     have: tienen
     help: Ayuda
-    id: Nº interno
+    id: Número único (ID)
     language: Idioma
     lightning: haz de luz
     link: Enlace

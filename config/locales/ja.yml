@@ -198,7 +198,7 @@ ja:
     from: から
     have: 持っている
     help: ヘルプ
-    id: 内部番号
+    id: 固有番号（ID）
     language: 言語
     lightning: 雷
     link: リンク

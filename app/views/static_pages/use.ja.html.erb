@@ -1,52 +1,41 @@
-<h1>引用の埋め込み</h1>
+<h1>引用を組み込む</h1>
 <p>
-あなたのホームページに引用を埋め込むことができます。
-まずは、<a href="https://www.zitat-service.de/quote" target="_blank">https://www.zitat-service.de/quote</a>を試してみてください。ページを再読み込みすることで、ブラウザで次のランダムな引用が表示されます。
+あなたのウェブサイトに引用を表示したいですか？ その方法をこちらで紹介します。
+以下のリンクをクリックしてください。ページをリロードするたびに新しい引用が表示されます：<br />
+<a href="https://api.zitat-service.de/v1/quote_html?language=ja" target="_blank">https://api.zitat-service.de/v1/quote_html?language=ja</a><br />
 </p>
 <h2>Joomla</h2>
-<p>CMS Joomlaを使った組み込みは、<a href="/ja/joomla">joomla</a>で説明されています。</p>
-<h2>IFRAMEとCSS</h2>
+<p>CMS Joomlaに引用を組み込む方法：<a href="/ja/joomla">Joomlaのためのガイド</a>。</p>
+<h2>API</h2>
+<p>Application Programming Interface (API) が利用可能です：
+<a href="https://api.zitat-service.de" target="_blank">https://api.zitat-service.de</a>。
+<a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a>で利用可能なパラメーターを確認したり、IDをリストしたり、テストを行うことができます。</p>
+<h3>IFRAMEとCSS</h3>
 <p>
-あなたのページにインラインフレーム（iframe）を使って組み込み、カスケーディングスタイルシート（CSS）でページに合わせて調整することができます。以下はその例です：
+iframeを使用してページに引用を表示することができます。
+デザインはCascading Style Sheets (CSS) でカスタマイズすることができます。以下は例です：</p>
+<iframe src="https://api.zitat-service.de/v1/quote_html?language=ja&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"></iframe>
+<p>この組み込みのためのiframeコードは：
+<div class="code">&lt;iframe src="https://api.zitat-service.de/v1/quote_html?language=ja&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"&gt;&lt;/iframe&gt;</div>
 </p>
-<iframe src="https://www.zitat-service.de/quote?style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"></iframe>
-<p>このページでのiframeエントリは次のとおりです：
-<div class="code">&lt;iframe src="https://www.zitat-service.de/quote?style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"&gt;&lt;/iframe&gt;</div>
-</p>
-<p style="clear: both;">まずはこれを使ってテストしてみてください。</p>
-<h2>CSS</h2>
-<p>iframeをページに正常に埋め込んだら、
-自分の好みに合わせたCSSファイルを作成できます。
-それには、<a href="https://www.zitat-service.de/quote.css">quote.css</a>をテンプレートとして使用し、自分に合わせてカスタマイズします。独自のCSSは、<code>style</code>パラメータで組み込むことができます。</p>
-<p>クラス<i>quote</i>のDIV要素は、引用全体を囲んでいて、たとえば枠線を設定できます。それには、クラス<i>quotation</i>の引用とクラス<i>source</i>の著者と情報源を含む2つのDIV要素が含まれています。</p>
-<h2>パラメータ</h2>
-<p>引用の問い合わせには、スタイルシート用の<i>style</i>パラメータのほか、カテゴリ用の<i>category</i><%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %>パラメータ、引用の作成者のユーザー名用の<i>user</i>パラメータ、引用の著者名用の<i>author</i>パラメータを指定できます。
-このようにして、特定のカテゴリ、ユーザー、または指定された姓の著者からの引用のみを取得できます。
-例えば、アインシュタインの引用は以下のようになります：
-<div class="code">https://www.zitat-service.de/quote?author=Einstein</code></div>
-<p style="clear: both;">パラメータ<i>content_only</i>を使用すると、CSS-DIVのみで、HTMLヘッダーなしで引用が提供されます。</p>
-<p><i>encoding</i>パラメータでエンコーディングが指定されます。デフォルトはISO-8859-1で、このパラメータを使用してUTF-8などに変更できます。</p>
-<p>
-別のパラメータは<i>window</i>です。このパラメータがない場合、リンクは現在のウィンドウ（_parent）で開きます。たとえば、<i>window=quote</i>を指定すると、リンクは新しいウィンドウで開きます。</p>
-</p>
-<p>パラメータは組み合わせて使用することもできます。たとえば、ユーザー「heiko」がカテゴリ「WasBedeutetLiebe」で作成したすべての引用と、スタイルシートの指定を含むクエリは次のようになります：
-<div class="code">https://www.zitat-service.de/quote?user=heiko&category=programming&style=https://www.zitat-service.de/quote.css</code></div>
-</p>
-<hr style="clear: both;" />
-<p>
-  <%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %>
-  スクリプト <i>quote</i>は、ドイツ語（DE）で<i>category</i>と共に渡されたカテゴリ名を使用します。
-  翻訳が完了すると、言語の追加選択を持つ新しいスクリプトが提供されます。
-</p>
+<p>最初のテストとして、このコードをそのまま使用することができます。</p>
+<h3>CSS</h3>
+<p>あなたのウェブサイトにiframeを組み込んだら、デザインを個別にカスタマイズすることができます。
+そのためには<a href="https://www.zitat-service.de/quote.css">quote.css</a>のファイルをテンプレートとして使用し、あなたのニーズに合わせてカスタマイズすることができます。あなたの独自のCSSは<code>style</code> パラメーターで組み込むことができます。
+<div>クラス<i>quote</i>のDIV要素は全体の引用を囲んでおり、ここで枠を設定することができます。含まれるのは、引用のためのクラス<i>quotation</i>と著者やソースのためのクラス<i>source</i>の2つのDIV要素です。</div>
+<h3>パラメータ</h3>
+<p>さまざまなパラメーターで引用の選択をカスタマイズすることができます。
+IDは常に一意の番号として使用されます。
+例として、英語（language=en）で、政治（categoryId=147）のカテゴリーのランダムな引用：<br /><a href="https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en" target="_blank">https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en</a></p>
 <h2>実践例</h2>
-<p>引用サービスを組み込んでいるいくつかのウェブサイトを参考にしてください（2023年5月1日現在）：</p>
+<p>引用サービスを組み込んだいくつかのウェブサイトの提案（2023年5月1日現在）：</p>
 <ul>
   <li><a target="_blank" href="http://szloszjar.com">Georg Szloszjar</a> (Joomla)</li>
   <li><a target="_blank" href="https://www.ewattingen.com">Michael Faller – WebDesign und mehr</a> (Joomla, 新しいタブ)</li>
-  <li><a target="_blank" href="https://www.augederseele.de">Foto- und Videoblog von Angel und Andreas</a> (Joomla)</li>
-  <li><a target="_blank" href="http://www.dombergen.de/vwl">dombergen.de/vwl</a> (Joomla, カテゴリ： Geld, 著者： Keynes)</li>
+  <li><a target="_blank" href="https://www.augederseele.de">Angel und Andreasの写真とビデオブログ</a> (Joomla)</li>
+  <li><a target="_blank" href="http://www.dombergen.de/vwl">dombergen.de/vwl</a> (Joomla, カテゴリーお金、著者Keynes)</li>
   <li><a target="_blank" href="https://buggy-club-schweiz.ch">Buggy Club Schweiz</a> (Joomla)</li>
   <li><a target="_blank" href="https://samariter-niedergoesgen.ch">Samariterverein Niedergösgen</a> (Joomla)</li>
-  <li><a target="_blank" href="https://www.consulting.heikol.de">Systemberatung Heiko Lübbe</a> (Hugo, カテゴリ： programming, ユーザー： heiko)</li>
-  <li><a target="_blank" href="https://www.heikol.de">Hausseite Heiko Lübbe</a> (iframe)</li>
+  <li><a target="_blank" href="https://www.consulting.heikol.de">Systemberatung Heiko Lübbe</a> (Hugo, カテゴリー プログラミング, ユーザー heiko, 言語 ドイツ語, JSON)</li>
+  <li><a target="_blank" href="https://www.heikol.de">Heiko Lübbeのホームページ</a> (iframe, HTML)</li>
 </ul>

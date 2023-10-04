@@ -1,46 +1,35 @@
 <h1>Вставка цитат</h1>
 <p>
-Ви можете вставити цитати на свій сайт.
-Спробуйте виклик: <a href="https://www.zitat-service.de/quote" target="_blank">https://www.zitat-service.de/quote</a>. Натисніть "Оновити сторінку", щоб отримати наступну випадкову цитату в своєму браузері.
+Хочете відображати цитати на вашому веб-сайті? Ось як це можна зробити.
+Клацніть на посилання нижче. Кожен раз, коли ви перезавантажуєте сторінку, ви будете бачити нову цитату:<br />
+<a href="https://api.zitat-service.de/v1/quote_html?language=uk" target="_blank">https://api.zitat-service.de/v1/quote_html?language=uk</a><br />
 </p>
 <h2>Joomla</h2>
-<p>Опис інтеграції з CMS Joomla знаходиться тут: <a href="/uk/joomla">joomla</a>.</p>
-<h2>IFRAME та CSS</h2>
+<p>Ось як ви можете інтегрувати цитати у CMS Joomla: <a href="/uk/joomla">Інструкції для Joomla</a>.</p>
+<h2>API</h2>
+<p>Доступний інтерфейс програмування застосунків (API) за адресою:
+<a href="https://api.zitat-service.de" target="_blank">https://api.zitat-service.de</a>.
+За допомогою <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a> ви можете переглядати доступні параметри, список ID та проводити тести.</p>
+<h3>IFRAME та CSS</h3>
 <p>
-Інтеграція на ваших сторінках відбувається за допомогою вбудованих фреймів (iframe) і може бути налаштована за допомогою каскадних таблиць стилів (CSS). Ось приклад того, як це виглядає:
+Ви можете відображати цитати на своїй сторінці за допомогою iframe.
+Дизайн можна налаштовувати за допомогою каскадних таблиць стилів (CSS). Ось приклад:</p>
+<iframe src="https://api.zitat-service.de/v1/quote_html?language=uk&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"></iframe>
+<p>Код iframe для цієї інтеграції:
+<div class="code">&lt;iframe src="https://api.zitat-service.de/v1/quote_html?language=uk&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"&gt;&lt;/iframe&gt;</div>
 </p>
-<iframe src="https://www.zitat-service.de/quote?style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"></iframe>
-<p>Запис iframe на цій сторінці:
-<div class="code">&lt;iframe src="https://www.zitat-service.de/quote?style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"&gt;&lt;/iframe&gt;</div>
-</p>
-<p style="clear: both;">Просто скопіюйте його для свого першого тесту.</p>
-<h2>CSS</h2>
-<p>Якщо ви успішно вбудували iframe на свою сторінку,
-тоді ви можете створити власний файл CSS за своїми бажаннями.
-Ви можете використати <a href="https://www.zitat-service.de/quote.css">quote.css</a> як шаблон і налаштувати його для себе. Ваш власний CSS підключається за допомогою параметра <code>style</code></b>.
-Елемент DIV класу <i>quote</i> охоплює всю цитату, тут ви можете встановити рамку, наприклад. Він містить два елементи DIV класів <i>quotation</i> для цитати та <i>source</i> для автора та джерела.
-<h2>Параметри</h2>
-<p>Для запиту цитат, крім параметра <i>style</i> для стилів, ви можете вказати параметри
-<i>category</i><%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %> для категорії, <i>user</i> для імені користувача, який створив цитату, та <i>author</i> для імені автора цитати.
-Ви отримаєте лише цитати з цієї категорії, від цього користувача або автора з таким прізвищем.
-Цитати Ейнштейна, наприклад, можна отримати за допомогою:
-<div class="code">https://www.zitat-service.de/quote?author=Einstein</code></div>
-<p style="clear: both;">З параметром <i>content_only</i> цитата надається лише з CSS-DIV, тобто без HTML-заголовка.</p>
-<p>За допомогою параметра <i>encoding</i> вказується кодування. За замовчуванням встановлено ISO-8859-1, змінити, наприклад, на UTF-8 можна за допомогою цього параметра.</p>
-<p>
-Ще одним параметром є <i>window</i>. Без цього параметра посилання відкриваються у поточному вікні (_parent). З параметром <i>window=quote</i>, посилання відкриваються у новому вікні.</p>
-</p>
-<p>Параметри можуть бути комбіновані. Запит на всі цитати користувача "heiko" з категорії "programming" та з вказівкою таблиці стилів виконується, наприклад, за допомогою:
-<div class="code">https://www.zitat-service.de/quote?user=heiko&category=programming&style=https://www.zitat-service.de/quote.css</code></div>
-</p>
-<hr style="clear: both;" />
-<p>
-  <%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %>
-  Скрипт <i>quote</i> використовує назви категорій, передані з <i>category</i> німецької мови (DE).
-  Після завершення перекладу, буде новий скрипт з додатковим вибором мови.
-</p>
-<h2>Приклади використання</h2>
-<p>Для натхнення ось деякі веб-сайти, які інтегрували сервіс цитат (станом на 1 травня 2023 року):</p>
+<p>Для першого тесту ви можете використовувати цей код безпосередньо.</p>
+<h3>CSS</h3>
+<p>Після того як ви вставили iframe на ваш веб-сайт, ви можете налаштувати його дизайн.
+Для цього ви можете використовувати файл <a href="https://www.zitat-service.de/quote.css">quote.css</a> як шаблон та налаштовувати його для себе. Потім прив’яжіть свій користувацький CSS за допомогою параметра <code>style</code>.
+Елемент DIV класу <i>quote</i> обгортає всю цитату, тому, наприклад, ви можете встановити рамку. Усередині є два елементи DIV з класами <i>quotation</i> для самої цитати та <i>source</i> для автора та джерела.
+<h3>Параметри</h3>
+<p>Ви можете налаштовувати вибір цитат за допомогою різних параметрів.
+Унікальні номери, ID, завжди використовуються.
+Наприклад, випадкова цитата англійською мовою (language=en) у категорії Політика (categoryId=147):<br /><a href="https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en" target="_blank">https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en</a>
+<p>Ви можете комбінувати параметри для автора (authorId), категорії (categoryId), користувача (userId) та мови (language).
+<h2>Практичні приклади</h2>
+<p>Як натхнення, ось деякі веб-сайти, які інтегрували сервіс цитат (станом на 1 травня 2023 року):</p>
 <ul>
   <li><a target="_blank" href="http://szloszjar.com">Georg Szloszjar</a> (Joomla)</li>
   <li><a target="_blank" href="https://www.ewattingen.com">Michael Faller – WebDesign und mehr</a> (Joomla, нова вкладка)</li>

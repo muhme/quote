@@ -1,53 +1,50 @@
-<h1>Incluir citas</h1>
+<h1>Insertar citas</h1>
 <p>
-Puedes incorporar las citas en tu página web.
-Prueba a visitar: <a href="https://www.zitat-service.de/quote" target="_blank">https://www.zitat-service.de/quote</a>. Con "Actualizar página" obtendrás la siguiente cita aleatoria en tu navegador.
+¿Quieres mostrar citas en tu sitio web? Aquí te mostramos cómo hacerlo.
+Haz clic en el siguiente enlace. Cada vez que recargues la página, verás una nueva cita:<br />
+<a href="https://api.zitat-service.de/v1/quote_html?language=es" target="_blank">https://api.zitat-service.de/v1/quote_html?language=es</a><br />
 </p>
+
 <h2>Joomla</h2>
-<p>La integración con el CMS Joomla se describe aquí: <a href="/es/joomla">joomla</a>.</p>
-<h2>IFRAME y CSS</h2>
+<p>Así es cómo puedes incorporar las citas en el CMS Joomla: <a href="/es/joomla">Instrucciones para Joomla</a>.</p>
+
+<h2>API</h2>
+<p>Hay una Application Programming Interface (API) disponible en:
+<a href="https://api.zitat-service.de" target="_blank">https://api.zitat-service.de</a>.
+Con el <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a> puedes ver los parámetros disponibles, listar las IDs y realizar pruebas.</p>
+
+<h3>IFRAME y CSS</h3>
 <p>
-La integración en tus páginas se realiza mediante marcos en línea (iframe) y se puede personalizar con hojas de estilo en cascada (CSS). Aquí tienes un ejemplo de cómo se vería:
+Puedes mostrar las citas en tu página usando un iframe.
+El diseño se puede adaptar con Cascading Style Sheets (CSS). Aquí tienes un ejemplo:</p>
+<iframe src="https://api.zitat-service.de/v1/quote_html?language=es&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"></iframe>
+<p>El código iframe para esta integración es:
+<div class="code">&lt;iframe src="https://api.zitat-service.de/v1/quote_html?language=es&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"&gt;&lt;/iframe&gt;</div>
 </p>
-<iframe src="https://www.zitat-service.de/quote?style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"></iframe>
-<p>La entrada del iframe en esta página es:
-<div class="code">&lt;iframe src="https://www.zitat-service.de/quote?style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"&gt;&lt;/iframe&gt;</div>
-</p>
-<p style="clear: both;">Simplemente cópialo para tu primera prueba.</p>
-<h2>CSS</h2>
-<p>Una vez que hayas incorporado correctamente el iframe en tu página,
-puedes crear tu propio archivo CSS según tus preferencias.
-Para ello, puedes utilizar como plantilla <a href="https://www.zitat-service.de/quote.css">quote.css</a> y adaptarlo para ti. Luego, incluye tu propio CSS con el parámetro <code>style</code>.
-El elemento DIV de la clase <i>quote</i> rodea la cita completa, aquí puedes, por ejemplo, establecer un borde. Contiene dos elementos DIV de las clases <i>quotation</i> para la cita y <i>source</i> para el autor y la fuente.
-<h2>Parámetros</h2>
-<p>Para la consulta de citas, además del parámetro <i>style</i> para la hoja de estilo, puedes especificar los parámetros
-<i>category</i><%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %> para la categoría, <i>user</i> para el nombre de usuario del creador de la cita y <i>author</i> para el nombre del autor de la cita.
-Entonces, solo recibirás citas de esa categoría, de ese usuario o del autor con ese apellido.
-Las citas de Einstein, por ejemplo, las obtienes con:
-<div class="code">https://www.zitat-service.de/quote?author=Einstein</code></div>
-<p style="clear: both;">Con el parámetro <i>content_only</i>, la cita se proporciona solo con los DIV de CSS, es decir, sin encabezado HTML.</p>
-<p>Con el parámetro <i>encoding</i> se indica la codificación. El valor predeterminado es ISO-8859-1, pero se puede cambiar a, por ejemplo, UTF-8 con este parámetro.</p>
-<p>
-Otro parámetro es <i>window</i>. Sin este parámetro, los enlaces se abrirán en la ventana actual (_parent). Con, por ejemplo, <i>window=quote</i>, los enlaces se abrirán en una ventana nueva.</p>
-</p>
-<p>Los parámetros también se pueden combinar. La consulta de todas las citas del usuario "heiko" en la categoría "programming" e incluyendo una hoja de estilo se realiza, por ejemplo, con:
-<div class="code">https://www.zitat-service.de/quote?user=heiko&category=programming&style=https://www.zitat-service.de/quote.css</code></div>
-</p>
-<hr style="clear: both;" />
-<p>
-  <%= image_tag("error.png", alt: t("g.error_alt"), title: t("g.attention")) %>
-  El script <i>quote</i> utiliza los nombres de categoría pasados con <i>categoría</i> del idioma alemán (DE).
-  Una vez completada la traducción, habrá un nuevo script con una selección adicional de idioma.
-</p>
+<p>Para una primera prueba, puedes usar este código directamente.</p>
+
+<h3>CSS</h3>
+<p>Cuando hayas integrado el iframe en tu sitio web, puedes personalizar el diseño.
+Para ello, puedes usar el archivo <a href="https://www.zitat-service.de/quote.css">quote.css</a> como plantilla y adaptarlo a tus necesidades. Luego integra tu propio CSS usando el parámetro <code>style</code>.
+El elemento DIV de la clase <i>quote</i> envuelve toda la cita, aquí puedes, por ejemplo, establecer un marco. Contiene dos elementos DIV, las clases <i>quotation</i> para la cita y <i>source</i> para el autor y la fuente.</h3>
+
+<h3>Parámetros</h3>
+<p>Puedes ajustar la selección de las citas usando varios parámetros.
+Siempre se utilizan las IDs como números únicos.
+Por ejemplo, una cita aleatoria en inglés (language=en) en la categoría Política (categoryId=147):
+<br /><a href="https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en" target="_blank">https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en</a></p>
+<p>Los parámetros para el autor (authorId), la categoría (categoryId), el usuario (userId) y el idioma (language) pueden combinarse.</p>
+
 <h2>Ejemplos prácticos</h2>
-<p>Como inspiración, algunas páginas web que han integrado el servicio de citas (a partir del 1 de mayo de 2023):</p>
+<p>Como inspiración, algunos sitios web que han incorporado el servicio de citas (a partir del 1 de mayo de 2023):</p>
 <ul>
   <li><a target="_blank" href="http://szloszjar.com">Georg Szloszjar</a> (Joomla)</li>
-  <li><a target="_blank" href="https://www.ewattingen.com">Michael Faller – WebDesign und mehr</a> (Joomla, nueva pestaña)</li>
-  <li><a target="_blank" href="https://www.augederseele.de">Foto- und Videoblog von Angel und Andreas</a> (Joomla)</li>
-  <li><a target="_blank" href="http://www.dombergen.de/vwl">dombergen.de/vwl</a> (Joomla, Kategorie Geld, Autor Keynes)</li>
-  <li><a target="_blank" href="https://buggy-club-schweiz.ch">Buggy Club Schweiz</a> (Joomla)</li>
-  <li><a target="_blank" href="https://samariter-niedergoesgen.ch">Samariterverein Niedergösgen</a> (Joomla)</li>
-  <li><a target="_blank" href="https://www.consulting.heikol.de">Systemberatung Heiko Lübbe</a> (Hugo, categoría programming, usuario heiko)</li>
-  <li><a target="_blank" href="https://www.heikol.de">Hausseite Heiko Lübbe</a> (iframe)</li>
+  <li><a target="_blank" href="https://www.ewattingen.com">Michael Faller – Diseño Web y más</a> (Joomla, nueva pestaña)</li>
+  <li><a target="_blank" href="https://www.augederseele.de">Blog de fotos y videos de Angel y Andreas</a> (Joomla)</li>
+  <li><a target="_blank" href="http://www.dombergen.de/vwl">dombergen.de/vwl</a> (Joomla, categoría dinero, autor Keynes)</li>
+  <li><a target="_blank" href="https://buggy-club-schweiz.ch">Buggy Club Suiza</a> (Joomla)</li>
+  <li><a target="_blank" href="https://samariter-niedergoesgen.ch">Asociación Samaritana de Niedergösgen</a> (Joomla)</li>
+  <li><a target="_blank" href="https://www.consulting.heikol.de">Consultoría de Sistemas Heiko Lübbe</a> (Hugo, categoría programación, usuario heiko, idioma alemán, JSON)</li>
+  <li><a target="_blank" href="https://www.heikol.de">Página principal de Heiko Lübbe</a> (iframe, HTML)</li>
 </ul>
+
