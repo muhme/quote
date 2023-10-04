@@ -1,4 +1,4 @@
-# zitat-service.de
+# https://www.zitat-service.de/robots.txt
 #
 User-agent: *
-Allow: /
+Disallow:
