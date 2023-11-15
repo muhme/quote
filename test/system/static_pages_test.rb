@@ -31,9 +31,9 @@ class StaticPagessTest < ApplicationSystemTestCase
   end
   
   test "use" do
-    check_page page, start_use_url, "h1", "Embedding Quotes", 3000
+    check_page page, start_use_url, "h1", "Embedding Quotes", 2000
     assert_equal "Zitat-Service – Embed quotes into your own homepage", page.title
-    check_page page, start_use_url(locale: :de), "h1", "Zitate einbinden", 3000
+    check_page page, start_use_url(locale: :de), "h1", "Zitate einbinden", 2000
     assert_equal "Zitat-Service – Zitate in die eigene Homepage einbinden", page.title
   end
   
@@ -50,9 +50,9 @@ class StaticPagessTest < ApplicationSystemTestCase
 
   test "UTF-8 German Umlaut" do
     url = start_use_url(locale: :de)
-    check_page page, url, "p", "für", 3000
-    check_page page, url, "p", "geöffnet", 3000
-    check_page page, url, "p", "Änderung", 3000
+    check_page page, url, "p", "für", 2000
+    check_page page, url, "p", "können", 2000
+    check_page page, url, "p", "erfährst", 2000
   end
   
   test "403 forbidden" do
