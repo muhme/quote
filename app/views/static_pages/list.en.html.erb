@@ -25,6 +25,8 @@
 <p><%= User.count %> users have signed up. The most recently added quotes are from <%= raw @users[0] %>, <%= raw @users[1] %> and <%= raw @users[2] %>.</p>
 <h2>News</h2>
 <dl>
+  <dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> November 24, 2023</dt>
+<dd>There is a new <a href="https://github.com/muhme/quote_joomla/wiki">Joomla module quote-service.de</a>. When updating, the author, category, or user may need to be selected again once.</dd>
   <dt><%= image_tag("lightning.png", :alt => "a yellow lightning bolt", :title => "Hooray") %> September 20, 2023</dt>
     <dd>There's a new API: <a href="https://api.zitat-service.de">api.zitat-service.de</a>.</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> May 5th, 2023</dt>
@@ -34,8 +36,6 @@
       <%= link_to(raw("日本語 &#x1F1EF;&#x1F1F5;"), root_url(locale: :ja)) %> and
       <%= link_to(raw("Українська &#x1F1FA;&#x1F1E6;"), root_url(locale: :uk)) %>.
     If you are a native speaker, please help us improve the machine translation.</dd>
-  <dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> September 24th, 2019</dt>
-    <dd>There is a new Joomla! module for supporting TLS (https) and the Joomla update mechanism: <%= link_to 'Embed/Joomla', :action => 'joomla' %>.</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> March 24tn, 2018</dt>
     <dd>Web server relocation to Frankfurt am Main with the provider <a href="https://digitalocean.com/">DigitalOcean</a>.</dd>
   <dt><%= image_tag("exclamation.png", :alt => "explanation", :title => "Attention!") %> November 26th, 2012</dt>

@@ -1,16 +1,21 @@
 <h1>Вставка цитат</h1>
-<p>
-Хочете відображати цитати на вашому веб-сайті? Ось як це можна зробити.
-Клацніть на посилання нижче. Кожен раз, коли ви перезавантажуєте сторінку, ви будете бачити нову цитату:<br />
-<a href="https://api.zitat-service.de/v1/quote_html?language=uk" target="_blank">https://api.zitat-service.de/v1/quote_html?language=uk</a><br />
+<p>Хочете відображати цитати на вашому веб-сайті?
+   Тут ви дізнаєтесь, як це зробити за допомогою CMS Joomla, через API та за допомогою iFrame.
 </p>
+
 <h2>Joomla</h2>
-<p>Ось як ви можете інтегрувати цитати у CMS Joomla: <a href="/uk/joomla">Інструкції для Joomla</a>.</p>
+<p><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %>
+   Є спеціальний модуль Joomla для інтеграції цитат у CMS Joomla: Тут ви можете знайти допомогу: <a href="https://github.com/muhme/quote_joomla/wiki/%D0%94%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B0">Допомога</a>.
+</p>
+
 <h2>API</h2>
-<p>Доступний інтерфейс програмування застосунків (API) за адресою:
-<a href="https://api.zitat-service.de" target="_blank">https://api.zitat-service.de</a>.
-За допомогою <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a> ви можете переглядати доступні параметри, список ID та проводити тести.</p>
-<h3>IFRAME та CSS</h3>
+<p>Доступний інтерфейс програмування застосунків (API) за адресою: <a href="https://api.zitat-service.de" target="_blank">https://api.zitat-service.de</a>.
+   Наприклад, наступне посилання надає випадкову цитату українською мовою:<br />
+   <a href="https://api.zitat-service.de/v1/quote_html?language=uk" target="_blank">https://api.zitat-service.de/v1/quote_html?language=uk</a>.
+   За допомогою <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a> ви можете переглядати доступні параметри, список ID та проводити тести.
+</p>
+
+<h3>iFrame</h3>
 <p>
 Ви можете відображати цитати на своїй сторінці за допомогою iframe.
 Дизайн можна налаштовувати за допомогою каскадних таблиць стилів (CSS). Ось приклад:</p>
@@ -19,15 +24,18 @@
 <div class="code">&lt;iframe src="https://api.zitat-service.de/v1/quote_html?language=uk&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"&gt;&lt;/iframe&gt;</div>
 </p>
 <p>Для першого тесту ви можете використовувати цей код безпосередньо.</p>
+
 <h3>CSS</h3>
 <p>Після того як ви вставили iframe на ваш веб-сайт, ви можете налаштувати його дизайн.
 Для цього ви можете використовувати файл <a href="https://www.zitat-service.de/quote.css">quote.css</a> як шаблон та налаштовувати його для себе. Потім прив’яжіть свій користувацький CSS за допомогою параметра <code>style</code>.
 Елемент DIV класу <i>quote</i> обгортає всю цитату, тому, наприклад, ви можете встановити рамку. Усередині є два елементи DIV з класами <i>quotation</i> для самої цитати та <i>source</i> для автора та джерела.
+
 <h3>Параметри</h3>
 <p>Ви можете налаштовувати вибір цитат за допомогою різних параметрів.
 Унікальні номери, ID, завжди використовуються.
 Наприклад, випадкова цитата англійською мовою (language=en) у категорії Політика (categoryId=147):<br /><a href="https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en" target="_blank">https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en</a>
 <p>Ви можете комбінувати параметри для автора (authorId), категорії (categoryId), користувача (userId) та мови (language).
+
 <h2>Практичні приклади</h2>
 <p>Як натхнення, ось деякі веб-сайти, які інтегрували сервіс цитат (станом на 1 травня 2023 року):</p>
 <ul>

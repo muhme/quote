@@ -37,9 +37,23 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :internal_server_error #500
   end
 
-  test "should get joomla" do
+  test "joomla" do
     get joomla_url
-    assert_response :success
+    assert_redirected_to QUOTE_JOOMLA_WIKI[:de]
+  end
+  test "should redirected /joomla_english" do
+    get joomla_english_url
+    assert_redirected_to QUOTE_JOOMLA_WIKI[:en]
+  end
+  test "should redirected /start/joomla_english" do
+    get start_joomla_english_url
+    assert_redirected_to QUOTE_JOOMLA_WIKI[:en]
+  end
+  test "I18N joomla" do
+    QUOTE_JOOMLA_WIKI.each do |lang_code, url|
+      get "/#{lang_code}/joomla"
+      assert_redirected_to url
+    end
   end
 
   test "should get humans" do

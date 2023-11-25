@@ -41,11 +41,24 @@ class StaticPagessTest < ApplicationSystemTestCase
     check_page page, "humans.txt", nil, "TEAM", 300
   end
     
+
   test "joomla" do
-    check_page page, joomla_url, "h2", "Limitations and Error Handling", 4000
-    assert_equal "Zitat-Service – Integrate quotes into your own homepage with Joomla!", page.title
-    check_page page, joomla_url(locale: :de), "h2", "Fehler oder Erweiterungen", 4000
-    assert_equal "Zitat-Service – Zitate mit Joomla! in die eigene Homepage einbinden", page.title
+
+    # old Joomla plugin update
+    visit '/joomla/zitat-service-update.xml'
+    check_page_source page, 'updates'
+
+    # redirected URLs
+    check_page page, '/joomla', "h1", "Joomla", 4000
+    assert_equal page.current_url, QUOTE_JOOMLA_WIKI[:de]
+
+    check_page page, '/joomla_english', "h1", "Joomla", 4000
+    assert_equal page.current_url, QUOTE_JOOMLA_WIKI[:en]
+
+    check_page page, '/es/joomla', "h1", "Joomla", 4000
+    assert_equal page.current_url, QUOTE_JOOMLA_WIKI[:es]
+
+    # more cases are tested in minitest
   end
 
   test "UTF-8 German Umlaut" do

@@ -1,35 +1,42 @@
 <h1>Zitate einbinden</h1>
-<p>
-<p>
-Möchtest du Zitate auf Deiner Website anzeigen? Hier erfährst du, wie das geht.
-Klicke auf den folgenden Link. Bei jedem Neuladen der Seite siehst du ein neues Zitat:<br />
-<a href="https://api.zitat-service.de/v1/quote_html?language=de" target="_blank">https://api.zitat-service.de/v1/quote_html?language=de</a><br />
+<p>Möchtest du Zitate auf Deiner Website anzeigen?
+   Hier erfährst du, wie das mit dem CMS Joomla, mit der API und per iFrame machen kannst.
+</p>
 
-</p></p>
 <h2>Joomla</h2>
-<p>So binden Sie die Zitate in das CMS Joomla ein: <a href="/joomla">Anleitung für Joomla</a>.</p>
+<p><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %>
+   Es gibt ein eigenes Joomla-Modul zur Einbindung der Zitate in das CMS Joomla: Dafür gibt es hier: <a href="https://github.com/muhme/quote_joomla/wiki/Hilfe">Hilfe</a>.
+</p>
+
 <h2>API</h2>
 <p>Es steht ein Application Programming Interface (API) zur Verfügung unter:
-<a href="https://api.zitat-service.de" target="_blank">https://api.zitat-service.de</a>.
-Mit dem <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a> kannst du die verfügbaren Parameter sehen, IDs auflisten und Tests durchführen.</p>
-<h3>IFRAME und CSS</h3>
-<p>
-Du kannst die Zitate mittels eines iframes auf deiner Seite anzeigen.
-Das Design lässt sich dabei mit Cascading Style Sheets (CSS) anpassen. Hier siehst du ein Beispiel:</p>
+   <a href="https://api.zitat-service.de" target="_blank">https://api.zitat-service.de</a>.
+   Zum Beispiel liefert der folgende Link ein zufälliges Zitat in deutscher Sprache:<br />
+   <a href="https://api.zitat-service.de/v1/quote_html?language=de" target="_blank">https://api.zitat-service.de/v1/quote_html?language=de</a>.
+   Mit dem <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a> kannst du die verfügbaren Parameter sehen, IDs auflisten und Tests durchführen.
+</p>
+
+<h3>iFrame</h3>
+<p>Du kannst die Zitate mittels eines iFrame auf deiner Seite anzeigen.
+   Das Design lässt sich dabei mit Cascading Style Sheets (CSS) anpassen. Hier siehst du ein Beispiel:
+</p>
 <iframe src="https://api.zitat-service.de/v1/quote_html?language=de&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"></iframe>
 <p>Der iframe-Code für diese Einbindung ist:
-<div class="code">&lt;iframe src="https://api.zitat-service.de/v1/quote_html?language=de&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"&gt;&lt;/iframe&gt;</div>
+   <div class="code">&lt;iframe src="https://api.zitat-service.de/v1/quote_html?language=de&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"&gt;&lt;/iframe&gt;</div>
 </p>
-<p>Für einen ersten Test kannst du diesen Code direkt übernehmen.</p>
+<p class="clear-both">Für einen ersten Test kannst du diesen Code direkt übernehmen.</p>
+
 <h3>CSS</h3>
 <p>Wenn Du das iframe in Deiner Website eingebunden hast, kannst Du das Design individuell gestalten.
 Dazu kannst Du als Vorlage die Datei <a href="https://www.zitat-service.de/quote.css">quote.css</a> benutzen und für Dich anpassen. Dein eigenes CSS bindest Du dann mit dem Parameter <code>style</code> ein</b>.
 Das DIV-Element der Klasse <i>quote</i> umschließt das gesamte Zitat, hier kannst Du z.B. einen Rahmen setzen. Enthalten sind zwei DIV-Elemente der Klassen <i>quotation</i> für das Zitat und <i>source</i> für den Autor und die Quelle.
+
 <h3>Parameter</h3>
 <p>Die Auswahl der Zitate kannst du mit verschiedenen Parameterm anpassen.
 Dabei werden immer die IDs als eindeutige Nummern genutzt.
 Als Beispiel ein Zufallszitat auf Deutsch (language=de) von Albert Einstein (authorId=20):<br /><a href="https://api.zitat-service.de/v1/quote_html?authorId=20&language=de" target="_blank">https://api.zitat-service.de/v1/quote_html?authorId=20&language=de</a>
 <p>Die Parameter für den Autor (authorId), die Kategorie (categoryId), den Benutzer (userId) und die Sprache (language) können kombiniert werden.
+
 <h2>Praxis-Beispiele</h2>
 <p>Als Anregung einige Websites, die den Zitat-Service eingebunden haben (Stand 1. Mai 2023):</p>
 <ul>

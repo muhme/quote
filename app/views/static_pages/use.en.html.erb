@@ -1,33 +1,41 @@
 <h1>Embedding Quotes</h1>
-<p>
-Do you want to display quotes on your website? Here's how you can do it.
-Click on the link below. Every time you reload the page, you'll see a new quote:<br />
-<a href="https://api.zitat-service.de/v1/quote_html?language=en" target="_blank">https://api.zitat-service.de/v1/quote_html?language=en</a><br />
+<p>Do you want to display quotes on your website?
+   Here you can learn how to do it with the CMS Joomla, using an API and through an iFrame.
 </p>
+
 <h2>Joomla</h2>
-<p>This is how you can integrate the quotes into the CMS Joomla: <a href="/en/joomla">Instructions for Joomla</a>.</p>
+<p><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %>
+   There is a dedicated Joomla module for integrating quotes into the CMS Joomla: It is documented here: <a href="https://github.com/muhme/quote_joomla/wiki">Help</a>.
+</p>
+
 <h2>API</h2>
-<p>An Application Programming Interface (API) is available at:
-<a href="https://api.zitat-service.de" target="_blank">https://api.zitat-service.de</a>.
-With the <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a> you can view the available parameters, list IDs, and perform tests.</p>
-<h3>IFRAME and CSS</h3>
+<p>An Application Programming Interface (API) is available at: <a href="https://api.zitat-service.de" target="_blank">https://api.zitat-service.de</a>.
+   For example, the following link provides a random quote in the English language:<br />
+   <a href="https://api.zitat-service.de/v1/quote_html?language=en" target="_blank">https://api.zitat-service.de/v1/quote_html?language=en</a>.
+   With the <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a> you can view the available parameters, list IDs, and perform tests.
+</p>
+
+<h3>iFrame</h3>
 <p>
-You can display the quotes on your page using an iframe.
+You can display the quotes on your page using an inline frame (iFrame).
 The design can be customized using Cascading Style Sheets (CSS). Here's an example:</p>
 <iframe src="https://api.zitat-service.de/v1/quote_html?language=en&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"></iframe>
 <p>The iframe code for this integration is:
 <div class="code">&lt;iframe src="https://api.zitat-service.de/v1/quote_html?language=en&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"&gt;&lt;/iframe&gt;</div>
 </p>
 <p>For a first test, you can use this code directly.</p>
+
 <h3>CSS</h3>
 <p>Once you've embedded the iframe on your website, you can customize its design.
 For this, you can use the file <a href="https://www.zitat-service.de/quote.css">quote.css</a> as a template and customize it for yourself. Then, bind your custom CSS using the <code>style</code> parameter.
 The DIV element of the <i>quote</i> class wraps around the entire quote, so you can, for instance, set a border. Inside, there are two DIV elements with classes <i>quotation</i> for the quote itself and <i>source</i> for the author and the source.
+
 <h3>Parameters</h3>
 <p>You can customize the selection of quotes using different parameters.
 Unique numbers, the IDs, are always used.
 For example, a random quote in English (language=en) in category Politics (categoryId=147):<br /><a href="https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en" target="_blank">https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en</a>
 <p>You can combine parameters for the author (authorId), the category (categoryId), the user (userId), and the language (language).
+
 <h2>Practical Examples</h2>
 <p>As inspiration, here are some websites that have integrated the Quote Service (as of May 1, 2023):</p>
 <ul>

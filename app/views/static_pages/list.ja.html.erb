@@ -25,6 +25,8 @@
 <p><%= User.count %> 人のユーザーが登録されています。最近投稿された引用は <%= raw @users[0] %>, <%= raw @users[1] %> そして <%= raw @users[2] %> によるものです。</p>
 <h2>ニュース</h2>
 <dl>
+  <dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> 2023年11月24日</dt>
+    <dd><a href="https://github.com/muhme/quote_joomla/wiki/%E3%83%98%E3%83%AB%E3%83%97">Joomlaモジュール quote-service.de</a>が新しくあります。更新する際に、著者、カテゴリー、またはユーザーを一度再選択する必要があるかもしれません。</dd>
   <dt><%= image_tag("lightning.png", :alt => "黄色い稲妻", :title => "万歳") %> 2023年9月20日</dt>
     <dd>新しいAPIがあります：<a href="https://api.quote-service.de">api.quote-service.de</a>。</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 2023年5月5日</dt>
@@ -34,8 +36,6 @@
       <%= link_to(raw("日本語 &#x1F1EF;&#x1F1F5;"), root_url(locale: :ja)) %> および
       <%= link_to(raw("Українська &#x1F1FA;&#x1F1E6;"), root_url(locale: :uk)) %> が追加されました。
     ネイティブの方は、機械翻訳の改善にご協力をお願いします。</dd>
-  <dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> 2019年9月24日</dt>
-    <dd>TLS (https) サポートと Joomla 更新メカニズムのための新しい Joomla! モジュールがあります：<%= link_to '埋め込み/Joomla', :action => 'joomla' %>.</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record")  %> 2018年3月24日</dt>
     <dd>ウェブサーバーをフランクフルト・アム・マインの運営者 <a href="https://digitalocean.com/">DigitalOcean</a> に移転。</dd>
   <dt><%= image_tag("exclamation.png", :alt => "explamination", :title => "注意!") %> 2012年11月26日</dt>

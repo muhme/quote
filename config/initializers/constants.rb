@@ -35,3 +35,12 @@ ALL_LETTERS = {
   ja: BASE_LETTERS[:ja] + MAP_LETTERS[:ja].keys,
   uk: BASE_LETTERS[:uk] + MAP_LETTERS[:uk].keys
 }.freeze
+
+# Joomla module help is now on github
+QUOTE_JOOMLA_WIKI = {
+  de: 'https://github.com/muhme/quote_joomla/wiki/Hilfe',
+  en: 'https://github.com/muhme/quote_joomla/wiki',
+  es: 'https://github.com/muhme/quote_joomla/wiki/Ayuda',
+  ja: 'https://github.com/muhme/quote_joomla/wiki/%E3%83%98%E3%83%AB%E3%83%97', # ヘルプ
+  uk: 'https://github.com/muhme/quote_joomla/wiki/%D0%94%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B0' # Допомога
+}.freeze

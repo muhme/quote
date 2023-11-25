@@ -1,19 +1,22 @@
 <h1>Insertar citas</h1>
-<p>
-¿Quieres mostrar citas en tu sitio web? Aquí te mostramos cómo hacerlo.
-Haz clic en el siguiente enlace. Cada vez que recargues la página, verás una nueva cita:<br />
-<a href="https://api.zitat-service.de/v1/quote_html?language=es" target="_blank">https://api.zitat-service.de/v1/quote_html?language=es</a><br />
+<p>¿Quieres mostrar citas en tu sitio web?
+   Aquí puedes aprender cómo hacerlo con el CMS Joomla, utilizando una API y mediante un iFrame.
 </p>
 
 <h2>Joomla</h2>
-<p>Así es cómo puedes incorporar las citas en el CMS Joomla: <a href="/es/joomla">Instrucciones para Joomla</a>.</p>
+<p><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %>
+   Hay un módulo Joomla dedicado para la integración de citas en el CMS Joomla: Puede encontrar ayuda aquí: <a href="https://github.com/muhme/quote_joomla/wiki/Ayuda">Ayuda</a>.
+</p>
+
 
 <h2>API</h2>
-<p>Hay una Application Programming Interface (API) disponible en:
-<a href="https://api.zitat-service.de" target="_blank">https://api.zitat-service.de</a>.
-Con el <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a> puedes ver los parámetros disponibles, listar las IDs y realizar pruebas.</p>
+<p>Hay una Application Programming Interface (API) disponible en: <a href="https://api.zitat-service.de" target="_blank">https://api.zitat-service.de</a>.
+   Por ejemplo, el siguiente enlace proporciona una cita aleatoria en el idioma español:<br />
+   <a href="https://api.zitat-service.de/v1/quote_html?language=es" target="_blank">https://api.zitat-service.de/v1/quote_html?language=es</a>.
+  Con el <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a> puedes ver los parámetros disponibles, listar las IDs y realizar pruebas.
+</p>
 
-<h3>IFRAME y CSS</h3>
+<h3>iFrame</h3>
 <p>
 Puedes mostrar las citas en tu página usando un iframe.
 El diseño se puede adaptar con Cascading Style Sheets (CSS). Aquí tienes un ejemplo:</p>

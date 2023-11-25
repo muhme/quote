@@ -25,6 +25,8 @@
 <p><%= User.count %> користувачів зареєструвалися. Останні додані цитати від <%= raw @users[0] %>, <%= raw @users[1] %> та <%= raw @users[2] %>.</p>
 <h2>Новини</h2>
 <dl>
+  <dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> 24 листопада 2023 року</dt>
+    <dd>Є новий <a href="https://github.com/muhme/quote_joomla/wiki/%D0%94%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B0">модуль Joomla quote-service.de</a>. Під час оновлення можливо потрібно буде одноразово знову вибрати автора, категорію або користувача.</dd>
   <dt><%= image_tag("lightning.png", :alt => "жовтий блискавка", :title => "Ура") %> 20 вересня 2023 року</dt>
     <dd>Є новий API: <a href="https://api.zitat-service.de">api.api.zitat-service.de</a>.</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 5 травня 2023</dt>
@@ -34,8 +36,6 @@
       <%= link_to(raw("日本語 &#x1F1EF;&#x1F1F5;"), root_url(locale: :ja)) %> та
       <%= link_to(raw("Українська &#x1F1FA;&#x1F1E6;"), root_url(locale: :uk)) %> .
     Якщо ви є носієм мови, будь ласка, допоможіть нам покращити машинний переклад.</dd>
-  <dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> 24 вересня 2019</dt>
-    <dd>Доступний новий модуль Joomla! для підтримки TLS (https) та механізму оновлення Joomla: <%= link_to 'Інтеграція/Joomla', :action => 'joomla'%>.</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 24 березня 2018</dt>
     <dd>Переїзд веб-сервера до Франкфурта-на-Майні до провайдера <a href="https://digitalocean.com/">DigitalOcean</a>.</dd>
   <dt><%= image_tag("exclamation.png", :alt => "explamination", :title => "Увага!") %> 26 листопада 2012</dt>

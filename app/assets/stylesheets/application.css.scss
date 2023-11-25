@@ -296,7 +296,7 @@ span#side p {
     background-color: #ddd;
     border: 1px solid black;
     padding: 5px;
-    margin: 5px;
+    margin-bottom: 2ex;
     text-align: left;
 }
 
@@ -564,6 +564,10 @@ div.padding-cell {
 
 .float-left {
     float: left;
+}
+
+.clear-both {
+    clear: both;
 }
 
 .clear-both-after::after {

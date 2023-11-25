@@ -1,21 +1,26 @@
 Rails.application.routes.draw do
 
+  # all joomla going now outside
+  get 'joomla'               => redirect(QUOTE_JOOMLA_WIKI[:de]) # was started from the beginning with a direct URL, e.g. "joomla" instead "start/joomla"
+  get 'de/joomla'            => redirect(QUOTE_JOOMLA_WIKI[:de])
+  get 'joomla_english'       => redirect(QUOTE_JOOMLA_WIKI[:en]) # used from Joomla module, version 1.4
+  get 'start/joomla_english' => redirect(QUOTE_JOOMLA_WIKI[:en]) # old page link before I18n
+  get 'en/joomla'            => redirect(QUOTE_JOOMLA_WIKI[:en])
+  get 'es/joomla'            => redirect(QUOTE_JOOMLA_WIKI[:es])
+  get 'ja/joomla'            => redirect(QUOTE_JOOMLA_WIKI[:ja])
+  get 'uk/joomla'            => redirect(QUOTE_JOOMLA_WIKI[:uk])
+
   scope "(:locale)", locale: /#{I18n.available_locales.join("|")}/ do
 
     root to: "static_pages#list"
 
     # static_pages controller with historical and nicer 'start' URL
-    get 'start/humans'         => 'static_pages#humans'
-    get 'start/contact'        => 'static_pages#contact'
-    get 'start/joomla_english' => redirect('/en/joomla') # map the old page to new I18n
-    get 'start/project'        => 'static_pages#project'
-    get 'start/use'            => 'static_pages#use'
-    get 'start/help'           => 'static_pages#help'
-    get 'start/list'           => 'static_pages#list'
-    # start from the beginning with a direct URL, e.g. "joomla" instead "start/joomla"
-    get 'joomla'               => 'static_pages#joomla'
-    # used from Joomla module, version 1.4
-    get 'joomla_english'       => redirect('/en/joomla')
+    get 'start/humans'  => 'static_pages#humans'
+    get 'start/contact' => 'static_pages#contact'
+    get 'start/project' => 'static_pages#project'
+    get 'start/use'     => 'static_pages#use'
+    get 'start/help'    => 'static_pages#help'
+    get 'start/list'    => 'static_pages#list'
 
     # dynamic generated humans.txt
     get "humans.txt" => "static_pages#humans"
