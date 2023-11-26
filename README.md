@@ -1,8 +1,8 @@
 # README
 
-muhme/quote - Ruby on Rails web application, serving website [zitat-service.de](https://www.zitat-service.de)
+muhme/quote - Ruby on Rails (RoR) web application, serving website [zitat-service.de](https://www.zitat-service.de)
 
-Database is used for JSON API [api.zitat-service.de](https://api.zitat-service.de) too.
+Database is used for JSON API [api.zitat-service.de](https://api.zitat-service.de) too. The API itself is used by the RoR web application and also by the Joomla module [https://github.com/muhme/quote_joomla](https://github.com/muhme/quote_joomla).
 
 ## Docker Containers
 There is a Docker test and development environment prepared. You can create your own test and development instance with the following commands:
@@ -84,7 +84,6 @@ root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc1
 
 ## Roadmap
 
-* Upgrade Joomla plugin with the new API
 * Develop a Wordpress plugin
 
 ## History
