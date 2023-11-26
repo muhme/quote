@@ -1,8 +1,8 @@
 # README
 
-muhme/quote - Ruby on Rails (RoR) web application, serving website [zitat-service.de](https://www.zitat-service.de)
+Ruby on Rails (RoR) web application with which the website [zitat-service.de](https://www.zitat-service.de) runs.
 
-Database is used for JSON API [api.zitat-service.de](https://api.zitat-service.de) too. The API itself is used by the RoR web application and also by the Joomla module [https://github.com/muhme/quote_joomla](https://github.com/muhme/quote_joomla).
+Database is used for JSON API [api.zitat-service.de](https://api.zitat-service.de) too. The API itself is used by the RoR web application and also by the Joomla module [github.com/muhme/quote_joomla](https://github.com/muhme/quote_joomla).
 
 ## Docker Containers
 There is a Docker test and development environment prepared. You can create your own test and development instance with the following commands:
