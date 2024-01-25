@@ -262,15 +262,14 @@ module ApplicationHelper
 
   # give I18n.available_locales with first actual or given locale
   def ordered_locales(locale = I18n.locale)
-    locales = I18n.available_locales
-    index = locales.index(locale)
+    # duplicate before manipulating
+    locales = I18n.available_locales.dup
 
-    # Return the original locales if the locale is not in the list
+    # return the original locales if the locale is not in the list
     return locales unless locales.include?(locale)
-
-    # Remove the given locale from the array, then prepend it
-    locales -= [locale]
-    locales.unshift(locale)
+  
+    # remove the given locale inside the list and place at the beginning
+    locales.prepend(locales.delete(locale))
   end
 
   # transform "Einstein:https://www.zitat-service.de/authors/20" in relative HTML link and

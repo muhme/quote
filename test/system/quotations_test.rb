@@ -7,7 +7,7 @@ class QuotationsTest < ApplicationSystemTestCase
       assert_equal "Zitat-Service – Quotes", page.title
       check_this_page page, "h1", "2 Quotes"
       uncheck 'locale_en'
-      check_this_page page, "h1", /10,[0-9]{3} Quotes/ # actual 10,007
+      check_this_page page, "h1", /10[\.,][0-9]{3} Quotes/ # actual 10,007
       check 'locale_uk'
       check_this_page page, "h1", "0 Quotes"
       do_login
@@ -36,7 +36,7 @@ class QuotationsTest < ApplicationSystemTestCase
     2.times do # 1st run w/o, 2nd w/ login
       2.times do # 1st no locale is selected, 2nd :en
         check_page page, "quotations/list_by_user/#{User.first.id}", "h1",
-                   /10,[0-9]{3} Quotes of the user "first_user"/ # actual 10,006
+                   /10[\.,][0-9]{3} Quotes of the user "first_user"/ # actual 10,006
         assert_equal "Zitat-Service – Quotes of the user first_user", page.title
         # 2nd time :en
         check 'locale_en'

@@ -7,6 +7,7 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 module Quote
+
   # catch ActionController::BadRequest from Rack, see #54
   # set params[bad_request] as flag which will be handled by bad_request?() with HTTP 404, and note the reason as well
   # not calling static_pages/bad_request directly as ChatGPT says:
@@ -27,8 +28,13 @@ module Quote
   end
 
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    # Initialize configuration defaults for actual used Rails version.
+    config.load_defaults 7.1
+
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w(assets tasks))
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -51,11 +57,6 @@ module Quote
 
     # see https://www.mintbit.com/blog/custom-404-500-error-pages-in-rails
     config.exceptions_app = self.routes
-
-    config.i18n.available_locales = [:de, :en, :es, :ja, :uk]
-    config.i18n.load_path += Dir[Gem::Specification.find_by_name("rails-i18n").gem_dir + "/rails/*/{#{config.i18n.available_locales.join(',')}}.{rb,yml}"]
-    config.i18n.default_locale = :en
-    config.i18n.fallbacks = { de: :en, es: :en, ja: :en, uk: :en }
 
     # having own log format with datetime and severity
     Rails.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")

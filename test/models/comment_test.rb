@@ -39,7 +39,7 @@ class CommentTest < ActiveSupport::TestCase
   test "should be invalid without a comment" do
     comment = Comment.new(locale: "en")
     assert_not comment.valid?
-    assert_equal ["can't be blank"], comment.errors[:comment]
+    assert_equal ["must not be empty"], comment.errors[:comment]
   end
 
   test "should be valid if comment has maximum length" do
@@ -50,7 +50,7 @@ class CommentTest < ActiveSupport::TestCase
   test "should be invalid if comment exceeds maximum length" do
     comment = Comment.new(comment: "a" * 513, locale: "es")
     assert_not comment.valid?
-    assert_equal ["is too long (maximum is 512 characters)"], comment.errors[:comment]
+    assert_equal ["is too long (maximum 512 characters)"], comment.errors[:comment]
   end
 
   test "should return the correct number of comments for an object" do

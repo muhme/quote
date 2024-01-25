@@ -33,7 +33,7 @@ class CommentsAuthorsTest < ApplicationSystemTestCase
     fill_in "comment_comment", with: ""
     click_on "Add"
     check_this_page page, "h2", "Error"
-    check_this_page page, nil, "Comment can't be blank"
+    check_this_page page, nil, "must not be empty"
   end
 
   test "edit comment and language as own user" do

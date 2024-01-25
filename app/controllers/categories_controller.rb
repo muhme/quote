@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   include ReusableMethods
-  before_action :set_category, only: [:show, :edit, :update, :translate, :destroy]
+  before_action :set_category, only: [:show, :edit, :update, :destroy]
   before_action :set_comments, only: [:show, :destroy]
 
   # GET /categories

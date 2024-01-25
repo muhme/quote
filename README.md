@@ -34,9 +34,9 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
   * running system tests using Chrome browser on Selenium container with "docker exec -ti quote_rails rails test:system"
   * local directory /quote with cloned GitHub repository is mounted into container
   * users available are:
-    * user/user_password
-    * admin/admin_password
-    * super_admin/super_admin
+    * user/user_password/user@user.com
+    * admin/admin_password/admin@admin.com
+    * super_admin/super_admin/super_admin@admin.com
 * quote_chrome – Selenium Standalone with Chrome and VNC server
   * two ports are available to see browser working in test:system (using the password: secret):
     * using a VNC viewer [vnc://localhost:8104](vnc://localhost:8104) or
@@ -80,6 +80,9 @@ root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc1
   ```
   quote_rails $ export PORT=3100 && rails server --environment test -P /tmp/test.pid
   ```
+
+:point_right: If you are using Rails 7.1.3 there is a hack needed to run the system tests. Comment-out line #19 `#  @browser.preload` in file `/usr/local/bundle/gems/actionpack-7.1.3/lib/action_dispatch/system_testing/driver.rb`, see [rails/issues/50827](https://github.com/rails/rails/issues/50827) 
+
 </details>
 
 ## Roadmap
@@ -88,6 +91,7 @@ root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc1
 
 ## History
 
+* 2024 upgraded to Rails 7.1.3, Ruby 3.2
 * 2023 updated Rails 7.0.5 ... 7.0.8, Ruby 3.1
 * 2023 everything translated from German 🇩🇪 into English 🇺🇸, español 🇪🇸, 日本語 🇯🇵 and українська 🇺🇦
 * 2023 using Hotwire Turbo (see [Autocomplete mit Rails & Turbo](https://www.consulting.heikol.de/en/blog/autocomplete-ruby-on-rails-turbo/))
