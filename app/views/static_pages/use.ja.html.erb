@@ -1,6 +1,6 @@
 <h1>引用を組み込む</h1>
 <p>ウェブサイトに引用を表示したいですか？
-   CMS Joomla、APIを使う方法、iFrameを通じての方法をここで学べます。
+   CMS Joomla、APIを使う方法、iframeを通じての方法をここで学べます。
 </p>
 
 <h2>CMS</h2>
@@ -18,7 +18,7 @@
    <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a>で利用可能なパラメーターを確認したり、IDをリストしたり、テストを行うことができます。
 </p>
 
-<h3>iFrame</h3>
+<h3>iframe</h3>
 <p>
 iframeを使用してページに引用を表示することができます。
 デザインはCascading Style Sheets (CSS) でカスタマイズすることができます。以下は例です：</p>
@@ -37,14 +37,18 @@ iframeを使用してページに引用を表示することができます。
 <p>さまざまなパラメーターで引用の選択をカスタマイズすることができます。
 IDは常に一意の番号として使用されます。
 例として、英語（language=en）で、政治（categoryId=147）のカテゴリーのランダムな引用：<br /><a href="https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en" target="_blank">https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en</a></p>
+<p><i>target</i> パラメーターは、例えば iframe を使用してウェブページに統合するために重要です。
+   安全上の理由から、元のページ内で新しいウェブページを開くことは許可されていません。
+   <i>target</i> パラメーターにより、リンクを新しいタブまたはウィンドウで開くことができます。
+</p>
 
 <h2>実践例</h2>
-<p>引用サービスを組み込んだいくつかのウェブサイトの提案（2023年5月1日現在）：</p>
+<p>引用サービスを組み込んだいくつかのウェブサイトの提案（ステータス 2024年2月3日）：</p>
 <ul>
+  <li><a target="_blank" href="https://viskeert.de">Interessengemeinschaft Visquard</a> (iframe in one.com ウェブサイトビルダー, カテゴリ 東フリジア)</li>
   <li><a target="_blank" href="http://szloszjar.com">Georg Szloszjar</a> (Joomla)</li>
   <li><a target="_blank" href="https://www.ewattingen.com">Michael Faller – WebDesign und mehr</a> (Joomla, 新しいタブ)</li>
   <li><a target="_blank" href="https://www.augederseele.de">Foto- und Videoblog von Angel und Andreas</a> (Joomla)</li>
-  <li><a target="_blank" href="http://www.dombergen.de/vwl">dombergen.de/vwl</a> (Joomla, カテゴリーお金、著者Keynes)</li>
   <li><a target="_blank" href="https://buggy-club-schweiz.ch">Buggy Club Schweiz</a> (Joomla)</li>
   <li><a target="_blank" href="https://samariter-niedergoesgen.ch">Samariterverein Niedergösgen</a> (Joomla)</li>
   <li><a target="_blank" href="https://www.consulting.heikol.de/en">Systemberatung Heiko Lübbe</a> (Hugo, カテゴリー プログラミング, ユーザー heiko, 言語 ドイツ語, JSON)</li>

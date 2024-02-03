@@ -1,6 +1,6 @@
 <h1>Вставка цитат</h1>
 <p>Хочете відображати цитати на вашому веб-сайті?
-   Тут ви дізнаєтесь, як це зробити за допомогою CMS Joomla, через API та за допомогою iFrame.
+   Тут ви дізнаєтесь, як це зробити за допомогою CMS Joomla, через API та за допомогою iframe.
 </p>
 
 <h2>CMS</h2>
@@ -18,7 +18,7 @@
    За допомогою <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a> ви можете переглядати доступні параметри, список ID та проводити тести.
 </p>
 
-<h3>iFrame</h3>
+<h3>Iframe</h3>
 <p>
 Ви можете відображати цитати на своїй сторінці за допомогою iframe.
 Дизайн можна налаштовувати за допомогою каскадних таблиць стилів (CSS). Ось приклад:</p>
@@ -38,14 +38,18 @@
 Унікальні номери, ID, завжди використовуються.
 Наприклад, випадкова цитата англійською мовою (language=en) у категорії Політика (categoryId=147):<br /><a href="https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en" target="_blank">https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en</a>
 <p>Ви можете комбінувати параметри для автора (authorId), категорії (categoryId), користувача (userId) та мови (language).
+<p>Параметр <i>target</i> є важливим для інтеграції у веб-сторінку, наприклад, за допомогою iframe.
+   З міркувань безпеки, відкриття нової веб-сторінки всередині оригінальної сторінки не дозволяється.
+   Параметр <i>target</i> тепер дозволяє відкривати посилання у новій вкладці або вікні.
+</p>
 
 <h2>Практичні приклади</h2>
-<p>Як натхнення, ось деякі веб-сайти, які інтегрували сервіс цитат (станом на 1 травня 2023 року):</p>
+<p>Як натхнення, ось деякі веб-сайти, які інтегрували сервіс цитат (Статус 3 лютого 2024 року):</p>
 <ul>
+  <li><a target="_blank" href="https://viskeert.de">Interessengemeinschaft Visquard</a> (iframe у Конструкторі сайтів one.com, категорія Східна Фризія)</li>
   <li><a target="_blank" href="http://szloszjar.com">Georg Szloszjar</a> (Joomla)</li>
   <li><a target="_blank" href="https://www.ewattingen.com">Michael Faller – WebDesign und mehr</a> (Joomla, нова вкладка)</li>
   <li><a target="_blank" href="https://www.augederseele.de">Foto- und Videoblog von Angel und Andreas</a> (Joomla)</li>
-  <li><a target="_blank" href="http://www.dombergen.de/vwl">dombergen.de/vwl</a> (Joomla, категорія Geld, автор Keynes)</li>
   <li><a target="_blank" href="https://buggy-club-schweiz.ch">Buggy Club Schweiz</a> (Joomla)</li>
   <li><a target="_blank" href="https://samariter-niedergoesgen.ch">Samariterverein Niedergösgen</a> (Joomla)</li>
   <li><a target="_blank" href="https://www.consulting.heikol.de/en">Systemberatung Heiko Lübbe</a> (Hugo, категорія programming, English, користувач heiko)</li>

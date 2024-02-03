@@ -1,6 +1,6 @@
 <h1>Embedding Quotes</h1>
 <p>Do you want to display quotes on your website?
-   Here you can learn how to do it with the CMS Joomla, using an API and through an iFrame.
+   Here you can learn how to do it with the CMS Joomla, using an API and through an iframe.
 </p>
 
 <h2>CMS</h2>
@@ -18,9 +18,9 @@
    With the <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a> you can view the available parameters, list IDs, and perform tests.
 </p>
 
-<h3>iFrame</h3>
+<h3>Iframe</h3>
 <p>
-You can display the quotes on your page using an inline frame (iFrame).
+You can display the quotes on your page using an inline frame (iframe).
 The design can be customized using Cascading Style Sheets (CSS). Here's an example:</p>
 <iframe src="https://api.zitat-service.de/v1/quote_html?language=en&target=quotes&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"></iframe>
 <p>The iframe code for this integration is:
@@ -38,14 +38,18 @@ The DIV element of the <i>quote</i> class wraps around the entire quote, so you 
 Unique numbers, the IDs, are always used.
 For example, a random quote in English (language=en) in category Politics (categoryId=147):<br /><a href="https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en" target="_blank">https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en</a>
 <p>You can combine parameters for the author (authorId), the category (categoryId), the user (userId), and the language (language).
+<p>The <i>target</i> parameter is crucial for integrating into a webpage, for example, using an iframe.
+   For security reasons, opening a new webpage within the original page is not allowed.
+   The <i>target</i> parameter now allows for the links to be opened in a new tab or window.
+</p>
 
 <h2>Practical Examples</h2>
-<p>As inspiration, here are some websites that have integrated the Quote Service (as of May 1, 2023):</p>
+<p>As inspiration, here are some websites that have integrated the Quote Service (as of 3 February 2024):</p>
 <ul>
+  <li><a target="_blank" href="https://viskeert.de">Interessengemeinschaft Visquard</a> (iframe in one.com website builder, category East Frisia)</li>
   <li><a target="_blank" href="http://szloszjar.com">Georg Szloszjar</a> (Joomla)</li>
   <li><a target="_blank" href="https://www.ewattingen.com">Michael Faller – WebDesign und mehr</a> (Joomla, new tab)</li>
   <li><a target="_blank" href="https://www.augederseele.de">Foto- und Videoblog von Angel und Andreas</a> (Joomla)</li>
-  <li><a target="_blank" href="http://www.dombergen.de/vwl">dombergen.de/vwl</a> (Joomla, category Geld, author Keynes)</li>
   <li><a target="_blank" href="https://buggy-club-schweiz.ch">Buggy Club Schweiz</a> (Joomla)</li>
   <li><a target="_blank" href="https://samariter-niedergoesgen.ch">Samariterverein Niedergösgen</a> (Joomla)</li>
   <li><a target="_blank" href="https://www.consulting.heikol.de/en">Systemberatung Heiko Lübbe</a> (Hugo, category programming, language English, user heiko, JSON)</li>

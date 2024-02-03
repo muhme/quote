@@ -1,6 +1,6 @@
 <h1>Insertar citas</h1>
 <p>¿Quieres mostrar citas en tu sitio web?
-   Aquí puedes aprender cómo hacerlo con el CMS Joomla, utilizando una API y mediante un iFrame.
+   Aquí puedes aprender cómo hacerlo con el CMS Joomla, utilizando una API y mediante un iframe.
 </p>
 
 <h2>CMS</h2>
@@ -18,9 +18,9 @@
   Con el <a href="https://api.zitat-service.de/v1/explorer" target="_blank">API Explorer</a> puedes ver los parámetros disponibles, listar las IDs y realizar pruebas.
 </p>
 
-<h3>iFrame</h3>
+<h3>Iframe</h3>
 <p>
-Puedes mostrar las citas en tu página usando un iframe.
+Puedes mostrar las citas en tu página usando un iframe (por inline frame o marco incorporado).
 El diseño se puede adaptar con Cascading Style Sheets (CSS). Aquí tienes un ejemplo:</p>
 <iframe src="https://api.zitat-service.de/v1/quote_html?language=es&target=quotes&style=https://www.zitat-service.de/quote.css" frameborder="1" scrolling="auto" width="700"></iframe>
 <p>El código iframe para esta integración es:
@@ -39,10 +39,15 @@ Siempre se utilizan las IDs como números únicos.
 Por ejemplo, una cita aleatoria en inglés (language=en) en la categoría Política (categoryId=147):
 <br /><a href="https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en" target="_blank">https://api.zitat-service.de/v1/quote_html?categoryId=147&language=en</a></p>
 <p>Los parámetros para el autor (authorId), la categoría (categoryId), el usuario (userId) y el idioma (language) pueden combinarse.</p>
+<p>El parámetro <i>target</i> es crucial para la integración en una página web, por ejemplo, mediante un iframe.
+   Por razones de seguridad, no se permite abrir una nueva página web dentro de la página original.
+   El parámetro <i>target</i> ahora permite abrir los enlaces en una nueva pestaña o ventana.
+</p>
 
 <h2>Ejemplos prácticos</h2>
-<p>Como inspiración, algunos sitios web que han incorporado el servicio de citas (a partir del 1 de mayo de 2023):</p>
+<p>Como inspiración, algunos sitios web que han incorporado el servicio de citas (situación 3 de febrero de 2024):</p>
 <ul>
+  <li><a target="_blank" href="https://viskeert.de">Interessengemeinschaft Visquard</a> (iframe in one.com kit de construcción de sitios web, categoría Frisia oriental)</li>
   <li><a target="_blank" href="http://szloszjar.com">Georg Szloszjar</a> (Joomla)</li>
   <li><a target="_blank" href="https://www.ewattingen.com">Michael Faller – WebDesign und mehr</a> (Joomla, nueva pestaña)</li>
   <li><a target="_blank" href="https://www.augederseele.de">Foto- und Videoblog von Angel und Andreas</a> (Joomla)</li>
