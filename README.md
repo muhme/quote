@@ -54,7 +54,7 @@ user@host:/quote $ echo 'DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx"
 ```
 Or you set this DEEPL_API_KEY environment variable inside the container then you have it also for test stage and translations with i18n-tasks command:
 ```
-root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx' >> ~/.bashrc
+root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx"' >> ~/.bashrc
 ```
 </details>
 
