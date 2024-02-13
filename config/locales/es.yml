@@ -1,4 +1,3 @@
----
 es:
   activerecord:
     attributes:
@@ -244,7 +243,7 @@ es:
     application:
       admin: Administrador
       award_alt: una estrella en una cinta como medalla
-      contact: Contacto
+      contact: Aviso legal
       exclamation: "¡Error de atención!"
       exclamation_alt: signo de exclamación rojo
       green_flag: Nota

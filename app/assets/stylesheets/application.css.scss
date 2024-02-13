@@ -123,7 +123,7 @@ h1.error {
     color: red;
 }
 
-h2 {
+h2, h3 {
     font-family: Gondoliere, Comic Sans MS, serif;
     color: #208020;
     padding-top: 1ex;
@@ -327,6 +327,18 @@ table#letter td {
     /* hack? to disable transparency for tr */
 }
 
+table#contact td:first-child {
+    text-align: center;
+}
+table#contact {
+    border-collapse: collapse;
+    border: 3px solid darkgray;
+}
+table#contact td {
+    border: 1px solid darkgray;
+    padding: 0.5em;
+}
+
 .gray-text,
 table#letter td#unused {
     color: gray;
@@ -388,11 +400,6 @@ div#categories_list a:link,
 div.no_bottom_field a:link {
     border-bottom: 0;
     /* links without underlines */
-}
-
-table#environment td {
-    border: 1px solid black;
-    text-align: center;
 }
 
 .table,
@@ -587,6 +594,11 @@ form#new_comment_form {
     text-orientation: upright;
     white-space: nowrap;
 }
+
+a {
+    white-space: nowrap;
+}
+
 .margin-bottom-4 {
     margin-bottom: 4px;
 }

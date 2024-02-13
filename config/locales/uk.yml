@@ -1,4 +1,3 @@
----
 uk:
   activerecord:
     attributes:
@@ -261,7 +260,7 @@ uk:
     application:
       admin: Адміністратор
       award_alt: зірка на стрічці як орден
-      contact: Контакти
+      contact: Імпресум
       exclamation: Увага Помилка!
       exclamation_alt: червоний знак оклику
       green_flag: Підказка

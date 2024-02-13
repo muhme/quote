@@ -1,6 +1,28 @@
 <h1>Aviso legal</h1>
-<p>El operador Heiko Lübbe es responsable del contenido del sitio web <a href="https://www.zitat-service.de">zitat-service.de</a>:</p>
-<p class="padding-left-2em">
+<p>El operador Heiko Lübbe es responsable de los contenidos y servicios de los subdominios del dominio Zitat-Service.de.
+   Esto se refiere, entre otras cosas:</p>
+<div class="padding-left-2em">
+  <table id="contact">
+    <tr>
+      <td><%= image_tag("quote_service_16.png", :alt => "una letra Z verde", :title => "Zitat-Service Logotipo") %></td>
+      <td><a href="https://www.zitat-service.de/es">www.zitat-service.de</a> </td>
+      <td>Aplicación web</td>
+    </tr><tr>
+      <td><%= image_tag("quote_service_16.png", :alt => "una letra Z verde", :title => "Zitat-Service Logotipo") %></td>
+      <td><a href="https://api.zitat-service.de">api.zitat-service.de</a></td>
+      <td>Interfaz de programación</td>
+    </tr><tr>
+      <td><%= image_tag("joomla_16x16.png", :alt => "Joomla! Logotipo", :title => "Joomla!") %></td>
+      <td><a href="https://joomla.zitat-service.de/es">joomla.zitat-service.de</a></td>
+      <td>Demostración de la extensión Joomla</td>
+    </tr><tr>
+      <td><%= image_tag("wordpress.png", :alt => "WordPress Logotipo", :title => "WordPress", size: '16x16') %></td>
+      <td><a href="https://wp-demo.zitat-service.de/es">wp-demo.zitat-service.de</a></td>
+      <td>Demostración del plugin para WordPress</td>
+      </tr>
+  </table>
+</div>
+<p class="top_space_field">El operador puede ser localizado en</p>
 Heiko Lübbe<br/>
 Zum Stützpunkt 4<br/>
 14641 Nauen<br/>
@@ -12,31 +34,155 @@ GERMANY
 <p class="padding-left-2em">
 <a href="tel:&plus;&#52;&#57; &#51;&#51;&#50;&#51;&#57; &#50;&#48;&#53;&#57;&#48;">&plus;&#52;&#57; &#51;&#51;&#50;&#51;&#57; &#50;&#48;&#53;&#57;&#48;</a>
 </p> 
-<h2>Derechos de autor</h2>
-<p>Si usted, como autor o administrador del patrimonio, desea no ser citado aquí,
-por favor, informe al operador por correo electrónico. Las citas que estén bajo su derecho de autor serán eliminadas de inmediato.
-</p>
-<h2>Disponibilidad del sitio web</h2>
-<p>El operador se esforzará por ofrecer el servicio lo más libre de interrupciones posible. Sin embargo, a pesar de todos los cuidados, no se pueden descartar tiempos de inactividad. El operador se reserva el derecho de modificar o suspender la oferta en cualquier momento. No se asume ninguna garantía por las interrupciones u otras perturbaciones causadas por archivos no creados sin errores o formatos no estructurados sin errores.
-<h2>Nota sobre el uso de enlaces externos</h2>
-<p>Las páginas enlazadas externamente se comprueban al establecer el enlace por primera vez. Sin embargo, no se revisan constantemente los cambios en las páginas enlazadas externamente. Si el operador se entera o es informado por otros de que una oferta específica, a la que se proporcionó un enlace externo, provoca responsabilidad civil o penal, el operador eliminará la referencia a dicha oferta.</p>
 
-<h2>Uso de los servicios</h2>
-<p>Agradecemos el uso de los siguientes servicios:</p>
+<h2>1. Derechos de autor</h2>
+<p>Si no desea ser incluido en esta colección de citas con una o más citas como originador
+   o como la persona responsable del patrimonio no desea ser incluido en esta colección de citas,
+   por favor informe al operador por correo electrónico.
+</p>
+
+<h2>2. Términos de Uso</h2>
+
+<h3>2.1. Aceptación</h3>
+<p>Al acceder y utilizar los datos y servicios de los subdominios del dominio Zitat-Service.de,
+   usted acepta estos términos de uso.</p>
+
+<h3>2.2. Licencias</h3>
+<p>El software de código abierto <a href="https://github.com/muhme/quote">github.com/muhme/quote</a> para la aplicación web y
+   el software de código abierto <a href="https://github.com/muhme/quote_api">github.com/muhme/quote_api</a> para la API 
+   se proporcionan bajo la <a href="https://github.com/muhme/quote/blob/master/LICENSE">Licencia MIT</a>.</p>
+<p>La colección de citas de la comunidad de usuarios, la demostración y las páginas de ayuda se proporcionan bajo la Licencia Creative Commons
+   <a href="https://creativecommons.org/licenses/by/4.0/deed.es">CC BY 4.0</a>.
+</p>
+
+<h3>2.3. Restricciones de Uso</h3>
+<p>No puede utilizar los datos y servicios de los subdominios del dominio Zitat-Service.de de manera que:</p>
 <ul>
-  <li><a href="https://deepl.com">DeepL</a> API Free: para la traducción automática de textos</li>
-  <li><a href="https://wikipedia.org">Wikipedia</a> API: para encontrar entradas de Wikipedia en otros idiomas y traducir nombres de autores</li>
+  <li>viole leyes o regulaciones,</li>
+  <li>infrinja los derechos de otros,</li>
+  <li>sea perjudicial, fraudulento o engañoso.</li>
 </ul>
 
-<h2>Diseño y desarrollo</h2>
-<p>Para reportar errores o solicitar extensiones, por favor, cree un <a target="_blank" href="https://github.com/muhme/quote/issues">ticket</a>.</p>
-<table id="environment">
-  <tr><td><%= image_tag("tux.png", :alt => "Tux", :title => "Tux es la mascota de Linux")%>Servidor</td><td><%= Socket.gethostname %></td></tr>
-  <tr><td><a href="https://rubyonrails.org/">Rails</a></td><td><%= Rails.version %></td></tr>
-  <tr><td><%= image_tag("ruby.png", :alt => "Rubí", :title => "Rubí para el lenguaje de programación Ruby")%><a href="https://www.ruby-lang.org/">Ruby</a></td><td><%= RUBY_VERSION %></td></tr>
-  <tr><td><a href="https://github.com/muhme/quote">Software</a></td><td><%= getGitVersion() %></td></tr>
-  <tr><td>Entorno</td><td><%= ENV['RAILS_ENV'] %></td></tr>
-</table>
+<h3>2.4. Cambios</h3>
+<p>Los datos y servicios de los subdominios del dominio Zitat-Service.de
+   pueden ser cambiados o discontinuados temporal o permanentemente con o sin previo aviso.
+</p>
 
-<p>La aplicación web <a href="https://www.zitat-service.de">www.zitat-service.de</a> fue creada por:</p><p><a style="border: 0px;" href="https://www.consulting.heikol.de">
-    <%= image_tag("systemberatung.png", :alt => "Enlace a consulting.heiko.de", :title => "Consultoría de sistemas Heiko Lübbe") %></a>
+<h3>2.5. Descargo de Responsabilidad de Garantía</h3>
+<p>El operador se esforzará por proporcionar los servicios sin interrupciones.
+   Sin embargo, a pesar del máximo cuidado, no se puede excluir el tiempo de inactividad.
+   Los datos y servicios de los subdominios del dominio Zitat-Service.de
+   se proporcionan "tal cual" y "según disponibilidad".
+</p>
+
+<h3>2.6. Limitación de Responsabilidad</h3>
+<p>El operador no será responsable de ningún daño directo o indirecto,
+   resultante del uso de los datos y servicios de los subdominios del dominio Zitat-Service.de.
+</p>
+
+<h3>2.7. Modificación de Términos</h3>
+<p>El operador se reserva el derecho de cambiar estos términos de uso en cualquier momento.
+   Si continúa utilizando los datos y servicios de los subdominios del dominio Zitat-Service.de después de tales cambios,
+   usted acepta los nuevos términos y condiciones.
+</p>
+
+<h2>3. Declaración de Privacidad</h2>
+<p>Esta Política de Privacidad con fecha del 13 de febrero de 2024, cubre todos los datos y servicios de los subdominios del dominio Zitat-Service.de.
+   La protección de sus datos personales está sujeta al
+   <a href="https://eur-lex.europa.eu/legal-content/ES/TXT/HTML/?uri=CELEX:32016R0679">Reglamento general de protección de datos</a>
+   de la Unión Europea.</p>
+
+<h3>3.1. Información, Corrección, Bloqueo, Eliminación u Oposición</h3>
+<p>Usted tiene derecho a información, corrección, bloqueo, eliminación u oposición con respecto a sus datos personales almacenados en Zitat-Service.de.
+   Por favor, contacte al operador Heiko Lübbe.</p>
+
+<h3>3.2. Recopilación y Uso de Información de Registro</h3>
+<p>Cuando envía una solicitud a uno de los sitios web alojados bajo los subdominios de Zitat-Service.de,
+   estas solicitudes pueden ser registradas. Esto puede incluir, entre otros:</p>
+<ul>
+  <li>Detalles de la solicitud (como fecha, hora o tiempo de respuesta),</li>
+  <li>Información técnica (como dirección IP o dispositivo de acceso) o</li>
+  <li>Almacenamiento de inicio de sesión del usuario.</li>
+</ul>
+<p>Estos datos se recopilan para garantizar el correcto funcionamiento de los servicios,
+   para mejorar el rendimiento y analizar errores. Los datos recopilados solo se conservarán mientras sea necesario
+   para los fines mencionados. Una vez que ya no exista la necesidad de almacenamiento de datos, eliminamos los datos.
+</p>
+
+<h3>3.3. Almacenamiento y Uso de la Colección de Citas</h3>
+<p>La colección de citas de la comunidad de usuarios almacena datos de usuarios y contenido generado por los usuarios.
+   Esto puede incluir, entre otros:</p>
+<ul>
+  <li>Detalles del usuario (como nombre de usuario, contraseña encriptada de un solo sentido o dirección de correo electrónico),</li>
+  <li>Información de administración (como tiempo de creación o creador) y</li>
+  <li>Contenido (como citas, categorías o comentarios).</li>
+</ul>
+<p>Estos datos se almacenan permanentemente para la función de la colección de citas.
+   El contenido que cree puede ser anonimizado a petición.
+</p>
+
+<h3>3.4. Seguridad de Datos</h3>
+<p>Tomamos medidas adecuadas para proteger los datos contra pérdida, robo, mal uso y acceso no autorizado,
+   divulgación, alteración y destrucción.</p>
+
+<h3>3.5. Cookies</h3>
+<p>Las cookies son archivos de texto que se almacenan temporalmente en el navegador de un usuario de sitio web.
+   Al usar los subdominios de Zitat-Service.de, solo se establecen cookies técnicamente necesarias para el inicio de sesión.
+</p>
+
+<h3>3.6. Cambios en la Política de Privacidad</h3>
+<p>El operador se reserva el derecho de cambiar esta Política de Privacidad en cualquier momento.
+   Le informaremos sobre el cambio actualizando la fecha al principio de la Política de Privacidad.
+</p>
+
+<h2>4. Nota sobre el Uso de Enlaces Externos</h2>
+<p>Las páginas vinculadas externamente se verifican en el momento del enlace inicial.
+   Sin embargo, no se realiza un monitoreo continuo de los cambios en las páginas vinculadas externamente.
+   Si el operador se entera o es notificado por otros que una oferta específica, a la que hay un enlace externo,
+   desencadena responsabilidad civil o penal, el operador eliminará la referencia a esta oferta.
+</p>
+
+<h2>5. Uso de Servicios</h2>
+<p>Le agradecemos por usar los siguientes servicios:</p>
+<ul>
+  <li><a href="https://deepl.com">API Free de DeepL</a> – para la traducción automática de textos, y</li>
+  <li><a href="https://wikipedia.org">API de Wikipedia</a> – para encontrar entradas de Wikipedia en otros idiomas y traducir los nombres de los autores.</li>
+</ul>
+
+<h2>6. Diseño y Desarrollo</h2>
+<p>Para errores o solicitudes de mejoras, por favor cree un <a target="_blank" href="https://github.com/muhme/quote/issues">ticket</a>.
+   Esta aplicación web se basa en:
+</p>
+<div class="padding-left-2em">
+  <table id="contact">
+    <tr>
+      <td><%= image_tag("tux.png", :alt => "Tux", :title => "Tux es la mascota de Linux")%></td>
+      <td>Servidor</td>
+      <td><%= Socket.gethostname %></td>
+    </tr><tr>
+      <td><%= image_tag("rails_32.png", :height => 16, :alt => "Ruby", :title => "Ruby para el lenguaje de programación Ruby")%></td>
+      <td><a href="https://rubyonrails.org/">Ruby on Rails</a></td>
+      <td><%= Rails.version %></td>
+    </tr><tr>
+      <td><%= image_tag("ruby.png", :alt => "Ruby", :title => "Ruby para el lenguaje de programación Ruby")%></td>
+      <td><a href="https://www.ruby-lang.org/">Ruby</a></td>
+      <td><%= RUBY_VERSION %></td>
+    </tr><tr>
+      <td><%= image_tag("quote_service_16.png", :alt => "una Z verde", :title => "Logo de Zitat-Service") %></td>
+      <td><a href="https://github.com/muhme/quote">Software</a> de</td>
+      <td><%= getGitVersion() %></td>
+      </tr><tr>
+        <td>&nbsp;</td>
+        <td>Entorno</td>
+        <td><%= Rails.env %></td>
+      </tr>
+  </table>
+</div>
+
+<p class="top_space_field">La aplicación web <a href="https://www.Zitat-Service.de/es">www.Zitat-Service.de</a> y
+la interfaz de programación <a href="https://api.Zitat-Service.de">api.Zitat-Service.de</a>
+fueron creadas por:</p>
+<div class="padding-left-2em">
+  <a style="border: 0px;" href="https://www.consulting.heikol.de/en">
+  <%= image_tag("systemberatung.png", :alt => "Logo punto rojo y borde azul, escritura azul que dice Systemberatung Heiko Lübbe, debajo en rojo las palabras Metas, Proyectos y Éxitos", :title => "Systemberatung Heiko Lübbe") %></a>
+</div>
