@@ -1,8 +1,8 @@
 # README
 
-Ruby on Rails (RoR) web application with which the website [zitat-service.de](https://www.zitat-service.de) runs.
+Ruby on Rails (RoR) web application running the website [zitat-service.de](https://www.zitat-service.de).
 
-Database is used for JSON API [api.zitat-service.de](https://api.zitat-service.de) too. The API itself is used by the RoR web application and also by the Joomla module [github.com/muhme/quote_joomla](https://github.com/muhme/quote_joomla).
+Database is used for JSON API [api.zitat-service.de](https://api.zitat-service.de) too. The API itself is used by this RoR web application and also by the Joomla module [github.com/muhme/quote_joomla](https://github.com/muhme/quote_joomla) and WordPress plugin [github.com/muhme/quote_wordpress](https://github.com/muhme/quote_wordpress).
 
 ## Docker Containers
 There is a Docker test and development environment prepared. You can create your own test and development instance with the following commands:
@@ -81,13 +81,16 @@ root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc1
   quote_rails $ export PORT=3100 && rails server --environment test -P /tmp/test.pid
   ```
 
-:point_right: If you are using Rails 7.1.3 there is a hack needed to run the system tests. Comment-out line #19 `#  @browser.preload` in file `/usr/local/bundle/gems/actionpack-7.1.3/lib/action_dispatch/system_testing/driver.rb`, see [rails/issues/50827](https://github.com/rails/rails/issues/50827) 
-
+:point_right: If you are using Rails 7.1.3 there is a hack needed to run the system tests. Extend line #19 in file `/usr/local/bundle/gems/actionpack-7.1.3/lib/action_dispatch/system_testing/driver.rb`, see [rails/issues/50827](https://github.com/rails/rails/issues/50827):
+```
+< @browser.preload
+> @browser.preload unless @options[:browser] == :remote
+```
 </details>
 
 ## Roadmap
 
-* Develop a Wordpress plugin
+* Develop a Wordpress plugin, see development branch in [github.com/muhme/quote_wordpress](https://github.com/muhme/quote_wordpress)
 
 ## History
 
