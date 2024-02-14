@@ -6,8 +6,8 @@ I18n.load_path += Dir[Rails.root.join('config', 'locales', '*.yml')]
 # permitted locales available to the five supported
 I18n.available_locales = [:de, :en, :es, :ja, :uk]
 
-# set default locale explicity, even :en is alreaqdy the default
+# set default locale explicity, even :en is already the default
 I18n.default_locale = :en
 
 # set fallbacks explicity
-I18nfallbacks = { de: :en, es: :en, ja: :en, uk: :en }
+I18n.fallbacks.map(de: :en, es: :en, ja: :en, uk: :en);
