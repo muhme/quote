@@ -3,6 +3,8 @@
   <head>
     <title><%= page_title %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%# disable InstantClick, which is enabled by default since Turbo v8 / turbo-rails 2 %>
+    <meta name="turbo-prefetch" content="false">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= favicon_link_tag %>
