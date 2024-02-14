@@ -11,7 +11,7 @@ class StaticPagessTest < ApplicationSystemTestCase
   
   test "contact" do
     check_page page, start_contact_url, "h1", "Imprint", 500
-    assert_equal "Zitat-Service – Contact", page.title
+    assert_equal "Zitat-Service – Imprint", page.title
     check_page page, start_contact_url(locale: :de), "h1", "Impressum", 500
     assert_equal "Zitat-Service – Impressum", page.title
   end
