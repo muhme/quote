@@ -25,8 +25,11 @@
 <p><%= User.count %> usuarios se han registrado. Las últimas citas publicadas son de <%= raw @users[0] %>, <%= raw @users[1] %> y <%= raw @users[2] %>.</p>
 <h2>Noticias</h2>
 <dl>
+  <dt><%= image_tag("wordpress.png", :alt => "Logotipo de WordPress", :title => "WordPress", size: '16x16') %> 21 de febrero de 2024</dt>
+    <dd>Ahora también hay un <a href="https://github.com/muhme/quote_wordpress/wiki/Ayuda">plugin de WordPress</a>.</dd>
   <dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> 24 de noviembre de 2023</dt>
-    <dd>Hay un nuevo <a href="https://github.com/muhme/quote_joomla/wiki/Ayuda">módulo Joomla quote-service.de</a>. Al actualizar, puede ser necesario seleccionar nuevamente el autor, la categoría o el usuario una vez.</dd>
+    <dd>Hay un nuevo versión del <a href="https://github.com/muhme/quote_joomla/wiki/Ayuda">módulo Joomla</a>.
+        Al actualizar, puede ser necesario seleccionar nuevamente el autor, la categoría o el usuario una vez.</dd>
   <dt><%= image_tag("lightning.png", :alt => "un rayo amarillo", :title => "¡Hurra!") %> 20 de septiembre de 2023</dt>
     <dd>Hay una nueva API: <a href="https://api.zitat-service.de">api.zitat-service.de</a>.</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 5 de mayo de 2023</dt>
@@ -35,7 +38,7 @@
       <%= link_to(raw("Español &#x1F1EA;&#x1F1F8;"), root_url(locale: :es)) %>,
       <%= link_to(raw("日本語 &#x1F1EF;&#x1F1F5;"), root_url(locale: :ja)) %> y
       <%= link_to(raw("Українська &#x1F1FA;&#x1F1E6;"), root_url(locale: :uk)) %>.
-    Si es usted hablante nativo, ayúdenos a mejorar la traducción automática.</dd>
+      Si eres hablante nativo, ayúdanos a mejorar la traducción automática o a configurar citas.</dd>
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 24 de marzo de 2018</dt>
     <dd>Traslado del servidor web a Frankfurt am Main al proveedor <a href="https://digitalocean.com/">DigitalOcean</a>.</dd>
   <dt><%= image_tag("exclamation.png", :alt => "explamination", :title => "¡Atención!") %> 26 de noviembre de 2012</dt>  

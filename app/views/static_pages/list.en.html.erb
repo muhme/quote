@@ -25,25 +25,28 @@
 <p><%= User.count %> users have signed up. The most recently added quotes are from <%= raw @users[0] %>, <%= raw @users[1] %> and <%= raw @users[2] %>.</p>
 <h2>News</h2>
 <dl>
+  <dt><%= image_tag("wordpress.png", :alt => "WordPress logo", :title => "WordPress", size: '16x16') %> February 21, 2024</dt>
+    <dd>There is now also a <a href="https://github.com/muhme/quote_wordpress/wiki">WordPress plugin</a>.</dd>
   <dt><%= image_tag("joomla_16x16.png", :alt => "Joomla!", :title => "Joomla!") %> November 24, 2023</dt>
-<dd>There is a new <a href="https://github.com/muhme/quote_joomla/wiki">Joomla module quote-service.de</a>. When updating, the author, category, or user may need to be selected again once.</dd>
+    <dd>There is a new version of the <a href="https://github.com/muhme/quote_joomla/wiki">Joomla module</a>.
+        When updating, the author, category, or user may need to be selected again once.</dd>
   <dt><%= image_tag("lightning.png", :alt => "a yellow lightning bolt", :title => "Hooray") %> September 20, 2023</dt>
     <dd>There's a new API: <a href="https://api.zitat-service.de">api.zitat-service.de</a>.</dd>
-  <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> May 5th, 2023</dt>
+  <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> May 5, 2023</dt>
     <dd>Added the languages
       <%= link_to(raw("English &#x1F1FA;&#x1F1F8;"), root_url(locale: :en)) %>,
       <%= link_to(raw("Español &#x1F1EA;&#x1F1F8;"), root_url(locale: :es)) %>,
       <%= link_to(raw("日本語 &#x1F1EF;&#x1F1F5;"), root_url(locale: :ja)) %> and
       <%= link_to(raw("Українська &#x1F1FA;&#x1F1E6;"), root_url(locale: :uk)) %>.
-    If you are a native speaker, please help us improve the machine translation.</dd>
-  <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> March 24th, 2018</dt>
+      If you are a native speaker, please help us improve machine translation or set up quotes.</dd>
+  <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> March 24, 2018</dt>
     <dd>Web server relocation to Frankfurt am Main with the provider <a href="https://digitalocean.com/">DigitalOcean</a>.</dd>
-  <dt><%= image_tag("exclamation.png", :alt => "explanation", :title => "Attention!") %> November 26th, 2012</dt>
+  <dt><%= image_tag("exclamation.png", :alt => "explanation", :title => "Attention!") %> November 26, 2012</dt>
     <dd>Please do not add quotes from Karl Valentin, Erich Kästner, or Heinz Erhardt (see <%= link_to 'Copyright', :action => 'help', :anchor => 'copyright' %>).</dd>
-  <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> July 16th, 2011</dt>
+  <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> July 16, 2011</dt>
     <dd><a href="humans.txt">humans.txt</a> (We are people, not machines) – Thank you!</dd>
-  <dt><%= image_tag("award_star_bronze_1.png", :alt => "admin", :title => "Administrator") %> September 12th, 2010</dt>
+  <dt><%= image_tag("award_star_bronze_1.png", :alt => "admin", :title => "Administrator") %> September 12, 2010</dt>
     <dd><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> is now helping us manage the quotes. Thank you!</dd>
-  <dt><%= image_tag("pencil.png", :alt => "pencil", :title => "Pencil") %> November 22nd, 2009</dt>
+  <dt><%= image_tag("pencil.png", :alt => "pencil", :title => "Pencil") %> November 22, 2009</dt>
     <dd>The category <%= link_to('WebDesignTest', controller: :quotations, action: :list_by_category, category: 287 ) %> includes the shortest and longest quotes.</dd>
 </dl>
