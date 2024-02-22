@@ -88,10 +88,6 @@ root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc1
 ```
 </details>
 
-## Roadmap
-
-* Develop a Wordpress plugin, see development branch in [github.com/muhme/quote_wordpress](https://github.com/muhme/quote_wordpress)
-
 ## History
 
 * 2024 upgraded to Rails 7.1.3, Ruby 3.2
