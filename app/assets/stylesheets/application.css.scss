@@ -595,8 +595,10 @@ form#new_comment_form {
     white-space: nowrap;
 }
 
+// word break for links without hyphen
 a {
-    white-space: nowrap;
+    white-space: normal;
+    word-break: break-all;
 }
 
 .margin-bottom-4 {
