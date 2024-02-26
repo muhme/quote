@@ -31,6 +31,33 @@
 Будь ласка, зв'яжіться з нами через <%= link_to "Email", :controller => "static_pages", :action => "contact" %>.
 </p>
 
+<h2>Збірки цитат</h2>
+<p>Інші україномовні збірники цитат в інтернеті є:</p>
+<table  id="quote_collections" table cellspacing="0" cellpadding="5" border="1">
+  <thead>
+    <tr>
+      <th>Обсяг</th>
+      <th>Збірки<br />(станом на 25 лютого 2024 року)</th>
+      <th class="center">Без реклами</th>
+      <th>Коментар</th>
+  </thead>
+  <tbody>
+    <tr  class="ListLine0">
+      <td><a href="https://uk.wikiquote.org">uk.wikiquote.org</a></td>
+      <td>9.658 статей<br />(≈ Автори)</td>
+      <td class="center"><%= image_tag("accept.png", :alt => "OK", :title => "Werbefrei") %></td>
+      <td>з джерелами, різними категоріями (наприклад, за особами, темами, цитатами з фільмів, рекламними слоганами...)</td>
+    </tr>
+   <tr  class="ListLine0">
+      <td><a href="https://rozdil.lviv.ua/aphorisms/">rozdil.lviv.ua</a></td>
+      <td>5.251 цитат</td>
+      <td class="center"><%= image_tag("accept.png", :alt => "OK", :title => "Werbefrei") %></td>
+      <td>Афоризми, вислови, цитати відомих діячів культури, письменників, художників,
+          винахідників та історичних особистостей, а також невідомих авторів</td>
+    </tr>
+  </tbody>
+</table>
+
 <h2>Перевірка Цитат</h2>
 <p>Коли створюється нова цитата, будь ласка, вкажіть джерело,
    щоб уникнути неправильного цитування. Багато так званих цитат були спотворені,
