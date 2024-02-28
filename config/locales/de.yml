@@ -177,9 +177,10 @@ de:
       other: Kategorien
     category: Kategorie
     category_alt: Bild einer Organisationsstruktur, ein übergeordnetes Quadrat über drei untergeordneten Quadraten
-    comment: Kommentar
+    comment:
+      one: Kommentar
+      other: Kommentare
     comment_alt: eine Sprechblase mit angedeutet gefülltem Text
-    comments: Kommentare
     create: Anlegen
     created: Erstellt
     date: Datum & Uhrzeit
@@ -205,6 +206,7 @@ de:
     link_invalid: Der Link „%{link}” kann nicht aufgerufen werden!
     locale: Sprache
     machine_translation_failed: die maschinelle Übersetzung scheiterte
+    missing_user: Kann keinen Benutzer mit der ID=„%{user}” finden!
     name: Name
     name_seperator: " "
     no_admin: Kein Administrator!
@@ -218,6 +220,7 @@ de:
       one: 1 Kategorie
       other: "%{count} Kategorien"
       zero: Kategorien
+    of_the_user: des Benutzers „%{user}”
     ordered: Sortiert
     page: Seite
     pencil: Stift
@@ -312,9 +315,6 @@ de:
     list_by_category:
       no_category: Kann keine Kategorie mit der ID=„%{id}” finden!
       quotations: für die Kategorie %{category}
-    list_by_user:
-      no_user: Kann keinen Benutzer mit der ID=„%{user}” finden!
-      quotations: des Benutzers „%{user}”
     list_content:
       delete: Wirklich das Zitat „%{quote}” löschen?
       needs_login: Mit %{login_link} anmelden, um hier Zitate hinzuzufügen.
@@ -362,7 +362,7 @@ de:
       password_sample: mindestens 8 Zeichen lang
     index:
       last_login_at: Letztes Login
-      title: Benutzereinträge mit Zitaten
+      title: Benutzereinträge mit Zitaten oder Kommentaren
     new:
       new: Benutzereintrag anlegen
     not_logged_in: Nicht angemeldet!

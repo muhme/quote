@@ -50,8 +50,7 @@ class UsersController < ApplicationController
       return false
     end
 
-    sql = "select distinct u.* from users u, quotations q where u.id = q.user_id order by login"
-    @users = User.paginate_by_sql(sql, page: params[:page], :per_page => 10)
+    @users = User.with_quotations_or_comments.order(:login).paginate(page: params[:page], per_page: 10)
     # check pagination second time with number of pages
     bad_pagination?(@users.total_pages)
   end

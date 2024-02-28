@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :quotations
   has_many :categories
   has_many :authors
+  has_many :comments
 
   # EMAIL_NONASCII copied from authlogic-4.4.3/lib/authlogic/regex.rb as is deprecated/deleted
   #
@@ -37,9 +38,9 @@ class User < ApplicationRecord
               message: proc {
                 ::Authlogic::I18n.t(
                   "error_messages.email_invalid",
-                  default: "should look like an email address."
+                  default: "should look like an email address.",
                 )
-              }
+              },
             },
             length: { maximum: 64 },
             uniqueness: { case_sensitive: false }
@@ -50,9 +51,9 @@ class User < ApplicationRecord
               message: proc {
                 ::Authlogic::I18n.t(
                   "error_messages.login_invalid",
-                  default: "should use only letters, numbers, spaces, and .-_@+ please."
+                  default: "should use only letters, numbers, spaces, and .-_@+ please.",
                 )
-              }
+              },
             },
             length: { within: 3..32 },
             uniqueness: { case_sensitive: false }
@@ -61,12 +62,12 @@ class User < ApplicationRecord
             confirmation: { if: :require_password? },
             length: {
               minimum: 8,
-              if: :require_password?
+              if: :require_password?,
             }
   validates :password_confirmation,
             length: {
               minimum: 8,
-              if: :require_password?
+              if: :require_password?,
             }
 
   validates :crypted_password, presence: false, length: { maximum: 255 }, uniqueness: false
@@ -85,4 +86,11 @@ class User < ApplicationRecord
   def number_of_quotations
     return User.count_by_sql("select count(*) from quotations where user_id = #{self.id}")
   end
+
+  # get users with quotations or comments
+  scope :with_quotations_or_comments, -> {
+    left_joins(:quotations, :comments)
+      .where("quotations.user_id IS NOT NULL OR comments.user_id IS NOT NULL")
+      .distinct
+  }
 end

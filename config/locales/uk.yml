@@ -183,9 +183,13 @@ uk:
       zero: Категорій
     category: Категорія
     category_alt: Зображення організаційної структури, один вищий квадрат над трьома підлеглими квадратами
-    comment: Коментар
+    comment:
+      few: Коментаря
+      many: Коментарів
+      one: Коментар
+      other: Коментаря
+      zero: коментарів
     comment_alt: мовленнєва бульбашка з неявним заповненим текстом
-    comments: Коментарі
     create: Створити
     created: Створено
     date: Дата та час
@@ -215,6 +219,7 @@ uk:
     link_invalid: Посилання “%{link}” неможливо відкрити!
     locale: Мова
     machine_translation_failed: не вдалося виконати машинний переклад
+    missing_user: Не можу знайти користувача з ID="%{user}"!
     name: Назва
     name_seperator: " "
     no_admin: Немає прав адміністратора!
@@ -232,6 +237,7 @@ uk:
       one: 1 категорія
       other: "%{count} категорії"
       zero: Категорій
+    of_the_user: користувача "%{user}"
     ordered: Впорядковано
     page: Сторінка
     pencil: Олівець
@@ -329,9 +335,6 @@ uk:
     list_by_category:
       no_category: Не можу знайти категорію з ID="%{id}"!
       quotations: для категорії %{category}
-    list_by_user:
-      no_user: Не можу знайти користувача з ID="%{user}"!
-      quotations: користувача "%{user}"
     list_content:
       delete: Ви дійсно хочете видалити цитату „%{quote}”?
       needs_login: Увійдіть за допомогою %{login_link}, щоб додавати цитати тут.
@@ -379,7 +382,7 @@ uk:
       password_sample: щонайменше 8 символів завдовжки
     index:
       last_login_at: Останній вхід
-      title: Записи користувачів з цитуванням
+      title: Записи користувачів з цитатами або коментарями
     new:
       new: Створити запис користувача
     not_logged_in: Не увійшли в систему!

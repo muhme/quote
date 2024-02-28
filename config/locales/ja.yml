@@ -177,9 +177,10 @@ ja:
       other: カテゴリ
     category: カテゴリ
     category_alt: 組織構造の図、1つの上位の正方形が3つの下位の正方形の上にある。
-    comment: コメント
+    comment:
+      one: コメント
+      other: コメント
     comment_alt: テキストを埋め込んだスピーチバブル
-    comments: コメント
     create: 作成
     created: 作成されました
     date: 日付と時刻
@@ -205,6 +206,7 @@ ja:
     link_invalid: リンク「%{link}」にアクセスできません！
     locale: 言語
     machine_translation_failed: 機械翻訳の失敗
+    missing_user: ユーザー ID=「%{user}」 が見つかりません！
     name: 名
     name_seperator: "・"
     no_admin: 管理者ではありません！
@@ -218,6 +220,7 @@ ja:
       one: 1 カテゴリ
       other: "%{count} カテゴリ"
       zero: カテゴリ
+    of_the_user: ユーザー 「%{user}」 の引用
     ordered: 並び替え済み
     page: ページ
     pencil: 鉛筆
@@ -312,9 +315,6 @@ ja:
     list_by_category:
       no_category: ID=「%{id}」 のカテゴリが見つかりません！
       quotations: カテゴリ %{category} の引用
-    list_by_user:
-      no_user: ユーザー ID=「%{user}」 が見つかりません！
-      quotations: ユーザー 「%{user}」 の引用
     list_content:
       delete: 本当に引用 「%{quote}」 を削除しますか？
       needs_login: "%{login_link}でログインして、ここに引用を追加してください。"
@@ -362,7 +362,7 @@ ja:
       password_sample: 8文字以上
     index:
       last_login_at: 最終ログイン
-      title: 引用文献のあるユーザーエントリー
+      title: 引用やコメントを含むユーザーエントリー
     new:
       new: ユーザーエントリーの作成
     not_logged_in: ログインされていません！

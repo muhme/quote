@@ -7,7 +7,7 @@
     <th><%= raw sorted_img_if(t("g.name"), link_to(t("g.name"), controller: "authors", order: "authors"), params[:order] == "authors") %></th>
     <th><%= t("activerecord.attributes.author.description") %></th>
     <th><%= raw sorted_img_if(t("g.quotes", count: 2), link_to(t("g.quotes", count: 2), controller: "authors"), params[:order] != "authors") %></th>
-    <th><%= image_tag("comment.png", alt: t("g.comment_alt"), title: t("g.comments")) %></th>
+    <th><%= image_tag("comment.png", alt: t("g.comment_alt"), title: t("g.comment", count: 2)) %></th>
     <th><%= t("g.actions") %></th>
   </tr>
 

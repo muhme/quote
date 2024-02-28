@@ -6,6 +6,10 @@ class Comment < ApplicationRecord
     where(commentable_type: o.class.to_s, commentable_id: o.id).count
   end
 
+  def self.count_users_comments(user_id)
+    Comment.where(user_id: user_id).count
+  end
+
   def editable_by(user)
     user && user.id && ((user.id == self.user_id) || user.admin)
   end

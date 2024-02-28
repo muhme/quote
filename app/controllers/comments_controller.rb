@@ -93,6 +93,25 @@ class CommentsController < ApplicationController
     end
   end
 
+  # list comments created by a user ID
+  # e.g. GET /quotations/list_by_user/1
+  #      GET /quotations/list_by_user/1?page=42
+  # it is free to be called w/o login, but actual it is only linked from admin view
+  def list_by_user
+    user_id = my_sql_sanitize(params[:user])
+
+    unless User.exists?(id: user_id)
+      flash[:error] = t("g.missing_user", user: params[:user])
+      return redirect_to root_url
+    end
+
+    @comments = Comment.where(user_id: user_id).order(created_at: :desc)
+
+    @comments = @comments.paginate(page: params[:page], per_page: PER_PAGE)
+    # check pagination second time with number of pages
+    bad_pagination?(@comments.total_pages)
+  end
+
   private
 
   def set_comment

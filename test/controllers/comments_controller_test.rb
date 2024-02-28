@@ -104,4 +104,12 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success 
   end
 
+  # GET /comments/list_by_user/1
+  test "list by user method" do
+    get "/comments/list_by_user/1"
+    assert_response :success
+    get "/comments/list_by_user/4711"
+    assert_redirected_to root_url
+  end
+
 end

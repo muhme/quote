@@ -6,7 +6,7 @@
   <tr>
     <th><%= raw sorted_img_if(t("g.category"), link_to(t("g.category"), controller: "categories", order: "categories"), params[:order] == "categories") %></th>
     <th><%= raw sorted_img_if(t("g.quotes", count: 2), link_to(t("g.quotes", count: 2), controller: "categories"), params[:order] != "categories") %></th>
-    <th><%= image_tag("comment.png", alt: t("g.comment_alt"), title: t("g.comments")) %></th>
+    <th><%= image_tag("comment.png", alt: t("g.comment_alt"), title: t("g.comment", count: 2)) %></th>
     <th><%= t("g.actions") %></th>
   </tr>
 

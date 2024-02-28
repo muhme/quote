@@ -64,7 +64,7 @@
             image_tag("error.png", alt: t("g.error_alt"), title: t("g.duplicate", count: 1)),
             { controller: :categories, action: :list_duplicates }) %>
           <%= link_to(
-            image_tag("comment.png", alt: t("g.comment"), title: t("g.comment")),
+            image_tag("comment.png", alt: t("g.comment"), title: t("g.comment", count: 2)),
             { controller: :comments, action: :index }) %>
         </p>
       <% end %>

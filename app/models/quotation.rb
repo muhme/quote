@@ -11,12 +11,12 @@ class Quotation < ApplicationRecord
   validates :locale, presence: true
 
   # count all non-public quotes
-  def Quotation.count_non_public
+  def self.count_non_public
     return count_by_sql("select count(*) from quotations where public = 0")
   end
 
-  def Quotation.count_users_quotations(user_id)
-    Quotation.count_by_sql("select count(*) from quotations where user_id = #{user_id}")
+  def self.count_users_quotations(user_id)
+    Quotation.where(user_id: user_id).count
   end
 
   def get_author_name_or_blank

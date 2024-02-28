@@ -177,9 +177,10 @@ es:
       other: Categorías
     category: Categoría
     category_alt: Imagen de una estructura organizativa, un cuadrado superior sobre tres cuadrados subordinados
-    comment: Comentario
+    comment:
+      one: Comentario
+      other: Comentarios
     comment_alt: un bocadillo con texto implícito
-    comments: Comentarios
     create: Crear
     created: Creado
     date: Fecha y hora
@@ -205,6 +206,7 @@ es:
     link_invalid: "¡El enlace “%{link}” no se puede acceder!"
     locale: Idioma
     machine_translation_failed: la traducción automática ha fallado
+    missing_user: ¡No se puede encontrar un usuario con la ID="%{user}"!
     name: Nombre
     name_seperator: " "
     no_admin: "¡No hay administrador!"
@@ -218,6 +220,7 @@ es:
       one: 1 categoría
       other: "%{count} categorías"
       zero: categorías
+    of_the_user: del usuario "%{user}"
     ordered: Ordenado
     page: Página
     pencil: la pluma
@@ -312,9 +315,6 @@ es:
     list_by_category:
       no_category: ¡No se puede encontrar una categoría con la ID="%{id}"!
       quotations: para la categoría %{category}
-    list_by_user:
-      no_user: ¡No se puede encontrar un usuario con la ID="%{user}"!
-      quotations: del usuario "%{user}"
     list_content:
       delete: ¿Realmente quieres eliminar la cita "%{quote}"?
       needs_login: Inicia sesión con %{login_link} para añadir citas aquí.
@@ -362,7 +362,7 @@ es:
       password_sample: al menos 8 caracteres
     index:
       last_login_at: Último acceso
-      title: Entradas de usuarios con citas
+      title: Entradas de usuarios con citas o comentarios
     new:
       new: Crear entrada de usuario
     not_logged_in: "¡No has iniciado sesión!"

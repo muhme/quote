@@ -177,9 +177,10 @@ en:
       other: Categories
     category: Category
     category_alt: Image of an organizational structure, one superior square above three subordinate squares
-    comment: Comment
+    comment:
+      one: Comment
+      other: Comments
     comment_alt: a speech bubble with implied filled text
-    comments: Comments
     create: Create
     created: Created
     date: Date & Time
@@ -205,6 +206,7 @@ en:
     link_invalid: The link “%{link}” cannot be accessed!
     locale: Language
     machine_translation_failed: the machine translation failed
+    missing_user: Cannot find a user with ID="%{user}"!
     name: Name
     name_seperator: " "
     no_admin: Not an Administrator!
@@ -218,6 +220,7 @@ en:
       one: 1 category
       other: "%{count} categories"
       zero: categories
+    of_the_user: of the user "%{user}"
     ordered: Sorted
     page: Page
     pencil: Pencil
@@ -312,9 +315,6 @@ en:
     list_by_category:
       no_category: Cannot find a category with the ID="%{id}"!
       quotations: for the category %{category}
-    list_by_user:
-      no_user: Cannot find a user with ID="%{user}"!
-      quotations: of the user "%{user}"
     list_content:
       delete: Really delete the quote "%{quote}"?
       needs_login: Log in with %{login_link} to add quotes here.
@@ -362,7 +362,7 @@ en:
       password_sample: at least 8 characters long
     index:
       last_login_at: Last Login
-      title: User Entries with Quotes
+      title: User Entries with Quotes or Comments
     new:
       new: Create User Entry
     not_logged_in: Not logged in!

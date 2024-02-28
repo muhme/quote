@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
     name = t("g.authors", count: 1) if name == "Author"
     name = t("g.quotes", count: 1) if name == "Quotation"
     name = t("g.categories", count: 1) if name == "Category"
-    name = t("g.comment") if name == "Comment"
+    name = t("g.comment", count: 1) if name == "Comment"
 
     verb = t("g.have") # default
     verb = t("g.no_admin") if action == :admin

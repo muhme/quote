@@ -183,7 +183,7 @@ class QuotationsController < ApplicationController
     user_id = my_sql_sanitize(params[:user])
 
     unless User.exists?(id: user_id)
-      flash[:error] = t(".no_user", user: params[:user])
+      flash[:error] = t("g.missing_user", user: params[:user])
       return redirect_to root_url
     end
 

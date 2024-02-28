@@ -37,6 +37,7 @@ Rails.application.routes.draw do
     get  'quotations/author_selected/:author_id'  => 'quotations#author_selected'
     get  'quotations/category_selected/:ids'      => 'quotations#category_selected'
     get  'quotations/delete_category/(:ids)'      => 'quotations#delete_category'
+    get  'comments/list_by_user/:user'            => 'comments#list_by_user'
 
     # default controller routes
     resources :authors, :categories, :quotations
