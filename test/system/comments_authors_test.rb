@@ -1,7 +1,6 @@
 require "application_system_test_case"
 
 class CommentsAuthorsTest < ApplicationSystemTestCase
-  
   test "show existing comment" do
     check_page page, author_url(locale: "en", id: authors(:with_one_comment)), "h1", "Author"
     check_this_page page, "h2", "Comments"
@@ -39,7 +38,8 @@ class CommentsAuthorsTest < ApplicationSystemTestCase
   test "edit comment and language as own user" do
     do_login
     check_page page, author_url(locale: "de", id: authors(:with_one_comment)), "h1", "Autor" # Author
-    page.find('img.edit_comment').click # there are two pencil buttons, one for editing author and one for editing comment
+    # there are two pencil buttons, one for editing author and one for editing comment
+    page.find('img.edit_comment').click
     fill_in "edit_comment", with: "überschrieben" # overwritten
     click_on "Ändern" # Change
     check_this_page page, nil, "überschrieben"
@@ -52,7 +52,8 @@ class CommentsAuthorsTest < ApplicationSystemTestCase
   test "edit comment as admin" do
     do_login :admin_user, :admin_user_password
     check_page page, author_url(locale: "uk", id: authors(:with_one_comment)), "h1", "Автор" # Author
-    page.find('img.edit_comment').click # as admin there are two pencil buttons, one for editing author and one for editing comment
+    # as admin there are two pencil buttons, one for editing author and one for editing comment
+    page.find('img.edit_comment').click
     fill_in "edit_comment", with: "Слава Україні!" # Glory to Ukraine!
     click_on "Змінити" # Change
     check_this_page page, nil, "Слава Україні!"
@@ -67,7 +68,7 @@ class CommentsAuthorsTest < ApplicationSystemTestCase
     check_page page, author_url(locale: "es", id: authors(:with_one_comment)), "h1", "Autor" # Author
     assert_no_selector('img[class="edit_comment"]')
     visit logout_url
-    do_login 
+    do_login
     check_page page, author_url(locale: "es", id: authors(:with_one_comment)), "h1", "Autor"
     assert_selector('img[class="edit_comment"]')
   end
@@ -82,5 +83,4 @@ class CommentsAuthorsTest < ApplicationSystemTestCase
     end
     assert false, "still exists #{old_comment}" unless page.has_no_text?(old_comment)
   end
-
 end

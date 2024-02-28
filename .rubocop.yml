@@ -6,7 +6,6 @@ require:
 AllCops:
   DisabledByDefault: true
   Exclude:
-  - 'test/**/*'
   - 'db/migrate/*'
 
 # Style/StringLiterals:

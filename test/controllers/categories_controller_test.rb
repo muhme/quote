@@ -23,9 +23,11 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "list_by_letter method" do
-    get "/categories/list_by_letter/p" # there is category public_category in fixtures
+    # there is category public_category in fixtures
+    get "/categories/list_by_letter/p"
     assert_response :success
-    get '/categories/list_by_letter/Q' # there is no author starting with letter Q in fixtures and it should render page, telling this
+    # there is no author starting with letter Q in fixtures and it should render page, telling this
+    get '/categories/list_by_letter/Q'
     assert_response :success
     get "/categories/list_by_letter/*"
     assert_response :success
@@ -167,8 +169,8 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Glück",  patched.category(locale: :de)
     assert_equal "Luck",   patched.category(locale: :en)
     assert_equal "Suerte", patched.category(locale: :es)
-    assert_equal "運",     patched.category(locale: :ja)
-    assert_equal "Удача",  patched.category(locale: :uk)
+    assert_equal "運", patched.category(locale: :ja)
+    assert_equal "Удача", patched.category(locale: :uk)
   end
 
   test "update category with translate and machine translation is failed" do

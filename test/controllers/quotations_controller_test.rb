@@ -5,7 +5,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     @quotation_one = quotations(:one)
     @quotation_public_false = quotations(:public_false)
   end
-  
+
   test "setup" do
     assert       @quotation_one.public
     assert_equal @quotation_one.user_id, users(:first_user).id
@@ -20,14 +20,14 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     get quotations_url
     assert_response :success
   end
-  
+
   test "list_by_category method" do
     get '/quotations/list_by_category/1'
     assert_response :success
     get '/quotations/list_by_category/42000000'
     assert_redirected_to root_url
   end
-  
+
   test "list_by_user method" do
     get '/quotations/list_by_user/1'
     assert_response :success
@@ -41,7 +41,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     get '/quotations/list_by_author/x'
     assert_redirected_to root_url
   end
-  
+
   test "404 for not existing quote" do
     id = rand 0..10000000000000
     get quotation_url id: id
@@ -50,9 +50,8 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     login :first_user
     get quotation_url id
     assert_response :not_found
-
   end
-  
+
   test "should show public quote" do
     get quotation_url id: @quotation_one
     assert_response :success
@@ -78,7 +77,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     get quotation_url @quotation_public_false
     assert_response :success
   end
-  
+
   test "should get new" do
     get new_quotation_url
     assert_forbidden
@@ -88,11 +87,13 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create quotation" do
-    post quotations_url, params: { commit: "Speichern", quotation: { quotation: "Yes we can.", author_id: 0, locale: "en" } }
+    post quotations_url,
+         params: { commit: "Speichern", quotation: { quotation: "Yes we can.", author_id: 0, locale: "en" } }
     assert_forbidden
     assert_difference('Quotation.count') do
       login :first_user
-      post quotations_url, params: { commit: "Speichern", quotation: { quotation: "Yes we can.", author_id: 0, locale: "en" } }
+      post quotations_url,
+           params: { commit: "Speichern", quotation: { quotation: "Yes we can.", author_id: 0, locale: "en" } }
     end
     assert_redirected_to quotation_url(Quotation.last)
     quotation = Quotation.find_by_quotation 'Yes we can.'
@@ -117,14 +118,17 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update quotation" do
     login :first_user
-    patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm', locale: "en" } }
+    patch quotation_url(@quotation_one),
+          params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm', locale: "en" } }
     assert_redirected_to quotation_url @quotation_one
     get '/logout'
     login :admin_user
-    patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm!', locale: "en" } }
+    patch quotation_url(@quotation_one),
+          params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm!', locale: "en" } }
     assert_redirected_to quotation_url @quotation_one
     get '/logout'
-    patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm!!!', locale: "en" } }
+    patch quotation_url(@quotation_one),
+          params: { commit: "Save", quotation: { quotation: 'The early bird catches the worm!!!', locale: "en" } }
     assert_forbidden
     login :first_user
     patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: '' } }
@@ -212,5 +216,4 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     get '/quotations/list_no_public?page=42000000'
     assert_response :bad_request
   end
-  
 end

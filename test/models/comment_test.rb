@@ -11,7 +11,7 @@ class CommentTest < ActiveSupport::TestCase
     @comment.commentable_id = 1
     @comment.locale = "de"
   end
-  
+
   test "validate setup" do
     assert @comment.valid?
   end
@@ -20,12 +20,12 @@ class CommentTest < ActiveSupport::TestCase
     @comment.comment = ""
     assert_not @comment.valid?
   end
-  
+
   test "comment should not be too long" do
     @comment.comment = "a" * 513
     assert_not @comment.valid?
   end
-  
+
   test "comment max length" do
     @comment.comment = "a" * 512
     assert @comment.valid?
@@ -65,9 +65,8 @@ class CommentTest < ActiveSupport::TestCase
 
   test "comment editable" do
     assert @comment.editable_by(users :first_user) # @comment creator is first_user
-    assert @comment.editable_by(users :admin_user) 
+    assert @comment.editable_by(users :admin_user)
     refute @comment.editable_by(users :second_user)
     refute @comment.editable_by(nil)
   end
-
 end

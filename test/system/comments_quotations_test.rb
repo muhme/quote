@@ -1,7 +1,6 @@
 require "application_system_test_case"
 
 class CommentsQuotationsTest < ApplicationSystemTestCase
-  
   test "show existing comment" do
     check_page page, quotation_url(locale: "es", id: quotations(:with_one_comment)), "h1", "Cita"
     check_this_page page, "h2", "Comentarios"
@@ -52,7 +51,8 @@ class CommentsQuotationsTest < ApplicationSystemTestCase
   test "edit comment as admin" do
     do_login :admin_user, :admin_user_password
     check_page page, quotation_url(locale: "uk", id: quotations(:with_one_comment)), "h1", "Цитата" # Quotation
-    page.find('img.edit_comment').click # as admin there are to pencil buttons, one for editing quotation and one for editing comment
+    # as admin there are to pencil buttons, one for editing quotation and one for editing comment
+    page.find('img.edit_comment').click
     fill_in "edit_comment", with: "Слава Україні!" # Glory to Ukraine!
     click_on "Змінити" # Change
     check_this_page page, nil, "Слава Україні!"
@@ -82,5 +82,4 @@ class CommentsQuotationsTest < ApplicationSystemTestCase
     end
     assert false, "still exists #{old_comment}" unless page.has_no_text?(old_comment)
   end
-
 end

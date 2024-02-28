@@ -1,7 +1,6 @@
 require "application_system_test_case"
 
 class PasswordResetsTest < ApplicationSystemTestCase
-
   test "password reset page" do
     visit new_password_reset_url
     check_this_page page, "h1", "Reset password"
@@ -57,5 +56,4 @@ class PasswordResetsTest < ApplicationSystemTestCase
     click_on 'Send email'
     check_this_page page, nil, "No user found with the email"
   end
-
 end

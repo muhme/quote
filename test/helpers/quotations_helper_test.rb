@@ -19,12 +19,13 @@ class QuotationsHelperTest < ActionView::TestCase
     assert_equal "",
                  get_linked_author_and_source(@empty)
     # all
+    # rubocop:disable Layout/LineLength
     assert_equal "<a href=\"https://en.wikipedia.org/wiki/Friedrich_Schiller\" target=\"quote_extern\">Friedrich Schiller</a>, <a href=\"https://www.projekt-gutenberg.org/schiller/wallens1/wall3305.html\" target=\"quote_extern\">Wallenstein, 1800</a>",
                  get_linked_author_and_source(@schiller_quote)
   end
 
   test "get_linked_quotation method" do
     assert_equal "<a href=\"/quotations/1\">public_quotation to find public_category inside this quote</a>",
-                 get_linked_quotation(@one)        
+                 get_linked_quotation(@one)
   end
 end

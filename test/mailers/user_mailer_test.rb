@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class UserMailerTest < ActionMailer::TestCase
-  
   setup do
     @first_user = users(:first_user)
   end

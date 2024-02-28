@@ -1,7 +1,6 @@
 require "application_system_test_case"
 
 class CommentsCategoriesTest < ApplicationSystemTestCase
-  
   test "show existing comment" do
     check_page page, category_url(locale: "en", id: categories(:with_one_comment)), "h1", "Category"
     check_this_page page, "h2", "Comments"
@@ -52,7 +51,8 @@ class CommentsCategoriesTest < ApplicationSystemTestCase
   test "edit comment as admin" do
     do_login :admin_user, :admin_user_password
     check_page page, category_url(locale: "uk", id: categories(:with_one_comment)), "h1", "Категорія" # Category
-    page.find('img.edit_comment').click # as admin there are to pencil buttons, one for editing category and one for editing comment
+    # as admin there are to pencil buttons, one for editing category and one for editing comment
+    page.find('img.edit_comment').click
     fill_in "edit_comment", with: "Слава Україні!" # Glory to Ukraine!
     click_on "Змінити" # Change
     check_this_page page, nil, "Слава Україні!"
@@ -82,5 +82,4 @@ class CommentsCategoriesTest < ApplicationSystemTestCase
     end
     assert false, "still exists #{old_comment}" unless page.has_no_text?(old_comment)
   end
-
 end

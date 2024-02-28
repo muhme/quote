@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class StaticPagesControllerTest < ActionDispatch::IntegrationTest
-
   test "should get home" do
     get "/"
     assert_response :success
@@ -11,11 +10,11 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     get "/igitt"
     assert_response 404
   end
-# rails test fails "The action 'igitt' could not be found for StartController"
-#  test "should get not_found II" do
-#    get "/start/igitt"
-#    assert_response :success
-#  end
+  # rails test fails "The action 'igitt' could not be found for StartController"
+  #  test "should get not_found II" do
+  #    get "/start/igitt"
+  #    assert_response :success
+  #  end
   test "should get use too" do
     get "/static_pages/use/igitt"
     assert_response :not_found # 404
@@ -26,15 +25,15 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   end
   test "/404" do
     get "/404"
-    assert_response :not_found # 404 
+    assert_response :not_found # 404
   end
   test "/422" do
     get "/422"
-    assert_response :unprocessable_entity #422
+    assert_response :unprocessable_entity # 422
   end
   test "/500" do
     get "/500"
-    assert_response :internal_server_error #500
+    assert_response :internal_server_error # 500
   end
 
   test "joomla" do
@@ -86,7 +85,7 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     get start_list_url
     assert_response :success
   end
-  
+
   test "forbidden" do
     get forbidden_url
     assert_response :forbidden # 403

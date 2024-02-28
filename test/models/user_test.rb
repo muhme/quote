@@ -1,20 +1,19 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  
   def setup
     @user = User.find_by_login(:first_user)
   end
-  
+
   test "validate setup" do
     assert @user.valid?
   end
-  
+
   test "user's login should not be empty" do
     @user.login = ""
     assert_not @user.valid?
   end
-  
+
   test "user's email should not be empty" do
     @user.email = ""
     assert_not @user.valid?
@@ -28,7 +27,7 @@ class UserTest < ActiveSupport::TestCase
     @user.password_salt = "a" * 32
     assert @user.valid?
   end
-  
+
   test "user's login have to be unique" do
     @user.save
     duplicate = @user.dup
@@ -39,14 +38,14 @@ class UserTest < ActiveSupport::TestCase
     @user.save
     duplicate = @user.dup
     duplicate.email = "fresh@unused.com"
-    duplicate.login = duplicate.login.upcase 
+    duplicate.login = duplicate.login.upcase
     assert_not duplicate.valid?
   end
   test "user's login should not be too long" do
     @user.login = "a" * 33
     assert_not @user.valid?
   end
- 
+
   test "user's email have to be unique" do
     @user.save
     duplicate = @user.dup
@@ -57,14 +56,14 @@ class UserTest < ActiveSupport::TestCase
     @user.save
     duplicate = @user.dup
     duplicate.login = "fresh_and_unused"
-    duplicate.email = duplicate.email.upcase 
+    duplicate.email = duplicate.email.upcase
     assert_not duplicate.valid?
   end
   test "user's email should not be too long" do
     @user.email = "a" * 65
     assert_not @user.valid?
   end
-  
+
   test "user's crypted_password should not be too long" do
     @user.crypted_password = "a" * 256
     assert_not @user.valid?

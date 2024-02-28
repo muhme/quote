@@ -23,7 +23,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create user" do
     assert_difference('User.count') do
-      post users_url, params: { user: { login: "second", email: "second@bla.com" , password: "123QWEasd", password_confirmation: "123QWEasd" } }
+      post users_url,
+           params: { user: { login: "second", email: "second@bla.com", password: "123QWEasd",
+                             password_confirmation: "123QWEasd" } }
     end
     assert_redirected_to root_url
     follow_redirect!
@@ -32,7 +34,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "failed to create new user without email address" do
     assert_no_difference('User.count') do
-      post users_url, params: { user: { login: "test", email: "bla" , password: "123QWEasd", password_confirmation: "123QWEasd" } }
+      post users_url,
+           params: { user: { login: "test", email: "bla", password: "123QWEasd", password_confirmation: "123QWEasd" } }
     end
     assert_response :unprocessable_entity # 422
     assert_match /Mail should look like an email address./, @response.body
@@ -78,7 +81,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "own user update" do
     login :first_user
-    patch user_url(@first_user), params: { user: { login: @changed_user.login, email: @changed_user.email, password: :changed_user_password, password_confirmation: :changed_user_password } }
+    patch user_url(@first_user),
+          params: { user: { login: @changed_user.login, email: @changed_user.email, password: :changed_user_password,
+                            password_confirmation: :changed_user_password } }
     assert_redirected_to root_url
     follow_redirect!
     assert_match /Your user entry .*changed_user.* has been changed./, @response.body
@@ -99,7 +104,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "not logged-in try for user update" do
-    patch user_url(id: @first_user), params: { user: { login: @changed_user.login, email: @changed_user.email, password: :changed_user_password, password_confirmation: :changed_user_password } }
+    patch user_url(id: @first_user),
+          params: { user: { login: @changed_user.login, email: @changed_user.email, password: :changed_user_password,
+                            password_confirmation: :changed_user_password } }
     assert_redirected_to root_url
     follow_redirect!
     assert_match /Not logged in!/, @response.body
@@ -114,5 +121,4 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     delete '/users/1'
     assert_response :not_found
   end
-
 end

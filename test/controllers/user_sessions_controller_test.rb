@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class UserSessionsControllerTest < ActionDispatch::IntegrationTest
-
   test "new" do
     get new_user_session_url
     assert_response :success
@@ -9,15 +8,16 @@ class UserSessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "login successful" do
     I18n.available_locales.each do |locale|
-      post user_sessions_url(locale: locale), params: { user_session: { login: "first_user", password: "first_user_password" } }
+      post user_sessions_url(locale: locale),
+           params: { user_session: { login: "first_user", password: "first_user_password" } }
       assert_redirected_to root_path(locale: locale)
       follow_redirect!
       assert_response :success
       assert_match(/Hello first_user, nice to have you here./i, @response.body)   if locale == :en
       assert_match(/Hallo first_user, schön dass Du da bist./i, @response.body)   if locale == :de
       assert_match(/Hola first_user, es un gusto tenerte aquí./i, @response.body) if locale == :es
-      assert_match(/こんにちは first_user、おかえりなさい。/i, @response.body)         if locale == :ja
-      assert_match(/Вітаємо first_user, раді бачити вас тут./i, @response.body)   if locale == :uk
+      assert_match(/こんにちは first_user、おかえりなさい。/i, @response.body) if locale == :ja
+      assert_match(/Вітаємо first_user, раді бачити вас тут./i, @response.body) if locale == :uk
       get logout_url
     end
   end
@@ -44,5 +44,4 @@ class UserSessionsControllerTest < ActionDispatch::IntegrationTest
     get new_author_url
     assert_forbidden
   end
-
 end

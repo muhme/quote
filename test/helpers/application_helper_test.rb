@@ -2,11 +2,12 @@ require "test_helper"
 include ERB::Util # for e.g. html_escape
 
 class ApplicationHelperTest < ActionView::TestCase
-
   def setup
   end
 
-  # this test is only very basic, for real test it is needed to set controller name and controller action, but even this is useless if controller name or controllers action name is changing, therefore page title is tested in system test
+  # this test is only very basic, for real test it is needed to set controller name and controller action,
+  # but even this is useless if controller name or controllers action name is changing,
+  # therefore page title is tested in system test
   test "page_title method" do
     assert_equal "Zitat-Service", page_title
   end
@@ -78,11 +79,13 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test "lh with http link" do
-    assert_equal "<a popup=\"true\" href=\"http://www.zitat-service.de\">www.zitat-service.de</a>", lh("http://www.zitat-service.de")
+    assert_equal "<a popup=\"true\" href=\"http://www.zitat-service.de\">www.zitat-service.de</a>",
+                 lh("http://www.zitat-service.de")
   end
 
   test "lh with https link" do
-    assert_equal "<a popup=\"true\" href=\"https://www.zitat-service.de\">www.zitat-service.de</a>", lh("https://www.zitat-service.de")
+    assert_equal "<a popup=\"true\" href=\"https://www.zitat-service.de\">www.zitat-service.de</a>",
+                 lh("https://www.zitat-service.de")
   end
 
   test "link_to_joomla method" do
@@ -90,7 +93,8 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test "author selected name" do
-    assert_equal "Schiller, Friedrich, German poet and philosopher (1759 - 1805)", author_selected_name(authors(:schiller).id)
+    assert_equal "Schiller, Friedrich, German poet and philosopher (1759 - 1805)",
+                 author_selected_name(authors(:schiller).id)
     assert_equal "unknown, Unknown Author with ID 0", author_selected_name(authors(:unknown).id)
     assert_equal "", author_selected_name(nil)
     assert_equal "author with only name field set", author_selected_name(authors(:only_name).id)
@@ -146,30 +150,31 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test "transformLink" do
+    # rubocop:disable Layout/LineLength
     # real world, from categories/356 and at the end and DE
     assert_match 'im Sinne einer nicht ernst gemeinten Äußerung oder Handlung, die zur Belustigung dienen soll; siehe auch <a href="/de/categories/355" data-turbo="false">Witz</a>',
-      transformLink("im Sinne einer nicht ernst gemeinten Äußerung oder Handlung, die zur Belustigung dienen soll; siehe auch Witz:https://www.zitat-service.de/de/categories/355")
+                 transformLink("im Sinne einer nicht ernst gemeinten Äußerung oder Handlung, die zur Belustigung dienen soll; siehe auch Witz:https://www.zitat-service.de/de/categories/355")
     # in the beginning and EN
     assert_match '<a href="/en/quotations/1902" data-turbo="false">#1902</a> is identical',
-      transformLink("#1902:https://www.zitat-service.de/en/quotations/1902 is identical")
+                 transformLink("#1902:https://www.zitat-service.de/en/quotations/1902 is identical")
     # only the link and w/o locale
     assert_match '<a href="/authors/20" data-turbo="false">Einstein</a>',
-      transformLink("Einstein:https://www.zitat-service.de/authors/20")
+                 transformLink("Einstein:https://www.zitat-service.de/authors/20")
     # two links and in the middle and ES
     assert_match 'ver categorías <a href="/es/categories/305" data-turbo="false">Hormiga</a> y <a href="/es/categories/25" data-turbo="false">Perro</a> ambas recogen animales',
-      transformLink("ver categorías Hormiga:https://www.zitat-service.de/es/categories/305 y Perro:https://www.zitat-service.de/es/categories/25 ambas recogen animales")
+                 transformLink("ver categorías Hormiga:https://www.zitat-service.de/es/categories/305 y Perro:https://www.zitat-service.de/es/categories/25 ambas recogen animales")
     # external links are not transformed
     assert_match "bla https://www.googe.com bli",
-      transformLink("bla https://www.googe.com bli")
+                 transformLink("bla https://www.googe.com bli")
     # own links are not transformed and HTML sanitize
     assert_match "&lt;a href=&quot;https://www.google.de&quot;&gt;bla&lt;/a&gt;",
-      transformLink('<a href="https://www.google.de">bla</a>')
+                 transformLink('<a href="https://www.google.de">bla</a>')
     # test tab and JA
     assert_match '名前 <a href="/ja/categories/210" data-turbo="false">はじめに</a>',
-      transformLink("名前\tはじめに:https://www.zitat-service.de/ja/categories/210")
+                 transformLink("名前\tはじめに:https://www.zitat-service.de/ja/categories/210")
     # test new line and UK and apostroph ' is mapped to &#39; too
     assert_match 'До Основ&#39;яненка Слава <a href="/uk/quotations/1899" data-turbo="false">Україні!</a>',
-      transformLink("До Основ\'яненка\nСлава Україні!:https://www.zitat-service.de/uk/quotations/1899")
+                 transformLink("До Основ\'яненка\nСлава Україні!:https://www.zitat-service.de/uk/quotations/1899")
   end
 
   test "ordered locales" do

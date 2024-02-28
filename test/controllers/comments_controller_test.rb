@@ -1,17 +1,20 @@
 require "test_helper"
 
 class CommentsControllerTest < ActionDispatch::IntegrationTest
-
   setup do
   end
 
   # POST /comments
   test "create comment" do
-      post comments_url, params: { comment: { comment: "needs login first", commentable_type: "Category", commentable_id: 1, locale: :en } }
+    post comments_url,
+         params: { comment: { comment: "needs login first", commentable_type: "Category", commentable_id: 1,
+                              locale: :en } }
     assert_forbidden
     login :first_user
     assert_difference('Comment.count', 1) do
-      post comments_url, params: { comment: { comment: "works w/ login", commentable_type: "Category", commentable_id: 1, locale: :en } }
+      post comments_url,
+           params: { comment: { comment: "works w/ login", commentable_type: "Category", commentable_id: 1,
+                                locale: :en } }
     end
   end
 
@@ -57,7 +60,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     c = Comment.find((comments :one).id)
     assert_equal "ククー", c.comment
     assert_equal "ja", c.locale
-    get '/logout' 
+    get '/logout'
     patch comment_url(comments :one), params: { comment: { comment: "crow", locale: "en" } }
     assert_forbidden
     c = Comment.find((comments :one).id)
@@ -101,7 +104,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     get '/logout'
     login :admin_user
     get comments_url
-    assert_response :success 
+    assert_response :success
   end
 
   # GET /comments/list_by_user/1
@@ -111,5 +114,4 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     get "/comments/list_by_user/4711"
     assert_redirected_to root_url
   end
-
 end

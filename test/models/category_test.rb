@@ -1,13 +1,12 @@
 require 'test_helper'
 
 class CategoryTest < ActiveSupport::TestCase
-  
   def setup
     @category = Category.new()
     @category.user_id = User.first.id
     @category.category = "programming"
   end
-  
+
   test "validate setup" do
     assert @category.valid?
   end
@@ -16,17 +15,17 @@ class CategoryTest < ActiveSupport::TestCase
     @category.category = ""
     assert_not @category.valid?
   end
-  
+
   test "category name should not be too long" do
     @category.category = "a" * 65
     assert_not @category.valid?
   end
-  
+
   test "category name max length" do
     @category.category = "a" * 64
     assert @category.valid?
   end
-  
+
   test "category names should be unique" do
     @category.category = "test"
     @category.save
@@ -41,7 +40,7 @@ class CategoryTest < ActiveSupport::TestCase
     duplicate.category = "Test"
     assert_not duplicate.valid?
   end
-  
+
   test "category public defaults to false" do
     @category.save
     assert @category.public == false
@@ -61,11 +60,14 @@ class CategoryTest < ActiveSupport::TestCase
     # multiple categories in all 5 locales
     three_categories = [categories(:mountain).id, categories(:cloud).id, categories(:sun).id].sort
     I18n.locale = :en
-    assert_equal three_categories, Category.check(Quotation.new(quotation: "Above the mountain is a cloud and the sun.")).sort
+    assert_equal three_categories,
+                 Category.check(Quotation.new(quotation: "Above the mountain is a cloud and the sun.")).sort
     I18n.locale = :de
-    assert_equal three_categories, Category.check(Quotation.new(quotation: "Über dem Berg ist eine Wolke und die Sonne.")).sort
+    assert_equal three_categories,
+                 Category.check(Quotation.new(quotation: "Über dem Berg ist eine Wolke und die Sonne.")).sort
     I18n.locale = :es
-    assert_equal three_categories, Category.check(Quotation.new(quotation: "Sobre la montaña hay una nube y el sol.")).sort
+    assert_equal three_categories,
+                 Category.check(Quotation.new(quotation: "Sobre la montaña hay una nube y el sol.")).sort
     I18n.locale = :ja
     assert_equal three_categories, Category.check(Quotation.new(quotation: "山の上には雲と太陽がある。")).sort
     I18n.locale = :uk
@@ -78,7 +80,8 @@ class CategoryTest < ActiveSupport::TestCase
   # 23 Straße
   test "check German Umlaut and Sharp S" do
     I18n.locale = :de
-    assert_equal [20, 21, 22, 23], Category.check("voller übermut läuft ödipus über die STRASSE - zum Ärgernis aller.").sort
+    assert_equal [20, 21, 22, 23],
+                 Category.check("voller übermut läuft ödipus über die STRASSE - zum Ärgernis aller.").sort
   end
 
   # 24 Ei prevents ein or eine
@@ -108,13 +111,16 @@ class CategoryTest < ActiveSupport::TestCase
     # cross check longer 時間厳守 is found
     assert_equal [40], Category.check("成功の秘訣は時間厳守です。") # The secret of success is punctuality. (real)
     # both?
-    assert_equal [40, 41], Category.check("時間は貴重です、だから時間厳守を重視しましょう。").sort # Time is valuable, so we should value punctuality. (generic)
+    assert_equal [40, 41], Category.check("時間は貴重です、だから時間厳守を重視しましょう。").sort
+    # Time is valuable, so we should value punctuality. (generic)
   end
 
   # 50 Humano (human)
   test "check spanish category name without last letter" do
     I18n.locale = :es
-    assert_equal [50], Category.check("Hay dos cosas infinitas: el universo y la estupidez humana, y no estoy seguro de la primera.") # Time waits for no one. (real)
+    assert_equal [50],
+                 Category.check(
+                   "Hay dos cosas infinitas: el universo y la estupidez humana, y no estoy seguro de la primera."
+                 )
   end
-
 end

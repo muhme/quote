@@ -363,8 +363,10 @@ class QuotationsTest < ApplicationSystemTestCase
 
   # as seen from Internet, getting HTTP error 500 from ActionController::BadRequest with #54
   test "ActionController BadRequest" do
+    # rubocop:disable Layout/LineLength
     check_page page,
                "/quotations?page=2&pattern=-6177%25%27%20UNION%20ALL%20SELECT%201693%2C1693%2C1693%2C1693%2C1693%2C1693%2C1693%2C1693%2CCONCAT%280x7171767a71%2C0x4e4c6547675956596d4e4d6958496a6f6a4a4c494f586b5a756745544c6a494a436f596b724b6e47%2C0x71717a6a71%29%2", "h1", /HTTP.*400/
+    # rubocop:disable Layout/LineLength
   end
 
   test "ActionController BadRequest2" do

@@ -56,6 +56,4 @@ class ReusableMethodsTest < ActiveSupport::TestCase
     I18n.locale = :uk
     assert_equal 'A', @dummy.mapped_letters('a')
   end
-
-
 end

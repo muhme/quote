@@ -33,12 +33,12 @@ class CategoriesTest < ApplicationSystemTestCase
     check_page page, categories_path, nil, "two"
     check_page page, "/categories/list_by_letter/T", nil, "two"
     check_page page, category_url(id: Category.i18n.find_by(category: "two")), "h1", "Category"
-    
+
     do_login
     check_page page, categories_path, nil, "two"
     check_page page, "/categories/list_by_letter/T", nil, "two"
     check_page page, category_url(id: Category.i18n.find_by(category: "two")), "h1", "Category"
-    
+
     do_login :admin_user, :admin_user_password
     check_page page, categories_path, nil, "two"
     check_page page, "/categories/list_by_letter/T", nil, "two"
@@ -183,7 +183,8 @@ class CategoriesTest < ApplicationSystemTestCase
 
     check_page page, "/en/categories", "h1", "Categories"
     # ensure there is no link to letter 'X' in categories letters before
-    assert false, "oops link to category X already exists" if page.source =~ /<a href=".*\/categories\/list_by_letter\/X/
+    assert false,
+           "oops link to category X already exists" if page.source =~ /<a href=".*\/categories\/list_by_letter\/X/
 
     # create category 'X'
     do_login
@@ -194,5 +195,4 @@ class CategoriesTest < ApplicationSystemTestCase
 
     assert false, "link to category X is missing" unless page.source =~ /<a href=".*\/categories\/list_by_letter\/X/
   end
-
 end

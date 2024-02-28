@@ -1,7 +1,6 @@
 require "application_system_test_case"
 
 class I18nTest < ApplicationSystemTestCase
-
   # without language (locale) click on quotes menu entry, wait the quotes page is loaded and check h1 and url
   test "home without language" do
     check_page page, "/", "h1", "Welcome to the quote service zitat-service.de"
@@ -18,14 +17,16 @@ class I18nTest < ApplicationSystemTestCase
       upcase_locale = locale.to_s.upcase
       visit root_url
       find("#current-language").click
-      # look and click for unique e.g. " UK – " in "🇺🇦 UK – українська" (because ? it founds 3 elements, simple click the last one is working)
+      # look and click for unique e.g. " UK – " in "🇺🇦 UK – українська"
+      # (because ? it founds 3 elements, simple click the last one is working)
       all(:xpath, ".//div[contains(., '#{upcase_locale} – ')]", visible: true).last.click
       # click on quotes menu entry
       click_on I18n.t("g.quotes", locale: locale, count: 0)
       # have to unselect actual locale to see all quotes and to find plural title
       uncheck "locale_#{locale}"
       # first find h1 to wait until the page is loaded ...
-      find("h1", text: I18n.t("g.quotes", locale: locale, count: Quotation.count)) # for українська differs it ends in 4 or 5
+      # for українська differs it ends in 4 or 5
+      find("h1", text: I18n.t("g.quotes", locale: locale, count: Quotation.count))
       # ... and second check url
       assert_equal quotations_url(locale: locale) + "?locales=", current_url
     end
@@ -42,7 +43,9 @@ class I18nTest < ApplicationSystemTestCase
   end
 
   test "check all pages for missing translation" do
-    paths = (Rails.application.routes.routes.map { |r| r.path.spec.to_s }).select { |path| path.starts_with?("(/:locale)/") }
+    paths = (Rails.application.routes.routes.map { |r|
+               r.path.spec.to_s
+             }).select { |path| path.starts_with?("(/:locale)/") }
     # "(/:locale)/authors/new(.:format)",
     # "(/:locale)/authors/:id/edit(.:format)",
     # ...
@@ -59,7 +62,8 @@ class I18nTest < ApplicationSystemTestCase
 
       all_paths_to_check << path_wo_format_and_ids.sub(/\(\/:locale\)/, "") # add w/o locale
       I18n.available_locales.each do |locale|
-        all_paths_to_check << path_wo_format_and_ids.sub(/\(\/:locale\)/, "/#{locale.to_s}") # add with each locale available
+        # add with each locale available
+        all_paths_to_check << path_wo_format_and_ids.sub(/\(\/:locale\)/, "/#{locale.to_s}")
       end
     end
     # w/o login

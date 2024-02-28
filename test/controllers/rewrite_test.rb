@@ -1,7 +1,6 @@
 require "application_system_test_case"
 
 class RewriteTest < ActionDispatch::IntegrationTest
-
   test "categories_trailing_slash" do
     assert_trailing_slash categories_url
     assert_trailing_slash categories_url + '?page=1'
@@ -23,5 +22,4 @@ class RewriteTest < ActionDispatch::IntegrationTest
     assert_trailing_slash "/start/help"
     assert_trailing_slash "/humans.txt"
   end
-
 end

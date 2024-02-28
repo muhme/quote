@@ -1,7 +1,6 @@
 require "application_system_test_case"
 
 class LayoutsTest < ApplicationSystemTestCase
-
   test "favicon" do
     visit root_url
     assert page.source.match '<link rel="icon" type="image/x-icon" href="'
@@ -19,5 +18,4 @@ class LayoutsTest < ApplicationSystemTestCase
     assert_match /\/assets\/apple\-touch\-icon\-.*/, link[1]
     # TODO get apple-touch-icon
   end
-
 end
