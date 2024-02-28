@@ -81,7 +81,7 @@ root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc1
   quote_rails $ export PORT=3100 && rails server --environment test -P /tmp/test.pid
   ```
 
-:point_right: If you are using Rails 7.1.3 there is a hack needed to run the system tests. Extend line #19 in file `/usr/local/bundle/gems/actionpack-7.1.3/lib/action_dispatch/system_testing/driver.rb`, see [rails/issues/50827](https://github.com/rails/rails/issues/50827):
+:point_right: If you are using Rails 7.1.3.2 there is a hack needed to run the system tests. Extend line #19 in file `/usr/local/bundle/gems/actionpack-7.1.3.2/lib/action_dispatch/system_testing/driver.rb`, see [rails/issues/50827](https://github.com/rails/rails/issues/50827):
 ```
 < @browser.preload
 > @browser.preload unless @options[:browser] == :remote
