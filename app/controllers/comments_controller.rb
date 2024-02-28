@@ -9,7 +9,8 @@ class CommentsController < ApplicationController
       render "static_pages/forbidden", status: :forbidden
       return false
     end
-    @comments = Comment.paginate_by_sql "select * from comments order by updated_at desc", :page => params[:page], :per_page => 10
+    @comments = Comment.paginate_by_sql "select * from comments order by updated_at desc", :page => params[:page],
+                                                                                           :per_page => 10
     # check pagination second time with number of pages
     bad_pagination?(@comments.total_pages)
   end
@@ -17,6 +18,7 @@ class CommentsController < ApplicationController
   # POST /comments/new
   def create
     return unless logged_in? t("comments.login_missing")
+
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
     @commentable_type = @comment.commentable_type
@@ -26,7 +28,10 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.save
         format.turbo_stream
-        format.html { redirect_to controller: @commentable_type.downcase.pluralize, action: "show", locale: I18n.locale, id: @commentable_id }
+        format.html {
+          redirect_to controller: @commentable_type.downcase.pluralize, action: "show", locale: I18n.locale,
+                      id: @commentable_id
+        }
       else
         if @comment.errors.any?
           error = t("g.error", count: @comment.errors.count)
@@ -38,7 +43,8 @@ class CommentsController < ApplicationController
         format.turbo_stream
         format.html {
           flash[:error] = error
-          redirect_to controller: @commentable_type.downcase.pluralize, action: "show", locale: I18n.locale, id: @commentable_id, status: :unprocessable_entity
+          redirect_to controller: @commentable_type.downcase.pluralize, action: "show", locale: I18n.locale,
+                      id: @commentable_id, status: :unprocessable_entity
         }
       end
     end
@@ -56,7 +62,10 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.update(comment_params)
         format.turbo_stream { render turbo_stream: turbo_stream.replace("comment", partial: "comments/comments_table") }
-        format.html { redirect_to controller: @commentable_type.downcase.pluralize, action: "show", locale: I18n.locale, id: @commentable_id, notice: "comment was successfully updated." }
+        format.html {
+          redirect_to controller: @commentable_type.downcase.pluralize, action: "show", locale: I18n.locale,
+                      id: @commentable_id, notice: "comment was successfully updated."
+        }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -71,7 +80,13 @@ class CommentsController < ApplicationController
       if @comment.destroy
         @comments.reload
         format.turbo_stream { render turbo_stream: turbo_stream.replace("comment", partial: "comments/comments_table") }
-        format.html { redirect_to controller: @commentable_type.downcase.pluralize, action: "show", locale: I18n.locale, id: @commentable_id, notice: t("comments.deleted", comment: truncate(@comment.comment, length: 20)) }
+        format.html {
+          redirect_to controller: @commentable_type.downcase.pluralize,
+                      action: "show",
+                      locale: I18n.locale,
+                      id: @commentable_id,
+                      notice: t("comments.deleted", comment: truncate(@comment.comment, length: 20))
+        }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end

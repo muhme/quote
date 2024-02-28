@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-
   # all joomla going now outside
-  get 'joomla'               => redirect(QUOTE_JOOMLA_WIKI[:de]) # was started from the beginning with a direct URL, e.g. "joomla" instead "start/joomla"
+  # was started from the beginning with a direct URL, e.g. "joomla" instead "start/joomla"
+  get 'joomla'               => redirect(QUOTE_JOOMLA_WIKI[:de])
   get 'de/joomla'            => redirect(QUOTE_JOOMLA_WIKI[:de])
   get 'joomla_english'       => redirect(QUOTE_JOOMLA_WIKI[:en]) # used from Joomla module, version 1.4
   get 'start/joomla_english' => redirect(QUOTE_JOOMLA_WIKI[:en]) # old page link before I18n
@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   get 'uk/joomla'            => redirect(QUOTE_JOOMLA_WIKI[:uk])
 
   scope "(:locale)", locale: /#{I18n.available_locales.join("|")}/ do
-
     root to: "static_pages#list"
 
     # static_pages controller with historical and nicer 'start' URL
@@ -60,7 +59,5 @@ Rails.application.routes.draw do
 
     # catch all
     match "*path" => "static_pages#catch_all", via: :all
-    
   end
-
 end

@@ -16,7 +16,6 @@ class UsersController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-
   end
 
   # GET /users/1/edit
@@ -51,7 +50,7 @@ class UsersController < ApplicationController
       return false
     end
 
-    sql =  "select distinct u.* from users u, quotations q where u.id = q.user_id order by login"
+    sql = "select distinct u.* from users u, quotations q where u.id = q.user_id order by login"
     @users = User.paginate_by_sql(sql, page: params[:page], :per_page => 10)
     # check pagination second time with number of pages
     bad_pagination?(@users.total_pages)
@@ -62,13 +61,14 @@ class UsersController < ApplicationController
   # end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = current_user  # only allow current user
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:login, :email, :password, :password_confirmation)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = current_user # only allow current user
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.require(:user).permit(:login, :email, :password, :password_confirmation)
+  end
 end

@@ -5,6 +5,7 @@ module CommentsHelper
     elsif comment.commentable_type == "Author"
       return image_tag "author.png", alt: t("g.author_alt"), title: t("g.author")
     end
+
     # else "Quotation"
     image_tag "quote.png", alt: t("g.quote_alt"), title: t("g.quote")
   end

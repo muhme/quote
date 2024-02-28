@@ -1,12 +1,12 @@
 module ApplicationHelper
-
   # Create a SEO page title.
   def page_title
     d = "Zitat-Service"
 
     if controller.controller_name == "authors"
       if controller.action_name == "list_by_letter"
-        d += " –  #{t("g.authors", count: 2)}, #{t("layouts.application.starting_with_letter", letter: params[:letter].first)}"
+        d += " –  #{t("g.authors",
+                      count: 2)}, #{t("layouts.application.starting_with_letter", letter: params[:letter].first)}"
       elsif controller.action_name == "show" and @author.present?
         d += " – #{t("g.authors", count: 1)} #{@author.get_author_name_or_blank}"
       else
@@ -16,7 +16,8 @@ module ApplicationHelper
 
     if controller.controller_name == "categories"
       if controller.action_name == "list_by_letter"
-        d += " – #{t("g.categories", count: 2)}, #{t("layouts.application.starting_with_letter", letter: params[:letter].first)}"
+        d += " – #{t("g.categories",
+                     count: 2)}, #{t("layouts.application.starting_with_letter", letter: params[:letter].first)}"
       elsif controller.action_name == "show" and @category.present?
         d += " – #{t("g.categories", count: 1)} #{@category.category}"
       else
@@ -29,21 +30,35 @@ module ApplicationHelper
         d += " – #{t("layouts.application.quote_from")} #{@quotation.get_author_name_or_blank}"
       else
         d += " – #{t("g.quotes", count: 2)}"
-        d += " #{t("g.from")} #{@author.get_author_name_or_blank}" if controller.action_name == "list_by_author" and @author.present?
-        d += " #{t("g.for")} #{@category.category}" if controller.action_name == "list_by_category" and @category.present?
-        d += " #{t("layouts.application.of_the_user")} #{hu(params[:user])}" if controller.action_name == "list_by_user"
+        if controller.action_name == "list_by_author" and @author.present?
+          d += " #{t("g.from")} #{@author.get_author_name_or_blank}"
+        elsif controller.action_name == "list_by_category" and @category.present?
+          d += " #{t("g.for")} #{@category.category}"
+        elsif controller.action_name == "list_by_user"
+          d += " #{t("layouts.application.of_the_user")} #{hu(params[:user])}"
+        end
       end
     end
 
-    d += " – #{t("layouts.application.not_found")}" if controller.action_name == "not_found"
-    d += " – #{t("layouts.application.contact")}" if controller.action_name == "contact"
-    d += " – #{t("layouts.application.project")}" if controller.action_name == "project"
-    d += " – #{t("layouts.application.register")}" if controller.controller_name == "users" and controller.action_name == "new"
-    d += " – #{t("layouts.application.login")}" if controller.controller_name == "user_sessions" and controller.action_name == "new"
-    d += " – #{t("layouts.application.help")}" if controller.action_name == "help"
-    d += " – #{t("layouts.application.use")}" if controller.action_name == "use"
-    d += " – #{t("layouts.application.joomla")}" if controller.action_name == "joomla"
-    d += " – #{t("layouts.application.joomla_english")}" if controller.action_name == "joomla_english"
+    if controller.action_name == "not_found"
+      d += " – #{t("layouts.application.not_found")}"
+    elsif controller.action_name == "contact"
+      d += " – #{t("layouts.application.contact")}"
+    elsif controller.action_name == "project"
+      d += " – #{t("layouts.application.project")}"
+    elsif controller.action_name == "help"
+      d += " – #{t("layouts.application.help")}"
+    elsif controller.action_name == "use"
+      d += " – #{t("layouts.application.use")}"
+    elsif controller.action_name == "joomla"
+      d += " – #{t("layouts.application.joomla")}"
+    elsif controller.action_name == "joomla_english"
+      d += " – #{t("layouts.application.joomla_english")}"
+    elsif controller.action_name == "new" && controller.controller_name == "users"
+      d += " – #{t("layouts.application.register")}"
+    elsif controller.action_name == "new" && controller.controller_name == "user_sessions"
+      d += " – #{t("layouts.application.login")}"
+    end
 
     d += ", #{t("g.page")} #{params[:page]}" if params[:page]
 
@@ -54,6 +69,7 @@ module ApplicationHelper
   # TODO: replace with I18N
   def nice_number(number)
     return number.to_s if number < 1000
+
     number.to_s.reverse.scan(/\d{1,3}/).join(".").reverse
   end
 
@@ -152,7 +168,8 @@ module ApplicationHelper
   #   - returns table header 'name' entry and arrow-down-image or
   #   - returns table header 'name' entry linked with 'link'
   def sorted_img_if(name, link, bool)
-    bool ? name + image_tag("arrow_down.png", :alt => t("g.arrow_down"), :title => t("g.ordered"), :border => 0) + "</th>" : link
+    bool ? name + image_tag("arrow_down.png", :alt => t("g.arrow_down"), :title => t("g.ordered"),
+                                              :border => 0) + "</th>" : link
   end
 
   # do an html_escape() and a truncate overall on 40 chars
@@ -162,7 +179,7 @@ module ApplicationHelper
     ret = ""
     # "<b>G</b>oethe"
     bold_name = "<b>".html_safe + h(name[0..0]) + "</b>".html_safe + h(name[1..name.size]) unless name.blank?
-    
+
     if locale == :ja
       ret = bold_name if bold_name
       unless firstname.blank?
@@ -244,6 +261,7 @@ module ApplicationHelper
     l = locale&.to_sym&.downcase
     l = :en unless flag.has_key?(l)
     return flag[l] if only_flag
+
     ret = "<span class=\"flags\">#{flag[l]}&nbsp;#{l.upcase}</span>"
     ret = "#{ret} – #{lang[l]}" unless shorten
     # logger.debug { "string_for_locale ret=\”#{ret}\”" }
@@ -254,8 +272,10 @@ module ApplicationHelper
   def next_locale(current_locale = nil)
     locales = I18n.available_locales
     return "de" if current_locale.nil?
-    # find the index of the current locale in the array, increment it by one to get the index of the next locale, and then use the
-    # modulo operator (%) to ensure that the result is wrapped around to the beginning of the array if it exceeds the array's length.
+
+    # find the index of the current locale in the array, increment it by one to get the index of the next locale,
+    # and then use the modulo operator (%) to ensure that the result is wrapped around to the beginning of the array
+    # if it exceeds the array's length.
     index = locales.index(current_locale.to_sym)
     locales[(index + 1) % locales.length].to_s
   end
@@ -267,7 +287,7 @@ module ApplicationHelper
 
     # return the original locales if the locale is not in the list
     return locales unless locales.include?(locale)
-  
+
     # remove the given locale inside the list and place at the beginning
     locales.prepend(locales.delete(locale))
   end
@@ -286,7 +306,7 @@ module ApplicationHelper
     # Step 2: Handle every non-white-space part and check for link transformation
     parts.map! do |part|
       if part =~ /([^:]+):(#{Regexp.quote(base_url)}([\w\/]+))/
-        # If part matches link pattern, transform it into a relative link and with disabling Turbo to have full page load
+        # if part matches link pattern, transform it into a relative link with disabling Turbo to have full page load
         "<a href=\"#{$3}\" data-turbo=\"false\">#{$1}</a>"
       else
         # Step 3: Transform for all HTML chars like < > & " to &lt; ...

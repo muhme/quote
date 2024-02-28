@@ -11,7 +11,7 @@ class PasswordResetsController < ApplicationController
   def create
     @user = User.find_by_email(params[:email])
     # user entry exists and email is valied?
-    if @user && @user.email.match(User::EMAIL_NONASCII) 
+    if @user && @user.email.match(User::EMAIL_NONASCII)
       @user.deliver_password_reset_instructions!
       redirect_to root_path, notice: t(".email_sent", email: @user.email)
     else

@@ -9,5 +9,4 @@ class Comment < ApplicationRecord
   def editable_by(user)
     user && user.id && ((user.id == self.user_id) || user.admin)
   end
-
 end

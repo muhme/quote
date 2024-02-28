@@ -15,7 +15,8 @@ module ReusableMethods
       # Return the letter itself if it's a basic letter
       return letter if BASE_LETTERS[locale]&.include?(letter)
 
-      # Return the corresponding base letter if mapping exist in this locale (e.g. German Umlaut, japanse katakana or spanish accented)
+      # Return the corresponding base letter if mapping exist in this locale
+      # (e.g. German Umlaut, japanse katakana or spanish accented)
       return MAP_LETTERS[locale][letter] if MAP_LETTERS[locale]&.key?(letter)
 
       # Return '*' for any other character or if not set
@@ -38,8 +39,8 @@ module ReusableMethods
   def base_letter(letter = nil)
     self.class.base_letter(letter)
   end
+
   def mapped_letters(letter = nil)
     self.class.mapped_letters(letter)
   end
-
 end

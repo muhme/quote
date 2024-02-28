@@ -127,7 +127,8 @@ class QuotationsController < ApplicationController
     author_id, category_ids = scan_params_for_create_or_update
 
     if params[:commit]
-      # Are associated categories changed? Compare from params with existing list by hand as changed? does not exist for has_and_belongs_to_many.
+      # Are associated categories changed? Compare from params with existing list by hand as changed?
+      # does not exist for has_and_belongs_to_many.
       categories_changed = category_ids.sort != @quotation.category_ids.sort
       @quotation.assign_attributes(quotation_params)
       # set https if needed and possible and follow redirects, if not reachable set flash[:warning]
@@ -255,7 +256,7 @@ class QuotationsController < ApplicationController
   # return nil if params[:locales] is not set, else
   # return array ['es','uk'] from e.g. Parameters: {"locales"=>"es,uk"}
   def split_params_locales
-    params[:locales].split(',') if params[:locales]
+    params[:locales].split(",") if params[:locales]
   end
 
   def set_quotation
@@ -268,7 +269,7 @@ class QuotationsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def quotation_params
     # source and source_link are optional and saved as NULL in database if blank
-    params[:quotation][:source]      = nil if params[:quotation][:source].blank?
+    params[:quotation][:source] = nil if params[:quotation][:source].blank?
     params[:quotation][:source_link] = nil if params[:quotation][:source_link].blank?
     params.require(:quotation).permit(:author_id, :quotation, :source, :source_link, :public, :pattern, :locale,
                                       :category_ids => [])
@@ -311,14 +312,17 @@ class QuotationsController < ApplicationController
     turbo_stream_add_update("search_author_results", partial: "quotations/search_author_results",
                                                      locals: { authors: authors })
     # fill author field if there is exactly one entry and animate it if there is a change
+    animated_or_not = old_author_id.to_i != author_id.to_i ? :animated : :none
     author_id && turbo_stream_add_update("search_author", partial: "quotations/search_author",
-                                                          locals: { author_id: author_id, animation: old_author_id.to_i != author_id.to_i ? :animated : :none })
+                                                          locals: { author_id: author_id,
+                                                                    animation: animated_or_not })
   end
 
   # Two Turbo Stream Updates for category autocompletion. Add a new category:
   #   #1 category_id is set from category_selected() as click on a link from authors list or recommendation list
   #   #2 given letters match exactly one entry in @categories
-  # One Turbo update for partial search_category_result list with up to 10 categories. If the @categories list is empty it disappers.
+  # One Turbo update for partial search_category_result list with up to 10 categories.
+  #   If the @categories list is empty it disappers.
   # Second Turbo update for partial search_category_collected with:
   #   - update hidden field quotation[category_ids] and
   #   - show list of so far collected categories, linked with delete category action
@@ -359,11 +363,16 @@ class QuotationsController < ApplicationController
 
     # update the automplete search list or let the list disappear with categories []
     turbo_stream_add_update("search_category_results", partial: "quotations/search_category_results",
-                                                       locals: { categories: categories, category_ids: category_ids, rec_ids: rec_ids })
+                                                       locals: { categories: categories,
+                                                                 category_ids: category_ids,
+                                                                 rec_ids: rec_ids })
 
     # update hidden field quotation[category_ids] and show list of collected and recommended categories
     turbo_stream_add_update("search_category_collected", partial: "quotations/search_category_collected",
-                                                         locals: { categories: categories, category_id: category_id, category_ids: category_ids, rec_ids: rec_ids })
+                                                         locals: { categories: categories,
+                                                                   category_id: category_id,
+                                                                   category_ids: category_ids,
+                                                                   rec_ids: rec_ids })
   end
 
   # return [] for "" or "[]" or [""]

@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
     name = t("g.categories", count: 1) if name == "Category"
     name = t("g.comment") if name == "Comment"
 
-    verb = t("g.have")   # default
+    verb = t("g.have") # default
     verb = t("g.no_admin") if action == :admin
     verb = t("g.read") if action == :read
     verb = t("g.update") if action == :update
@@ -72,6 +72,7 @@ class ApplicationController < ActionController::Base
       if current_user and current_user.admin
         return true
       end
+
       msg = t("g.no_admin")
     else
       if action == :read
@@ -124,11 +125,13 @@ class ApplicationController < ActionController::Base
 
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
+
     @current_user_session = UserSession.find
   end
 
   def current_user
     return @current_user if defined?(@current_user)
+
     @current_user = current_user_session && current_user_session.user
   end
 
@@ -179,6 +182,7 @@ class ApplicationController < ActionController::Base
     return "Integer #{obj}" if obj.is_a?(Integer)
     return "Array #{obj}" if obj.is_a?(Array) and print_array
     return "Array with #{obj.count} entries" if obj.is_a?(Array)
+
     return "#{obj.class}"
   end
 

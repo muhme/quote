@@ -61,13 +61,14 @@ class DeeplService
          "Текст написаний автором на ім'я °°°."],
   }.freeze
 
-  # always translates authors description
-  # only translates authors name and first name if nil (and not already set from wikipedia service)
-  # if authors firstname and name needs to be translated try it first with prompt (additional context), if this fails simple translate 1:1
-  # can throw DeepL::Exception
-  # returns true on success
+  # - always translates authors description
+  # - only translates authors name and first name if nil (and not already set from wikipedia service)
+  # - if authors firstname and name needs to be translated try it first with
+  #   prompt (additional context), if this fails simple translate 1:1
+  # - can throw DeepL::Exception
+  # - returns true on success
   def author_translate(src_locale, author)
-    Rails.logger.debug { "author_translate(src_locale=#{src_locale}, #{author.inspect})"}
+    Rails.logger.debug { "author_translate(src_locale=#{src_locale}, #{author.inspect})" }
     return false unless ENV["DEEPL_API_KEY"].present?
 
     begin
@@ -76,7 +77,8 @@ class DeeplService
         author.send("description_#{dst_locale}=", translate_description(author, src_locale, dst_locale))
 
         if author.firstname(locale: dst_locale).blank? and author.name(locale: dst_locale).blank?
-          text = TRANSLATE_NAME[src_locale][0].gsub("°°°", first_last_or_both(src_locale, author, seperator(src_locale)))
+          text = TRANSLATE_NAME[src_locale][0].gsub("°°°",
+                                                    first_last_or_both(src_locale, author, seperator(src_locale)))
           found = translate_name_and_firstname(author, text, src_locale, dst_locale)
 
           unless found
@@ -97,9 +99,9 @@ class DeeplService
   # return :both, :firstname, :name or ""
   # depending firstname and name are present in actual locale, only firstname, only name or nothing
   def names_mode(author)
-    return :both      if author.firstname.present? and author.name.present?
+    return :both if author.firstname.present? and author.name.present?
     return :firstname if author.firstname.present?
-    return :name      if author.name.present?
+    return :name if author.name.present?
 
     return ""
   end
@@ -120,7 +122,7 @@ class DeeplService
     Rails.logger.debug { "translated #{src_locale} \”#{text}\" -> #{dst_locale} \"#{ret}\"" }
 
     # "Текст був написаний автором Томасом Чендлером Галібартоном (Thomas Chandler Haliburton)."
-    ret = ret.gsub(/\s?\(.*?\)/, '') # delete space + round brackets with the content inside
+    ret = ret.gsub(/\s?\(.*?\)/, "") # delete space + round brackets with the content inside
     TRANSLATE_NAME[dst_locale].each do |e|
       # create pattern, e.g.
       # "The text was written by the author with the name °°°."
@@ -131,7 +133,9 @@ class DeeplService
         return set_author_names(author, match[1], dst_locale)
       end
     end
-    Rails.logger.warn { "author #{author.id} translation was not matching #{src_locale} \”#{text}\" -> #{dst_locale} \"#{ret}\"" }
+    Rails.logger.warn {
+      "author #{author.id} translation was not matching #{src_locale} \”#{text}\" -> #{dst_locale} \"#{ret}\""
+    }
     false
   end
 
@@ -147,7 +151,9 @@ class DeeplService
           "#{dst_locale} firstname=[#{author.firstname(locale: dst_locale)}] name=[#{author.name(locale: dst_locale)}]"
         }
       else
-        Rails.logger.warn "Couldn't split for author ##{author.id} in firstname and name for #{dst_locale} from #{match}"
+        Rails.logger.warn(
+          "Couldn't split for author ##{author.id} in firstname and name for #{dst_locale} from #{match}"
+        )
         return false
       end
     elsif mode == :firstname
@@ -192,7 +198,7 @@ class DeeplService
     en: "(born 0000)",
     es: "(n. 0000)",
     ja: "(0000生)",
-    uk: "(нар. 0000)"
+    uk: "(нар. 0000)",
   }.freeze
   # translate year born and fix some single wrong characters from Deepl
   def wash_translation(ret, target_lang)

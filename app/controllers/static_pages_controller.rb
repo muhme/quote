@@ -18,12 +18,12 @@ class StaticPagesController < ApplicationController
       @lines << user.login + " (" + user.number_of_quotations.to_s + ")"
     end
     @lines = @lines.sort_by(&:downcase)
-    render :layout => false #, :content_type => 'text/plain'
+    render :layout => false # , :content_type => 'text/plain'
     # render plain: "TEAM OK"
   end
 
   def forbidden
-    render :status => :forbidden  # 403
+    render :status => :forbidden # 403
   end
 
   def contact
@@ -41,14 +41,15 @@ class StaticPagesController < ApplicationController
   def help
   end
 
-  # get one random quotation
-  # get last three users they have created new quotes, linked to there list of quotes and with a count of there quotes at all
+  # get a random quote and determine the three users who have most recently created new quotes,
+  # linked to the list of their quotes and to the total number of their quotes
   def list
     # select * from quotations where public = 1 order by rand() limit 1
     @quotation = Quotation.where(public: true, locale: I18n.locale).order(Arel.sql("rand()")).first
 
     # for inner limit see https://stackoverflow.com/questions/26372511/mysql-order-by-inside-subquery
-    sql = "select distinct x.user_id from ( select q.user_id from quotations q order by created_at desc limit 1000) as x limit 0,3"
+    sql = "select distinct x.user_id from ( select q.user_id from quotations q order by \
+           created_at desc limit 1000) as x limit 0,3"
     quotations = Quotation.find_by_sql(sql)
     @users = []
 
@@ -64,7 +65,10 @@ class StaticPagesController < ApplicationController
         begin
           count = Quotation.count_by_sql("select count(*) from quotations where user_id = #{quotations[i].user_id}")
           @users[i] = "<a href=\"" +
-                      url_for(:only_path => true, :controller => "quotations", :action => "list_by_user", :user => quotations[i].user_id) +
+                      url_for(:only_path => true,
+                              :controller => "quotations",
+                              :action => "list_by_user",
+                              :user => quotations[i].user_id) +
                       "\">#{login}</a>(#{count})"
         rescue
           @users[i] = login

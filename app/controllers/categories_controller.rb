@@ -23,7 +23,8 @@ class CategoriesController < ApplicationController
         # by category name alphabetically
         " ORDER BY COALESCE(mst.value, mst_en.value)" :
         # by the number of quotations that the categories have
-        " ORDER BY (SELECT COUNT(*) FROM categories_quotations cq, quotations q WHERE cq.quotation_id = q.id AND cq.category_id = c.id) DESC"
+        " ORDER BY (SELECT COUNT(*) FROM categories_quotations cq, quotations q WHERE cq.quotation_id = q.id AND \
+          cq.category_id = c.id) DESC"
 
     @categories = Category.paginate_by_sql(sql, page: params[:page], :per_page => PER_PAGE)
     # check pagination second time with number of pages
@@ -159,9 +160,10 @@ class CategoriesController < ApplicationController
   # get category list for a letter or all-no-letters
   def list_by_letter
     letter = params[:letter].first.upcase
-    # first LEFT JOIN attempts to get the translation in the current locale, and the second one gets the English translation as default
-    # The COALESCE function returns the first non-null argument, so it will use the current locale's translation if available, otherwise,
-    # it falls back to English.
+    # 1st LEFT JOIN attempts to get the translation in the current locale, and the
+    # 2nd LEFT JOIN gets the English translation as default
+    # the COALESCE function returns the first non-null argument,
+    # so it will use the current locale's translation if available, otherwise, it falls back to English
     sql = <<-SQL
       SELECT DISTINCT c.*, COALESCE(mst.value, mst_en.value) AS value
       FROM categories c

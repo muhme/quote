@@ -7,7 +7,7 @@ class Category < ApplicationRecord
   has_many :comments, as: :commentable
   before_destroy :check_quotes_and_comments
   validate :validate_category
-  after_save    :expire_category_init_chars_cache
+  after_save :expire_category_init_chars_cache
   after_destroy :expire_category_init_chars_cache
 
   # words, exluded from word matching without last or two last letters
@@ -168,7 +168,10 @@ class Category < ApplicationRecord
     end
   end
 
-  class << self # opens up the singleton class to define private class methods as only private applies to instance and not to class methods
+  # opens up the singleton class to ...
+  class << self
+    # ...define private class methods as only private applies to instance and not to class methods
+
     private
 
     # In Japanese, there are no spaces to separate words, so we just have to go through each character one by one.
@@ -195,8 +198,8 @@ class Category < ApplicationRecord
     end
 
     # everthing is mapped to lowercase to compare
-    # even compared with one or two letters less in the ending to find e.g. "Liebe" for "lieben" and "Spiel" for "spielen",
-    # but not for excluded_words
+    # even compared with one or two letters less in the ending to find e.g.
+    # "Liebe" for "lieben" and "Spiel" for "spielen", but not for excluded_words
     # German Umlaut (äöü) and sharp S (ß) are mapped to find e.g. "Kampf" for "kämpfen" or "süss" for "süßer"
     def check_german(quotation, ids_and_categories)
       ret = []
@@ -227,9 +230,9 @@ class Category < ApplicationRecord
     end
 
     # everthing is mapped to lowercase to compare
-    # even compared with one or two letters less in the ending to find e.g. "German" for "Germany" and "time" for "timely",
-    # but not for excluded_words
-    # also tries the other way round to remove last letter from category name (if the category name has at least 3 chars)
+    # even compared with one or two letters less in the ending to find e.g.
+    # "German" for "Germany" and "time" for "timely", but not for excluded_words
+    # also tries the other way round to remove last letter from category name (if it has at least 3 chars)
     def check_american_english(quotation, ids_and_categories)
       ret = []
       # create a lowercase list of words
@@ -250,7 +253,7 @@ class Category < ApplicationRecord
           # and the other way round "politics" for "politic"
           ret << id if word == category || word.chop == category || word.chop.chop == category ||
                        (category.size > 2 and
-                         (word == category.chop || word.chop == category.chop || word.chop.chop == category.chop))
+                        (word == category.chop || word.chop == category.chop || word.chop.chop == category.chop))
         end
       end
       ret
@@ -258,7 +261,7 @@ class Category < ApplicationRecord
 
     # everthing is mapped to lowercase to compare
     # even compared with one or two letters less in the ending of word from quotation
-    # also tries the other way round to remove last letter from category name (if the category name has at least 3 chars)
+    # also tries the other way round to remove last letter from category name (if it has at least 3 chars)
     def check_spanish(quotation, ids_and_categories)
       ret = []
       # create a lowercase list of words
@@ -275,7 +278,7 @@ class Category < ApplicationRecord
           # and "Humano" for "humanas", but not "Su" for "se"
           ret << id if word == category || word.chop == category || word.chop.chop == category ||
                        (category.size > 2 and
-                         (word == category.chop || word.chop == category.chop || word.chop.chop == category.chop))
+                        (word == category.chop || word.chop == category.chop || word.chop.chop == category.chop))
         end
       end
       ret

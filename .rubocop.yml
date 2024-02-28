@@ -1,12 +1,13 @@
 # inherit_from: ../.rubocop.yml
 
 require:
- - rubocop-i18n
+- rubocop-i18n
 
 AllCops:
   DisabledByDefault: true
   Exclude:
-    - 'test/**/*'
+  - 'test/**/*'
+  - 'db/migrate/*'
 
 # Style/StringLiterals:
 #   EnforcedStyle: single_quotes
@@ -31,9 +32,17 @@ I18n/GetText:
 #   Enabled: true
 #   AutoCorrect: false
 
-
 # Style/Encoding:
 #   Enabled: false
 
 # Layout/LineLength:
 #   Max: 99
+
+Layout/LineContinuationLeadingSpace: # new in 1.31
+  Enabled: true
+Layout/LineContinuationSpacing: # new in 1.31
+  Enabled: true
+Layout/LineEndStringConcatenationIndentation: # new in 1.18
+  Enabled: true
+Layout/SpaceBeforeBrackets: # new in 1.7
+  Enabled: true

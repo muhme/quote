@@ -7,7 +7,6 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 
 module Quote
-
   # catch ActionController::BadRequest from Rack, see #54
   # set params[bad_request] as flag which will be handled by bad_request?() with HTTP 404, and note the reason as well
   # not calling static_pages/bad_request directly as ChatGPT says:
@@ -50,7 +49,8 @@ module Quote
     # last handle ActionController::BadRequest exceptions from Rack
     config.middleware.use Quote::HandleBadRequests
 
-    # delete trailing slashes from URLs, found on https://davepeiris.com/blog/trailing-slashes-rails, modfied to Rack::Sendfile, see rails middleware
+    # delete trailing slashes from URLs, found on https://davepeiris.com/blog/trailing-slashes-rails,
+    # modfied to Rack::Sendfile, see rails middleware
     config.middleware.insert_before Rack::Sendfile, Rack::Rewrite do
       r301 %r{^/(.*)/$}, "/$1"
     end

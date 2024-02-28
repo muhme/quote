@@ -18,7 +18,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_111618) do
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness",
+                                                             unique: true
   end
 
   create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -33,7 +34,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_111618) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_general_ci",
+                                                 force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
@@ -56,7 +58,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_111618) do
     t.index ["user_id"], name: "index_categories_on_user_id"
   end
 
-  create_table "categories_quotations", id: false, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "categories_quotations", id: false, charset: "utf8mb4", collation: "utf8mb4_general_ci",
+                                        force: :cascade do |t|
     t.bigint "category_id", null: false
     t.bigint "quotation_id", null: false
     t.index ["category_id", "quotation_id"], name: "index_categories_quotations_on_category_id_and_quotation_id"
@@ -71,11 +74,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_111618) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable", length: { commentable_type: 255 }
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable",
+                                                    length: { commentable_type: 255 }
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "mobility_string_translations", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+  create_table "mobility_string_translations", charset: "utf8mb4", collation: "utf8mb4_general_ci",
+                                               force: :cascade do |t|
     t.string "locale", limit: 8, null: false
     t.string "key", limit: 16, null: false
     t.string "value"
@@ -83,8 +88,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_111618) do
     t.bigint "translatable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["translatable_id", "translatable_type", "key"], name: "index_mobility_string_translations_on_translatable_attribute"
-    t.index ["translatable_id", "translatable_type", "locale", "key"], name: "index_mobility_string_translations_on_keys", unique: true
+    t.index ["translatable_id", "translatable_type", "key"],
+            name: "index_mobility_string_translations_on_translatable_attribute"
+    t.index ["translatable_id", "translatable_type", "locale", "key"],
+            name: "index_mobility_string_translations_on_keys", unique: true
     t.index ["translatable_type", "key", "value", "locale"], name: "index_mobility_string_translations_on_query_keys"
   end
 
@@ -96,8 +103,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_111618) do
     t.bigint "translatable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["translatable_id", "translatable_type", "key"], name: "index_mobility_text_translations_on_translatable_attribute"
-    t.index ["translatable_id", "translatable_type", "locale", "key"], name: "index_mobility_text_translations_on_keys", unique: true
+    t.index ["translatable_id", "translatable_type", "key"],
+            name: "index_mobility_text_translations_on_translatable_attribute"
+    t.index ["translatable_id", "translatable_type", "locale", "key"],
+            name: "index_mobility_text_translations_on_keys", unique: true
   end
 
   create_table "quotations", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|

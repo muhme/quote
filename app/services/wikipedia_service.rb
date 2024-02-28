@@ -10,12 +10,14 @@ require 'addressable/uri'
 class WikipediaService
   # The call method is the main method for the WikiService and does the following:
   #   1. Parses the last part of the author's current link to get the title of the Wikipedia page.
-  #   2. Constructs a URL to request the Wikipedia API for 'langlinks' property of the page with this title in the language specified by current_locale.
+  #   2. Constructs a URL to request the Wikipedia API for 'langlinks' property of the page with
+  #      this title in the language specified by current_locale.
   #   3. Sends an HTTP GET request to this URL.
   #   4. If the response status is 200 (OK), it processes the response.
   #      - It parses the JSON response body to get the "pages" field.
   #      - For each page in the response, it checks if the page has "langlinks".
-  #      - For each language link in "langlinks", it checks if the language is one of the desired ones (English, Spanish, Ukrainian, Japanese or German).
+  #      - For each language link in "langlinks", it checks if the language is one of the desired ones
+  #        (English, Spanish, Ukrainian, Japanese or German).
   #      - If it is, it sets the author's link for this language to the URL provided in the response.
   def call(locale, link)
     return if link.blank?
@@ -116,7 +118,8 @@ class WikipediaService
   #   <div class="mw-parser-output">
   #     <div class="redirectMsg">
   #       <p>Weiterleitung nach:</p>
-  #       <ul class="redirectText"><li><a href="/wiki/Friedrich_Schiller" title="Friedrich Schiller">Friedrich Schiller</a></li>
+  #       <ul class="redirectText">
+  #         <li><a href="/wiki/Friedrich_Schiller" title="Friedrich Schiller">Friedrich Schiller</a></li>
   #
   def clean_link(link)
     return nil if link.blank?
@@ -160,7 +163,7 @@ class WikipediaService
   #   en: ' the ' e.g. Seneca the Younger
   def split_name(fullname, locale)
     if locale == :en and fullname =~ / the /
-      return { firstname: '', lastname: fullname } 
+      return { firstname: '', lastname: fullname }
     end
 
     delimiter = locale == :ja ? '・' : ' '

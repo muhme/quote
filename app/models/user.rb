@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-
   has_many :quotations
   has_many :categories
   has_many :authors
@@ -29,54 +28,54 @@ class User < ApplicationRecord
     \z
   /x
 
-# LOGIN = /\A[[:alnum:]_][[:alnum:]\.+\-_@ ]+\z/
-LOGIN = /\A[^[:cntrl:][@\[\]\^\!"\#$\(\)*,\/:;<=>?`{|}~\\]]+\z/
+  # LOGIN = /\A[[:alnum:]_][[:alnum:]\.+\-_@ ]+\z/
+  LOGIN = /\A[^[:cntrl:][@\[\]\^\!"\#$\(\)*,\/:;<=>?`{|}~\\]]+\z/
 
-validates :email,
-  format: {
-    with: EMAIL_NONASCII,
-    message: proc {
-      ::Authlogic::I18n.t(
-        "error_messages.email_invalid",
-        default: "should look like an email address."
-      )
-    }
-  },
-  length: { maximum: 64 },
-  uniqueness: {case_sensitive: false}
+  validates :email,
+            format: {
+              with: EMAIL_NONASCII,
+              message: proc {
+                ::Authlogic::I18n.t(
+                  "error_messages.email_invalid",
+                  default: "should look like an email address."
+                )
+              }
+            },
+            length: { maximum: 64 },
+            uniqueness: { case_sensitive: false }
 
-validates :login,
-  format: {
-    with: LOGIN,
-    message: proc {
-      ::Authlogic::I18n.t(
-        "error_messages.login_invalid",
-        default: "should use only letters, numbers, spaces, and .-_@+ please."
-      )
-    }
-  },
-  length: { within: 3..32 },
-  uniqueness: {case_sensitive: false}
+  validates :login,
+            format: {
+              with: LOGIN,
+              message: proc {
+                ::Authlogic::I18n.t(
+                  "error_messages.login_invalid",
+                  default: "should use only letters, numbers, spaces, and .-_@+ please."
+                )
+              }
+            },
+            length: { within: 3..32 },
+            uniqueness: { case_sensitive: false }
 
   validates :password,
-    confirmation: { if: :require_password? },
-    length: {
-      minimum: 8,
-      if: :require_password?
-    }
+            confirmation: { if: :require_password? },
+            length: {
+              minimum: 8,
+              if: :require_password?
+            }
   validates :password_confirmation,
-    length: {
-      minimum: 8,
-      if: :require_password?
-  }
-  
+            length: {
+              minimum: 8,
+              if: :require_password?
+            }
+
   validates :crypted_password, presence: false, length: { maximum: 255 }, uniqueness: false
   validates :password_salt, presence: false, length: { maximum: 255 }, uniqueness: false
 
   acts_as_authentic do |c|
     c.crypto_provider = ::Authlogic::CryptoProviders::SCrypt
   end
-  
+
   def deliver_password_reset_instructions!
     reset_perishable_token!
     UserMailer.password_reset(self).deliver_now
@@ -86,5 +85,4 @@ validates :login,
   def number_of_quotations
     return User.count_by_sql("select count(*) from quotations where user_id = #{self.id}")
   end
-
 end
