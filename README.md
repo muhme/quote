@@ -2,14 +2,23 @@
 
 Ruby on Rails (RoR) web application running the website [zitat-service.de](https://www.zitat-service.de).
 
-Database is used for JSON API [api.zitat-service.de](https://api.zitat-service.de) too. The API itself is used by this RoR web application and also by the Joomla module [github.com/muhme/quote_joomla](https://github.com/muhme/quote_joomla) and WordPress plugin [github.com/muhme/quote_wordpress](https://github.com/muhme/quote_wordpress).
+The database is used for JSON API [api.zitat-service.de](https://api.zitat-service.de) too.
+The API itself is used by this RoR web application and also by the Joomla module
+[github.com/muhme/quote_joomla](https://github.com/muhme/quote_joomla) and WordPress plugin
+[github.com/muhme/quote_wordpress](https://github.com/muhme/quote_wordpress).
+
+### Scripts
+
+Some bash-scripts are prepared for a pleasant and also faster development, see folder [scripts](./scripts/) and
+commented list of scripts there.
 
 ## Docker Containers
-There is a Docker test and development environment prepared. You can create your own test and development instance with the following commands:
+There is a Docker test and development environment prepared. You can create your own test and development instance
+with the following commands:
 ```
 $ git clone https://github.com/muhme/quote
 $ cd quote
-$ docker compose up -d
+$ scripts/compose.sh
 ```
 Then you should have five containers running:
 ```
@@ -48,13 +57,11 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
 <details>
   <summary>The application uses DeepL API Free for translation.</summary>
   
-  You can register there and then store your own API key in the .env file and restart quote_rails container for the development stage.
+  You can register there and then use your own key in the rails application, in the tests and for translations
+  with i18n-tasks command. The key has to be set in rails container's `.bashrc` by the compose script:
+  
 ```
-user@host:/quote $ echo 'DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx"' > .env
-```
-Or you set this DEEPL_API_KEY environment variable inside the container then you have it also for test stage and translations with i18n-tasks command:
-```
-root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx"' >> ~/.bashrc
+host $ DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx" scripts/compose.sh
 ```
 </details>
 
@@ -81,7 +88,10 @@ root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc1
   quote_rails $ export PORT=3100 && rails server --environment test -P /tmp/test.pid
   ```
 
-:point_right: If you are using Rails 7.1.3.2 there is a hack needed to run the system tests. Extend line #19 in file `/usr/local/bundle/gems/actionpack-7.1.3.2/lib/action_dispatch/system_testing/driver.rb`, see [rails/issues/50827](https://github.com/rails/rails/issues/50827):
+:point_right: If you are using Rails 7.1.3.2 there is a hack needed to run the system tests. The `scripts/compose.sh``
+is doing it by extendong line #19 in file
+`/usr/local/bundle/gems/actionpack-7.1.3.2/lib/action_dispatch/system_testing/driver.rb`,
+see [rails/issues/50827](https://github.com/rails/rails/issues/50827):
 ```
 < @browser.preload
 > @browser.preload unless @options[:browser] == :remote
@@ -90,7 +100,7 @@ root@container:/quote # echo 'export DEEPL_API_KEY="sample11-key1-ab12-1234-qbc1
 
 ## History
 
-* 2024 upgraded to Rails 7.1.3, Ruby 3.2
+* 2024 upgraded to Rails 7.1.3
 * 2023 updated Rails 7.0.5 ... 7.0.8, Ruby 3.1
 * 2023 everything translated from German 🇩🇪 into English 🇺🇸, español 🇪🇸, 日本語 🇯🇵 and українська 🇺🇦
 * 2023 using Hotwire Turbo (see [Autocomplete mit Rails & Turbo](https://www.consulting.heikol.de/en/blog/autocomplete-ruby-on-rails-turbo/))
