@@ -14,7 +14,6 @@ The scripts are used on the Mac command line and inside Docker container, but sh
 And now you are ready to double the speed :smiley: Create the five Docker containers and running all the test with just one command line:
 ```
 host$ DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx" scripts/compose.sh && scripts/test.sh
-$ scripts/compose.sh && scripts/test.sh
 
 *** Removing all docker containers ^quote_[a-z]*$
 
