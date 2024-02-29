@@ -83,13 +83,14 @@ host $ DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx" scripts/compose.s
   After running the tests you can find simplecov report in the directory coverage, e.g.:
   ![simplecov.png](/app/assets/images/simplecov.png)
 
-  While the system tests are running, you can access the test environment in parallel via http://localhost:8112. Or you can start the Rails server for the test environment manually inside the docker container:
+  While the system tests are running, you can access the test environment in parallel via http://localhost:8112.
+  Or you can start the Rails server for the test environment manually inside the docker container:
   ```
   quote_rails $ export PORT=3100 && rails server --environment test -P /tmp/test.pid
   ```
 
-:point_right: If you are using Rails 7.1.3.2 there is a hack needed to run the system tests. The `scripts/compose.sh``
-is doing it by extendong line #19 in file
+:point_right: If you are using Rails 7.1.3.2 there is a hack needed to run the system tests. `scripts/compose.sh`
+is doing it by extending line #19 in file
 `/usr/local/bundle/gems/actionpack-7.1.3.2/lib/action_dispatch/system_testing/driver.rb`,
 see [rails/issues/50827](https://github.com/rails/rails/issues/50827):
 ```
