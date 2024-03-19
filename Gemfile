@@ -70,6 +70,10 @@ gem 'stackprof'
 # get wikipedia articles
 gem 'rest-client'
 
+# for avatar images
+gem 'rmagick'
+gem 'requestjs-rails'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[mri mingw x64_mingw]
@@ -79,11 +83,14 @@ group :development, :test do
   # code coverage for Ruby
   gem 'simplecov', require: false
   # find and manage missing and unused translations
-  gem 'i18n-tasks', '~> 1.0', require: false
+  gem 'i18n-tasks', require: false
+  # for i18n-tasks translate-missing
+  gem 'easy_translate', require: false
   gem 'rubocop', require: false
   gem 'rubocop-i18n', require: false
   gem 'htmlbeautifier' # for erb-formatter
   gem 'erb-formatter', require: false
+  gem 'minitest-hooks', require: false
 end
 
 group :development do

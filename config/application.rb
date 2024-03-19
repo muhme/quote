@@ -61,9 +61,10 @@ module Quote
     # having own log format with datetime and severity
     Rails.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")
     Rails.logger.formatter = proc do |severity, time, progname, msg|
-      # %y%m%d %H:%M:%S'   INFO message, e.g.
-      # 230723 15:08:20    INFO Completed 200 OK in 322ms
-      "#{time.to_s[2..18].gsub('-', '')} #{severity.rjust(7)} #{msg}\n"
+      formatted_time = time.strftime("%y%m%d %H:%M:%S.%L") # include milliseconds
+      # %y%m%d %H:%M:%S.%L'   INFO message, e.g.
+      # 230723 15:08:20.544   INFO Completed 200 OK in 322ms
+      "#{formatted_time} #{severity.rjust(7)} #{msg}\n"
     end
 
     # using caching in all stages

@@ -206,6 +206,7 @@ de:
     link_invalid: Der Link „%{link}” kann nicht aufgerufen werden!
     locale: Sprache
     machine_translation_failed: die maschinelle Übersetzung scheiterte
+    missing_params: Es fehlen Parameter!
     missing_user: Kann keinen Benutzer mit der ID=„%{user}” finden!
     name: Name
     name_seperator: " "
@@ -351,6 +352,10 @@ de:
       login: Bitte melde Dich an
       no_user: 'Du hast noch keinen Benutzer?<br />Dann lege Dir bitte selbst einen Benutzer an. Dann kannst Du Zitate anlegen und bearbeiten → '
   users:
+    avatar_display:
+      copy_gravatar: Gravater kopieren
+      recreate: Erneuern
+      select_file: Datei auswählen
     create:
       created: Ein Benutzer „%{user}” wurde für dich angelegt.
     edit:
@@ -358,6 +363,7 @@ de:
     form:
       confirmation_sample: bitte das Passwort wiederholen
       email_sample: z.B. emma@web.de
+      hint: Dein Avatar kann erneut automatisch erstellt, vom Gravatar kopiert oder als Bild hochgeladen werden. Der Avatar wird mit 80x80 Pixeln im PNG-Format gespeichert.
       login_sample: z.B. emma
       password_sample: mindestens 8 Zeichen lang
     index:
@@ -366,6 +372,14 @@ de:
     new:
       new: Benutzereintrag anlegen
     not_logged_in: Nicht angemeldet!
+    recreate_avatar:
+      created_with_random_color: Avatar wurde mit einer Zufallsfarbe erstellt.
+    show_avatar:
+      generated_automatically: Avatar wurde automatisch aus dem Benutzernamen erstellt.
+      taken_from_gravatar: Avatar wurde vom Gravatar für die E-Mail-Adresse übernommen.
+    take_gravatar:
+      copied_from_gravatar: Avatar wurde vom Gravatar der E-Mail-Adresse kopiert.
+      not_found: Kein Gravatar gefunden für die E-Mail-Adresse „%{email}”
     update:
       updated: Dein Benutzereintrag „%{user}” wurde geändert.
   will_paginate:

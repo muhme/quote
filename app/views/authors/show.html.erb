@@ -49,7 +49,8 @@
         <td><%= nice_date(@author.created_at) %></td>
       </tr><tr>
         <td><%= t("g.by_the_user") %>:</td>
-        <td><%= hu(@author.user_id) %></td>
+        <td><%= image_tag("#{AVATARS_URL}/#{@author.user_id}.png", class: "avatar-small") + " " + 
+                hu(@author.user_id) %></td>
       </tr>
       <% if @author.created_at != @author.updated_at %>
         <tr>

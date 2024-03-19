@@ -16,6 +16,6 @@ module QuotationsHelper
 
   # returns quote with link
   def get_linked_quotation(quote)
-    link_to quote.quotation, controller: :quotations, action: :show, id: quote.id
+    link_to quote.quotation, { controller: :quotations, action: :show, id: quote.id }, class: 'no-break'
   end
 end

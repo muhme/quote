@@ -219,6 +219,7 @@ uk:
     link_invalid: Посилання “%{link}” неможливо відкрити!
     locale: Мова
     machine_translation_failed: не вдалося виконати машинний переклад
+    missing_params: Параметри відсутні!
     missing_user: Не можу знайти користувача з ID="%{user}"!
     name: Назва
     name_seperator: " "
@@ -371,6 +372,10 @@ uk:
       login: Будь ласка, зареєструйтесь
       no_user: Ви ще не маєте користувача? <br />Тоді, будь ласка, створіть його самостійно. Тоді ви зможете створювати та редагувати цитати →
   users:
+    avatar_display:
+      copy_gravatar: Скопіювати Gravater
+      recreate: Поновити
+      select_file: Виберіть файл
     create:
       created: Користувач "%{user}" був створений для вас.
     edit:
@@ -378,6 +383,7 @@ uk:
     form:
       confirmation_sample: будь ласка, повторіть пароль
       email_sample: наприклад, olena@ukr.net
+      hint: Ваш аватар можна створити знову автоматично, скопіювати з Gravatar або завантажити як зображення. Після цього аватар зберігається у форматі PNG розміром 80x80 пікселів.
       login_sample: наприклад, oлена
       password_sample: щонайменше 8 символів завдовжки
     index:
@@ -386,6 +392,14 @@ uk:
     new:
       new: Створити запис користувача
     not_logged_in: Не увійшли в систему!
+    recreate_avatar:
+      created_with_random_color: Аватар був створений випадковим кольором.
+    show_avatar:
+      generated_automatically: Аватар був створений автоматично.
+      taken_from_gravatar: Аватар був перейнятий Gravatar.
+    take_gravatar:
+      copied_from_gravatar: Аватар був скопійований з граватару адреси електронної пошти.
+      not_found: Для адреси електронної пошти "%{email}" не знайдено жодного граватара
     update:
       updated: Ваш запис користувача "%{user}" був змінений.
   will_paginate:

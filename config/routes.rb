@@ -39,6 +39,12 @@ Rails.application.routes.draw do
     get  'quotations/delete_category/(:ids)'      => 'quotations#delete_category'
     get  'comments/list_by_user/:user'            => 'comments#list_by_user'
 
+    # Hotwire Stimulus & Hotwire Turbo
+    get  'users/show_avatar'                      => 'users#show_avatar'
+    get  'users/recreate_avatar'                  => 'users#recreate_avatar'
+    get  'users/take_gravatar'                    => 'users#take_gravatar'
+    post 'users/upload_avatar'                    => 'users#upload_avatar'
+
     # default controller routes
     resources :authors, :categories, :quotations
     resources :users, except: [:show, :destroy]

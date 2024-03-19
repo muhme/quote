@@ -37,7 +37,8 @@
       </tr>
       <tr>
         <td><%= t("g.by_the_user") %>:</td>
-        <td><%= hu(@category.user_id) %></td>
+        <td><%= image_tag("#{AVATARS_URL}/#{@category.user_id}.png", class: "avatar-small") + " " + 
+                hu(@category.user_id) %></td>
       </tr>
       <% if @category.created_at != @category.updated_at %>
         <tr>

@@ -7,9 +7,9 @@
 
   <thead>
     <tr>
-      <th><%= t("activerecord.attributes.user.login") %></th>
+      <th><%= t("g.user") %></th>
       <th><%= t("g.quotes", count: 2) %></th>
-      <th><%= t("g.comment", count: 2) %></th>
+      <th><%= image_tag("comment.png", alt: t("g.comment"), title: t("g.comment", count: 2)) %></th>
       <th><%= t("activerecord.attributes.user.email") %></th>
       <th><%= t("g.created") %></th>
       <th><%= t(".last_login_at") %></th>
@@ -21,15 +21,31 @@
       <% quotes_count = Quotation.count_users_quotations(user.id) %>
       <% comments_count = Comment.count_users_comments(user.id) %>
       <tr>
-        <td><%= user.login %></td>
+        <td><%= image_tag("#{AVATARS_URL}/#{user.id}.png", class: "avatar-small") %> <%= user.login %></td>
         <td class="text-right">
           <% if quotes_count > 0 %>
-            <%= link_to(quotes_count, url_for(only_path: true, controller: "quotations", action: "list_by_user", user: user.id)) %>
+            <%= link_to(
+              quotes_count,
+              url_for(
+                only_path: true,
+                controller: "quotations",
+                action: "list_by_user",
+                user: user.id,
+              ),
+            ) %>
           <% end %>
         </td>
         <td class="text-right">
           <% if comments_count > 0 %>
-            <%= link_to(comments_count, url_for(only_path: true, controller: "comments", action: "list_by_user", user: user.id)) %>
+            <%= link_to(
+              comments_count,
+              url_for(
+                only_path: true,
+                controller: "comments",
+                action: "list_by_user",
+                user: user.id,
+              ),
+            ) %>
           <% end %>
         </td>
         <td><%= user.email %></td>

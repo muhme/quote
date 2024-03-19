@@ -46,7 +46,9 @@
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 16 липня 2011</dt>
     <dd><a href="humans.txt">humans.txt</a> (Ми люди, а не машини) – Дякуємо!</dd>
   <dt><%= image_tag("award_star_bronze_1.png", :alt => "admin", :title => "Адміністратор") %> 12 вересня 2010</dt>
-    <dd><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> тепер допомагає нам у керуванні цитатами. Дякуємо!</dd>
+    <dd><%= link_to image_tag("#{AVATARS_URL}/73.png", class: "avatar-small") + ' Miguel ', :controller => 'quotations',
+                    :action => 'list_by_user', :user => 73 %>
+        тепер допомагає нам у керуванні цитатами. Дякуємо!</dd>
   <dt><%= image_tag("pencil.png", :alt => "pencil", :title => "Олівець") %> 22 листопада 2009</dt>
     <dd>Категорія <%= link_to('WebDesignTest', controller: :quotations, action: :list_by_category, category: 287 ) %> містить найкоротші та найдовші цитати.</dd>
 </dl>

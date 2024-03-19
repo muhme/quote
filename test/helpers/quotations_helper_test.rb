@@ -25,7 +25,7 @@ class QuotationsHelperTest < ActionView::TestCase
   end
 
   test "get_linked_quotation method" do
-    assert_equal "<a href=\"/quotations/1\">public_quotation to find public_category inside this quote</a>",
+    assert_equal "<a class=\"no-break\" href=\"/quotations/1\">public_quotation to find public_category inside this quote</a>",
                  get_linked_quotation(@one)
   end
 end

@@ -58,3 +58,15 @@ super_admin:
   active: true
   approved: true
   confirmed: true
+
+# user with Gravatar
+test_gravatar:
+  id: 6
+  login: test.gravatar
+  email: test.gravatar@zitat-service.de
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::SCrypt.encrypt("test.gravatar_password" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  active: true
+  approved: true
+  confirmed: true

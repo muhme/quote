@@ -20,6 +20,15 @@
    This ensures that all necessary information is always available to you.
 </p>
 
+<h2>User Entry</h2>
+<!-- 9.png is 'He' -->
+<p><%= image_tag("#{AVATARS_URL}/9.png", class: "avatar float-left margin-right-1em") %>Clicking on your avatar
+   will take you to a page where you can change your username, e-mail address, password and avatar image.
+   Your initial avatar image is automatically created by combining the first two letters of your username with
+   a randomly selected color. If a Gravatar is already linked to your email address, this will automatically
+   be used as your avatar. Alternatively, you have the option of uploading your own image and using it as your avatar.
+</p>
+
 <div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Creating a quote is shown.", :title => "View", :border => 1, size: '466x315') %><br />Example: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/en/quotations/898' %></div>
 <h2>Quotes</h2>
 <p>In the list of <%= link_to 'quotes', '/en/quotations' %>, you can view all the details of a quote by clicking on the eye <%= image_tag("eye.png", :alt => "Eye", :title => "View") %>. If you are logged in, you can enter new quotes. You can edit your own quotes by clicking on the pencil <%= image_tag("pencil.png", :alt => "Pencil", :title => "Edit") %>, or delete them by clicking on the red cross <%= image_tag("cancel.png", :alt => "Red cross", :title => "Delete") %>. Please note that deletion is only possible if the quote has no comments.</p>

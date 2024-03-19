@@ -46,7 +46,9 @@
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 2011年7月16日</dt>
     <dd><a href="humans.txt">humans.txt</a> (私たちは人間です、機械ではありません) – ありがとう！</dd>
   <dt><%= image_tag("award_star_bronze_1.png", :alt => "admin", :title => "管理者") %> 2010年9月12日</dt>
-    <dd><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> が引用の管理を手伝ってくれるようになりました。ありがとう！</dd>
+    <dd><%= link_to image_tag("#{AVATARS_URL}/73.png", class: "avatar-small") + ' Miguel ', :controller => 'quotations',
+                    :action => 'list_by_user', :user => 73 %>
+        が引用の管理を手伝ってくれるようになりました。ありがとう！</dd>
   <dt><%= image_tag("pencil.png", :alt => "pencil", :title => "Pencil") %> 2009年11月22日</dt>
     <dd>カテゴリ <%= link_to('WebDesignTest', controller: :quotations, action: :list_by_category, category: 287 ) %> には最短および最長の引用が含まれています。</dd>
 </dl>

@@ -11,9 +11,21 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   # user list don't have to be available
-  test "should get index" do
+  test "no index for non-registered" do
     get users_url
     assert_response :forbidden
+  end
+
+  test "no index for non-admins" do
+    login :first_user
+    get users_url
+    assert_response :forbidden
+  end
+
+  test "index for admins" do
+    login :admin_user
+    get users_url
+    assert_response :success
   end
 
   test "should get new" do
@@ -29,7 +41,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /A user .*second.* has been created for you./, @response.body
+    assert_match(/A user .*second.* has been created for you./, @response.body)
   end
 
   test "failed to create new user without email address" do
@@ -38,7 +50,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
            params: { user: { login: "test", email: "bla", password: "123QWEasd", password_confirmation: "123QWEasd" } }
     end
     assert_response :unprocessable_entity # 422
-    assert_match /Mail should look like an email address./, @response.body
+    assert_match(/Mail should look like an email address./, @response.body)
   end
 
   # user, e.g. /users/1/show
@@ -57,26 +69,26 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get '/users/1/edit'
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Not logged in!/, @response.body
+    assert_match(/Not logged in!/, @response.body)
   end
 
   test "should get edit" do
     login :first_user
     get '/users/current/edit'
-    assert_match /Update User Entry/, @response.body
+    assert_match(/Update User Entry/, @response.body)
   end
 
   test "login" do
     login :first_user
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Hello first_user, nice to have you here./, @response.body
+    assert_match(/Hello first_user, nice to have you here./, @response.body)
   end
 
   test "failed login" do
     post user_sessions_url, :params => { :user_session => { :login => 'bla', :password => 'bli' } }
     assert_response :unprocessable_entity
-    assert_match /login is not valid/, @response.body
+    assert_match(/login is not valid/, @response.body)
   end
 
   test "own user update" do
@@ -86,12 +98,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
                             password_confirmation: :changed_user_password } }
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Your user entry .*changed_user.* has been changed./, @response.body
+    assert_match(/Your user entry .*changed_user.* has been changed./, @response.body)
     get '/logout'
     login :changed_user
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Hello changed_user, nice to have you here./, @response.body
+    assert_match(/Hello changed_user, nice to have you here./, @response.body)
   end
 
   test "failed own user change" do
@@ -100,7 +112,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       patch user_url(id: @second_user), params: { user: { email: @first_user.email } }
     end
     assert_response :unprocessable_entity # 422
-    assert_match /Mail has already been taken/, @response.body
+    assert_match(/Mail has already been taken/, @response.body)
   end
 
   test "not logged-in try for user update" do
@@ -109,16 +121,54 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
                             password_confirmation: :changed_user_password } }
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Not logged in!/, @response.body
+    assert_match(/Not logged in!/, @response.body)
     # and login is still possible with 1st user credentials
     login :first_user
     assert_redirected_to root_url
     follow_redirect!
-    assert_match /Hello first_user, nice to have you here./, @response.body
+    assert_match(/Hello first_user, nice to have you here./, @response.body)
   end
 
   test "destroy user not allowed" do
     delete '/users/1'
     assert_response :not_found
+  end
+
+  test "show avatar without params" do
+    get users_show_avatar_url
+    assert_redirected_to root_url
+    follow_redirect!
+    assert_match(/Parameters are missing/, @response.body)
+  end
+
+  test "show avatar with login param" do
+    login :first_user
+    get users_show_avatar_url, params: { login: users(:first_user).login }, as: :turbo_stream
+    assert_response :success
+  end
+
+  test "show avatar with email param without Gravatar" do
+    get users_show_avatar_url, params: { email: users(:first_user).email }, as: :turbo_stream
+    assert_response :success
+  end
+
+  test "show avatar with email param with Gravatar" do
+    get users_show_avatar_url, params: { email: users(:test_gravatar).email }, as: :turbo_stream
+    assert_response :success
+  end
+
+  test "recreate avatar" do
+    get users_recreate_avatar_url, as: :turbo_stream
+    assert_response :success
+  end
+
+  test "take gravatar for existing" do
+    get users_take_gravatar_url, params: { email: users(:test_gravatar).email }, as: :turbo_stream
+    assert_response :success
+  end
+
+  test "take gravatar for non-existing" do
+    get users_take_gravatar_url, params: { email: 'user.bla@non-existing.xyz' }, as: :turbo_stream
+    assert_response :success
   end
 end

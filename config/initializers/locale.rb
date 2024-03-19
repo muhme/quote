@@ -4,6 +4,7 @@
 I18n.load_path += Dir[Rails.root.join('config', 'locales', '*.yml')]
 
 # permitted locales available to the five supported
+# have to correspond to AVAILABLE_LOCALES in app/javascript/constants.js
 I18n.available_locales = [:de, :en, :es, :ja, :uk]
 
 # set default locale explicity, even :en is already the default

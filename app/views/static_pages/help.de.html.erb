@@ -21,6 +21,16 @@
   Damit stellen wir sicher, dass dir stets alle benötigten Informationen zur Verfügung stehen.
 </p>
 
+<h2>Benutzer-Eintrag</h2>
+<!-- 9.png is 'He' -->
+<p><%= image_tag("#{AVATARS_URL}/9.png", class: "avatar float-left margin-right-1em") %>Durch Anklicken deines
+   Avatars gelangst du zu einer Seite, auf der du deinen Benutzernamen, deine E-Mail-Adresse,
+   dein Passwort und dein Avatar-Bild ändern kannst. Dein anfängliches Avatar-Bild wird automatisch erstellt,
+   indem die ersten beiden Buchstaben deines Benutzernamens mit einer zufällig ausgewählten Farbe kombiniert werden.
+   Falls mit deiner E-Mail-Adresse bereits ein Gravatar verknüpft ist, wird dieser automatisch als dein Avatar
+   übernommen. Alternativ hast du die Möglichkeit, ein eigenes Bild hochzuladen und als Avatar zu verwenden.
+</p>
+
 <div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Das Anlegen eines Zites wird gezeigt.", :title => "Ansehen", :border => 1, size: '466x315') %><br />Beispiel: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/de/quotations/898' %></div>
 <h2>Zitate</h2>
 <p>In der Liste der <%= link_to 'Zitate', '/quotations' %> kannst du mit dem Auge <%= image_tag("eye.png", :alt => "Auge", :title => "Ansehen") %> alle Einzelheiten zu einem Zitat sehen. Wenn du angemeldest bist, dann kannst du neue Zitate eingeben. du kannst deine eigenen Zitate bearbeiten, indem du auf den Stift <%= image_tag("pencil.png", :alt => "Stift", :title => "Ändern") %> klickst, oder löschen, indem du auf das rote Kreuz <%= image_tag("cancel.png", :alt => "rotes Kreuz", :title => "Löschen") %>  klickst. Bitte beachte, dass das Löschen nur möglich ist, wenn das Zitat keine Kommentare hat.</p>

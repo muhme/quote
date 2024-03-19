@@ -46,7 +46,9 @@
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> July 16, 2011</dt>
     <dd><a href="humans.txt">humans.txt</a> (We are people, not machines) – Thank you!</dd>
   <dt><%= image_tag("award_star_bronze_1.png", :alt => "admin", :title => "Administrator") %> September 12, 2010</dt>
-    <dd><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> is now helping us manage the quotes. Thank you!</dd>
+    <dd><%= link_to image_tag("#{AVATARS_URL}/73.png", class: "avatar-small") + ' Miguel ', :controller => 'quotations',
+                    :action => 'list_by_user', :user => 73 %>
+        is now helping us manage the quotes. Thank you!</dd>
   <dt><%= image_tag("pencil.png", :alt => "pencil", :title => "Pencil") %> November 22, 2009</dt>
     <dd>The category <%= link_to('WebDesignTest', controller: :quotations, action: :list_by_category, category: 287 ) %> includes the shortest and longest quotes.</dd>
 </dl>

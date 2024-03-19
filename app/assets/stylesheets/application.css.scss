@@ -82,7 +82,7 @@ a:visited {
     border-bottom: 1px dashed #000;
 }
 
-a:hover {
+button:hover, a:hover {
     background-color: #bb88bb;
 }
 
@@ -429,6 +429,22 @@ table#details tr:not(:last-child) td.border-bottom-0 {
         background-color: white;
     }
 }
+@keyframes lightgreen-to-transparent {
+    from {
+        background-color: lightgreen;
+    }
+    to {
+        background-color: transparent;
+    }
+}
+@keyframes darkorange-to-transparent {
+    from {
+        background-color: darkorange;
+    }
+    to {
+        background-color: transparent;
+    }
+}
 
 input[type="search"]#author.animated {
     animation-name: ligthgreen;
@@ -444,6 +460,16 @@ a.animated {
     animation-name: ligthgreen;
     animation-duration: 5s;
     display: inline-block;
+}
+
+#avatar_hint {
+    animation-name: lightgreen-to-transparent;
+    animation-duration: 5s;
+    animation-fill-mode: forwards; /* make sure the last keyframe styles persist, as also using from JS */
+}
+#avatar_error {
+    animation-name: darkorange-to-transparent;
+    animation-duration: 5s;
 }
 
 div.large_right {
@@ -516,6 +542,9 @@ span#side div.language-option {
 }
 .margin-bottom-0-2em {
     margin-bottom: 0.2em;
+}
+.margin-top-1ex {
+    margin-top: 1ex;
 }
 
 .opacity-25 {
@@ -600,7 +629,13 @@ a {
     white-space: normal;
     word-break: break-all;
 }
+.no-break {
+    word-break: normal; /* e.g. fortune quote on home */
+}
 
+.margin-right-1em {
+    margin-right: 1em;
+}
 .margin-bottom-4 {
     margin-bottom: 4px;
 }
@@ -630,11 +665,44 @@ a {
 }
 /* This applies when the screen is 600px or wider */
 @media screen and (min-width: 960px) {
-    .quotes-container table {
+    .quotes-container table, .quotes-container, div#comments.table, table#details, .avatar-block {
         width: 800px;
     }
+}
+.vertical-align-bottom {
+    vertical-align: bottom;
+}
+img.avatar-small {
+    /*vertical-align: bottom; - the image is not under the underline of the link */
+    width: 20px;
+    height: 20px;
+}
+img.avatar {
+    vertical-align: bottom;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+    border: 1px solid black;
+}
+img.avatar-big {
+    vertical-align: bottom;
+    width: 80px;
+    height: 80px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+    border: 1px solid black;
+}
+/* overwrite border-bottom: none for linked img.avatar */
+a:link img.avatar,
+a:visited img.avatar {
+    border-bottom: 1px solid black;;
+}
 
-    .quotes-container, div#comments.table, table#details {
-        width: 800px;
-    }
+.avatar-block {
+    border: 1px solid gray;
+    padding: 0 1em 1em 1em;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+    background-color: #ddffdd;
+}
+.avatar-block h2 {
+    padding-top: 0;
 }

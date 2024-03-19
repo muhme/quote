@@ -21,6 +21,16 @@
   Esto asegura que siempre tengas a tu disposición toda la información necesaria.
 </p>
 
+<h2>Actualizar entrada de usuario</h2>
+<!-- 203.png is 'Ál' -->
+<p><%= image_tag("#{AVATARS_URL}/203.png", class: "avatar float-left margin-right-1em") %>Al hacer clic en tu avatar
+  accederás a una página en la que podrás cambiar tu nombre de usuario, dirección de correo electrónico,
+  contraseña e imagen de avatar. Tu imagen de avatar inicial se creará automáticamente combinando las dos primeras
+  letras de tu nombre de usuario con un color seleccionado al azar. Si ya hay un Gravatar vinculado a tu dirección
+  de correo electrónico, se utilizará automáticamente como avatar.
+  También puedes subir tu propia imagen y utilizarla como avatar.
+</p>
+
 <div class="large_right"><%= image_tag("autocomplete.gif", :alt => "Se muestra cómo crear una cita.", :title => "Ver", :border => 1, size: '466x315') %><br />Ejemplo: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/es/quotations/898' %></div>
 <h2>Citas</h2>
 <p>En la lista de <%= link_to 'citas', '/es/quotations' %>, puedes ver todos los detalles de una cita haciendo clic en el ojo <%= image_tag("eye.png", :alt => "Ojo", :title => "Ver") %>. Si has iniciado sesión, puedes ingresar nuevas citas.

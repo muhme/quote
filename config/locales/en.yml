@@ -206,6 +206,7 @@ en:
     link_invalid: The link “%{link}” cannot be accessed!
     locale: Language
     machine_translation_failed: the machine translation failed
+    missing_params: Parameters are missing!
     missing_user: Cannot find a user with ID="%{user}"!
     name: Name
     name_seperator: " "
@@ -351,6 +352,10 @@ en:
       login: Please register
       no_user: You do not have a user yet?<br />Then please create a user yourself. Then you can create and edit quotes →
   users:
+    avatar_display:
+      copy_gravatar: Copy Gravatar
+      recreate: Recreate
+      select_file: Select file
     create:
       created: A user "%{user}" has been created for you.
     edit:
@@ -358,6 +363,7 @@ en:
     form:
       confirmation_sample: please repeat the password
       email_sample: e.g. olivia@gmail.com
+      hint: Your avatar can be recreated, copied from the Gravatar or uploaded as an image. The avatar is saved with 80x80 pixels in PNG format.
       login_sample: e.g. olivia
       password_sample: at least 8 characters long
     index:
@@ -366,6 +372,14 @@ en:
     new:
       new: Create User Entry
     not_logged_in: Not logged in!
+    recreate_avatar:
+      created_with_random_color: Avatar was created with a random color.
+    show_avatar:
+      generated_automatically: Avatar was created automatically.
+      taken_from_gravatar: Avatar was taken over by Gravatar.
+    take_gravatar:
+      copied_from_gravatar: Avatar was copied from the gravatar of the e-mail address.
+      not_found: No gravatar found for the email address "%{email}"
     update:
       updated: Your user entry "%{user}" has been changed.
   will_paginate:

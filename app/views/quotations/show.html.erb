@@ -22,7 +22,7 @@
                                    title: t(".quotes_link", count: i, author: author_name ))
 
     # user with links and link number of quotations in link title
-    name = hu(@quotation.user_id)
+    name = image_tag("#{AVATARS_URL}/#{@quotation.user_id}.png", width: "20", height: "20") + raw("&nbsp;") + hu(@quotation.user_id)
     u = User.find_by_id(@quotation.user_id)
     i = u.nil? ? 0 : u.quotations.size
     if (i >= 1)

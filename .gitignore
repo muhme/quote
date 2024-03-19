@@ -4,21 +4,30 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-# Ignore bundler config.
+# ignore bundler config
 /.bundle
 
-# Ignore all logfiles and tempfiles.
+# ignore all log and temp files
 /log/*
 /tmp/*
 !/log/.keep
 !/tmp/.keep
 
-/node_modules
 /yarn-error.log
 
 .byebug_history
 
 /public/assets/*
+
+# pa - production avatars, da - development avatars and ta - test avatars
+/public/images/pa
+/public/images/da
+# default avatar 0.png, avatars of fixtures users [1...5].png or those hard-wired referenced
+# in HTML [9|73|203|204|205].png are provided, test-generated avatars [6|7|8|10].png are ignored
+/public/images/ta/6.png
+/public/images/ta/7.png
+/public/images/ta/8.png
+/public/images/ta/10.png
 
 # hlu, Mar 16th 2018: as found on DigitalOcean production server
 .ruby-gemset
@@ -31,6 +40,5 @@ coverage
 # ignore Mac OS X desktop service store
 .DS_Store
 
-/config/master.key
-# ignore environment vars file, e.g. DEEPL_API_KEY
+# don't commit environment vars file, e.g. DEEPL_API_KEY
 .env

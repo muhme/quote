@@ -21,6 +21,10 @@
   これにより、必要な情報が常に利用可能であることが保証されます。
 </p>
 
+<h2>ユーザーエントリーの更新</h2>
+<!-- 204.png is 'あき' -->
+<p><%= image_tag("#{AVATARS_URL}/204.png", class: "avatar float-left margin-right-1em") %>アバターをクリックすると、ユーザー名、メールアドレス、パスワード、アバター画像を変更できるページに移動します。最初のアバター画像は、ユーザー名の最初の2文字とランダムに選択された色を組み合わせて自動的に作成されます。メールアドレスにGravatarがすでにリンクされている場合は、これが自動的にアバターとして使用されます。または、ご自身の画像をアップロードしてアバターとして使用することもできます。</p>
+
 <div class="large_right"><%= image_tag("autocomplete.gif", :alt => "名言の作成が表示されます", :title => "ビュー", :border => 1, size: '466x315') %><br />例: <%= link_to 'Und jedem Anfang wohnt ein Zauber inne ...', '/ja/quotations/898' %></div>
 <h2>引用</h2>
 <p><%= link_to '引用', '/ja/quotations' %>のリストでは、目のアイコン <%= image_tag("eye.png", :alt => "目", :title => "ビュー") %> をクリックして引用の詳細を表示できます。 鉛筆のアイコンをクリックして自分の引用を編集したり <%= image_tag("pencil.png", :alt => "鉛筆", :title => "編集") %>、赤十字のアイコンをクリックして削除することができます <%= image_tag("cancel.png", :alt => "赤い十字", :title => "削除") %> 。引用にコメントがない場合にのみ削除が可能であることに注意してください 。</p>

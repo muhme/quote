@@ -16,11 +16,11 @@
   
 <div class="field">
   <%= f.label t('activerecord.attributes.user.login') %><br />
-  <%= f.text_field :login, autofocus: true %>
+  <%= f.text_field :login, autocomplete: "username", required: true, autofocus: true %>
 </div>
 <div class="field">
   <%= f.label t('activerecord.attributes.user.password') %><br />
-  <%= f.password_field :password %><br />
+  <%= f.password_field :password, autocomplete: "password", required: true %><br />
 </div>
 <div class="actions">
     <%= f.submit t('.doit') %>

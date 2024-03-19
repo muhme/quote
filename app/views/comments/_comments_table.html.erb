@@ -4,16 +4,17 @@
       <div class="tdata">
         <% @comments.each do |comment|
             border_bottom_is_not_last = comment == @comments.last ? "" : "border-bottom"
-            header = '<span class="opacity-50 font-size-smaller">'
+            header = image_tag("#{AVATARS_URL}/#{comment.user_id}.png", class: "avatar-small")
+            header << raw(' <span class="opacity-50 font-size-smaller">')
             header << hu(comment.user_id)
             if comment.updated_at && comment.created_at
-              header << "<span class=\"opacity-50  font-size-smaller\"> #{t("comments.commented_on")} "
+              header << raw("<span class=\"opacity-50  font-size-smaller\"> #{t("comments.commented_on")} ")
               header << nice_date(comment.created_at)
               if comment.updated_at != comment.created_at
                 header << "; #{t("comments.updated_at")} "
                 header << nice_date(comment.updated_at)
               end
-              header << "</span>"
+              header << raw("</span>")
             end
           %>
             <div class="table-row-group" id="<%= "#{dom_id(comment)}_container" %>">

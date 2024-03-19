@@ -1,3 +1,7 @@
-<h1><%= "#{number_with_delimiter(@quotations.total_entries)} #{t('g.quotes', count: @quotations.total_entries)} #{t("g.of_the_user", user: hu(params[:user]))}" %></h1>
+
+<h1><%= "#{number_with_delimiter(@quotations.total_entries)}
+         #{t('g.quotes', count: @quotations.total_entries)}
+         #{t("g.of_the_user", user: hu(params[:user]))}" %>
+    <%= image_tag("#{AVATARS_URL}/#{params[:user]}.png", class: "avatar") %></h1>
 
 <%= render 'list_content' %>

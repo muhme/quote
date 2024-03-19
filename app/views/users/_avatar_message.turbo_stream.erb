@@ -1,0 +1,22 @@
+<!-- app/views/users/_avatar_message.turbo_stream.erb
+     Turbo frame partial to display message line below avatars
+     used from:
+     - show_avatar_message.turbo_stream.erb
+     - upload_avatar.turbo_stream.erb
+     - upload_avatar.turbo_stream.erb
+-->
+<%= turbo_frame_tag :avatar_message do %>
+  <span id="avatar_hint" class="font-size-smaller">
+    <%= if @avatar_hint.present?
+      image_tag("accept.png", title: "OK", class: "vertical-align-bottom") + " " +
+        @avatar_hint
+    end %>
+  </span>
+  <span id="avatar_error" class="font-size-smaller">
+    <%= if @avatar_error.present?
+      image_tag("error.png", title: "error", class: "vertical-align-bottom") + " " +
+        @avatar_error
+    end %>
+  </span>
+  <br/>
+<% end %>

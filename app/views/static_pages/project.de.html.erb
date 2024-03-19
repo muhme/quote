@@ -1,33 +1,43 @@
 <h1>Projekt</h1>
 <p>
-Ich wollte eigene Zitate zu verschiedenen Themen auf meinen Webseiten einbinden und habe einen Zitat-Service gesucht, bei dem ich eine eigene Zitat-Sammlung einstellen und zu Themen wieder abrufen kann. Einen solchen Service habe ich nicht gefunden und so 2006 eine eigene Datenbank mit Abfrageskript aufgesetzt.
-Nun habe ich diese Webanwendung zur Verwaltung der Zitate in der Datenbank
-geschrieben und am 1. September 2007 online geschaltet.
-</p>
+  <%= link_to image_tag("#{AVATARS_URL}/2.png", class: "avatar float-left margin-right-1em") %>
+  Ich wollte eigene Zitate zu verschiedenen Themen auf meinen Webseiten einbinden und habe einen Zitat-Service gesucht,
+  bei dem ich eine eigene Zitat-Sammlung einstellen und zu Themen wieder abrufen kann. Einen solchen Service habe ich
+  nicht gefunden und so 2006 eine eigene Datenbank mit Abfrageskript aufgesetzt.
+  Nun habe ich diese Webanwendung zur Verwaltung der Zitate in der Datenbank geschrieben und
+  ging am 1. September 2007 online.</p>
+
 <h2>Technisch</h2>
 <p>
-Das Projekt ist mit dem Web-Framework <a href="https://www.RubyOnRails.org">Ruby on Rails</a> implementiert. Die Anwendung ist Open-Source-Software und wird unter <a href="https://github.com/muhme/quote">https://github.com/muhme/quote</a> verwaltet.
-</p>
-<p>Wenn Du einen Fehler gefunden hast, oder Dir eine Erweiterung wünschst, dann öffnet bitte ein GitHub <a target="_blank" href="https://github.com/muhme/quote/issues">Ticket</a>.</p>
+  Das Projekt ist mit dem Web-Framework <a href="https://www.RubyOnRails.org">Ruby on Rails</a> implementiert.
+  Die Anwendung ist Open-Source-Software und wird unter
+  <a href="https://github.com/muhme/quote">github.com/muhme/quote</a> verwaltet.</p>
+<p>
+  Wenn Du einen Fehler gefunden hast, oder Dir eine Erweiterung wünschst, dann öffnet bitte ein GitHub
+  <a target="_blank" href="https://github.com/muhme/quote/issues">Ticket</a>.</p>
+
 <h2>Mitarbeit</h2>
 <p>
-<%= image_tag("heart.png", :alt => "Herz", :title => "Herzlichen Dank") %> Vielen Dank an:
-<ul>
-<li>Marc James, dessen freie <a href="https://github.com/markjames/famfamfam-silk-icons">SILK ICONS</a> hier Anwendung finden</li>
-<li><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> der uns bei der Verwaltung der Zitate hilft</li>
-</ul>
+  <%= image_tag("heart.png", :alt => "Herz", :title => "Herzlichen Dank") %> Vielen Dank an:
+  <ul>
+    <li>Marc James, dessen freie <a href="https://github.com/markjames/famfamfam-silk-icons">SILK ICONS</a>
+         hier Anwendung finden</li>
+    <li><%= link_to link_to image_tag("#{AVATARS_URL}/73.png", class: "avatar-small") + ' Miguel ',
+        :controller => 'quotations', :action => 'list_by_user', :user => '73' %>
+        der uns bei der Verwaltung der Zitate hilft</li>
+  </ul>
 </p>
-<p>Gefällt Dir die Idee und Du magst vielleicht auch mitmachen? Wir suchen:</p>
+<p>Gefällt Dir die Idee und Du magst vielleicht etwas beitragen? Wir suchen:</p>
 <ul>
-<li>Muttersprachler – um die maschinellen Übersetzungen zu korrigieren
-<li>Programmierer – die Lust haben die Webanwendung weiter zu entwickeln</li>
-<li>Verwalter – die neue Zitate, Autoren und Kategorien prüfen und frei schalten</li>
-<li>Screen-Designer – die der Website ein cooles Outfit verpassen wollen</li>
-<li>Tester – z.B. mit Windows Computer</li>
-<li>Menschen – die aus Spass an diesem Projekt mitmachen wollen</li>
+  <li>Muttersprachler – um die maschinellen Übersetzungen zu korrigieren oder Zitate hinzuzufügen
+  <li>Programmierer – die Lust haben die Webanwendung weiter zu entwickeln</li>
+  <li>Verwalter – die neue Zitate, Autoren und Kategorien prüfen und frei schalten</li>
+  <li>Screen-Designer – die der Website ein cooles Outfit verpassen wollen</li>
+  <li>Tester – z.B. mit Windows Computer</li>
+  <li>Menschen – die aus Spass an diesem Projekt mitmachen wollen</li>
 </ul>
 <p>
-Bitte lass per <%= link_to "Email", :controller => "static_pages", :action => "contact" %> von Dir hören.
+  Bitte lass per <%= link_to "Email", :controller => "static_pages", :action => "contact" %> von Dir hören.
 </p>
 
 <h2>Zitat-Sammlungen</h2>

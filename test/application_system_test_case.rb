@@ -23,8 +23,9 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   MAX_EXECUTION_TIME = 1000 # milliseconds
 
   # visiting page with given path, finding content for selector, verifying minimum page size and loading speed
-  # if running longer than one second first time, after a short breath, making a second attempt to be successfull
-  # in Docker env as well
+  #   - if running longer than one second first time, after a short breath, making a second attempt to be successfull
+  #     in Docker env as well
+  #   - finally checking for broken images
   def check_page page, path, selector, content, size = DEFAULT_MIN_PAGE_SIZE, first_time = true,
                  max_execution_time = MAX_EXECUTION_TIME
     Rails.logger.debug "check_page path=#{path} selector=#{selector} " +
@@ -53,6 +54,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
         assert false, "page \"#{path}\" took #{run_time} milliseconds (second time)"
       end
     end
+    # final check for missing images
+    detect_broken_images
   end
 
   # do check_page w/o visiting new path
@@ -72,5 +75,58 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     fill_in 'user_session_password', with: password
     click_on 'Log In'
     check_this_page page, "h1", pattern # wait for turbo to be completed
+  end
+
+  # detecting broken images (which results in a 404 error when accessed)
+  def detect_broken_images
+    # execute JavaScript to check for broken images
+    # have it more stable and handle potential race conditions where images might not have finished loading
+    # - image loading check is wrapped in a promise that resolves when all images have either loaded or failed to load,
+    #   by attaching load and error event listeners to each image
+    # - waits for all images to either load or fail to load
+    # - check for image width 0
+    broken_images = page.execute_script(<<~JS)
+      function waitForImagesToLoad() {
+        return new Promise((resolve, reject) => {
+          let images = Array.from(document.querySelectorAll('img'));
+          let loaded = 0;
+
+          images.forEach(img => {
+            // if the image is already loaded or failed, count it
+            if (img.complete) {
+              loaded++;
+              if (loaded === images.length) resolve(checkForBrokenImages());
+            } else {
+              // otherwise, attach load and error listeners
+              img.addEventListener('load', () => {
+                loaded++;
+                if (loaded === images.length) resolve(checkForBrokenImages());
+              });
+              img.addEventListener('error', () => {
+                loaded++;
+                if (loaded === images.length) resolve(checkForBrokenImages());
+              });
+            }
+          });
+
+          // immediate resolve if there are no images
+          if (images.length === 0) resolve([]);
+        });
+      }
+
+      function checkForBrokenImages() {
+        var brokenImages = [];
+        document.querySelectorAll('img').forEach(function(img) {
+          if (!img.complete || img.naturalWidth == 0) {
+            brokenImages.push(img.src);
+          }
+        });
+        return brokenImages;
+      }
+
+      return waitForImagesToLoad();
+    JS
+
+    assert false, "Broken images detected: #{broken_images.join(', ')}." if broken_images.any?
   end
 end

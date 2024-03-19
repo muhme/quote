@@ -16,13 +16,13 @@ commented list of scripts there.
 There is a Docker test and development environment prepared. You can create your own test and development instance
 with the following commands:
 ```
-$ git clone https://github.com/muhme/quote
-$ cd quote
-$ scripts/compose.sh
+host $ git clone https://github.com/muhme/quote
+host $ cd quote
+host $ scripts/compose.sh
 ```
 Then you should have five containers running:
 ```
-$ docker ps
+host $ docker ps
 IMAGE                        PORTS                                                      NAMES
 quote-rails                  0.0.0.0:8102->3000/tcp                                     quote_rails
 phpmyadmin/phpmyadmin        0.0.0.0:8101->80/tcp                                       quote_mysqladmin
@@ -58,10 +58,18 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
   <summary>The application uses DeepL API Free for translation.</summary>
   
   You can register there and then use your own key in the rails application, in the tests and for translations
-  with i18n-tasks command. The key has to be set in rails container's `.bashrc` by the compose script:
+  with i18n-tasks command. The key has to be set in `.env` file and rails container's `.bashrc` by the compose script:
   
 ```
 host $ DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx" scripts/compose.sh
+```
+
+Then you can use `i18n-tasks` within the Rails container to check if the keys are ok, normalize the order or
+translate missing keys:
+```
+quote-rails # i18n-tasks health
+quote-rails # i18n-tasks normalize
+quote-rails # i18n-tasks translate-missing --backend=deepl
 ```
 </details>
 
@@ -70,14 +78,15 @@ host $ DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx" scripts/compose.s
 <details>
   <summary>Mini tests and system tests are available for application validation.</summary>
 
-  Test coverage is greater than 90%, check it by your own:
+  Mini tests are sometimes integration tests, when the interaction with external services such as Deepl or Gravatar
+  is also tested. Test coverage is greater than 90%, check it by your own:
   * rails test - to run automated minitests
   * rails test:system - to run automated Selenium system tests with Chrome browser
 
   **Note**
   > If your're using Docker, go into container first with:
   ```
-  $ docker exec -it quote_rails /bin/bash
+  host $ docker exec -it quote_rails /bin/bash
   ```
 
   After running the tests you can find simplecov report in the directory coverage, e.g.:
@@ -99,9 +108,28 @@ see [rails/issues/50827](https://github.com/rails/rails/issues/50827):
 ```
 </details>
 
+For JavaScript files and debugging see folder [app/javascript](./app/javascript/).
+
+## New Server Version
+<details>
+  <summary>Todo list before create a new server image:</summary>
+
+* bundle update
+* check ES Module Shims for new version
+  * https://www.npmjs.com/package/es-module-shims
+  * download into public/javascripts
+* git commit -a
+* scripts/compose.sh && scripts/test.sh
+* git push
+* drop folder `quote` into trash and create fresh new and test:
+  * git clone https://github.com/muhme/quote
+  * cd quote && scripts/compose.sh && scripts/test.sh
+
+</details>
+
 ## History
 
-* 2024 upgraded to Rails 7.1.3
+* 2024 upgraded to Rails 7.1.3, added avatar images
 * 2023 updated Rails 7.0.5 ... 7.0.8, Ruby 3.1
 * 2023 everything translated from German 🇩🇪 into English 🇺🇸, español 🇪🇸, 日本語 🇯🇵 and українська 🇺🇦
 * 2023 using Hotwire Turbo (see [Autocomplete mit Rails & Turbo](https://www.consulting.heikol.de/en/blog/autocomplete-ruby-on-rails-turbo/))

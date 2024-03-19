@@ -3,37 +3,107 @@
     <div id="error_explanation">
       <h2><%= t("g.error", count: user.errors.count) %></h2>
       <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
+  <!-- Hotwire Stimulus 'focusout' fires when the input field has lost focus
+  -->
+  <div
+    class="field"
+    <% if action == :new %>
+    data-controller="avatar"
+    data-action="focusout->avatar#updateFromLogin"
+    <% end %>
+  >
+    <%= form.label :login,
+               label_and_description(
+                 t("activerecord.attributes.user.login"),
+                 t(".login_sample"),
+               ),
+               class: "font-size-smaller" %><br/>
+    <%= form.text_field :login,
+                    id: :user_login,
+                    autocomplete: "username",
+                    required: true,
+                    data: {
+                      avatar_target: "login",
+                    } %>
+  </div>
 
-  <div class="field">
-    <%= form.label :login, label_and_description(t("activerecord.attributes.user.login"), t(".login_sample")), class: "font-size-smaller" %><br/>
-    <%= form.text_field :login, id: :user_login %>
+  <div
+    class="field"
+    <% if action == :new %>
+    data-controller="avatar"
+    data-action="focusout->avatar#updateFromEmail"
+    <% end %>
+  >
+    <%= form.label :email,
+               label_and_description(
+                 t("activerecord.attributes.user.email"),
+                 t(".email_sample"),
+               ),
+               class: "font-size-smaller" %><br/>
+    <%= form.text_field :email,
+                    id: :user_email,
+                    autocomplete: "email",
+                    required: true,
+                    data: {
+                      avatar_target: "email",
+                    } %>
   </div>
 
   <div class="field">
-    <%= form.label :email, label_and_description(t("activerecord.attributes.user.email"), t(".email_sample")), class: "font-size-smaller" %><br/>
-    <%= form.text_field :email, id: :user_email %>
-  </div>
-
-  <div class="field">  
     <p>
-    <%= form.label :password, label_and_description(t("activerecord.attributes.user.password"), t(".password_sample")), class: "font-size-smaller" %><br/>
-    <%= form.password_field :password %>
-  </p>
-  <p>
-    <%= form.label :password_confirmation, label_and_description(t("activerecord.attributes.user.password_confirmation"), t(".confirmation_sample")), class: "font-size-smaller" %><br/>
-    <%= form.password_field :password_confirmation %>
-  </p>
+      <%= form.label :password,
+                 label_and_description(
+                   t("activerecord.attributes.user.password"),
+                   t(".password_sample"),
+                 ),
+                 class: "font-size-smaller" %><br/>
+      <%= form.password_field :password, autocomplete: "new-password", required: false %>
+    </p>
+    <p>
+      <%= form.label :password_confirmation,
+                 label_and_description(
+                   t("activerecord.attributes.user.password_confirmation"),
+                   t(".confirmation_sample"),
+                 ),
+                 class: "font-size-smaller" %><br/>
+      <%= form.password_field :password_confirmation,
+                          autocomplete: "new-password",
+                          required: false %>
+    </p>
+  </div>
 
-  <div class="actions">
+  <div class="avatar-block">
+    <h2>Avatar</h2>
+    <p class="font-size-smaller"><%= t(".hint") %></p>
+    <%= render partial: "avatar_display", formats: [:turbo_stream] %>
+    <!--<% form.file_field :image,
+                    accept: "image/png,image/gif,image/jpeg",
+                    data: {
+                      controller: "avatar",
+                      action: "change->avatar#uploadImage",
+                      avatar_target: "image",
+                    } %>
+                    -->
+  </div>
+
+  <div class="actions margin-top-1ex">
     <%= form.submit t("g.save") %>
     &nbsp;
-    <%= link_to(image_tag("arrow_undo.png", alt: t("g.arrow_undo_alt"), title: t("g.back"), border: "0"), root_url) %>
+    <%= link_to(
+      image_tag(
+        "arrow_undo.png",
+        alt: t("g.arrow_undo_alt"),
+        title: t("g.back"),
+        border: "0",
+      ),
+      root_url,
+    ) %>
   </div>
 
 <% end %>

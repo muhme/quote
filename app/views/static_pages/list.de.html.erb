@@ -47,7 +47,9 @@
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 16. Juli 2011</dt>
     <dd><a href="humans.txt">humans.txt</a> (Wir sind Menschen, keine Maschinen) – Danke!</dd>
   <dt><%= image_tag("award_star_bronze_1.png", :alt => "admin", :title => "Administrator") %> 12. September 2010</dt>
-    <dd><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> hilft uns jetzt bei der Verwaltung der Zitate. Dankeschön!</dd>
+    <dd><%= link_to image_tag("#{AVATARS_URL}/73.png", class: "avatar-small") + ' Miguel ', :controller => 'quotations',
+                    :action => 'list_by_user', :user => 73 %>
+        hilft uns jetzt bei der Verwaltung der Zitate. Dankeschön!</dd>
   <dt><%= image_tag("pencil.png", :alt => "pencil", :title => "Pencil") %> 22. November 2009</dt>
     <dd>Die Kategorie <%= link_to('WebDesignTest', controller: :quotations, action: :list_by_category, category: 287 ) %> umfasst die kürzesten und längsten Zitate.</dd>
 </dl>

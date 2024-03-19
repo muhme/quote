@@ -206,6 +206,7 @@ es:
     link_invalid: "¡El enlace “%{link}” no se puede acceder!"
     locale: Idioma
     machine_translation_failed: la traducción automática ha fallado
+    missing_params: Faltan parámetros
     missing_user: ¡No se puede encontrar un usuario con la ID="%{user}"!
     name: Nombre
     name_seperator: " "
@@ -351,6 +352,10 @@ es:
       login: Por favor, regístrese
       no_user: Todavía no tienes un usuario?<br />Entonces, por favor, crea uno tú mismo. Entonces podrá crear y editar citas →
   users:
+    avatar_display:
+      copy_gravatar: Copiar Gravater
+      recreate: Recree
+      select_file: Seleccionar archivo
     create:
       created: Se ha creado un usuario "%{user}" para ti.
     edit:
@@ -358,6 +363,7 @@ es:
     form:
       confirmation_sample: repita la contraseña
       email_sample: 'por ejemplo: lucia@gmail.com'
+      hint: Tu avatar puede crearse de nuevo automáticamente, copiarse de Gravatar o subirse como imagen. El avatar se guarda con 80x80 píxeles en formato PNG.
       login_sample: por ejemplo, lucia
       password_sample: al menos 8 caracteres
     index:
@@ -366,6 +372,14 @@ es:
     new:
       new: Crear entrada de usuario
     not_logged_in: "¡No has iniciado sesión!"
+    recreate_avatar:
+      created_with_random_color: El avatar se creó con un color aleatorio.
+    show_avatar:
+      generated_automatically: El avatar se creó automáticamente.
+      taken_from_gravatar: Avatar fue absorbida por Gravatar.
+    take_gravatar:
+      copied_from_gravatar: El avatar se copió del gravatar de la dirección de correo electrónico.
+      not_found: No se ha encontrado gravatar para la dirección de correo electrónico "%{email}"
     update:
       updated: Tu entrada de usuario "%{user}" ha sido modificada.
   will_paginate:

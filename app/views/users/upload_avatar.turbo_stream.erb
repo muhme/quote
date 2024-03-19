@@ -1,0 +1,7 @@
+<!-- app/views/users/show_avatar_message.turbo_stream.erb - Turbo Streams template for rendering hint or error -->
+<turbo-stream action="update" target="avatar_message">
+  <template>
+    <% @avatar_error = "pfui" %>
+    <%= render partial: "avatar_message" %>
+  </template>
+</turbo-stream>

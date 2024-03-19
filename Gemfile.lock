@@ -84,14 +84,14 @@ GEM
       activesupport (>= 5.2, < 7.2)
       request_store (~> 1.0)
     base64 (0.2.0)
-    better_html (2.0.2)
+    better_html (2.1.0)
       actionview (>= 6.0)
       activesupport (>= 6.0)
       ast (~> 2.0)
       erubi (~> 1.4)
       parser (>= 2.4)
       smart_properties
-    bigdecimal (3.1.6)
+    bigdecimal (3.1.7)
     bindex (0.8.1)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
@@ -122,15 +122,17 @@ GEM
     deepl-rb (2.5.3)
     docile (1.4.0)
     domain_name (0.6.20240107)
-    drb (2.2.0)
-      ruby2_keywords
+    drb (2.2.1)
+    easy_translate (0.5.1)
+      thread
+      thread_safe
     erb-formatter (0.7.2)
       syntax_tree (~> 6.0)
     erubi (1.12.0)
     execjs (2.9.1)
     ffi (1.16.3)
-    ffi-compiler (1.0.1)
-      ffi (>= 1.0.0)
+    ffi-compiler (1.3.2)
+      ffi (>= 1.15.5)
       rake
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -139,7 +141,7 @@ GEM
     http-accept (1.7.0)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
-    i18n (1.14.1)
+    i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     i18n-tasks (1.0.13)
       activesupport (>= 4.0.2)
@@ -157,7 +159,7 @@ GEM
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.7.2)
-    irb (1.11.2)
+    irb (1.12.0)
       rdoc
       reline (>= 0.4.2)
     jbuilder (2.11.5)
@@ -176,13 +178,15 @@ GEM
       net-imap
       net-pop
       net-smtp
-    marcel (1.0.2)
+    marcel (1.0.4)
     matrix (0.4.2)
     mime-types (3.5.2)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2024.0206)
+    mime-types-data (3.2024.0305)
     mini_mime (1.1.5)
-    minitest (5.22.2)
+    minitest (5.22.3)
+    minitest-hooks (1.5.1)
+      minitest (> 5.3)
     mobility (1.2.9)
       i18n (>= 0.6.10, < 2)
       request_store (~> 1.0)
@@ -200,12 +204,16 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.7.0)
-    nokogiri (1.16.2-x86_64-linux)
+    nokogiri (1.16.3-x86_64-darwin)
       racc (~> 1.4)
+    nokogiri (1.16.3-x86_64-linux)
+      racc (~> 1.4)
+    observer (0.1.2)
     parallel (1.24.0)
     parser (3.3.0.5)
       ast (~> 2.4.1)
       racc
+    pkg-config (1.5.6)
     prettier_print (1.2.1)
     psych (5.1.2)
       stringio
@@ -245,7 +253,7 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
-    rails-i18n (7.0.8)
+    rails-i18n (7.0.9)
       i18n (>= 0.7, < 2)
       railties (>= 6.0.0, < 8)
     railties (7.1.3.2)
@@ -268,13 +276,18 @@ GEM
       io-console (~> 0.5)
     request_store (1.6.0)
       rack (>= 1.4)
+    requestjs-rails (0.0.11)
+      railties (>= 6.1.0)
     rest-client (2.1.0)
       http-accept (>= 1.7.0, < 2.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.2.6)
-    rubocop (1.60.2)
+    rmagick (5.4.4)
+      observer (~> 0.1)
+      pkg-config (~> 1.4)
+    rubocop (1.62.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
@@ -282,15 +295,14 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml (>= 3.2.5, < 4.0)
-      rubocop-ast (>= 1.30.0, < 2.0)
+      rubocop-ast (>= 1.31.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
-    rubocop-ast (1.30.0)
-      parser (>= 3.2.1.0)
+    rubocop-ast (1.31.2)
+      parser (>= 3.3.0.4)
     rubocop-i18n (3.0.0)
       rubocop (~> 1.0)
     ruby-progressbar (1.13.0)
-    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     rvt (1.1.0)
       activemodel (>= 4.0)
@@ -341,9 +353,11 @@ GEM
     terser (1.2.0)
       execjs (>= 0.3.0, < 3)
     thor (1.3.1)
+    thread (0.2.2)
+    thread_safe (0.3.6)
     tilt (2.3.0)
     timeout (0.4.1)
-    turbo-rails (2.0.4)
+    turbo-rails (2.0.5)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
@@ -366,6 +380,7 @@ GEM
     zeitwerk (2.6.13)
 
 PLATFORMS
+  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
@@ -374,12 +389,14 @@ DEPENDENCIES
   capybara
   debug
   deepl-rb
+  easy_translate
   erb-formatter
   htmlbeautifier
-  i18n-tasks (~> 1.0)
+  i18n-tasks
   importmap-rails
   jbuilder
   listen (~> 3.1)
+  minitest-hooks
   mobility (~> 1.2)
   mysql2 (~> 0.5)
   puma
@@ -387,7 +404,9 @@ DEPENDENCIES
   rack-rewrite
   rails (~> 7.1)
   rails-i18n (~> 7.0.0)
+  requestjs-rails
   rest-client
+  rmagick
   rubocop
   rubocop-i18n
   rvt

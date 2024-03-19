@@ -69,7 +69,8 @@ class StaticPagesController < ApplicationController
                               :controller => "quotations",
                               :action => "list_by_user",
                               :user => quotations[i].user_id) +
-                      "\">#{login}</a>(#{count})"
+                      "\"><img class='avatar-small' src='#{AVATARS_URL}/#{quotations[i].user_id}.png'> " +
+                      "#{login}</a>(#{count})"
         rescue
           @users[i] = login
         end

@@ -29,8 +29,13 @@ class User < ApplicationRecord
     \z
   /x
 
+  # \A start of the string
+  # [[:alnum:] .\-_@+] any alphanumeric character, space, dot, dash, underscore, at symbol or plus
+  # + one or more times.
+  # \z end of the string
   # LOGIN = /\A[[:alnum:]_][[:alnum:]\.+\-_@ ]+\z/
-  LOGIN = /\A[^[:cntrl:][@\[\]\^\!"\#$\(\)*,\/:;<=>?`{|}~\\]]+\z/
+  # LOGIN = /\A[^[:cntrl:][@\[\]\^\!"\#$\(\)*,\/:;<=>?`{|}~\\]]+\z/
+  LOGIN = /\A[[:alnum:]_][[:alnum:] .\-_@+]+\z/
 
   validates :email,
             format: {
@@ -93,4 +98,10 @@ class User < ApplicationRecord
       .where("quotations.user_id IS NOT NULL OR comments.user_id IS NOT NULL")
       .distinct
   }
+
+  # a password check is required for new users who have never set a password before,
+  # or if one of the password fields is set
+  def require_password?
+    password.present? || password_confirmation.present? || crypted_password.blank?
+  end
 end

@@ -49,3 +49,14 @@ QUOTE_JOOMLA_WIKI = {
   ja: 'https://github.com/muhme/quote_joomla/wiki/%E3%83%98%E3%83%AB%E3%83%97', # ヘルプ
   uk: 'https://github.com/muhme/quote_joomla/wiki/%D0%94%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B0' # Допомога
 }.freeze
+
+if Rails.env == "test"
+  AVATARS_DIR = Rails.root.join('public', 'images', 'ta').freeze # test avatars
+elsif Rails.env == "development"
+  AVATARS_DIR = Rails.root.join('public', 'images', 'da').freeze # development avatars
+else
+  AVATARS_DIR = Rails.root.join('public', 'images', 'pa').freeze # production avatars
+end
+AVATARS_URL = AVATARS_DIR.to_s.gsub("/quote/public", "").freeze # for URL without quote/public
+
+AVATAR_SIZE = 80 # as 80x80px

@@ -1,34 +1,45 @@
 <h1>Proyecto</h1>
 <p>
-Quería incluir mis propias citas sobre varios temas en mis sitios web y buscaba un servicio de citas donde pudiera configurar mi propia colección de citas y recuperarlas por tema. No encontré tal servicio, así que en 2006 creé mi propia base de datos con un script de consulta.
-Ahora he escrito esta aplicación web para administrar las citas en la base de datos
-y la lancé en línea el 1 de septiembre de 2007.
+   <%= link_to image_tag("#{AVATARS_URL}/2.png", class: "avatar float-left margin-right-1em") %>
+   Quería incluir mis propias citas sobre varios temas en mis sitios web y buscaba un servicio de citas donde pudiera
+   configurar mi propia colección de citas y recuperarlas por tema. No encontré tal servicio, así que en 2006 creé
+   mi propia base de datos con un script de consulta.
+   Ahora he escrito esta aplicación web para administrar las citas en la base de datos
+   y la lancé en línea el 1 de septiembre de 2007.
 </p>
+
 <h2>Técnico</h2>
 <p>
-El proyecto está implementado con el marco web <a href="https://www.RubyOnRails.org">Ruby on Rails</a>. La aplicación es software de código abierto y se administra en <a href="https://github.com/muhme/quote">https://github.com/muhme/quote</a>.
-</p>
-<p>Si encuentras un error o tienes una solicitud de función, abre un <a target="_blank" href="https://github.com/muhme/quote/issues">ticket</a> en GitHub.</p>
-<h
-2>Colaboración</h2>
+  El proyecto está implementado con el marco web <a href="https://www.RubyOnRails.org">Ruby on Rails</a>.
+  La aplicación es software de código abierto y se administra en
+  <a href="https://github.com/muhme/quote">github.com/muhme/quote</a>.</p>
 <p>
-<%= image_tag("heart.png", :alt => "Corazón", :title => "Muchas gracias") %> Muchas gracias a:
+  Si encuentras un error o tienes una solicitud de función,
+  abre un <a target="_blank" href="https://github.com/muhme/quote/issues">incidencia</a> en GitHub.</p>
+
+<h2>Colaboración</h2>
+<p>
+  <%= image_tag("heart.png", :alt => "Corazón", :title => "Muchas gracias") %> Muchas gracias a:
+  <ul>
+    <li>Marc James, cuyos <a href="https://github.com/markjames/famfamfam-silk-icons">SILK ICONS</a
+        gratuitos se utilizan aquí</li>
+    <li><%= link_to link_to image_tag("#{AVATARS_URL}/73.png", class: "avatar-small") + ' Miguel ',
+      :controller => 'quotations', :action => 'list_by_user', :user => '73' %>
+      que nos ayuda a gestionar las citas</li>
+  </ul>
+</p><p>
+  ¿Te gusta la idea y quieres aportar algo? Estamos buscando:</p>
 <ul>
-<li>Marc James, cuyos <a href="https://github.com/markjames/famfamfam-silk-icons">SILK ICONS</a> gratuitos se utilizan aquí</li>
-<li><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> que nos ayuda a gestionar las citas</li>
-</ul>
-</p>
-<p>¿Te gusta la idea y quieres participar? Estamos buscando:</p>
-<ul>
-<li>Hablantes nativos – para corregir las traducciones automáticas</li>
-<li>Programadores – que quieran seguir desarrollando la aplicación web</li>
-<li>Administradores – que revisen y aprueben nuevas citas, autores y categorías</li>
-<li>Diseñadores de pantalla – que quieran darle un aspecto genial al sitio web</li>
-<li>Probadores – por ejemplo con ordenador Windows</li>
-<li>Personas – que quieran participar en este proyecto por diversión</li>
+   <li>Hablantes nativos – corregir las traducciones automáticas o añadir citas</li>
+   <li>Programadores – que quieran seguir desarrollando la aplicación web</li>
+   <li>Administradores – que revisen y aprueben nuevas citas, autores y categorías</li>
+   <li>Diseñadores de pantalla – que quieran darle un aspecto genial al sitio web</li>
+   <li>Probadores – por ejemplo con ordenador Windows</li>
+   <li>Personas – que quieran participar en este proyecto por diversión</li>
 </ul>
 <p>
-Por favor, ponte en contacto con nosotros a través de <%= link_to "Email", :controller => "static_pages", :action => "contact" %>.
+  Por favor, ponte en contacto con nosotros a través de
+  <%= link_to "Email", :controller => "static_pages", :action => "contact" %>.
 </p>
 
 <h2>Verificación de Citas</h2>

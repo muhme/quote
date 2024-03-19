@@ -22,7 +22,8 @@
         <td><%= link_to raw("#{image_tag_for_commentable_type(comment)} #{comment.commentable_id}"), locale: I18n.locale,
           controller: comment.commentable_type.pluralize.downcase, action: "show", id: comment.commentable_id %></td>
         <td><%= raw dates %></td>
-        <td><%= hu(comment.user_id) %></td>
+        <td><%= image_tag("#{AVATARS_URL}/#{comment.user_id}.png", class: "avatar-small") + " " + 
+                hu(comment.user_id) %></td>
         <td><%= raw transformLink(comment.comment) %></td>
         <td><%= raw string_for_locale(comment.locale, true) %></td>
       </tr>

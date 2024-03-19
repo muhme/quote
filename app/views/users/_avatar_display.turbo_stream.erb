@@ -1,0 +1,65 @@
+<!-- partial app/views/users/_avatar_display.html.erb -->
+<turbo-frame id="avatar_frame">
+
+  <%# text_field_tag "debug", @avatar_image, size: 80 %>
+  <%# "size=#{@avatar_image.size}, end=#{@avatar_image[-10..-1]}" if @avatar_image %>
+
+  <%# hidden field contains the recreated/Gravatar copied/upload image to have it as parameter for saving %>
+  <%= hidden_field_tag "user[avatar_image]", @avatar_image %>
+
+  <% if @avatar_image and @avatar_image.size > 100 %>
+    <%# only 'avatar' image is filled, the two others are filled by following <script> to have the 5k image only once in form %>
+    <img class="avatar-big" id="avatar-big"/>
+    <img class="avatar" id="avatar"/>
+    <img class="avatar-small vertical-align-bottom" id="avatar-small"/>
+  <% elsif @avatar_image %>
+    <%# direct file link, e.g. "/images/da/2.png" %>
+    <%= image_tag(@avatar_image, id: "avatar-big", class: "avatar-big") %>
+    <%= image_tag(@avatar_image, id: "avatar", class: "avatar") %>
+    <%= image_tag(@avatar_image, id: "avatar-small", class: "avatar-small vertical-align-bottom") %>
+  <% end %>
+  <br/>
+
+  <%= render "avatar_message" %>
+
+  <span data-controller="avatar">
+    <button data-action="click->avatar#recreate" type="button"><%= t(".recreate") %></button>
+    <button data-action="click->avatar#takeGravatar" type="button"><%= t(".copy_gravatar") %></button>
+    <!-- using a button instead of input and a file name next to it,
+    implemented in the stimulus controller -->
+    <input
+      id="avatar-upload"
+      type="file"
+      style="display: none;"
+      accept="image/png,image/gif,image/jpeg"
+      data-action="change->avatar#uploadImage"
+      data-avatar-target="fileInput"
+    />
+    <button data-action="click->avatar#clickUploadImage" type="button"><%= t(".select_file") %></button>
+  </span>
+
+  <%# dirty insert JavaScript here, because all the addEventListeners for all the circumstances don't work for me %>
+  <script>
+// encapsulates in an immediately invoked function expression (IIFE), to avoid conflicts with any variables that might
+// be declared already ?by called from Turbo multiple times?
+(function() {
+  const user_avatar_image_id = "user_avatar_image";
+  var hiddenFieldElement = document.getElementById(user_avatar_image_id);
+  if (hiddenFieldElement) {
+        // get the base64 image data from the hidden input
+    var avatarImage = hiddenFieldElement.value;
+    ["avatar-big", "avatar", "avatar-small"].forEach((id) => {
+      var imageElement = document.getElementById(id);
+      if (imageElement) {
+                // set the src attribute of each image to the base64 image data
+        imageElement.src = avatarImage;
+      } else {
+        console.error(`avatarImageLoad: no element found for ID "${id}"`);
+      }
+    });
+  } else {
+    console.error(`avatarImageLoad: no element found for ID ${user_avatar_image_id}`);
+  }
+})();
+  </script>
+</turbo-frame>

@@ -1,33 +1,35 @@
 <h1>プロジェクト</h1>
 <p>
-私は自分のウェブサイトでさまざまなトピックに関する独自の引用を含めたくて、自分の引用コレクションを設定してトピック別に取得できる引用サービスを探していました。そのようなサービスが見つからず、2006年に自分でデータベースとクエリースクリプトをセットアップしました。
-そして、このデータベース内の引用を管理するウェブアプリケーションを作成し、2007年9月1日にオンラインで開始しました。
+  <%= link_to image_tag("#{AVATARS_URL}/2.png", class: "avatar float-left margin-right-1em") %>
+  私は自分のウェブサイトでさまざまなトピックに関する独自の引用を含めたくて、自分の引用コレクションを設定してトピック別に取得できる引用サービスを探していました。そのようなサービスが見つからず、2006年に自分でデータベースとクエリースクリプトをセットアップしました。そして、このデータベース内の引用を管理するウェブアプリケーションを作成し、2007年9月1日にオンラインで開始しました。
 </p>
+
 <h2>技術的</h2>
 <p>
-このプロジェクトは、ウェブフレームワーク<a href="https://www.RubyOnRails.org">Ruby on Rails</a>を使用して実装されています。このアプリケーションはオープンソースソフトウェアで、<a href="https://github.com/muhme/quote">https://github.com/muhme/quote</a>で管理されています。
-</p>
-<p>バグが見つかった場合や機能要求がある場合は、GitHubの<a target="_blank" href="https://github.com/muhme/quote/issues">チケット</a>を開いてください。</p>
+  このプロジェクトは、ウェブフレームワーク<a href="https://www.RubyOnRails.org">Ruby on Rails</a>を使用して実装されています。このアプリケーションはオープンソースソフトウェアで、<a href="https://github.com/muhme/quote">https://github.com/muhme/quote</a>で管理されています。
+</p><p>
+  バグが見つかった場合や機能要求がある場合は、GitHubの<a target="_blank" href="https://github.com/muhme/quote/issues">チケット</a>を開いてください。</p>
+
 <h2>協力</h2>
-<p>
-<%= image_tag("heart.png", :alt => "ハート", :title => "どうもありがとう") %> 感謝します:
+<p><%= image_tag("heart.png", :alt => "ハート", :title => "どうもありがとう") %> 感謝します:
+  <ul>
+    <li>Marc Jamesさん、無料の<a href="https://github.com/markjames/famfamfam-silk-icons">SILK
+        ICONS</a>がここで使用されています</li>
+    <li><%= link_to link_to image_tag("#{AVATARS_URL}/73.png", class: "avatar-small") + ' Miguel ',
+            :controller => 'quotations', :action => 'list_by_user', :user => '73' %>引用の管理を手伝ってくれる</li>
+  </ul>
+</p><p>
+  このアイデアを気に入っていただけましたか？私たちは探しています：</p>
 <ul>
-<li>Marc Jamesさん、無料
-の <a href="https://github.com/markjames/famfamfam-silk-icons">SILK ICONS</a>がここで使用されています</li>
-<li><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> 引用の管理を手伝ってくれる</li>
-</ul>
-</p>
-<p>このアイデアが気に入って参加したいですか？募集中：</p>
-<ul>
-<li>母国語話者 – 機械翻訳の修正</li>
-<li>プログラマー – ウェブアプリケーションの開発を続けたい方</li>
-<li>管理者 – 新しい引用、著者、カテゴリーの確認と承認</li>
-<li>スクリーンデザイナー – ウェブサイトにクールなルックを提供したい方</li>
-<li>テスター 例えば、Windowsコンピュータの場合</li>
-<li>人々 – このプロジェクトに楽しく参加したい方</li>
+   <li>母国語話者 – 機械翻訳を修正したり、引用を追加する</li>
+   <li>プログラマー – ウェブアプリケーションの開発を続けたい方</li>
+   <li>管理者 – 新しい引用、著者、カテゴリーの確認と承認</li>
+   <li>スクリーンデザイナー – ウェブサイトにクールなルックを提供したい方</li>
+   <li>テスター 例えば、Windowsコンピュータの場合</li>
+   <li>人々 – このプロジェクトに楽しく参加したい方</li>
 </ul>
 <p>
-<%= link_to "Email", :controller => "static_pages", :action => "contact" %> でお問い合わせください。
+  <%= link_to "Email", :controller => "static_pages", :action => "contact" %> でお問い合わせください。
 </p>
 
 <h2>引用チェック</h2>

@@ -1,33 +1,42 @@
 <h1>Project</h1>
 <p>
-I wanted to include my own quotes on various topics on my websites and was looking for a quote service where I could set up my own collection of quotes and retrieve them by topic. I couldn't find such a service, so in 2006 I set up my own database with a query script.
-Now I have written this web application for managing the quotes in the database
-and launched it online on September 1, 2007.
-</p>
+   <%= link_to image_tag("#{AVATARS_URL}/2.png", class: "avatar float-left margin-right-1em") %>
+   I wanted to include my own quotes on various topics on my websites and was looking for a quote service where
+   I could set up my own collection of quotes and retrieve them by topic. I couldn't find such a service,
+   so in 2006 I set up my own database with a query script.
+   Now I have written this web application for managing the quotes in the database
+   and launched it on September 1, 2007.</p>
+
 <h2>Technical</h2>
 <p>
-The project is implemented with the web framework <a href="https://www.RubyOnRails.org">Ruby on Rails</a>. The application is open-source software and is managed at <a href="https://github.com/muhme/quote">https://github.com/muhme/quote</a>.
-</p>
-<p>If you found a bug or have a feature request, please open a GitHub <a target="_blank" href="https://github.com/muhme/quote/issues">ticket</a>.</p>
+  The project is implemented with the web framework <a href="https://www.RubyOnRails.org">Ruby on Rails</a>.
+  The application is open-source software and is managed at
+  <a href="https://github.com/muhme/quote">github.com/muhme/quote</a>.</p>
+<p>
+  If you have found a bug or have a feature request, please open a GitHub
+  <a target="_blank" href="https://github.com/muhme/quote/issues">issue</a>.</p>
+
 <h2>Collaboration</h2>
 <p>
-<%= image_tag("heart.png", :alt => "Heart", :title => "Thank you very much") %> Many thanks to:
+  <%= image_tag("heart.png", :alt => "Heart", :title => "Thank you very much") %> Many thanks to:
+  <ul>
+    <li>Marc James, whose free <a href="https://github.com/markjames/famfamfam-silk-icons">SILK ICONS</a> are used here</li>
+    <li><%= link_to link_to image_tag("#{AVATARS_URL}/73.png", class: "avatar-small") + ' Miguel ',
+            :controller => 'quotations', :action => 'list_by_user', :user => '73' %>
+        who helps us with managing the quotes</li>
+  </ul>
+</p><p>
+  Do you like the idea and would you like to contribute something? We are looking for:</p>
 <ul>
-<li>Marc James, whose free <a href="https://github.com/markjames/famfamfam-silk-icons">SILK ICONS</a> are used here</li>
-<li><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> who helps us with managing the quotes</li>
-</ul>
-</p>
-<p>Do you like the idea and want to get involved? We are looking for:</p>
-<ul>
-<li>Native speakers – to correct the machine translations</li>
-<li>Programmers – who want to further develop the web application</li>
-<li>Administrators – who review and approve new quotes, authors, and categories</li>
-<li>Screen designers – who want to give the website a cool look</li>
-<li>Testers – e.g. with Windows computer</li>
-<li>People – who want to participate in this project for fun</li>
+   <li>Native speakers – to correct the machine translations or add quotations</li>
+   <li>Programmers – who want to further develop the web application</li>
+   <li>Administrators – who review and approve new quotes, authors, and categories</li>
+   <li>Screen designers – who want to give the website a cool look</li>
+   <li>Testers – e.g. with Windows computer</li>
+   <li>People – who want to participate in this project for fun</li>
 </ul>
 <p>
-Please get in touch via <%= link_to "Email", :controller => "static_pages", :action => "contact" %>.
+  Please get in touch via <%= link_to "Email", :controller => "static_pages", :action => "contact" %>.
 </p>
 
 <h2>Quote Check</h2>

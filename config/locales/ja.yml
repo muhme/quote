@@ -206,6 +206,7 @@ ja:
     link_invalid: リンク「%{link}」にアクセスできません！
     locale: 言語
     machine_translation_failed: 機械翻訳の失敗
+    missing_params: パラメータが見つからない！
     missing_user: ユーザー ID=「%{user}」 が見つかりません！
     name: 名
     name_seperator: "・"
@@ -351,6 +352,10 @@ ja:
       login: ご登録ください
       no_user: まだユーザーをお持ちでないのですか？<br />それなら、ご自身で作成してください。そうすると、引用の作成と編集ができるようになります →
   users:
+    avatar_display:
+      copy_gravatar: コピー・グラベーター
+      recreate: 再現
+      select_file: ファイルを選択
     create:
       created: あなたのためにユーザー「%{user}」が作成されました。
     edit:
@@ -358,6 +363,7 @@ ja:
     form:
       confirmation_sample: パスワードの再入力をお願いします
       email_sample: 例）miyuki@gmail.com
+      hint: アバターは自動作成、Gravatarからのコピー、または画像としてアップロードすることができます。アバターは80x80ピクセルのPNG形式で保存されます。
       login_sample: 例えば、みゆきのように
       password_sample: 8文字以上
     index:
@@ -366,6 +372,14 @@ ja:
     new:
       new: ユーザーエントリーの作成
     not_logged_in: ログインされていません！
+    recreate_avatar:
+      created_with_random_color: アバターはランダムな色で作成された。
+    show_avatar:
+      generated_automatically: アバターは自動的に作成された。
+      taken_from_gravatar: アバターはグラバターに乗っ取られた。
+    take_gravatar:
+      copied_from_gravatar: アバターはメールアドレスのグラビアからコピーした。
+      not_found: メールアドレス "%{email}" に該当するグラビアは見つかりませんでした。
     update:
       updated: ユーザーエントリ「%{user}」が変更されました。
   will_paginate:

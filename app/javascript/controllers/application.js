@@ -1,4 +1,5 @@
 import { Application } from "@hotwired/stimulus"
+import { DEBUG } from "../constants";
 
 const application = Application.start()
 
@@ -30,13 +31,13 @@ window.myCleanField = function (id) {
   if (c != null) {
     c.value = "";
     c.focus();
-    // console.debug (`${id} emptied`);
+    DEBUG && console.debug (`${id} emptied`);
   }
 }
 
 // jump to the end in an input field with value
 window.myMoveCursorToEnd = function (id) {
-  // console.debug (`myMoveCursorToEnd(id=${id})`);
+  DEBUG && console.debug (`myMoveCursorToEnd(id=${id})`);
   var c = document.getElementById(id);
   if (c != null) {
     c.focus();
@@ -49,7 +50,7 @@ window.myUpdateCommentCountdown = function (input_field_id, max) {
   var countdown_id = input_field_id + "_countdown";
   var inputField = document.getElementById(input_field_id);
   var rest = max - inputField.value.length;
-  // console.debug (`myUpdateCommentCountdown(rest=${rest}, input_field_id=${input_field_id})`);
+  DEBUG && console.debug (`myUpdateCommentCountdown(rest=${rest}, input_field_id=${input_field_id})`);
   if (rest < 100) {
     document.getElementById(countdown_id).textContent = rest;
   } else {
@@ -63,7 +64,7 @@ window.myUpdateCommentCountdown = function (input_field_id, max) {
 //     if (c != null) {
 //         c.focus();
 //         c.select();
-//         console.debug (`${id} focus set`);
+//         DEBUG && console.debug (`${id} focus set`);
 //     }
 // }
 
@@ -80,7 +81,7 @@ document.addEventListener("turbo:load", () => {
   languageOptions.forEach(function (option) {
     option.addEventListener("click", (event) => {
       const selectedLocale = option.getAttribute("data-locale");
-      // console.debug ("click event, selectedLocale=" + selectedLocale);
+      DEBUG && console.debug ("click event, selectedLocale=" + selectedLocale);
       const currentUrl = window.location.pathname;
       const localePattern = /(\/(de|en|es|ja|uk))/;
       let newUrl;
@@ -94,7 +95,7 @@ document.addEventListener("turbo:load", () => {
         newUrl = `/${selectedLocale}${currentUrl}`;
       }
       // Navigate to the updated URL
-      // console.debug ("newUrl=" + newUrl);
+      DEBUG && console.debug ("newUrl=" + newUrl);
       window.location.href = newUrl;
     });
   });
@@ -102,12 +103,12 @@ document.addEventListener("turbo:load", () => {
 
 document.addEventListener("turbo:load", function() {
   let checkboxes = document.querySelectorAll('.locale-checkbox');
-  // console.log(`Found ${checkboxes.length} checkboxes`); // Log the number of checkboxes found
+  DEBUG && console.log(`Found ${checkboxes.length} checkboxes`); // Log the number of checkboxes found
 
   checkboxes.forEach(function(checkbox, index) {
-    // console.log(`Adding event listener to checkbox ${index}`); // Log the index of each checkbox as the event listener is added
+    DEBUG && console.log(`Adding event listener to checkbox ${index}`); // Log the index of each checkbox as the event listener is added
     checkbox.addEventListener('change', function() {
-      // console.log(`Checkbox ${index} changed`); // Log when a checkbox is changed
+      DEBUG && console.log(`Checkbox ${index} changed`); // Log when a checkbox is changed
       let selectedLocales = Array.from(checkboxes).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
       let locales = selectedLocales.join(',');
       let url = window.location.pathname + "?locales=" + locales;

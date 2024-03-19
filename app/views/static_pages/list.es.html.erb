@@ -46,7 +46,9 @@
   <dt><%= image_tag("asterisk_orange.png", :alt => "record", :title => "Record") %> 16 de julio de 2011</dt>
     <dd><a href="humans.txt">humans.txt</a> (Somos personas, no máquinas) - ¡Gracias!</dd>
   <dt><%= image_tag("award_star_bronze_1.png", :alt => "admin", :title => "Administrador") %> 12 de septiembre de 2010</dt>
-    <dd><%= link_to 'Miguel', :controller => 'quotations', :action => 'list_by_user', :user => 'Miguel' %> nos ayuda ahora con la administración de las citas. ¡Gracias!</dd>
+    <dd><%= link_to image_tag("#{AVATARS_URL}/73.png", class: "avatar-small") + ' Miguel ', :controller => 'quotations',
+                    :action => 'list_by_user', :user => 73 %>
+        nos ayuda ahora con la administración de las citas. ¡Gracias!</dd>
   <dt><%= image_tag("pencil.png", :alt => "pencil", :title => "Pencil") %> 22 de noviembre de 2009</dt>
     <dd>La categoría <%= link_to('WebDesignTest', controller: :quotations, action: :list_by_category, category: 287 ) %> incluye las citas más cortas y largas.</dd>
 </dl>
