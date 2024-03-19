@@ -108,6 +108,8 @@ see [rails/issues/50827](https://github.com/rails/rails/issues/50827):
 ```
 </details>
 
+## JavaScript
+
 For JavaScript files and debugging see folder [app/javascript](./app/javascript/).
 
 ## New Server Version
@@ -123,7 +125,7 @@ For JavaScript files and debugging see folder [app/javascript](./app/javascript/
 * git push
 * drop folder `quote` into trash and create fresh new and test:
   * git clone https://github.com/muhme/quote
-  * cd quote && scripts/compose.sh && scripts/test.sh
+  * cd quote && scripts/compose.sh build && scripts/test.sh
 
 </details>
 
