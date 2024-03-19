@@ -163,12 +163,14 @@ class UsersTest < ApplicationSystemTestCase
   end
 
   test "recreate user avater" do
-    do_login
+    # as public/images/ta/1.png is under git control and recreate avatar is overwriting with random color,
+    # we have to use test_gravatar user as 6.png is not under git control
+    do_login users(:test_gravatar).login, "#{users(:test_gravatar).login}_password"
     check_page page, 'users/current/edit', nil, "Update User Entry"
     click_on 'Recreate'
     check_this_page page, nil, "Avatar was created with a random color"
     click_on 'Save'
-    check_this_page page, nil, 'Your user entry "first_user" has been changed.'
+    check_this_page page, nil, "Your user entry \"#{users(:test_gravatar).login}\" has been changed."
   end
   test "recreate users Gravatar" do
     do_login users(:test_gravatar).login, "#{users(:test_gravatar).login}_password"
