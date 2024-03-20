@@ -57,6 +57,8 @@ elsif Rails.env == "development"
 else
   AVATARS_DIR = Rails.root.join('public', 'images', 'pa').freeze # production avatars
 end
-AVATARS_URL = AVATARS_DIR.to_s.gsub("/quote/public", "").freeze # for URL without quote/public
+# for URL without /quote/public on test/development
+# and without /var/www/zitat-service.de/quote/public on production
+AVATARS_URL = AVATARS_DIR.to_s.gsub(/.*\/quote\/public/, "").freeze
 
 AVATAR_SIZE = 80 # as 80x80px
