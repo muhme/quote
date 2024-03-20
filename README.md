@@ -119,7 +119,7 @@ For JavaScript files and debugging see folder [app/javascript](./app/javascript/
 * bundle update
 * check ES Module Shims for new version
   * https://www.npmjs.com/package/es-module-shims
-  * download into public/javascripts
+  * download into public/javascripts and removing source map reference in the end
 * git commit -a
 * scripts/compose.sh && scripts/test.sh
 * git push
