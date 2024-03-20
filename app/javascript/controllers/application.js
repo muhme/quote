@@ -1,5 +1,5 @@
 import { Application } from "@hotwired/stimulus"
-import { DEBUG } from "../constants";
+import { DEBUG } from "constants";
 
 const application = Application.start()
 

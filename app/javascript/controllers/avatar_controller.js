@@ -3,7 +3,7 @@
  */
 import { Controller } from "@hotwired/stimulus"; // https://stimulus.hotwired.dev
 import { get } from "@rails/request.js"; // https://github.com/rails/request.js
-import { AVAILABLE_LOCALES, AVATAR_SIZE, DEBUG } from "../constants";
+import { AVAILABLE_LOCALES, AVATAR_SIZE, DEBUG } from "constants";
 
 export default class extends Controller {
   static targets = ["login", "email", "image", "avatarHidden", "fileInput"];
