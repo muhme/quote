@@ -94,7 +94,7 @@ class QuotationsController < ApplicationController
     if params[:commit]
       @quotation = Quotation.new(quotation_params)
       # set https if needed and possible and follow redirects, if not reachable set flash[:warning]
-      verify_and_improve_link(:new)
+      verify_and_improve_link
 
       @quotation.user_id = current_user.id
       @quotation.author_id = 0 unless @quotation.author_id # empty author field is an unknown author, which has id 0
@@ -132,7 +132,7 @@ class QuotationsController < ApplicationController
       categories_changed = category_ids.sort != @quotation.category_ids.sort
       @quotation.assign_attributes(quotation_params)
       # set https if needed and possible and follow redirects, if not reachable set flash[:warning]
-      verify_and_improve_link(:edit)
+      verify_and_improve_link
 
       logger.debug { "update() categories_changed=#{categories_changed}, quotation.changed #{@quotation.changes}" }
       if @quotation.changed? or categories_changed
@@ -425,7 +425,7 @@ class QuotationsController < ApplicationController
   # reading from and writing on @quotation.source_link with actual locale
   # change http to https, URL unencode and verify URL is reachable
   # if link is not reachable writes into flash[:warning]
-  def verify_and_improve_link(to_render)
+  def verify_and_improve_link
     new_link = UrlCheckerService.check(@quotation.source_link)
     if @quotation.source_link.present? and new_link.nil?
       flash[:warning] = t("g.link_invalid", link: @quotation.source_link)

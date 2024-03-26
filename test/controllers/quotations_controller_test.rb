@@ -88,16 +88,38 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create quotation" do
     post quotations_url,
-         params: { commit: "Speichern", quotation: { quotation: "Yes we can.", author_id: 0, locale: "en" } }
+         params: { commit: "Save", quotation: { quotation: "Yes we can.", author_id: 0, locale: "en" } }
     assert_forbidden
     assert_difference('Quotation.count') do
       login :first_user
       post quotations_url,
-           params: { commit: "Speichern", quotation: { quotation: "Yes we can.", author_id: 0, locale: "en" } }
+           params: { commit: "Save", quotation: { quotation: "Yes we can.", author_id: 0, locale: "en" } }
     end
     assert_redirected_to quotation_url(Quotation.last)
     quotation = Quotation.find_by_quotation 'Yes we can.'
     assert_not quotation.public
+  end
+
+  test "should not create duplicated quote" do
+    login :first_user
+    post quotations_url,
+         params: { commit: "Save", quotation: { quotation: "Yes we can.", author_id: 0, locale: "en" } }
+    assert_no_difference 'Quotation.count' do
+      post quotations_url,
+           params: { commit: "Save", quotation: { quotation: "Yes we can.", author_id: 0, locale: "en" } }
+      assert_response :unprocessable_entity # 422
+    end
+  end
+
+  test "Turbo POST create without :commit" do
+    login :first_user
+    assert_no_difference 'Quotation.count' do
+      post quotations_url,
+           params: { author: 'Schill', quotation: { quotation: "Die Sterne lügen nicht." } }
+      assert_response :success
+      assert_equal "text/vnd.turbo-stream.html; charset=utf-8", @response.content_type
+      assert_match /<input type="search" name="author" id="author" value="Schiller, Friedrich/, @response.body
+    end
   end
 
   test "should get edit" do
@@ -134,6 +156,17 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: '' } }
     assert_response :unprocessable_entity # 422
     assert_match /1 fehler|1 error/i, @response.body
+  end
+
+  test "Turbo POST update without :commit" do
+    login :first_user
+    assert_no_difference 'Quotation.count' do
+      patch quotation_url(@quotation_one),
+           params: { author: 'Schill', quotation: { quotation: "Die Sterne lügen nicht." } }
+      assert_response :success
+      assert_equal "text/vnd.turbo-stream.html; charset=utf-8", @response.content_type
+      assert_match /<input type="search" name="author" id="author" value="Schiller, Friedrich/, @response.body
+    end
   end
 
   test "destroy quotation" do
@@ -342,6 +375,57 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
         assert_select "a[href=?]", link
         assert_select "a.animated", count: 0
       end
+    end
+  end
+
+  #
+  # indirect private methods
+  #
+
+  # this and the following are integration tests, Internet requets are made
+  #
+  test "verify_and_improve_link – valid link" do
+    login :first_user
+    patch quotation_url(@quotation_one),
+          params: { commit: "Save",
+                    quotation: { quotation: 'The early bird catches the worm',
+                                 locale: 'en',
+                                 source_link: 'https://httpbin.org/status/200' } }
+
+    assert_nil flash[:warning]
+  end
+  test "verify_and_improve_link – changed http link" do
+    login :first_user
+    patch quotation_url(@quotation_one),
+          params: { commit: "Save",
+                    quotation: { quotation: 'The early bird catches the worm',
+                                 locale: 'en',
+                                 source_link: 'http://httpbin.org/status/200' } }
+    assert_match /The link “http:.* has been changed to “https:.*/, flash[:warning]
+    assert_match 'https://httpbin.org/status/200', Quotation.find_by(id: @quotation_one.id).source_link
+  end
+  test "verify_and_improve_link – invalid link" do
+    login :first_user
+    patch quotation_url(@quotation_one),
+          params: { commit: "Save",
+                    quotation: { quotation: 'The early bird catches the worm',
+                                 locale: 'en',
+                                 source_link: 'https://non.existing.bla' } }
+    assert_match /The link .* cannot be accessed!/, flash[:warning]
+    # warning, but the link is saved anyway
+    assert_match 'https://non.existing.bla', Quotation.find_by(id: @quotation_one.id).source_link
+  end
+  test "verify_and_improve_link – empty link" do
+    [nil, ''].each do |link|
+      login :first_user
+      patch quotation_url(@quotation_one),
+            params: { commit: "Save",
+                      quotation: { quotation: 'The early bird catches the worm',
+                                   locale: 'en',
+                                   source_link: link } }
+
+      assert_nil flash[:warning]
+      assert_nil Quotation.find_by(id: @quotation_one.id).source_link
     end
   end
 end
