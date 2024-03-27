@@ -7,14 +7,16 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     @author_without_quotes_and_comments = authors(:without_quotes_and_comments)
   end
 
-  test "should get index without login" do
-    get authors_url
-    assert_response :success
-  end
-  test "should get index with login" do
-    login :first_user
-    get authors_url
-    assert_response :success
+  test "index" do
+    [false, true].each do |with_login| # test with and without login
+      login :first_user if with_login
+      [false, true].each do |with_order| # # test ordered by name and ordered by number of quotes
+        with_order ?
+          (get authors_url params: { order: :authors }) : # by name
+          (get authors_url) # by number of quotes
+      end
+      assert_response :success
+    end
   end
 
   test "list by letter" do
@@ -85,6 +87,14 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     author = Author.i18n.find_by_name "Johnson"
     assert_not author.public
   end
+  test "create author fails with empty name" do
+    login :first_user
+    assert_no_difference "Author.count" do
+      post authors_url, params: { author: { name_en: "" } }
+    end
+    assert_response :unprocessable_entity # 422
+    assert_match /1 error/i, @response.body
+  end
 
   test "fail get edit without login" do
     get edit_author_url id: @author_one
@@ -138,7 +148,7 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     assert_match /https:\/\/en.wikipedia.org\/wiki\/Martin_Luther/, @response.body
   end
 
-  test "should update own author entry" do
+  test "update save own author entry" do
     login :first_user
     patch author_url(@author_one),
           params: { author: { description_en: "New Description",
@@ -156,7 +166,7 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
                               name_en: "Luther" } }
     assert_forbidden
   end
-  test "should update other users author entry as admin" do
+  test "update save other users author entry as admin" do
     login :admin_user
     patch author_url(@author_one),
           params: { author: { description_en: "New Description",
@@ -168,11 +178,34 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     author = Author.i18n.find_by_name "Luther"
     assert author.public
   end
-  test "return to edit if validation fails" do
+  test "update author fails with empty name" do
     login :first_user
     patch author_url(@author_one), params: { author: { name_en: "" } }
     assert_response :unprocessable_entity # 422
     assert_match /1 error/i, @response.body
+  end
+  test "update translate own author entry" do
+    login :first_user
+    patch author_url(@author_one),
+          params: { translate: :translate,
+                    author: { description_en: "New Description",
+                              firstname_en: "New Firstname",
+                              link_en: "https://en.wikipedia.org/wiki/Martin_Luther",
+                              name_en: "Luther" } }
+    assert_redirected_to author_url(@author_one)
+  end
+  test "update translate other users author entry as admin" do
+    login :admin_user
+    patch author_url(@author_one),
+          params: { translate: :translate,
+                    author: { description_en: "New Description",
+                              firstname_en: "New Firstname",
+                              link_en: "https://en.wikipedia.org/wiki/Martin_Luther",
+                              name_en: "Luther",
+                              public: true } }
+    assert_redirected_to author_url @author_one
+    author = Author.i18n.find_by_name "Luther"
+    assert author.public
   end
 
   test "should destroy own author entry" do
@@ -275,4 +308,5 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     get "/authors/list_no_public?page=42000000"
     assert_response :bad_request
   end
+
 end

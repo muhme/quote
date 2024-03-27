@@ -30,14 +30,6 @@ class AuthorsController < ApplicationController
   def show
   end
 
-  # POST /authors/search
-  def search
-    @authors = Author.filter_by_name(params[:author])
-    logger.debug { "POST /authors/search found #{@authors.count} authors for \"#{params[:author]}\"" }
-    render turbo_stream: turbo_stream.replace("search_author_results", partial: "quotations/search_author_results",
-                                                                       locals: { authors: @authors })
-  end
-
   # GET /authors/new
   def new
     return unless logged_in? t("authors.login_missing")
