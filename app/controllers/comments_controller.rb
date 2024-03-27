@@ -129,10 +129,4 @@ class CommentsController < ApplicationController
   def comment_params
     params.require(:comment).permit(:comment, :locale, :commentable_type, :commentable_id)
   end
-
-  # TODO delete, once i18n-tasks is seeing keys are used in view
-  def never
-    used = t("comments.commented_on")
-    used = t("comments.updated_at")
-  end
 end

@@ -17,6 +17,15 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
                                 locale: :en } }
     end
   end
+  test "create comment failed" do
+    login :first_user
+    assert_no_difference 'Comment.count' do
+      post comments_url,
+           params: { comment: { comment: "", commentable_type: "Category", commentable_id: 1,
+                                locale: :en } }
+    end
+    assert_response :unprocessable_entity # 422
+  end
 
   # GET /comments/1/edit
   test "edit comment" do
@@ -72,6 +81,14 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "crow", c.comment
     assert_equal "en", c.locale
   end
+  test "update comment failed" do
+    login :first_user
+    assert_no_difference 'Comment.count' do
+      patch comment_url(comments :one), params: { comment: { comment: "", locale: "en" } }
+    end
+    assert_response :unprocessable_entity # 422
+  end
+
 
   # DELETE /comments/1
   test "delete comment" do

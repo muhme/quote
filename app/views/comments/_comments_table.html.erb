@@ -8,6 +8,9 @@
             header << raw(' <span class="opacity-50 font-size-smaller">')
             header << hu(comment.user_id)
             if comment.updated_at && comment.created_at
+              # i18n-tasks health counts them as unused, therefor name them explicit
+              # i18n-tasks-use t('comments.commented_on')
+              # i18n-tasks-use t('comments.updated_at')
               header << raw("<span class=\"opacity-50  font-size-smaller\"> #{t("comments.commented_on")} ")
               header << nice_date(comment.created_at)
               if comment.updated_at != comment.created_at

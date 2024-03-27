@@ -308,5 +308,4 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     get "/authors/list_no_public?page=42000000"
     assert_response :bad_request
   end
-
 end
