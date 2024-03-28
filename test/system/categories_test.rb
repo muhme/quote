@@ -195,4 +195,16 @@ class CategoriesTest < ApplicationSystemTestCase
 
     assert false, "link to category X is missing" unless page.source =~ /<a href=".*\/categories\/list_by_letter\/X/
   end
+
+  test "admin needed to list duplicate categories" do
+    check_page page, categories_list_duplicates_url, nil, "Not an Administrator!"
+    do_login
+    check_page page, categories_list_duplicates_url, nil, "Not an Administrator!"
+  end
+  test "list duplicate categories" do
+    do_login :admin_user, :admin_user_password
+    check_this_page page, nil, "Hello admin_user, nice to have you here."
+    # at docker in test environment with > 5.000 categories it takes 6 seconds
+    check_page page, categories_list_duplicates_url, "h1", "Duplicate", DEFAULT_MIN_PAGE_SIZE, true, 10000
+  end
 end
