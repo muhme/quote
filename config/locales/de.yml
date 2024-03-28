@@ -383,5 +383,6 @@ de:
     update:
       updated: Dein Benutzereintrag „%{user}” wurde geändert.
   will_paginate:
-    next_label: "&raquo;"
-    previous_label: "&laquo;"
+    next_label: "&raquo;"     # »
+    previous_label: "&laquo;" # «
+    page_gap: "&hellip;"      # ...
