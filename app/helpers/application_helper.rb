@@ -50,10 +50,6 @@ module ApplicationHelper
       d += " – #{t("layouts.application.help")}"
     elsif controller.action_name == "use"
       d += " – #{t("layouts.application.use")}"
-    elsif controller.action_name == "joomla"
-      d += " – #{t("layouts.application.joomla")}"
-    elsif controller.action_name == "joomla_english"
-      d += " – #{t("layouts.application.joomla_english")}"
     elsif controller.action_name == "new" && controller.controller_name == "users"
       d += " – #{t("layouts.application.register")}"
     elsif controller.action_name == "new" && controller.controller_name == "user_sessions"
@@ -195,11 +191,6 @@ module ApplicationHelper
       end
     end
     truncate(ret, length: 40, escape: false)
-  end
-
-  # link to zip's in public/joomla
-  def link_to_joomla(url)
-    link_to(url, "/joomla/" + url)
   end
 
   # return last git checkin date, like "Sun Feb 5 17:58:03 2023 +0100"

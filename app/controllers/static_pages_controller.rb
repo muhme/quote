@@ -1,8 +1,7 @@
 class StaticPagesController < ApplicationController
   protect_from_forgery except: :not_found
 
-  def joomla
-  end
+  # joomla() and joomla_english() are removed and now redirected to https://github.com/muhme/quote_joomla/wiki
 
   # dynamic generated humans.txt
   def humans
@@ -27,9 +26,6 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
-  end
-
-  def joomla_english
   end
 
   def project

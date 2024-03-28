@@ -88,10 +88,6 @@ class ApplicationHelperTest < ActionView::TestCase
                  lh("https://www.zitat-service.de")
   end
 
-  test "link_to_joomla method" do
-    assert_equal "<a href=\"/joomla/a.zip\">a.zip</a>", link_to_joomla("a.zip")
-  end
-
   test "author selected name" do
     assert_equal "Schiller, Friedrich, German poet and philosopher (1759 - 1805)",
                  author_selected_name(authors(:schiller).id)
