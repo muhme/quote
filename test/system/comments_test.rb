@@ -8,6 +8,13 @@ class CommentsCategoriesTest < ApplicationSystemTestCase
     visit logout_url
     do_login :admin_user, :admin_user_password
     check_page page, "/comments", "h1", "Comments"
+    # first page contains only category comments, jump to the last page to see author and quote comments too
+    links = all('div.pagination a[href*="/comments?page="]', visible: true)
+    # click on the second to last link in the collection (last link is next)
+    links[-2].click if links.size > 1
+    assert_selector "img[src*='/assets/category']"
+    assert_selector "img[src*='/assets/author']"
+    assert_selector "img[src*='/assets/quote']"
   end
 
   test "comments exist" do
