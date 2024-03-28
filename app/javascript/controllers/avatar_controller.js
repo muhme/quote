@@ -83,7 +83,7 @@ export default class extends Controller {
   // - POST request to users controller upload_avatar()
   //
   uploadImage() {
-    DEBUG && console.debug(`avatar_controler::uploadImage()`);
+    DEBUG && console.debug(`avatar_controller::uploadImage()`);
     const input = this.fileInputTarget;
     const file = input.files[0];
     if (file) {
@@ -134,7 +134,7 @@ export default class extends Controller {
   // - GET request to users controller recreate_avatar()
   //
   recreate() {
-    DEBUG && console.debug(`avatar_controler::recreate()`);
+    DEBUG && console.debug(`avatar_controller::recreate()`);
     // if there was an image uploaded the selected file will be cleaned here and
     // deleted in file system by Rails user controller afterwards
     const element = document.getElementById("user_image");
@@ -158,7 +158,7 @@ export default class extends Controller {
   // - GET request to users controller take_gravatar()
   //
   takeGravatar() {
-    DEBUG && console.debug(`avatar_controler::takeGravatar()`);
+    DEBUG && console.debug(`avatar_controller::takeGravatar()`);
     // if there was an image uploaded the selected file will be cleaned here and
     // deleted in file system by Rails user controller afterwards
     const element = document.getElementById("user_image");
