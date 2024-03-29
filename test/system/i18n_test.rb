@@ -43,9 +43,12 @@ class I18nTest < ApplicationSystemTestCase
   end
 
   test "check all pages for missing translation" do
-    paths = (Rails.application.routes.routes.map { |r|
-               r.path.spec.to_s
-             }).select { |path| path.starts_with?("(/:locale)/") }
+    paths = (Rails.application.routes.routes.map do |route|
+      verb = route.verb.to_s
+      path = route.path.spec.to_s
+      # select paths starting with the locale pattern and are not POST requests
+      path if path.starts_with?("(/:locale)/") && !verb.include?("POST")
+    end.compact)
     # "(/:locale)/authors/new(.:format)",
     # "(/:locale)/authors/:id/edit(.:format)",
     # ...
