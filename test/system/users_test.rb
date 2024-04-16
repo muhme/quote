@@ -193,4 +193,17 @@ class UsersTest < ApplicationSystemTestCase
     check_this_page page, nil, "Avatar was taken over by Gravatar"
     # no 'Save' as user with this email address exist already
   end
+
+  test "upload avatar" do
+    do_login
+    check_page page, 'users/current/edit', nil, "Update User Entry"
+    # click_on and attach_file are not working
+    #   click_on 'Select file'
+    #   attach_file('avatar-upload', '/tmp/face-smile.png', make_visible: true)
+    # using hidden input field in bypassing Stimulus JS controller
+    # image file `face-smile.png` comes local from quote_chrome docker container
+    find('form input[type="file"]', visible: false).set('/usr/share/icons/Adwaita/48x48/legacy/face-smile.png')
+    click_on 'Save'
+    check_this_page page, nil, 'Your user entry "first_user" has been changed.'
+  end
 end
