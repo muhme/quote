@@ -19,7 +19,7 @@
   </head>
   <body class="locale_<%= I18n.locale.to_s %>">
     <span id="side">
-      <div id="logo"><a href="/<%= "#{I18n.locale}" %>"><%= image_tag("quote_service_32.png", size: "32x32", class: "logo", alt: t(".logo_alt"), title: "www.zitat-service.de") %></a></div>
+      <div id="logo_div"><a href="/<%= "#{I18n.locale}" %>"><div id="logo32"></div></a></div>
       <div id="locale">
         <span id="current-language" class="language-selector"><%= raw(string_for_locale(I18n.locale, true)) %> ▾ </span>
           <div id="language-dropdown" class="hidden">

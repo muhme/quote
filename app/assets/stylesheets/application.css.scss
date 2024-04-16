@@ -215,13 +215,29 @@ span#side p {
     text-align: center;
 }
 
-#logo {
-    /* padding: 12px 1px 24px 24px;*/
-    padding: 12px 0 24px 0;
+#logo_div {
+    padding: 12px;
 }
-
-.logo:hover {
-    content: image-url("quote_service_32_black.png");
+#logo16 {
+    width: 16px;
+    height: 16px;
+}
+#logo24 {
+    width: 24px;
+    height: 24px;
+}
+#logo32 {
+    width: 32px;
+    height: 32px;
+}
+#logo32:hover {
+    background-color: #000;
+}
+#logo16, #logo24, #logo32 {
+    display: inline-block;
+    background-image: image-url("zitat-service.svg");
+    background-repeat: no-repeat;
+    background-size: contain; /* up-/downscale */
 }
 
 .ListSource,

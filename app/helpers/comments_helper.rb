@@ -7,6 +7,6 @@ module CommentsHelper
     end
 
     # else "Quotation"
-    image_tag "quote.png", alt: t("g.quote_alt"), title: t("g.quote")
+    image_tag "zitat-service.svg", alt: t("g.quote_alt"), title: t("g.quote"), id: 'logo16'
   end
 end

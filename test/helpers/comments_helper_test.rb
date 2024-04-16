@@ -14,11 +14,11 @@ class CommentsHelperTest < ActionView::TestCase
     assert_equal "<img alt=\"Picture of woman with long hair and red top\" title=\"Author\" src=\"/images/author.png\" />",
                  image_tag_for_commentable_type(@comment)
     @comment.commentable_type = "Quotation"
-    assert_equal "<img alt=\"Letter Z in green, as in logo\" title=\"Quote\" src=\"/images/quote.png\" />",
+    assert_equal "<img alt=\"green letters Zi as logo\" title=\"Quote\" id=\"logo16\" src=\"/images/zitat-service.svg\" />",
                  image_tag_for_commentable_type(@comment)
     # testing default to quotation
     @comment.commentable_type = "Cheesecake"
-    assert_equal "<img alt=\"Letter Z in green, as in logo\" title=\"Quote\" src=\"/images/quote.png\" />",
+    assert_equal "<img alt=\"green letters Zi as logo\" title=\"Quote\" id=\"logo16\" src=\"/images/zitat-service.svg\" />",
                  image_tag_for_commentable_type(@comment)
   end
 end

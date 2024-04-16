@@ -14,7 +14,7 @@ class CommentsCategoriesTest < ApplicationSystemTestCase
     links[-2].click if links.size > 1
     assert_selector "img[src*='/assets/category']"
     assert_selector "img[src*='/assets/author']"
-    assert_selector "img[src*='/assets/quote']"
+    assert_selector "img[src*='/assets/zitat-service']"
   end
 
   test "comments exist" do
