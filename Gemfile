@@ -1,7 +1,13 @@
+# Gemfile
+#
+# to check for up-to-date (but also check ruby version is available in CentOS 9 Stream):
+#   bundle outdated
+#   bundle update
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '~> 3.1' # Feb-2-2024 CentOS 9 Stream is only supporting Ruby 3.1
+ruby '~> 3.3'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.1'
