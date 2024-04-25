@@ -4,5 +4,5 @@
 #
 Rails.application.config.after_initialize do
   # only enqueue the job if the avatars directory does not exist
-  GenerateAvatarsJob.perform_later unless Dir.exists?(AVATARS_DIR)
+  GenerateAvatarsJob.perform_later unless Dir.exist?(AVATARS_DIR)
 end
