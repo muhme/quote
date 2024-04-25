@@ -1,7 +1,6 @@
 # rails.Dockerfile - instructions to build Docker image for the Ruby on Rails based web application zitat-service.de
 #
-# Feb-2-2024 CentOS 9 Stream is only supporting Ruby 3.1, see dnf module list ruby
-FROM ruby:3.1
+FROM ruby:3.3
 # nc for scripts/wait_for_database.sh
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y net-tools vim node.js iputils-ping netcat-traditional
 RUN mkdir /quote
