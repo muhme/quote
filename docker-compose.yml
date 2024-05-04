@@ -5,7 +5,6 @@
 # - Selenium with headless chrome with locale de and VNC server for system tests
 # - maildev SMTP server for testing mails
 
-version: '3.5'
 services:
   db:
     container_name: quote_mariadb
