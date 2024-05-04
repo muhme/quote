@@ -8,7 +8,4 @@
 PATTERN="^quote_[a-z]*$"
 echo ''
 echo "*** Removing all docker containers ${PATTERN}"
-docker ps -a --format '{{.Names}}' | grep "${PATTERN}" | xargs docker rm -f
-
-# if there are no containers to remove, then we also want to end successfully
-exit 0
+docker ps -a --format '{{.Names}}' | grep "${PATTERN}" | xargs -r docker rm -f
