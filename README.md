@@ -7,10 +7,17 @@ The API itself is used by this RoR web application and also by the Joomla module
 [github.com/muhme/quote_joomla](https://github.com/muhme/quote_joomla) and WordPress plugin
 [github.com/muhme/quote_wordpress](https://github.com/muhme/quote_wordpress).
 
-### Scripts
+## Scripts
 
 Some bash-scripts are prepared for a pleasant and also faster development, see folder [scripts](./scripts/) and
 commented list of scripts there.
+
+
+### Prerequisites
+
+[Git](https://git-scm.com/), [Docker](https://www.docker.com/) an a bash scripting environment are required and must be installed. The installation takes about 50 MB (and the log files grow quickly).
+
+Last tested in May 2024 with macOS 14 Sonoma and Ubuntu 22 Jammy Jellyfish.
 
 ## Docker Containers
 There is a Docker test and development environment prepared. You can create your own test and development instance
