@@ -22,6 +22,9 @@ services:
   mysqladmin:
     container_name: quote_mysqladmin
     image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_USER: root
+      PMA_PASSWORD: root
     ports:
       - "8101:80"
     restart: unless-stopped
