@@ -20,22 +20,23 @@ commented list of scripts there.
 Last tested in May 2024 with macOS 14 Sonoma and Ubuntu 22 Jammy Jellyfish.
 
 ## Docker Containers
-There is a Docker test and development environment prepared. You can create your own test and development instance
-with the following commands:
+There is a Docker test and development environment prepared.
+You can create your own local test and development instance with the following commands:
 ```
 host $ git clone https://github.com/muhme/quote
 host $ cd quote
-host $ scripts/compose.sh
+# or starting without setting DEEPL_API_KEY, then there are no automatic translations
+host $ DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx" scripts/compose.sh
 ```
 Then you should have five containers running:
 ```
 host $ docker ps
-IMAGE                        PORTS                                                      NAMES
-quote-rails                  0.0.0.0:8102->3000/tcp                                     quote_rails
-phpmyadmin/phpmyadmin        0.0.0.0:8101->80/tcp                                       quote_mysqladmin
-mariadb                      3306/tcp                                                   quote_mariadb
-selenium/standalone-chrome   4444/tcp, 0.0.0.0:8104->5900/tcp, 0.0.0.0:8105->7900/tcp   quote_chrome
-maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                           quote_maildev
+NAMES              IMAGE                        PORTS
+quote_rails        quote-rails                  0.0.0.0:8102->3000/tcp
+quote_mysqladmin   phpmyadmin/phpmyadmin        0.0.0.0:8101->80/tcp
+quote_mariadb      mariadb                      3306/tcp
+quote_chrome       selenium/standalone-chrome   4444/tcp, 0.0.0.0:8104->5900/tcp, 0.0.0.0:8105->7900/tcp
+quote_maildev      maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp
 ```
 * quote_mariadb – MariaDB database server
   * database admin user is root/root
@@ -46,15 +47,13 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
 * quote_rails – Rails web application zitat-service
   * http://localhost:8102
   * getting Shell with: "docker exec -it quote_rails bash"
-  * running function tests with "docker exec -it quote_rails rails t"
-  * running system tests using Chrome browser on Selenium container with "docker exec -ti quote_rails rails test:system"
   * local directory /quote with cloned GitHub repository is mounted into container
   * users available are:
-    * user/user_password/user@user.com
-    * admin/admin_password/admin@admin.com
-    * super_admin/super_admin/super_admin@admin.com
+    * user / user_password / user@user.com
+    * admin / admin_password / admin@admin.com
+    * super_admin / super_admin / super_admin@admin.com
 * quote_chrome – Selenium Standalone with Chrome and VNC server
-  * two ports are available to see browser working in test:system (using the password: secret):
+  * two ports are available to see browser working in system test (using the password: secret):
     * using a VNC viewer [vnc://localhost:8104](vnc://localhost:8104) or
     * using your browser (no VNC client is needed) http://localhost:8105/?autoconnect=1&resize=scale&password=secret
 * quote_maildev – SMTP Server and Web Interface for viewing and testing emails during development
@@ -64,19 +63,15 @@ maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp                   
 <details>
   <summary>The application uses DeepL API Free for translation.</summary>
   
-  You can register there and then use your own key in the rails application, in the tests and for translations
-  with i18n-tasks command. The key has to be set in `.env` file and rails container's `.bashrc` by the compose script:
-  
-```
-host $ DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx" scripts/compose.sh
-```
+  You can register there for free and then use your own key in the rails application, in the tests and for translations
+  with i18n-tasks command. The key is set in `.env` file and rails container's `.bashrc` by the `scripts/compose.sh` or you can add it later.
 
 Then you can use `i18n-tasks` within the Rails container to check if the keys are ok, normalize the order or
 translate missing keys:
 ```
-quote-rails # i18n-tasks health
-quote-rails # i18n-tasks normalize
-quote-rails # i18n-tasks translate-missing --backend=deepl
+host $ docker exec -it quote_rails i18n-tasks health
+host $ docker exec -it quote_rails i18n-tasks normalize
+host $ docker exec -it quote_rails bash -c ". ~/.bashrc && i18n-tasks translate-missing --backend=deepl"
 ```
 </details>
 
@@ -85,21 +80,18 @@ quote-rails # i18n-tasks translate-missing --backend=deepl
 <details>
   <summary>Mini tests and system tests are available for application validation.</summary>
 
-  Mini tests are sometimes integration tests, when the interaction with external services such as Deepl or Gravatar
-  is also tested. Test coverage is greater than 90%, check it by your own:
-  * rails test - to run automated minitests
-  * rails test:system - to run automated Selenium system tests with Chrome browser
+  You can run mini tests and system tests with:
+  ```
+  host $ scripts/test.sh
+  ```
 
-  **Note**
-  > If your're using Docker, go into container first with:
-  ```
-  host $ docker exec -it quote_rails /bin/bash
-  ```
+  Mini tests are sometimes integration tests, when the interaction with external services
+  such as Deepl or Gravatar is also tested.
 
   After running the tests you can find simplecov report in the directory coverage, e.g.:
   ![simplecov.png](/app/assets/images/simplecov.png)
 
-  While the system tests are running, you can access the test environment in parallel via http://localhost:8112.
+  While the system tests are running, you can access the test environment web application in parallel via http://localhost:8112.
   Or you can start the Rails server for the test environment manually inside the docker container:
   ```
   quote_rails $ export PORT=3100 && rails server --environment test -P /tmp/test.pid
