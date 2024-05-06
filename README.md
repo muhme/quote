@@ -17,7 +17,7 @@ commented list of scripts there.
 
 [Git](https://git-scm.com/), [Docker](https://www.docker.com/) an a bash scripting environment are required and must be installed. The installation takes about 50 MB (and the log files grow quickly).
 
-Last tested in May 2024 with macOS 14 Sonoma and Ubuntu 22 Jammy Jellyfish.
+Tested with macOS 14 Sonoma and Ubuntu 22 Jammy Jellyfish.
 
 ## Docker Containers
 There is a Docker test and development environment prepared.
@@ -40,7 +40,7 @@ quote_maildev      maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp
 ```
 * quote_mariadb – MariaDB database server
   * database admin user is root/root
-  * Database quote_development with database user quote_development/quote_development and LIVE database import from August 2023 and three additional users created with the three different user roles 
+  * Database quote_development with database user quote_development/quote_development and cleaned LIVE database import from August 2023 and three additional users created with the three different user roles 
   * database quote_test with database user quote_test/quote_test created
 * quote_mysqladmin – phpMyAdmin (user root/root)
   * http://localhost:8101
@@ -92,7 +92,7 @@ host $ docker exec -it quote_rails bash -c ". ~/.bashrc && i18n-tasks translate-
   ![simplecov.png](/app/assets/images/simplecov.png)
 
   While the system tests are running, you can access the test environment web application in parallel via http://localhost:8112.
-  Or you can start the Rails server for the test environment manually inside the docker container:
+  Or you can start the Rails server for the test environment manually inside the docker container to inspect the web application working with test test environment data:
   ```
   quote_rails $ export PORT=3100 && rails server --environment test -P /tmp/test.pid
   ```
