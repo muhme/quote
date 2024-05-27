@@ -29,7 +29,7 @@ docker exec -it quote_rails sh -c "echo export DEEPL_API_KEY=${DEEPL_API_KEY} >>
 echo "DEEPL_API_KEY=${DEEPL_API_KEY}" > .env
 
 # see https://github.com/rails/rails/issues/50827
-FILE="/usr/local/bundle/gems/actionpack-7.1.3.2/lib/action_dispatch/system_testing/driver.rb"
+FILE="/usr/local/bundle/gems/actionpack-7.1.3.3/lib/action_dispatch/system_testing/driver.rb"
 echo ''
 echo "*** Rails system test hack $FILE"
 # backup the original file before making changes
