@@ -100,37 +100,48 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test "string for locale" do
-    assert_match /EN/, string_for_locale
-    assert_match /EN/, string_for_locale(nil)
-    assert_match /EN/, string_for_locale(nil, true)
-    assert_match /DE/, string_for_locale("de")
-    assert_match /EN/, string_for_locale("quark cake")
-    assert_match /DE/, string_for_locale("de", true)
-    assert_match /DE/, string_for_locale("de", false)
-    assert_match /Deutsch/, string_for_locale("de", false)
-    refute_match /Deutsch/, string_for_locale("de", true)
-    assert_match /EN/, string_for_locale("en", false)
-    assert_match /English/, string_for_locale("en", false)
-    refute_match /English/, string_for_locale("en", true)
-    assert_match /ES/, string_for_locale("es", false)
-    assert_match /Español/, string_for_locale("es", false)
-    refute_match /Español/, string_for_locale("es", true)
-    assert_match /JA/, string_for_locale("ja", false)
-    assert_match /日本語/, string_for_locale("ja", false)
-    refute_match /日本語/, string_for_locale("ja", true)
-    assert_match /UK/, string_for_locale("uk", false)
-    assert_match /Українська/, string_for_locale("uk", false)
-    refute_match /Українська/, string_for_locale("uk", true)
+    assert_match "fi-us", string_for_locale
+    assert_match "fi-us", string_for_locale(nil)
+    assert_match "fi-us", string_for_locale(nil, true)
+    assert_match "fi-de", string_for_locale("de")
+    assert_match "fi-us", string_for_locale("quark cake")
+    assert_match "fi-de", string_for_locale("de", true)
+    assert_match "fi-de", string_for_locale("de", false)
+    assert_match "Deutsch", string_for_locale("de", false)
+    refute_match "Deutsch", string_for_locale("de", true)
+    assert_match "fi-us", string_for_locale("en", false)
+    assert_match "English", string_for_locale("en", false)
+    refute_match "English", string_for_locale("en", true)
+    assert_match "fi-es", string_for_locale("es", false)
+    assert_match "Español", string_for_locale("es", false)
+    refute_match "Español", string_for_locale("es", true)
+    assert_match "fi-jp", string_for_locale("ja", false)
+    assert_match "日本語", string_for_locale("ja", false)
+    refute_match "日本語", string_for_locale("ja", true)
+    assert_match "fi-ua", string_for_locale("uk", false)
+    assert_match "Українська", string_for_locale("uk", false)
+    refute_match "Українська", string_for_locale("uk", true)
   end
 
   test "string for locale only flag" do
-    assert_equal '&#x1F1FA;&#x1F1F8;', string_for_locale(nil, nil, true) # 🇺🇸
-    assert_equal '&#x1F1FA;&#x1F1F8;', string_for_locale("en", nil, true) # 🇺🇸
-    assert_equal '&#x1F1FA;&#x1F1F8;', string_for_locale(:en, nil, true) # 🇺🇸
-    assert_equal '&#x1F1E9;&#x1F1EA;', string_for_locale(:de, nil, true) # 🇩🇪
-    assert_equal '&#x1F1EA;&#x1F1F8;', string_for_locale(:es, nil, true) # 🇪🇸
-    assert_equal '&#x1F1EF;&#x1F1F5;', string_for_locale(:ja, nil, true) # 🇯🇵
-    assert_equal '&#x1F1FA;&#x1F1E6;', string_for_locale(:uk, nil, true) # 🇺🇦
+    assert_equal '<span class="fi fi-us"></span>', string_for_locale(nil) # 🇺🇸
+    assert_equal '<span class="fi fi-us"></span>', string_for_locale("en") # 🇺🇸
+    assert_equal '<span class="fi fi-us"></span>', string_for_locale(:en) # 🇺🇸
+    assert_equal '<span class="fi fi-de"></span>', string_for_locale(:de) # 🇩🇪
+    assert_equal '<span class="fi fi-es"></span>', string_for_locale(:es) # 🇪🇸
+    assert_equal '<span class="fi fi-jp"></span>', string_for_locale(:ja) # 🇯🇵
+    assert_equal '<span class="fi fi-ua"></span>', string_for_locale(:uk) # 🇺🇦
+  end
+
+  test "strings for locale UTF-8" do
+    assert_equal '&#x1F1E9;&#x1F1EA; – Deutsch', string_for_locale_utf8("de") # 🇩🇪
+    assert_equal '&#x1F1FA;&#x1F1F8; – English', string_for_locale_utf8("en") # 🇺🇸
+    assert_equal '&#x1F1EA;&#x1F1F8; – Español', string_for_locale_utf8("es") # 🇪🇸
+    assert_equal '&#x1F1EF;&#x1F1F5; – 日本語', string_for_locale_utf8(:ja) # 🇯🇵
+    assert_equal '&#x1F1FA;&#x1F1E6; – Українська', string_for_locale_utf8(:uk) # 🇺🇦
+    assert_equal '&#x1F1FA;&#x1F1F8; – English', string_for_locale_utf8() # 🇺🇸
+    assert_equal '&#x1F1FA;&#x1F1F8; – English', string_for_locale_utf8(nil) # 🇺🇸
+    assert_equal '&#x1F1FA;&#x1F1F8; – English', string_for_locale_utf8("fr") # 🇺🇸
   end
 
   # [:de, :en, :es, :ja, :uk]

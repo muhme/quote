@@ -14,12 +14,10 @@ class I18nTest < ApplicationSystemTestCase
   # select a language (locale) and click on quotes menu entry, wait the quotes page is loaded and check h1 and url
   test "select language" do
     I18n.available_locales.each do |locale|
-      upcase_locale = locale.to_s.upcase
       visit root_url
       find("#current-language").click
-      # look and click for unique e.g. " UK – " in "🇺🇦 UK – українська"
-      # (because ? it founds 3 elements, simple click the last one is working)
-      all(:xpath, ".//div[contains(., '#{upcase_locale} – ')]", visible: true).last.click
+      # look and click for unique e.g. data-locale="de"
+      find(".language-option[data-locale=\"#{locale}\"]").click
       # click on quotes menu entry
       click_on I18n.t("g.quotes", locale: locale, count: 0)
       # have to unselect actual locale to see all quotes and to find plural title

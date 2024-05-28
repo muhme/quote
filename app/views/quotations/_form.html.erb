@@ -43,7 +43,11 @@
 
   <div class="top_space_field">
     <%= form.label :public, label_and_description(t("g.language")), class: "font-size-smaller" %><br/>
-    <%= form.select :locale, I18n.available_locales.map { |locale| [string_for_locale(locale).html_safe, locale] } %>
+    <%# This is the last place where UTF-8 flags are used as emojicons and displayed as two-letter language code
+        in Microsoft Windows Edge and Chrome. The reason for this is that we want to save ourselves the trouble
+        of using the flags as background images and using JS in the selection.
+    %>
+    <%= form.select :locale, I18n.available_locales.map { |locale| [string_for_locale_utf8(locale).html_safe, locale] } %>
   </div>
   
   <% if current_user and current_user.admin == true %>

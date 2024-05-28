@@ -21,11 +21,11 @@
     <span id="side">
       <div id="logo_div"><a href="/<%= "#{I18n.locale}" %>"><div id="logo32"></div></a></div>
       <div id="locale">
-        <span id="current-language" class="language-selector"><%= raw(string_for_locale(I18n.locale, true)) %> ▾ </span>
+        <span id="current-language" class="language-selector"><%= raw(string_for_locale(I18n.locale)) %> ▾ </span>
           <div id="language-dropdown" class="hidden">
             <% [:de, :en, :es, :ja, :uk].each do |locale| %>
-              <%# e.g. 🇺🇦 UK – Українська %>
-              <%= raw("<div class='language-option' data-locale='#{locale}'>#{string_for_locale(locale)}</div>") %>
+              <%# e.g. 🇺🇦 – Українська %>
+              <%= raw("<div class='language-option' data-locale='#{locale}'>#{string_for_locale(locale, false)}</div>") %>
             <% end %>
           </div>
       </div>

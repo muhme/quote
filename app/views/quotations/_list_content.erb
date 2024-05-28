@@ -4,7 +4,7 @@
     <% selected_locales = ((params[:locales] && params[:locales].split(',')) || []).map(&:to_sym) %>
     <% I18n.available_locales.each do |locale| %>
       <%= check_box_tag 'locales[]', locale, selected_locales.include?(locale), id: "locale_#{locale}", class: 'locale-checkbox' %>
-      <%= label_tag "locale_#{locale}", string_for_locale(locale, true, true).html_safe %>
+      <%= label_tag "locale_#{locale}", string_for_locale(locale, true).html_safe %>
       &nbsp;
     <% end %>
   <% end %>
@@ -27,7 +27,7 @@
         <tr valign="top" class="ListLine<%= odd_or_even %>">
           <td>
             <span class="center">
-            <%= raw string_for_locale(quotation.locale, true, true) %>
+            <%= raw string_for_locale(quotation.locale) %>
           </span>
         </td>
         <td class="ListQuote">

@@ -9,8 +9,11 @@ class CommentsAuthorsTest < ApplicationSystemTestCase
     check_this_page page, nil, /first_user.*commented on 01.05.2023.*updated on 10.05.2023/
     # comment itself
     check_this_page page, nil, "日本語 comment for author with one comment"
-    # locale
-    check_this_page page, "span.flags", "JA"
+    # looking for div#comments.table' .* span.fi.fi-jp
+    assert page.has_css?('div#comments.table')
+    within('div#comments.table') do
+      assert page.has_css?('span.fi.fi-jp')
+    end
   end
 
   test "add new comment" do
@@ -19,11 +22,19 @@ class CommentsAuthorsTest < ApplicationSystemTestCase
     fill_in "comment_comment", with: "Test Comment"
     click_on "Add"
     check_this_page page, nil, "Test Comment"
-    check_this_page page, "span.flags", "EN"
+    # looking for div#comments.table' .* span.fi.fi-us
+    assert page.has_css?('div#comments.table')
+    within('div#comments.table') do
+      assert page.has_css?('span.fi.fi-us')
+    end
     # reload Author
     check_page page, author_url(locale: "en", id: authors(:with_one_comment)), "h1", "Author"
     check_this_page page, nil, "Test Comment"
-    check_this_page page, "span.flags", "EN"
+    # looking for div#comments.table' .* span.fi.fi-us
+    assert page.has_css?('div#comments.table')
+    within('div#comments.table') do
+      assert page.has_css?('span.fi.fi-us')
+    end
   end
 
   test "no empty comments allowed" do
@@ -46,7 +57,11 @@ class CommentsAuthorsTest < ApplicationSystemTestCase
     # reload Author
     check_page page, author_url(locale: "en", id: authors(:with_one_comment)), "h1", "Author"
     check_this_page page, nil, "überschrieben"
-    check_this_page page, "span.flags", "DE"
+    # looking for div#comments.table' .* span.fi.fi-de
+    assert page.has_css?('div#comments.table')
+    within('div#comments.table') do
+      assert page.has_css?('span.fi.fi-de')
+    end
   end
 
   test "edit comment as admin" do
@@ -60,7 +75,11 @@ class CommentsAuthorsTest < ApplicationSystemTestCase
     # reload Author
     check_page page, author_url(locale: "en", id: authors(:with_one_comment)), "h1", "Author"
     check_this_page page, nil, "Слава Україні!"
-    check_this_page page, "span.flags", "UK"
+    # looking for div#comments.table' .* span.fi.fi-ua
+    assert page.has_css?('div#comments.table')
+    within('div#comments.table') do
+      assert page.has_css?('span.fi.fi-ua')
+    end
   end
 
   test "not allowed to edit someone else comment" do

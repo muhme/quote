@@ -12,7 +12,7 @@
 
     <% @result.each do |entry| %>
       <tr>
-        <td class="center"><%= raw string_for_locale(entry[0], true) %></td>
+        <td class="center"><%= raw string_for_locale(entry[0]) %></td>
         <td><%= entry[1] %></td>
         <td class="actions"><%= raw "#{entry[2]} &nbsp;
                 <span class=\"float-right\">

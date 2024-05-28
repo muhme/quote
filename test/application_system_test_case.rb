@@ -26,7 +26,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   #   - if running longer than one second first time, after a short breath, making a second attempt to be successfull
   #     in Docker env as well
   #   - finally checking for broken images
-  def check_page page, path, selector, content, size = DEFAULT_MIN_PAGE_SIZE, first_time = true,
+  def check_page page, path, selector, content = nil, size = DEFAULT_MIN_PAGE_SIZE, first_time = true,
                  max_execution_time = MAX_EXECUTION_TIME
     Rails.logger.debug "check_page path=#{path} selector=#{selector} " +
                        content.class.name +
@@ -39,6 +39,8 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       assert false,
              "page \"#{page.current_url}\" is missing " +
              content.class.name + " \"#{content}\"" unless page.has_text?(content)
+    elsif content.nil?
+      assert_selector selector, visible: true
     else
       assert_selector selector, text: content, visible: true
     end
@@ -59,7 +61,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   # do check_page w/o visiting new path
-  def check_this_page page, selector, content, size = DEFAULT_MIN_PAGE_SIZE, first_time = true,
+  def check_this_page page, selector, content = nil, size = DEFAULT_MIN_PAGE_SIZE, first_time = true,
                       max_execution_time = MAX_EXECUTION_TIME
     check_page page, nil, selector, content, size, first_time, max_execution_time
   end

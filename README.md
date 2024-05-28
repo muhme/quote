@@ -132,7 +132,7 @@ For JavaScript files and debugging see folder [app/javascript](./app/javascript/
 
 * 2024 upgraded to Rails 7.1.3, added avatar images
 * 2023 updated Rails 7.0.5 ... 7.0.8, Ruby 3.1
-* 2023 everything translated from German 🇩🇪 into English 🇺🇸, español 🇪🇸, 日本語 🇯🇵 and українська 🇺🇦
+* 2023 everything translated from German into English, español, 日本語 and українська
 * 2023 using Hotwire Turbo (see [Autocomplete mit Rails & Turbo](https://www.consulting.heikol.de/en/blog/autocomplete-ruby-on-rails-turbo/))
 * 2022 updated to Ruby 3.0 and Rails 7.0.1 ... 7.0.4
 * 2021 updated to Rails 6.1.3 ... 6.1.4

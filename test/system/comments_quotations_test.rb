@@ -10,7 +10,7 @@ class CommentsQuotationsTest < ApplicationSystemTestCase
     # comment itself
     check_this_page page, nil, "Comentarios en español for quotation \"with_one_comment\""
     # locale
-    check_this_page page, "span.flags", "ES"
+    check_this_page page, "span.fi.fi-es"
   end
 
   test "add new comment" do
@@ -19,11 +19,11 @@ class CommentsQuotationsTest < ApplicationSystemTestCase
     fill_in "comment_comment", with: "Test Comment"
     click_on "Add"
     check_this_page page, nil, "Test Comment"
-    check_this_page page, "span.flags", "EN"
+    check_this_page page, "span.fi.fi-us"
     # reload quotation
     check_page page, quotation_url(locale: "en", id: quotations(:with_one_comment)), "h1", "Quote"
     check_this_page page, nil, "Test Comment"
-    check_this_page page, "span.flags", "EN"
+    check_this_page page, "span.fi.fi-us"
   end
 
   test "no empty comments allowed" do
@@ -45,7 +45,7 @@ class CommentsQuotationsTest < ApplicationSystemTestCase
     # reload quotation
     check_page page, quotation_url(locale: "en", id: quotations(:with_one_comment)), "h1", "Quote"
     check_this_page page, nil, "überschrieben"
-    check_this_page page, "span.flags", "DE"
+    check_this_page page, "span.fi.fi-de"
   end
 
   test "edit comment as admin" do
@@ -59,7 +59,7 @@ class CommentsQuotationsTest < ApplicationSystemTestCase
     # reload quotation
     check_page page, quotation_url(locale: "en", id: quotations(:with_one_comment)), "h1", "Quote"
     check_this_page page, nil, "Слава Україні!"
-    check_this_page page, "span.flags", "UK"
+    check_this_page page, "span.fi.fi-ua"
   end
 
   test "not allowed to edit someone else comment" do

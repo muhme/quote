@@ -19,7 +19,7 @@
         <%= form.text_field "category_#{I18n.locale}", id: "category_name_#{I18n.locale}", autofocus: true, value: @category.category(locale: I18n.locale) %>
       </div>
       <div>
-        <%= raw "&nbsp;#{string_for_locale(I18n.locale, true)}" %>
+        <%= raw "&nbsp;#{string_for_locale(I18n.locale)}" %>
       </div>
     </div>
 
@@ -30,7 +30,7 @@
             <%= form.text_field "category_#{locale}", id: "category_name_#{locale}", value: @category.category(locale: locale) %>
         </div>
         <div>
-            <%= raw "&nbsp;#{string_for_locale(locale, true)}" %>
+            <%= raw "&nbsp;#{string_for_locale(locale)}" %>
         </div>
         </div>
       <% end %>

@@ -229,18 +229,27 @@ module ApplicationHelper
   end
 
   # returns e.g.
-  #   "🇺🇦 UK – українська" for string_for_locale(:uk)
-  #   "🇺🇦 UK" for string_for_locale(:uk, true)
-  #   "🇺🇦" for string_for_locale(:uk, true, true)
-  # falls back to :en for unknown locale or nil
-  def string_for_locale(locale = "en", shorten = false, only_flag = false)
-    # logger.debug { "string_for_locale(#{locale.class} #{locale}, #{shorten})" }
+  #   "<span class="fi fi-ua"></span>" for string_for_locale(:uk)
+  #   "<span class="flags"><span class="fi fi-ua"></span></span> – Українська</div>" for string_for_locale(:uk, false)
+  #
+  # fall back to :en for unknown locale or nil
+  #
+  # changed from using UTF-8 emoji flags to selected SVG flags from flag-icons
+  # as Microsoft Windows doesn't support UTF8 emoji flags on Edge or Chrome
+  #
+  def string_for_locale(locale = "en", only_flag = true)
+    # logger.debug { "string_for_locale(#{locale.class} #{locale}, #{only_flag})" }
     flag = {
-      :de => '&#x1F1E9;&#x1F1EA;',
-      :en => '&#x1F1FA;&#x1F1F8;',
-      :es => '&#x1F1EA;&#x1F1F8;',
-      :ja => '&#x1F1EF;&#x1F1F5;',
-      :uk => '&#x1F1FA;&#x1F1E6;'
+      # 🇩🇪 Germany for 'de' Deutsch (German)
+      :de => '<span class="fi fi-de"></span>',
+      # 🇺🇸 United States of America for 'en' English
+      :en => '<span class="fi fi-us"></span>',
+      # 🇪🇸 Spain for 'es' Español (Spanish)
+      :es => '<span class="fi fi-es"></span>',
+      # 🇯🇵 Japan for 'jp' 日本語 (Japanese)
+      :ja => '<span class="fi fi-jp"></span>',
+      # 🇺🇦 Ukraine for 'ua' Українська (Ukrainian)
+      :uk => '<span class="fi fi-ua"></span>'
     }.freeze
     lang = {
       :de => 'Deutsch',
@@ -253,10 +262,27 @@ module ApplicationHelper
     l = :en unless flag.has_key?(l)
     return flag[l] if only_flag
 
-    ret = "<span class=\"flags\">#{flag[l]}&nbsp;#{l.upcase}</span>"
-    ret = "#{ret} – #{lang[l]}" unless shorten
+    ret = "<span class=\"flags\">#{flag[l]}</span> – #{lang[l]}"
     # logger.debug { "string_for_locale ret=\”#{ret}\”" }
     ret
+  end
+
+  # returns string for locale with flag as UTF-8 emojis
+  # (shown on Microsoft Windows Edge or Chrom as 2-letter language code)
+  #
+  # e.g. "🇯🇵 – 日本語"
+  #
+  def string_for_locale_utf8(locale = "en")
+    sfl = {
+      :de => '&#x1F1E9;&#x1F1EA; – Deutsch',
+      :en => '&#x1F1FA;&#x1F1F8; – English',
+      :es => '&#x1F1EA;&#x1F1F8; – Español',
+      :ja => '&#x1F1EF;&#x1F1F5; – 日本語',
+      :uk => '&#x1F1FA;&#x1F1E6; – Українська'
+    }.freeze
+    l = locale&.to_sym&.downcase
+    l = :en unless sfl.has_key?(l)
+    sfl[l]
   end
 
   # returns next locale from [:de, :en, :es, :ja, :uk] as string

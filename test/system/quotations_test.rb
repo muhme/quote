@@ -153,7 +153,7 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, "The quote has been updated."
     check_page page, quotation_url(id: 1), nil, /Original source:.*jo!/
     check_this_page page, nil, /Author:.*Friedrich Schiller/
-    check_this_page page, nil, "🇺🇦 UK"
+    check_this_page page, "span.fi.fi-ua" # 🇺🇦
   end
   test "edit own quote fails" do
     do_login
@@ -300,7 +300,7 @@ class QuotationsTest < ApplicationSystemTestCase
     check_this_page page, nil, "quote has been added."
     new_quote = Quotation.last
     check_page page, quotation_url(id: new_quote), nil, /Public:.*No/
-    check_this_page page, nil, "🇺🇦 UK"
+    check_this_page page, "span.fi.fi-ua"
     # delete
     visit quotations_url
     check 'locale_uk'

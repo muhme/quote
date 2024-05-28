@@ -58,6 +58,7 @@ textarea {
     -webkit-hyphenate-limit-chars: auto 5;
     -webkit-hyphenate-limit-lines: 2;
     -webkit-hyphens: auto;
+    hyphenate-limit-chars: auto 5;
     text-align: justify;
     width: calc(100% - 10em);
 }
@@ -538,7 +539,7 @@ span#side div.language-option {
 
 .flags {
     display: inline-block;
-    width: 5ch;
+    width: 2ch;
 }
 
 .hidden {
@@ -596,6 +597,7 @@ div.tdata:blank {
 div.td {
     display: table-cell;
     padding: 1px;
+    width: 100%; // important to have edit-button, delete-button and language flag right-bound
 }
 
 div.tr {
@@ -721,4 +723,59 @@ a:visited img.avatar {
 }
 .avatar-block h2 {
     padding-top: 0;
+}
+
+/* five flags from https://github.com/lipis/flag-icons are used */
+.fi {
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    position: relative;
+    display: inline-block;
+    width: 1em;
+    line-height: 0.75em;
+    transform: skewX(-10deg);
+    border: 1px solid gray;
+}
+.fi:before {
+    content: " ";
+}
+.fi-de { // Germany
+    background-image: url(/images/de.svg);
+}
+.fi-us { // United States of America
+    background-image: url(/images/us.svg);
+}
+.fi-es { // Spain
+    background-image: url(/images/es.svg);
+}
+.fi-jp {  // Japan
+    background-image: url(/images/jp.svg);
+}
+.fi-ua { // Ukraine
+    background-image: url(/images/ua.svg);
+}
+// having flag in the menu with shadows
+.flags .fi, .language-selector .fi {
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+}
+
+/* in comment row, having pencil-button, delete-button and flag in one line */
+.float-right .inline-elements {
+    display: flex;
+    align-items: center;
+}
+.float-right .inline-elements > * {
+    margin-right: 10px;
+}
+.float-right .inline-elements > *:last-child {
+    margin-right: 0;
+}
+
+// debug only
+.red-border {
+    border: 1px solid red;
+}
+.blue-border {
+    border: 1px dashed blue;
 }

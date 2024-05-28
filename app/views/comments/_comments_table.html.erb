@@ -23,30 +23,35 @@
             <div class="table-row-group" id="<%= "#{dom_id(comment)}_container" %>">
               <div class="tr <%= "#{dom_id(comment)}_tr" %>">
                 <div class="td"><%= raw(header) %></div>
-                <div class="td text-right">
-                  <% if comment.editable_by(current_user) %>
-                    <%= link_to image_tag("pencil.png", class: "edit_comment", alt: t("g.pencil"), title: t("g.update")),
-                      { locale: I18n.locale, action: :edit, controller: :comments, id: comment },
-                      data: {
-                        turbo_frame: dom_id(comment)
-                      },
-                      class: "no-decoration" %>
-                    <%= link_to image_tag("cancel.png", alt: t("g.red_cross"), title: t("g.delete")),
-                      { locale: I18n.locale, action: :destroy, controller: :comments, id: comment },
-                      method: :delete,
-                      data: {
-                        turbo_method: :delete,
-                        turbo_confirm: t("comments.delete", comment: truncate(comment.comment, length: 20))
-                      },
-                      class: "no-decoration" %>
-                  <% end %>
+                <div class="td">
+                  <div class="float-right">
+                    <%# having pencil-button, delete-button and flag inline in one line %>
+                    <div class="inline-elements">
+                      <% if comment.editable_by(current_user) %>
+                        <%= link_to image_tag("pencil.png", class: "edit_comment", alt: t("g.pencil"), title: t("g.update")),
+                          { locale: I18n.locale, action: :edit, controller: :comments, id: comment },
+                          data: {
+                            turbo_frame: dom_id(comment)
+                          },
+                          class: "no-decoration" %>
+                        <%= link_to image_tag("cancel.png", alt: t("g.red_cross"), title: t("g.delete")),
+                          { locale: I18n.locale, action: :destroy, controller: :comments, id: comment },
+                          method: :delete,
+                          data: {
+                            turbo_method: :delete,
+                            turbo_confirm: t("comments.delete", comment: truncate(comment.comment, length: 20))
+                          },
+                          class: "no-decoration" %>
+                      <% end %>
+                      <div class="opacity-50"><%= raw "#{string_for_locale(comment.locale)}</span>" %></div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="tr <%= "#{dom_id(comment)}_tr #{border_bottom_is_not_last}" %>">
                 <%= turbo_frame_tag "#{dom_id(comment)}" do %>
                   <div id="<%= "#{dom_id(comment)}" %>" class="td"><%= raw transformLink(comment.comment) %></div>
                 <% end %>
-                <div class="td #{border_bottom_is_not_last}"><%= raw "<span class=\"opacity-25 font-size-smaller\">#{string_for_locale(comment.locale, true)}</span>" %></div>
               </div>
             </div>
         <% end %>
