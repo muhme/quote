@@ -12,25 +12,20 @@ The API itself is used by this RoR web application and also by the Joomla module
 Some bash-scripts are prepared for a pleasant and also faster development, see folder [scripts](./scripts/) and
 commented list of scripts there.
 
-
 ### Prerequisites
 
-[Git](https://git-scm.com/), [Docker](https://www.docker.com/) an a bash scripting environment are required and must be installed. The installation takes about 50 MB (and the log files grow quickly).
-
-Tested with macOS 14 Sonoma and Ubuntu 22 Jammy Jellyfish.
+[Git](https://git-scm.com/) and [Docker](https://www.docker.com/) in a scripting environment are required. Tested with macOS 14 Sonoma, Ubuntu 22 Jammy Jellyfish and Microsoft Windows 11 WSL 2.
 
 ## Docker Containers
 There is a Docker test and development environment prepared.
 You can create your own local test and development instance with the following commands:
 ```
-host $ git clone https://github.com/muhme/quote
-host $ cd quote
-# or starting without setting DEEPL_API_KEY, then there are no automatic translations
-host $ DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx" scripts/compose.sh
+git clone https://github.com/muhme/quote
+cd quote
+scripts/compose.sh
 ```
-Then you should have five containers running:
+Then five containers are running:
 ```
-host $ docker ps
 NAMES              IMAGE                        PORTS
 quote_rails        quote-rails                  0.0.0.0:8102->3000/tcp
 quote_mysqladmin   phpmyadmin/phpmyadmin        0.0.0.0:8101->80/tcp
@@ -46,17 +41,17 @@ quote_maildev      maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp
   * http://localhost:8101
 * quote_rails – Rails web application zitat-service
   * http://localhost:8102
-  * getting Shell with: "docker exec -it quote_rails bash"
-  * local directory /quote with cloned GitHub repository is mounted into container
+  * local directory `/quote` with cloned GitHub repository is mounted into container
   * users available are:
     * user / user_password / user@user.com
     * admin / admin_password / admin@admin.com
     * super_admin / super_admin / super_admin@admin.com
 * quote_chrome – Selenium Standalone with Chrome and VNC server
   * two ports are available to see browser working in system test (using the password: secret):
-    * using a VNC viewer [vnc://localhost:8104](vnc://localhost:8104) or
-    * using your browser (no VNC client is needed) http://localhost:8105/?autoconnect=1&resize=scale&password=secret
-* quote_maildev – SMTP Server and Web Interface for viewing and testing emails during development
+    * using a VNC viewer: [vnc://localhost:8104](vnc://localhost:8104) or
+    * using your browser (no VNC client is needed):<br />
+      http://localhost:8105/?autoconnect=1&resize=scale&password=secret
+* quote_maildev – SMTP Server and Web Interface for viewing and testing mails during development
   * http://localhost:8106
 
 ## Machine Translation
@@ -64,14 +59,21 @@ quote_maildev      maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp
   <summary>The application uses DeepL API Free for translation.</summary>
   
   You can register there for free and then use your own key in the rails application, in the tests and for translations
-  with i18n-tasks command. The key is set in `.env` file and rails container's `.bashrc` by the `scripts/compose.sh` or you can add it later.
+  with i18n-tasks command. The easiest way is to start with `DEEPL_API_KEY` at the beginning:
 
-Then you can use `i18n-tasks` within the Rails container to check if the keys are ok, normalize the order or
+  ```
+  DEEPL_API_KEY="sample11-key1-ab12-1234-qbc123456789:fx" scripts/compose.sh
+  ```
+
+  Or set the key manually in `.env` file and  in the `.bashrc` of the `quote_rails` container.
+
+You can then use machine translation on the development server. The tests that use machine translation will run.
+And you can use `i18n-tasks` within the Rails container to check if the keys are ok, normalize the order or
 translate missing keys:
 ```
-host $ docker exec -it quote_rails i18n-tasks health
-host $ docker exec -it quote_rails i18n-tasks normalize
-host $ docker exec -it quote_rails bash -c ". ~/.bashrc && i18n-tasks translate-missing --backend=deepl"
+docker exec -it quote_rails i18n-tasks health
+docker exec -it quote_rails i18n-tasks normalize
+docker exec -it quote_rails bash -c ". ~/.bashrc && i18n-tasks translate-missing --backend=deepl"
 ```
 </details>
 
@@ -80,9 +82,9 @@ host $ docker exec -it quote_rails bash -c ". ~/.bashrc && i18n-tasks translate-
 <details>
   <summary>Mini tests and system tests are available for application validation.</summary>
 
-  You can run mini tests and system tests with:
+  You can run all mini tests and system tests:
   ```
-  host $ scripts/test.sh
+  scripts/test.sh
   ```
 
   Mini tests are sometimes integration tests, when the interaction with external services
@@ -94,10 +96,10 @@ host $ docker exec -it quote_rails bash -c ". ~/.bashrc && i18n-tasks translate-
   While the system tests are running, you can access the test environment web application in parallel via http://localhost:8112.
   Or you can start the Rails server for the test environment manually inside the docker container to inspect the web application working with test test environment data:
   ```
-  quote_rails $ export PORT=3100 && rails server --environment test -P /tmp/test.pid
+  docker exec -it quote_rails bash -c "export PORT=3100 && rails server --environment test -P /tmp/test.pid"
   ```
 
-:point_right: If you are using Rails 7.1.3.2 there is a hack needed to run the system tests. `scripts/compose.sh`
+:point_right: If you are using Rails 7.1.3.3 there is a hack needed to run the system tests. `scripts/compose.sh`
 is doing it by extending line #19 in file
 `/usr/local/bundle/gems/actionpack-7.1.3.2/lib/action_dispatch/system_testing/driver.rb`,
 see [rails/issues/50827](https://github.com/rails/rails/issues/50827):
