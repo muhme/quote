@@ -70,14 +70,19 @@ class I18nTest < ApplicationSystemTestCase
     # w/o login
     all_paths_to_check.each do |path|
       visit path
-      # Check if the page does not contain an element with the 'translation_missing' class
+      # check if the page does not contain an element with the 'translation_missing' class
       assert has_no_css?(".translation_missing"), "Found #{path} with translation missing"
+      # check if the page is missing global translation in <img alt="g.show" title="g.show"
+      assert !page.html.include?('="g.'), "Found #{path} with img alt or title attribute starting with 'g.'"
     end
     # w/ login
     do_login
     all_paths_to_check.each do |path|
       visit path
+      # check if the page does not contain an element with the 'translation_missing' class
       assert has_no_css?(".translation_missing"), "Found #{path} with translation missing"
+      # check if the page is missing global translation in <img alt="g.show" title="g.show"
+      assert !page.html.include?('="g.'), "Found #{path} with img alt or title attribute starting with 'g.'"
     end
   end
 

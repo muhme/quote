@@ -20,7 +20,7 @@
         <td class="center"><%= link_to quotations.to_s, controller: "quotations", action: "list_by_category", category: category.id %></td>
         <td class="center"><%= number_of_comments if number_of_comments > 0 %></td>
         <td class="ListActions">
-          <%= link_to image_tag("eye.png", alt: "g.eye", title: "g.show"), locale: I18n.locale, action: "show", id: category %>
+          <%= link_to image_tag("eye.png", alt: t("g.eye"), title: t("g.show")), locale: I18n.locale, action: "show", id: category %>
           <% if can_edit?(category.user_id) %>
             &nbsp;
             <%= link_to image_tag("pencil.png", alt: t("g.pencil"), title: t("g.edit")), locale: I18n.locale, action: "edit", id: category %>

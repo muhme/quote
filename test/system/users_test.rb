@@ -22,9 +22,9 @@ class UsersTest < ApplicationSystemTestCase
     visit root_url
     assert_selector "a[href='#{users_path(locale: :en)}']"
     click_link "User", href: users_path(locale: :en)
-    check_page page, users_path, "h1", "User Entries with Quotes"
-    visit root_url
-    check_page page, users_path, "h1", "User Entries with Quotes"
+    # don't use check_page as it takes e.g. 1.5 seconds on Docker container
+    visit users_path
+    check_this_page page, "h1", "User Entries with Quotes"
   end
 
   # /user
