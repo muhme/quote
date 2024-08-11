@@ -98,15 +98,6 @@ docker exec -it quote_rails bash -c ". ~/.bashrc && i18n-tasks translate-missing
   ```
   docker exec -it quote_rails bash -c "export PORT=3100 && rails server --environment test -P /tmp/test.pid"
   ```
-
-:point_right: If you are using Rails 7.1.3.3 there is a hack needed to run the system tests. `scripts/compose.sh`
-is doing it by extending line #19 in file
-`/usr/local/bundle/gems/actionpack-7.1.3.2/lib/action_dispatch/system_testing/driver.rb`,
-see [rails/issues/50827](https://github.com/rails/rails/issues/50827):
-```
-< @browser.preload
-> @browser.preload unless @options[:browser] == :remote
-```
 </details>
 
 ## JavaScript
@@ -132,7 +123,7 @@ For JavaScript files and debugging see folder [app/javascript](./app/javascript/
 
 ## History
 
-* 2024 upgraded to Rails 7.1.3, added avatar images
+* 2024 upgraded to Rails 7.1.3 ... 7.2, Ruby 3.3, added avatar images
 * 2023 updated Rails 7.0.5 ... 7.0.8, Ruby 3.1
 * 2023 everything translated from German into English, español, 日本語 and українська
 * 2023 using Hotwire Turbo (see [Autocomplete mit Rails & Turbo](https://www.consulting.heikol.de/en/blog/autocomplete-ruby-on-rails-turbo/))

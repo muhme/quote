@@ -10,7 +10,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '~> 3.3'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '~> 7.1'
+gem 'rails', '~> 7.2'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -55,7 +55,8 @@ gem "sassc-rails"
 gem 'puma'
 
 gem 'will_paginate', '~> 4.0'
-gem 'authlogic', '~> 6'
+# waiting for https://github.com/binarylogic/authlogic/pull/770
+gem "authlogic", github: "binarylogic/authlogic", ref: "refs/pull/770/head"
 # for authlogic >= 6
 gem "scrypt", "~> 3.0"
 
