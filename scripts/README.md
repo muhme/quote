@@ -6,7 +6,7 @@ The scripts are used on the Mac command line and inside Docker container, but sh
 
 | Script | Description | Additional Info |
 | --- | --- | --- |
-| [scripts/compose.sh](compose.sh) | Compose docker test & development environment. | - 1st delete all `quote_*` docker containers<br />- 2nd create docker containers (with optional script argument `build`, they are build with no cache)<br />- 3rd set `DEEPL_API_KEY` (as taken from script running environment)<br />- 4th doing Rails system test hack<br />  |
+| [scripts/compose.sh](compose.sh) | Compose docker test & development environment. | - 1st delete all `quote_*` docker containers<br />- 2nd create docker containers (with optional script argument `build`, they are build with no cache)<br />- 3rd set `DEEPL_API_KEY` (as taken from script running environment)  |
 | [scripts/test.sh](test.sh) | Run all the tests in the rails container. | - running `rails test` and `rails test:system` |
 | [scripts/wait_for_database.sh](wait_for_database.sh) | Wait in the rails container for database to be ready in mariadb container. | - count down 60 seconds |
 | [scripts/clean.sh](clean.sh) | Removes all quote_* Docker containers. | - but not quote_api_* nor quote_joomla_* etc. |
