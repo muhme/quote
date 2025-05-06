@@ -10,7 +10,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '~> 3.3'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '~> 7.2'
+gem 'rails', '~> 8.0'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -63,7 +63,7 @@ gem "scrypt", "~> 3.0"
 # to remove trailing slashes from URLs
 gem 'rack-rewrite'
 
-gem 'rails-i18n', '~> 7.0.0'
+gem 'rails-i18n', '~> 8.0'
 gem "mobility", "~> 1.2"
 
 # Terser minifies JavaScript files by wrapping TerserJS to be accessible in Ruby

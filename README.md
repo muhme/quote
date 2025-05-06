@@ -123,17 +123,18 @@ For JavaScript files and debugging see folder [app/javascript](./app/javascript/
 
 ## History
 
-* 2024 upgraded to Rails 7.1.3 ... 7.2, Ruby 3.3, added avatar images
-* 2023 updated Rails 7.0.5 ... 7.0.8, Ruby 3.1
-* 2023 everything translated from German into English, español, 日本語 and українська
-* 2023 using Hotwire Turbo (see [Autocomplete mit Rails & Turbo](https://www.consulting.heikol.de/en/blog/autocomplete-ruby-on-rails-turbo/))
-* 2022 updated to Ruby 3.0 and Rails 7.0.1 ... 7.0.4
-* 2021 updated to Rails 6.1.3 ... 6.1.4
-* 2020 updated to Rails 6.0.2 ... 6.1.0
-* 2019 updated to Rails 5.2.3 / 5.2.4, upgraded to 6.0.1
-* 2018 migrated to Rails 5.1.5, updated to Rails 5.2.1 / 5.2.2
-* 2009 upgraded to Rails 2.0
-* 2006 developed with Rails 1.2
+* 2025 Upgraded to Rails 8.0.2
+* 2024 Upgraded to Rails 7.1.3 ... 7.2.2, Ruby 3.3, added avatar images
+* 2023 Updated to Rails 7.0.5 ... 7.0.8, Ruby 3.1
+* 2023 Everything translated from German into English, español, 日本語 and українська
+* 2023 Using Hotwire Turbo (see [Autocomplete mit Rails & Turbo](https://www.consulting.heikol.de/en/blog/autocomplete-ruby-on-rails-turbo/))
+* 2022 Updated to Rails 7.0.1 ... 7.0.4, Ruby 3.0
+* 2021 Updated to Rails 6.1.3 ... 6.1.4
+* 2020 Updated to Rails 6.0.2 ... 6.1.0
+* 2019 Updated to Rails 5.2.3 / 5.2.4, upgraded to 6.0.1
+* 2018 Migrated to Rails 5.1.5, updated to Rails 5.2.1 / 5.2.2
+* 2009 Upgraded to Rails 2.0
+* 2006 Developed with Ruby on Rails 1.2
 
 ## Contact
 
