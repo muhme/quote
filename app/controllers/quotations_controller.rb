@@ -105,7 +105,7 @@ class QuotationsController < ApplicationController
         hint << " #{t(".author_used", author: Author.find(@quotation.author_id).name)}" if @authors.count != 1
         return redirect_to quotation_path(@quotation, locale: I18n.locale), notice: hint
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     else
       turbo_author(author_id)
@@ -116,7 +116,7 @@ class QuotationsController < ApplicationController
     problem = "#{exc.class} #{exc.message}"
     logger.error "create quotation failed: #{problem}"
     flash[:error] = t(".failed", exception: problem)
-    render :new, status: :unprocessable_entity
+    render :new, status: :unprocessable_content
   end
 
   # PATCH/PUT /quotations/1
@@ -144,7 +144,7 @@ class QuotationsController < ApplicationController
           hint << " #{t(".author_unchanged", author: Author.find(@quotation.author_id).name)}" if @authors.count != 1
           return redirect_to quotation_path(@quotation, locale: I18n.locale), notice: hint
         else
-          render :edit, status: :unprocessable_entity
+          render :edit, status: :unprocessable_content
         end
       else # quotation and associated categories are unchanged
         hint = t(".unchanged")
@@ -170,7 +170,7 @@ class QuotationsController < ApplicationController
     else
       flash[:error] = e = @quotation.errors.any? ? @quotation.errors.first.full_message : "error"
       logger.error "destroy quotation ID=#{@quotation.id} – failed with #{e}"
-      render :show, status: :unprocessable_entity
+      render :show, status: :unprocessable_content
     end
   end
 

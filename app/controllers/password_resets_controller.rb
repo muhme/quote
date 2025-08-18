@@ -16,7 +16,7 @@ class PasswordResetsController < ApplicationController
       redirect_to root_path, notice: t(".email_sent", email: @user.email)
     else
       flash.now[:error] = t(".email_not_found", email: params[:email])
-      render :action => :new, status: :unprocessable_entity
+      render :action => :new, status: :unprocessable_content
     end
   end
 

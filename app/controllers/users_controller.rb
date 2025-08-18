@@ -60,7 +60,7 @@ class UsersController < ApplicationController
       # get avatar image from saved content of the hidden form field
       @avatar_image = avatar_image
       logger.debug { "create: save faild, reset @avatar_image=\"#{avatar_image}\"" }
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -109,7 +109,7 @@ class UsersController < ApplicationController
     else
       # get avatar image from saved content of the hidden form field
       @avatar_image = avatar_image
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

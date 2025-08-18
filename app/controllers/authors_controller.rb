@@ -53,7 +53,7 @@ class AuthorsController < ApplicationController
     unless @author.valid?
       flash[:error] = e = @author.errors.any? ? @author.errors.first.full_message : "error"
       logger.error "create author not valid with #{e}"
-      return render :new, status: :unprocessable_entity
+      return render :new, status: :unprocessable_content
     end
 
     # set https if needed and possible and follow redirects, if not reachable set flash[:warning]
@@ -78,7 +78,7 @@ class AuthorsController < ApplicationController
       return redirect_to author_path(@author, locale: I18n.locale),
                          notice: t(".created", author: @author.get_author_name_or_blank)
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -139,7 +139,7 @@ class AuthorsController < ApplicationController
     else
       flash[:error] = e = @author.errors.any? ? @author.errors.first.full_message : "error"
       logger.error "save author ID=#{@author&.id} – failed with #{e}"
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
@@ -155,7 +155,7 @@ class AuthorsController < ApplicationController
     else
       flash[:error] = e = @author.errors.any? ? @author.errors.first.full_message : "error"
       logger.error "destroy author ID=#{@author&.id} – failed with #{e}"
-      render :show, status: :unprocessable_entity
+      render :show, status: :unprocessable_content
     end
   end
 

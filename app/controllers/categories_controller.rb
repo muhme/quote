@@ -60,7 +60,7 @@ class CategoriesController < ApplicationController
     unless @category.valid?
       flash[:error] = e = @category.errors.any? ? @category.errors.first.full_message : "error"
       logger.error "create category not valid with #{e}"
-      return render :new, status: :unprocessable_entity
+      return render :new, status: :unprocessable_content
     end
 
     begin
@@ -93,7 +93,7 @@ class CategoriesController < ApplicationController
     else
       flash[:error] = e = @category.errors.any? ? @category.errors.first.full_message : "error"
       logger.error "create failed with #{e}"
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -137,7 +137,7 @@ class CategoriesController < ApplicationController
     else
       flash[:error] = e = @category.errors.any? ? @category.errors.first.full_message : "error"
       logger.error "save category ID=#{@category.id} – failed with #{e}"
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
@@ -153,7 +153,7 @@ class CategoriesController < ApplicationController
     else
       flash[:error] = e = @category.errors.any? ? @category.errors.first.full_message : "error"
       logger.error "destroy category ID=#{@category.id} – failed with #{e}"
-      render :show, status: :unprocessable_entity
+      render :show, status: :unprocessable_content
     end
   end
 

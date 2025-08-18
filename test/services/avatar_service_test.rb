@@ -15,8 +15,8 @@ class AvatarServiceTest < ActiveSupport::TestCase
   test "generate Base64 avatar from login name" do
     img = AvatarService::generate_base64_avatar_from_login('test')
     # avatar image created with letters 'te' and color from hash 'test'
-    assert_equal 3498, img.size
-    assert_equal "8ca015240dc697894c0628f5ab0a5a1a", Digest::MD5.hexdigest(img)
+    assert_equal 3478, img.size
+    assert_equal "890baec520b34422e8707c41e7fb2635", Digest::MD5.hexdigest(img)
   end
 
   test "generate Base64 avatar from email with existing Gravatar" do

@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
       redirect_to root_path(locale: I18n.locale)
     else
       flash[:error] = t(".login_failed")
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 

@@ -89,7 +89,7 @@ class StaticPagesController < ApplicationController
 
   # 422
   def unprocessable
-    render status: :unprocessable_entity, :formats => :html, content_type: "text/html"
+    render status: :unprocessable_content, :formats => :html, content_type: "text/html"
   end
 
   # 500

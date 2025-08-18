@@ -44,7 +44,7 @@ class CommentsController < ApplicationController
         format.html {
           flash[:error] = error
           redirect_to controller: @commentable_type.downcase.pluralize, action: "show", locale: I18n.locale,
-                      id: @commentable_id, status: :unprocessable_entity
+                      id: @commentable_id, status: :unprocessable_content
         }
       end
     end
@@ -67,7 +67,7 @@ class CommentsController < ApplicationController
                       id: @commentable_id, notice: "comment was successfully updated."
         }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
       end
     end
   end
@@ -88,7 +88,7 @@ class CommentsController < ApplicationController
                       notice: t("comments.deleted", comment: truncate(@comment.comment, length: 20))
         }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :edit, status: :unprocessable_content }
       end
     end
   end
