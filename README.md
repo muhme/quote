@@ -1,3 +1,7 @@
+The web app has been translated into Ukrainian and supports the Ukrainian language. Ця веб-програма перекладена українською мовою та підтримує українську мову. [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua) 
+
+---
+
 # README
 
 Ruby on Rails (RoR) web application running the website [zitat-service.de](https://www.zitat-service.de).
