@@ -23,7 +23,7 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
   # POST /password_resets
   test "fail for not existing email address" do
     post password_resets_url, :params => { :email => 'bla' }
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
     assert_match /No user found with the email .*!/, @response.body
   end
 

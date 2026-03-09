@@ -123,7 +123,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference('Category.count') do
       post categories_url(locale: :en), params: { category: { category_en: " " } }
     end
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
     assert_match /1 error/i, @response.body
     assert_match /Category can.*t be blank/i, @response.body
   end
@@ -195,7 +195,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   test "return to edit if validation fails" do
     login :first_user
     patch category_url(id: @category_one.id, locale: :en), params: { category: { category_en: '' } }
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
     assert_match /1 fehler|1 error/i, @response.body
   end
 
@@ -223,7 +223,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference('Category.count') do
       delete category_url @category_one
     end
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
     assert_equal category_url(@category_one), request.original_url
   end
   test "delete category as admin" do
@@ -238,7 +238,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference 'Category.count' do
       delete category_url (categories :with_one_comment)
     end
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
   end
 
   test "pagination" do

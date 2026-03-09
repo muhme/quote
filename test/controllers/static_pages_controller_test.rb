@@ -29,7 +29,7 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   end
   test "/422" do
     get "/422"
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
   end
   test "/500" do
     get "/500"

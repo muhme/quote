@@ -24,12 +24,12 @@ class UserSessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "login failed" do
     post user_sessions_url, params: { locale: :en, user_session: { login: "first_user", password: "" } }
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
     assert_match /1 error/i, @response.body
     assert_match /password can not be blank/i, @response.body
 
     post user_sessions_url, params: { locale: :en, user_session: { login: "first_user", password: "bla" } }
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
     assert_match /1 error/i, @response.body
     assert_match /password is not valid/i, @response.body
   end

@@ -107,7 +107,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference 'Quotation.count' do
       post quotations_url,
            params: { commit: "Save", quotation: { quotation: "Yes we can.", author_id: 0, locale: "en" } }
-      assert_response :unprocessable_entity # 422
+      assert_response :unprocessable_content # 422
     end
   end
 
@@ -154,7 +154,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
     assert_forbidden
     login :first_user
     patch quotation_url(@quotation_one), params: { commit: "Save", quotation: { quotation: '' } }
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
     assert_match /1 fehler|1 error/i, @response.body
   end
 

@@ -24,7 +24,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
            params: { comment: { comment: "", commentable_type: "Category", commentable_id: 1,
                                 locale: :en } }
     end
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
   end
 
   # GET /comments/1/edit
@@ -86,7 +86,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference 'Comment.count' do
       patch comment_url(comments :one), params: { comment: { comment: "", locale: "en" } }
     end
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
   end
 
 

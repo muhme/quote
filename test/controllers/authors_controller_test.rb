@@ -92,7 +92,7 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference "Author.count" do
       post authors_url, params: { author: { name_en: "" } }
     end
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
     assert_match /1 error/i, @response.body
   end
 
@@ -181,7 +181,7 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
   test "update author fails with empty name" do
     login :first_user
     patch author_url(@author_one), params: { author: { name_en: "" } }
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
     assert_match /1 error/i, @response.body
   end
   test "update translate own author entry" do
@@ -240,7 +240,7 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference "Author.count" do
       delete author_url @author_one
     end
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
     assert_equal author_url(@author_one), request.original_url
   end
   test "not able to delete author with comments" do
@@ -248,7 +248,7 @@ class AuthorsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference "Author.count" do
       delete author_url (authors :with_one_comment)
     end
-    assert_response :unprocessable_entity # 422
+    assert_response :unprocessable_content # 422
     assert_equal author_url(authors :with_one_comment), request.original_url
   end
 
