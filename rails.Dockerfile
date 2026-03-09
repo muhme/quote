@@ -1,6 +1,6 @@
 # rails.Dockerfile - instructions to build Docker image for the Ruby on Rails based web application zitat-service.de
 #
-FROM ruby:3.3
+FROM ruby:3.4
 # nc for scripts/wait_for_database.sh
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y net-tools vim node.js iputils-ping netcat-traditional
 RUN mkdir /quote

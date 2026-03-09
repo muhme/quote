@@ -72,7 +72,7 @@ module ApplicationHelper
   # return authors "name, firstname, description" or "" for unknown author (id=0) or id isn't set
   # e.g. "Schiller, Friedrich, deutscher Dichter und Philosoph (1759 - 1805)" with max length 80
   def author_selected_name(id)
-    long_name = ""
+    long_name = String.new("")
     if id
       author = Author.find(id)
       [author.name, author.firstname, author.description].each do |field|
@@ -97,7 +97,7 @@ module ApplicationHelper
     else
       all << "*"
     end
-    ret = "<table id=\"letter\"><tr>"
+    ret = String.new("<table id=\"letter\"><tr>")
     for i in 0..(all.length - 1)
       if init_chars.include?(all[i])
         ret << "<td>" + link_to(all[i], controller: :authors, action: :list_by_letter, letter: all[i]) + "</td>"
@@ -123,7 +123,7 @@ module ApplicationHelper
     else
       all << "*"
     end
-    ret = "<table id=\"letter\"><tr>"
+    ret = String.new("<table id=\"letter\"><tr>")
     for i in 0..(all.length - 1)
       if init_chars.include?(all[i])
         ret << "<td>" + link_to(all[i], controller: :categories, action: :list_by_letter, letter: all[i]) + "</td>"

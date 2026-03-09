@@ -127,6 +127,7 @@ For JavaScript files and debugging see folder [app/javascript](./app/javascript/
 
 ## History
 
+* 2026 Upgraded to Rails 8.1.2, Ruby 3.4
 * 2025 Upgraded to Rails 8.0.2
 * 2024 Upgraded to Rails 7.1.3 ... 7.2.2, Ruby 3.3, added avatar images
 * 2023 Updated to Rails 7.0.5 ... 7.0.8, Ruby 3.1

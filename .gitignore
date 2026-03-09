@@ -23,11 +23,12 @@
 /public/images/pa
 /public/images/da
 # default avatar 0.png, avatars of fixtures users [1...5].png or those hard-wired referenced
-# in HTML [9|73|203|204|205].png are provided, test-generated avatars [6|7|8|10].png are ignored
+# in HTML [9|73|203|204|205].png are provided, test-generated avatars 6.png ... 21.png are ignored
 /public/images/ta/6.png
 /public/images/ta/7.png
 /public/images/ta/8.png
 /public/images/ta/10.png
+/public/images/ta/11.png
 /public/images/ta/12.png
 /public/images/ta/14.png
 /public/images/ta/16.png

@@ -7,10 +7,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '~> 3.3'
+ruby '~> 3.4'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '~> 8.0'
+gem 'rails', '~> 8.1'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -55,15 +55,14 @@ gem "sassc-rails"
 gem 'puma'
 
 gem 'will_paginate', '~> 4.0'
-# waiting for https://github.com/binarylogic/authlogic/pull/770
-gem "authlogic", github: "binarylogic/authlogic", ref: "refs/pull/770/head"
+gem "authlogic", "~> 6.6"
 # for authlogic >= 6
 gem "scrypt", "~> 3.0"
 
 # to remove trailing slashes from URLs
 gem 'rack-rewrite'
 
-gem 'rails-i18n', '~> 8.0'
+gem 'rails-i18n', '~> 8.1'
 gem "mobility", "~> 1.2"
 
 # Terser minifies JavaScript files by wrapping TerserJS to be accessible in Ruby

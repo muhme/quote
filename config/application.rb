@@ -74,9 +74,5 @@ module Quote
     config.public_file_server.headers = {
       "Cache-Control" => "public, max-age=#{2.days.to_i}"
     }
-
-    # Make to_time preserve the full timezone (Europe/Berlin) rather than just the offset (+01:00),
-    # which is the new default behavior in Rails 8.1.
-    config.active_support.to_time_preserves_timezone = :zone
   end
 end

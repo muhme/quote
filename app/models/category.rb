@@ -49,7 +49,7 @@ class Category < ApplicationRecord
   def self.filter_by_category(search, category_ids)
     return [] if search.blank?
 
-    sql = "SELECT DISTINCT c.* from categories c "
+    sql = String.new("SELECT DISTINCT c.* from categories c ")
     sql << "INNER JOIN mobility_string_translations mst "
     sql << "ON c.id = mst.translatable_id "
     sql << "AND mst.translatable_type = 'Category' "
