@@ -119,7 +119,7 @@ GEM
     easy_translate (0.5.1)
       thread
       thread_safe
-    erb (6.0.2)
+    erb (6.0.4)
     erb-formatter (0.7.3)
       syntax_tree (~> 6.0)
     erubi (1.13.1)
