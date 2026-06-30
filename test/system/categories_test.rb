@@ -57,9 +57,9 @@ class CategoriesTest < ApplicationSystemTestCase
     check_page page, cu, "h1", "Category"
     check_this_page page, nil, "Smile" # en
     check_this_page page, nil, "Lächeln" # de
-    check_this_page page, nil, "Sonría" # es
-    check_this_page page, nil, "スマイル" # ja
-    check_this_page page, nil, "Посміхнися" # uk
+    check_this_page page, nil, "Sonríe" # es, was once Sonría
+    check_this_page page, nil, "笑顔" # ja, was once スマイル
+    check_this_page page, nil, "Посміхнись" # uk, was once Посміхнися
     # delete
     visit "/en/categories/list_by_letter/S"
     accept_alert do
@@ -131,13 +131,13 @@ class CategoriesTest < ApplicationSystemTestCase
     click_on "Save"
     check_this_page page, nil, 'The category "Child" has been created.'
     check_this_page page, nil, 'Niño'    # translation ES was working
-    check_this_page page, nil, 'Дитинко' # translation UK was working
+    check_this_page page, nil, 'Дитина' # translation UK was working, was once Дитинко
     click_on "Pencil"
     fill_in "category_name_es", with: "Abuelo" # me :)
     click_on "Save"
     check_this_page page, nil, 'The category "Child" has been updated.'
     check_this_page page, nil, "Abuelo"  # ES overwritten
-    check_this_page page, nil, 'Дитинко' # UK still exist
+    check_this_page page, nil, 'Дитина' # UK still exist, was once Дитинко
     click_on "Pencil"
     click_on "Translate"
     check_this_page page, nil, 'The category "Child" has been updated.'
