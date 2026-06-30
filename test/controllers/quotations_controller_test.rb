@@ -390,7 +390,7 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
           params: { commit: "Save",
                     quotation: { quotation: 'The early bird catches the worm',
                                  locale: 'en',
-                                 source_link: 'https://httpbin.org/status/200' } }
+                                 source_link: 'https://httpbingo.org/status/200' } }
 
     assert_nil flash[:warning]
   end
@@ -400,9 +400,9 @@ class QuotationsControllerTest < ActionDispatch::IntegrationTest
           params: { commit: "Save",
                     quotation: { quotation: 'The early bird catches the worm',
                                  locale: 'en',
-                                 source_link: 'http://httpbin.org/status/200' } }
+                                 source_link: 'http://httpbingo.org/status/200' } }
     assert_match /The link “http:.* has been changed to “https:.*/, flash[:warning]
-    assert_match 'https://httpbin.org/status/200', Quotation.find_by(id: @quotation_one.id).source_link
+    assert_match 'https://httpbingo.org/status/200', Quotation.find_by(id: @quotation_one.id).source_link
   end
   test "verify_and_improve_link – invalid link" do
     login :first_user
