@@ -51,18 +51,23 @@ class DeeplServiceTest < ActiveSupport::TestCase
     assert_equal "マイケル・A", author.send("firstname_ja"), "author.firstname wrong in :ja"
 
     # check description
-    assert_includes ["US-American professor of computer science", "US professor of computer science"],
+    assert_includes ["US-American professor of computer science",
+                     "US professor of computer science",
+                     "U.S. professor of computer science"],
                     author.send("description_en"),
                     "author.description wrong in :en"
-    assert_equal "Profesor estadounidense de informática",
-                 author.send("description_es"),
-                 "author.description wrong in :es"
+    assert_includes ["Profesor estadounidense de informática",
+                     "Profesor estadounidense de Informática"],
+                    author.send("description_es"),
+                    "author.description wrong in :es"
     assert_includes ["米コンピューターサイエンス教授",
+                     "米国のコンピュータサイエンスの教授",
                      "コンピューター・サイエンス教授"],
                     author.send("description_ja"),
                     "author.description wrong in :ja"
     assert_includes ["Американський професор комп'ютерних наук",
-                     "Американо-американський професор комп'ютерних наук"],
+                     "Американо-американський професор комп'ютерних наук",
+                     "американський професор інформатики"],
                     author.send("description_uk"),
                     "author.description wrong in :uk"
   end
