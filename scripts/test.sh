@@ -4,7 +4,7 @@
 #
 # source .bashrc to set $DEEPL_API_KEY
 #
-# MIT License, Copyright (c) 2007 - 2024 Heiko Lübbe
+# MIT License, Copyright (c) 2007 - 2026 Heiko Lübbe
 # Ruby on Rail web application https://www.zitat-service.de, see https://github.com/muhme/quote
 
 echo ''

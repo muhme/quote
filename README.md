@@ -58,6 +58,25 @@ quote_maildev      maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp
 * quote_maildev – SMTP Server and Web Interface for viewing and testing mails during development
   * http://localhost:8106
 
+<details>
+  <summary>Database Startup Ordering</summary>
+
+To avoid partial initialization issues (for example Authlogic methods missing when DB is not ready),
+application startup now waits for database readiness.
+
+Configuration via environment variables:
+
+* `DB_WAIT_ON_BOOT` – set to `0` to disable app-level DB wait (default: enabled except in test)
+* `DB_WAIT_TIMEOUT` – max wait time in seconds (default: `60`)
+* `DB_WAIT_INTERVAL` – retry interval in seconds (default: `1`)
+* `DB_HOST` / `DB_PORT` – used by `scripts/wait_for_database.sh` (defaults: `db` / `3306`)
+
+In Docker, startup ordering is enforced twice:
+
+* `db` has a healthcheck and `rails` depends on `service_healthy`
+* `rails` container command runs `scripts/wait_for_database.sh` before `rails s`
+</details>
+
 ## Machine Translation
 <details>
   <summary>The application uses DeepL API Free for translation.</summary>

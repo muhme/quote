@@ -1,6 +1,9 @@
 require_relative "boot"
 
 require "rails/all"
+require "erb"
+require "socket"
+require "yaml"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -29,6 +32,40 @@ module Quote
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
+
+    # Enforce DB readiness before app initialization to avoid partially initialized auth modules.
+    config.before_initialize do
+      next if Rails.env.test?
+      next if ENV["DB_WAIT_ON_BOOT"] == "0"
+
+      timeout_seconds = ENV.fetch("DB_WAIT_TIMEOUT", "60").to_i
+      interval_seconds = ENV.fetch("DB_WAIT_INTERVAL", "1").to_f
+      started_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+      db_config =
+        YAML.safe_load(
+          ERB.new(File.read(Rails.root.join("config/database.yml"))).result,
+          aliases: true,
+        )
+      env_db_config = db_config.fetch(Rails.env, {})
+      host = ENV.fetch("DB_HOST", env_db_config.fetch("host", "127.0.0.1"))
+      port = ENV.fetch("DB_PORT", env_db_config.fetch("port", 3306)).to_i
+
+      loop do
+        begin
+          Socket.tcp(host, port, connect_timeout: 1) { |sock| sock.close }
+          break
+        rescue StandardError => e
+          elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - started_at
+          if elapsed >= timeout_seconds
+            raise "Database #{host}:#{port} not ready after #{timeout_seconds}s: #{e.class}: #{e.message}"
+          end
+
+          puts "Waiting for database #{host}:#{port} (#{elapsed.to_i}s/#{timeout_seconds}s): #{e.class}: #{e.message}"
+          sleep interval_seconds
+        end
+      end
+    end
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

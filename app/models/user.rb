@@ -79,6 +79,7 @@ class User < ApplicationRecord
   validates :password_salt, presence: false, length: { maximum: 255 }, uniqueness: false
 
   acts_as_authentic do |c|
+    c.raise_on_model_setup_error = true
     c.crypto_provider = ::Authlogic::CryptoProviders::SCrypt
   end
 

@@ -18,6 +18,11 @@ services:
       MARIADB_DATABASE: quote_development
       MARIADB_USER: quote_development
       MARIADB_PASSWORD: quote_development
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u root -proot"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
     restart: unless-stopped
   mysqladmin:
     container_name: quote_mysqladmin
@@ -39,13 +44,18 @@ services:
       - .:/quote
     environment:
       QUOTE_DATABASE_PASSWORD: quote_development
+      DB_WAIT_ON_BOOT: "1"
+      DB_WAIT_TIMEOUT: "90"
+      DB_WAIT_INTERVAL: "1"
     ports:
       - "8102:3000" # development environment
       - "8112:3100" # test environment, if running
     restart: unless-stopped
     depends_on:
-      - db
-      - chrome
+      db:
+        condition: service_healthy
+      chrome:
+        condition: service_started
   chrome:
     container_name: quote_chrome
     image: selenium/standalone-chrome
