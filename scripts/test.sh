@@ -9,12 +9,12 @@
 
 echo ''
 echo '*** Waiting for database to be ready'
-docker exec -it quote_rails sh -c "scripts/wait_for_database.sh"
+docker exec -it quote_rails bash -c "scripts/wait_for_database.sh"
 
 echo ''
 echo '*** Running mini tests - rails test'
-docker exec -it quote_rails sh -c ". ~/.bashrc && rails test"
+docker exec -it quote_rails bash -c ". ~/.bashrc && set -o allexport && source /quote/.env && rails test"
 
 echo ''
 echo '*** Running system tests - rails test:system'
-docker exec -it quote_rails sh -c ". ~/.bashrc && rails test:system"
+docker exec -it quote_rails bash -c ". ~/.bashrc && set -o allexport && source /quote/.env && rails test:system"
