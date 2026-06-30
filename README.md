@@ -32,9 +32,9 @@ Then five containers are running:
 ```
 NAMES              IMAGE                        PORTS
 quote_rails        quote-rails                  0.0.0.0:8102->3000/tcp
-quote_mysqladmin   phpmyadmin/phpmyadmin        0.0.0.0:8101->80/tcp
+quote_mysqladmin   phpmyadmin:latest            0.0.0.0:8101->80/tcp
 quote_mariadb      mariadb                      3306/tcp
-quote_chrome       selenium/standalone-chrome   4444/tcp, 0.0.0.0:8104->5900/tcp, 0.0.0.0:8105->7900/tcp
+quote_chrome       selenium/standalone-chromium 4444/tcp, 0.0.0.0:8104->5900/tcp, 0.0.0.0:8105->7900/tcp
 quote_maildev      maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp
 ```
 * quote_mariadb – MariaDB database server
@@ -50,7 +50,7 @@ quote_maildev      maildev/maildev              1025/tcp, 0.0.0.0:8106->1080/tcp
     * user / user_password / user@user.com
     * admin / admin_password / admin@admin.com
     * super_admin / super_admin / super_admin@admin.com
-* quote_chrome – Selenium Standalone with Chrome and VNC server
+* quote_chrome – Selenium Standalone with Chromium and VNC server
   * two ports are available to see browser working in system test (using the password: secret):
     * using a VNC viewer: [vnc://localhost:8104](vnc://localhost:8104) or
     * using your browser (no VNC client is needed):<br />
