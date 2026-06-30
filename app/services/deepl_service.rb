@@ -29,9 +29,10 @@ class DeeplService
     de: ["Der Text wurde geschrieben von dem Autor mit dem Namen °°°.",
          "Der Text wurde von einem Autor namens °°° geschrieben.",
          "Der Text wurde von einem Autor mit dem Namen °°° geschrieben.",
-         "Es wurde von einem Autor namens Thomas Mann geschrieben."],
+         "Es wurde von einem Autor namens °°° geschrieben."],
     en: ["The text was written by the author with the name °°°.",
-         "The text was written by the author named °°°."],
+         "The text was written by the author named °°°.",
+         "The text was written by an author named °°°."],
     es: ["El texto fue escrito por el autor de nombre °°°.",
          "El texto fue escrito por el autor con el nombre de °°°.",
          "El texto fue escrito por un autor llamado °°°.",
@@ -58,7 +59,8 @@ class DeeplService
          "この文章°°°という作家によって書かれた。"],
     uk: ["Текст був написаний автором на ім'я °°°.",
          "Текст написала авторка на ім'я °°°.",
-         "Текст написаний автором на ім'я °°°."],
+         "Текст написаний автором на ім'я °°°.",
+         "Цей текст написав автор на ім’я °°°."],
   }.freeze
 
   # - always translates authors description
