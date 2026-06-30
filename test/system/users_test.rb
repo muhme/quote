@@ -201,8 +201,8 @@ class UsersTest < ApplicationSystemTestCase
     #   click_on 'Select file'
     #   attach_file('avatar-upload', '/tmp/face-smile.png', make_visible: true)
     # using hidden input field in bypassing Stimulus JS controller
-    # image file `google-chrome.png` comes local from quote_chrome docker container
-    find('form input[type="file"]', visible: false).set('/usr/share/icons/hicolor/256x256/apps/google-chrome.png')
+    # use image file from docker container
+    find('form input[type="file"]', visible: false).set('/usr/share/pixmaps/debian-logo.png')
     click_on 'Save'
     check_this_page page, nil, 'Your user entry "first_user" has been changed.'
   end
